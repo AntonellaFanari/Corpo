@@ -13,7 +13,7 @@ namespace Corpo.Data.Repositories
     class UserRepository : IUserRepository
     {
         private CorpoContext _context;
-
+        
         public UserRepository(CorpoContext context)
         {
             _context = context;
@@ -23,7 +23,7 @@ namespace Corpo.Data.Repositories
         {
             return _context.User.Include(x=> x.Role).ToList();
         }
-
+        //roles
         public List<Role> GetRoles()
         {
             return _context.Role.ToList();

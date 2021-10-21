@@ -1,0 +1,92 @@
+<div class="row mt">
+  <div class="col-lg-12">
+    <div class="form-panel">
+      <h3 class="mb text-center">Alta de Socios</h3>
+      <button type="button" class="btn btn-success pull-right margButton" routerLink="/user-medical-history">Ficha Medica</button>
+      <br />
+      <br />
+      <form class="form-horizontal style-form" [formGroup]="formCreate">
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Apellido:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="lastName">
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Nombre:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Fecha de Nacimiento:</label>
+            <div class="margLeft">
+              <input type="date" class="form-control" formControlName="birthDate">
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Dirección:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="address">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Celular:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="mobile">
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Email:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="email">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Contraseña:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="password">
+              <span>La contraseña debe ser alfanúmerica, entre 8 y 13 caracteres y minimo una mayúscula</span>
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Repetir Contraseña:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="repeatPassword">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Número de Urgencia:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="emergencyPhone">
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Contacto de Urgencia:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="emergencyContact">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Instagram:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="instagram">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- col-lg-12-->

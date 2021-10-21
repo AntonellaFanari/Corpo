@@ -1,0 +1,21 @@
+﻿using Corpo.Data.Repositories;
+using Corpo.Domain.Contracts.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Corpo.Data.Dependencies
+{
+     public static class DataDependencies
+    {
+        public static void AddDataConfiguration(this IServiceCollection services, string connection)
+        {
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
+        }
+    }
+}

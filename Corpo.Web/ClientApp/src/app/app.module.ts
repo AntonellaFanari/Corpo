@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { NgbModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -19,6 +20,11 @@ import { MemberDetailComponent } from './components/member/member-detail/member-
 import { MemberFormComponent } from './components/member/member-form/member-form.component';
 import { MemberListComponent } from './components/member/member-list/member-list.component';
 import { MemberLoginComponent } from './components/member/member-login/member-login.component';
+import { UserViewComponent } from './components/user/user-view/user-view.component';
+import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
+import { HistoryMedicalCreateComponent } from './components/member/history-medical/history-medical-create/history-medical-create.component';
+import { HistoryMedicalDetailComponent } from './components/member/history-medical/history-medical-detail/history-medical-detail.component';
+import { HistoryMedicalFormComponent } from './components/member/history-medical/history-medical-form/history-medical-form.component';
 
 @NgModule({
   declarations: [
@@ -36,22 +42,36 @@ import { MemberLoginComponent } from './components/member/member-login/member-lo
     MemberDetailComponent,
     MemberFormComponent,
     MemberListComponent,
-    MemberLoginComponent
+    MemberLoginComponent,
+    UserViewComponent,
+    CustomAlertComponent,
+    HistoryMedicalCreateComponent,
+    HistoryMedicalDetailComponent,
+    HistoryMedicalFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
+    NgbCollapseModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent },
       { path: 'user-list', component: UserListComponent },
+      { path: 'user-view', component: UserViewComponent },
+      { path: 'user-detail', component: UserDetailComponent },
       { path: 'member-list', component: MemberListComponent },
-      { path: 'member-create', component: MemberCreateComponent }
+      { path: 'member-create', component: MemberCreateComponent },
+      { path: 'member-detail', component: MemberDetailComponent },
+      { path: 'history-medical-create', component: HistoryMedicalCreateComponent }
     ])
+  ],
+  entryComponents: [
+    CustomAlertComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

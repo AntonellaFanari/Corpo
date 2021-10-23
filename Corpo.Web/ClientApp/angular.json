@@ -24,7 +24,7 @@
             "styles": [
 
               "src/styles.css",
-              "src/css/style.css",
+              //"src/css/style.css",
               "src/css/style-responsive.css",
               "src/css/table-responsive.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

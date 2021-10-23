@@ -12,5 +12,9 @@ namespace Corpo.Domain.Contracts.Services
     {
         List<Role> GetRoles();
         List<User> GetAll();
+        DomainResponse Add(User user);
+        User GetById(int id);
+        DomainResponse Update(int id, User user);
+        void Delete(int id);
     }
 }

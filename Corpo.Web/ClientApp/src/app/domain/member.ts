@@ -10,4 +10,5 @@ export class Member {
   emergencyPhone: string;
   emergencyContact: string;
   instagram: string;
+  historyMedicalId: number
 }

@@ -1,1 +1,5 @@
-<p>user-detail works!</p>
+<div class="container">
+  <app-user-form></app-user-form>
+  <button class="btn btn-theme pull-left" type="submit" (click)="submit()">Guardar</button>
+  <button class="btn btn-theme04 pull-right" type="button" [routerLink]="['/user-list']">Cancelar</button>
+</div>  

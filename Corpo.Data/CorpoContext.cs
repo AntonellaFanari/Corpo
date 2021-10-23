@@ -18,8 +18,15 @@ namespace Corpo.Data
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+            builder.Entity<Member>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
         public DbSet<User> User { get; set; }
         public DbSet<Role> Role { get; set; }
+        public DbSet<Member> Member { get; set; }
+        public DbSet<HistoryMedical> HistoryMedical { get; set; }
+        public DbSet<Injury> Injury { get; set; }
+        public DbSet<File> File { get; set; }
     }
 }

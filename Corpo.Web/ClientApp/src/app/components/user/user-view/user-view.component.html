@@ -1,0 +1,36 @@
+<div class="row mt">
+  <div class="col-md-12">
+    <div class="task-panel ">
+      <h4 class="table-title">Informacion del Usuario</h4>
+    </div>
+    <hr>
+    <section id="no-more-tables">
+      <table class="table table-bordered table-condensed cf">
+        <thead class="cf">
+          <tr>
+            <th class="numeric">Apellido y Nombre</th>
+            <th class="numeric">Tipo de Usuario</th>
+            <th class="numeric">Fecha de Nacimiento</th>
+            <th class="numeric">Domicilio</th>
+            <th class="numeric">Teléfono</th>
+            <th class="numeric">Email</th>
+            <th class="numeric">Contraseña</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="scrollme">
+            <td class="numeric" data-title="Apellido y Nombre"><span>{{user.lastName}} {{user.name}}</span></td>
+            <td data-title="Tipo de Usuario"><span>{{role}}</span></td>
+            <td data-title="Fecha de Nacimiento"><span>{{user.birthDate}}</span></td>
+            <td data-title="Domicilio"><span>{{user.address}}</span></td>
+            <td data-title="Teléfono"><span>{{user.phone}}</span></td>
+            <td data-title="Email"><span>{{user.email}}</span></td>
+            <td data-title="Contraseña"><span>{{user.password}}</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <button type="button" class="btn btn-success pull-right" routerLink="/user-list">Volver</button>
+      </div>
+    </section>
+  </div>

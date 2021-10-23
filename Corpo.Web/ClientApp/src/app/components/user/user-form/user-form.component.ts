@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Role } from '../../../domain/role';
 import { User } from '../../../domain/user';
 import { UserService } from '../../../services/user.service';
+import { Password } from '../../validations/password';
 
 @Component({
   selector: 'app-user-form',
@@ -13,18 +14,22 @@ export class UserFormComponent implements OnInit {
   roles: Role[] = [];
   formCreate: FormGroup;
   sendForm: boolean = false;
+  dt: Date = new Date();
+  user: User;
+  modeCreate: boolean = true;
+  unamePattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,15}$";
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.formCreate = this.formBuilder.group({
       lastName: ['', Validators.required],
       name: ['', Validators.required],
-      birthDate: ['', Validators.required],
+      birthDate: [this.dt, Validators.required],
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.min(8), Validators.max(15)]],
-      repeatPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      password: ['', Validators.pattern(this.unamePattern)],
+      repeatPassword: '',
       address: ['', Validators.required],
-      role: ['', Validators.required]
-    })
+      roleId: ['', Validators.required]
+    }, { validators: Password.mustMatch('password', 'repeatPassword') })
   }
   ngOnInit() {
     this.userService.getRoles().
@@ -45,7 +50,7 @@ export class UserFormComponent implements OnInit {
     this.sendForm = true;
     if (this.formCreate.valid) {
       var newUser = new User();
-      newUser.role = this.formCreate.value.role;
+      newUser.roleId = parseInt(this.formCreate.value.roleId);
       newUser.lastName = this.formCreate.value.lastName;
       newUser.name = this.formCreate.value.name;
       newUser.birthDate = this.formCreate.value.birthDate;
@@ -55,6 +60,35 @@ export class UserFormComponent implements OnInit {
       newUser.password = this.formCreate.value.password;
       return newUser;
     }
-   
   }
-}
+
+  getUserUpdate(id) {
+    this.userService.getById(id).subscribe(
+      result => {
+        this.user = result;
+        console.log(this.user);
+        this.toCompleteForm();
+      },
+      error => console.error(error)
+    )
+  }
+
+  toCompleteForm() {
+    this.modeCreate = false;
+      this.dt = new Date(this.user.birthDate);
+      this.formCreate.patchValue({
+        lastName: this.user.lastName,
+        name: this.user.name,
+        birthDate: new Date(this.user.birthDate),
+        phone: this.user.phone,
+        email: this.user.email,
+        password: this.user.password,
+        repeatPassword: this.user.password,
+        address: this.user.address,
+        roleId: this.user.roleId,
+      })
+
+    }
+
+   
+ }

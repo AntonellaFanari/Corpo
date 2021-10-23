@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Corpo.Domain.Contracts.Services;
+﻿using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
-using Microsoft.AspNetCore.Http;
+using Corpo.Web.Controllers.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
-using Corpo.Domain.Views;
-using Corpo.Web.ViewModels;
+using System.Collections.Generic;
 
 namespace Corpo.Web.Controllers
 {
@@ -26,14 +21,41 @@ namespace Corpo.Web.Controllers
         {
             var listRoles = _userService.GetRoles();
             return Ok(listRoles);
-
         }
 
         [HttpGet("getAll")]
-        public ActionResult<UserView> GetAll()
+        public ActionResult<User> GetAll()
         {
-            var listUsers =UserViewModel.FromDomain(_userService.GetAll());
+            var listUsers = ViewModels.UserViewModel.FromDomain(_userService.GetAll());
             return Ok(listUsers);
+        }
+
+        [HttpGet("getById")]
+        public ActionResult<User> GetById(int id)
+        {
+            var user = _userService.GetById(id);
+            return Ok(user);
+        }
+
+        [HttpPost("[action]")]
+        public ActionResult Add([FromBody]User user)
+        {
+           var response = _userService.Add(user);
+            return this.ToActionResult(response);
+        }
+
+        [HttpPut("[action]")]
+        public ActionResult Update(int id, User user)
+        {
+            var response = _userService.Update(id, user);
+            return this.ToActionResult(response);
+        }
+
+        [HttpDelete("[action]")]
+        public ActionResult Delete(int id)
+        {
+            _userService.Delete(id);
+            return Ok();
         }
     }
 }

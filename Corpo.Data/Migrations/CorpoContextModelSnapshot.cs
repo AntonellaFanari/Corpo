@@ -19,6 +19,136 @@ namespace Corpo.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Corpo.Domain.Models.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InjuryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InjuryId");
+
+                    b.ToTable("File");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.HistoryMedical", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Allergies")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HabitualMedication")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HeartDisease")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Observations")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Period")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RespiratoryDisease")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SurgicalIntervention")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HistoryMedical");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Injury", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("HistoryMedicalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryMedicalId");
+
+                    b.ToTable("Injury");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Member", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EmergencyContact")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmergencyPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HistoryMedicalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("HistoryMedicalId");
+
+                    b.ToTable("Member");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -76,6 +206,39 @@ namespace Corpo.Data.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.File", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Injury", "Injury")
+                        .WithMany("File")
+                        .HasForeignKey("InjuryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Injury");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Injury", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.HistoryMedical", "History")
+                        .WithMany("Injury")
+                        .HasForeignKey("HistoryMedicalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("History");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Member", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.HistoryMedical", "HistoryMedical")
+                        .WithMany()
+                        .HasForeignKey("HistoryMedicalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HistoryMedical");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Role", "Role")
@@ -85,6 +248,16 @@ namespace Corpo.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.HistoryMedical", b =>
+                {
+                    b.Navigation("Injury");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Injury", b =>
+                {
+                    b.Navigation("File");
                 });
 #pragma warning restore 612, 618
         }

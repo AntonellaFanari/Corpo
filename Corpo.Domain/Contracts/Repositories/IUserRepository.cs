@@ -12,5 +12,9 @@ namespace Corpo.Domain.Contracts.Repositories
     {
         List<Role> GetRoles();
         List<User> GetAll();
+        void Add(User user);
+        User GetById(int id);
+        void Update(int id, User user);
+        void Delete(int id);
     }
 }

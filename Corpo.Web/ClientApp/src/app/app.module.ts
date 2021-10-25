@@ -25,6 +25,8 @@ import { CustomAlertComponent } from './components/custom-alert/custom-alert.com
 import { HistoryMedicalCreateComponent } from './components/member/history-medical/history-medical-create/history-medical-create.component';
 import { HistoryMedicalDetailComponent } from './components/member/history-medical/history-medical-detail/history-medical-detail.component';
 import { HistoryMedicalFormComponent } from './components/member/history-medical/history-medical-form/history-medical-form.component';
+import { SettingsAccesComponent } from './components/settings/settings-acces/settings-acces.component';
+import { CashFormComponent } from './components/cash/cash-form/cash-form.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { HistoryMedicalFormComponent } from './components/member/history-medical
     CustomAlertComponent,
     HistoryMedicalCreateComponent,
     HistoryMedicalDetailComponent,
-    HistoryMedicalFormComponent
+    HistoryMedicalFormComponent,
+    SettingsAccesComponent,
+    CashFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -67,7 +71,10 @@ import { HistoryMedicalFormComponent } from './components/member/history-medical
       { path: 'member-list', component: MemberListComponent },
       { path: 'member-create', component: MemberCreateComponent },
       { path: 'member-detail', component: MemberDetailComponent },
-      { path: 'history-medical-create', component: HistoryMedicalCreateComponent }
+      { path: 'history-medical-create', component: HistoryMedicalCreateComponent },
+      { path: 'history-medical-detail', component: HistoryMedicalCreateComponent },
+      { path: 'accesos', component: SettingsAccesComponent },
+      { path: 'caja', component: CashFormComponent }
     ])
   ],
   entryComponents: [

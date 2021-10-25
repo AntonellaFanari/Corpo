@@ -12,7 +12,7 @@ namespace Corpo.Domain.Models
         public string Name { get; set; }
         public HistoryMedical History { get; set; }
         public int HistoryMedicalId { get; set; }
-        public List<File> File { get; set; }
+        public List<File> Files { get; set; }
 
     }
 }

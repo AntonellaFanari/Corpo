@@ -36,7 +36,7 @@ namespace Corpo.Data.Repositories
         {
             try
             {
-                _context.Add(user);
+                _context.User.Add(user);
                 _context.SaveChanges();
             }
             catch (DbUpdateException ex)

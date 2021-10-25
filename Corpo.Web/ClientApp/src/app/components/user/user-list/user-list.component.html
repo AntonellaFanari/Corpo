@@ -24,8 +24,7 @@
               <td data-title="Teléfono"><span>{{user.phone}}</span></td>
               <td data-title="Email"><span>{{user.email}}</span></td>
               <td data-title="Acción">
-                <button class="btn btn-info btn-xs" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}"><i class="fa fa-eye"></i></button>
-                <button class="btn btn-primary btn-xs"><i class="fa fa-check"></i></button>
+                <button class="btn btn-primary btn-xs" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}"><i class="fa fa-check"></i></button>
                 <button class="btn btn-warning btn-xs" [routerLink]="['/user-detail']" [queryParams]="{id:user.id}"><i class="fa fa-pencil-square-o "></i></button>
                 <button class="btn btn-danger btn-xs" (click)="delete(user.id)"><i class="fa fa-trash-o "></i></button>
               </td>

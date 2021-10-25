@@ -19,7 +19,6 @@ namespace Corpo.Domain.Models
         public string EmergencyPhone { get; set; }
         public string EmergencyContact { get; set; }
         public string Instagram { get; set; }
-        public virtual HistoryMedical HistoryMedical { get; set; }
-        public int HistoryMedicalId { get; set; }
+       
     }
 }

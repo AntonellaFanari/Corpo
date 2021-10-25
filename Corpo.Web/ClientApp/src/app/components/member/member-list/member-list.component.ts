@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Member } from '../../../domain/member';
 import { MemberService } from '../../../services/member.service';
 
 @Component({
@@ -11,14 +12,13 @@ export class MemberListComponent implements OnInit {
   constructor(private memberService: MemberService) { }
 
   ngOnInit() {
-    //this.memberService.getAll().subscribe(
-    //  result => {
-    //    this.members = [];
-    //    this.members.push(result);
-    //    console.log(this.members);
-    //  },
-    //  error => console.error(error)
-    //);
+    this.memberService.getAll().subscribe(
+      (result) => {
+        console.log(result.result);
+        this.members = result.result;
+      },
+      error => console.error(error)
+    );
   }
 
 }

@@ -14,3 +14,29 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+li.nav-item {
+  margin-left: 10px;
+  margin-top: 7px;
+}
+
+.nav-item a {
+  color: #aeb2b7;
+  text-decoration: none;
+  font-family: Ruda, sans-serif;
+  font-size: 13px;
+}
+
+nav.bg-dark {
+  background: #22242a;
+  border-bottom: 1px solid #393d46;
+}
+
+section.wrapper {
+  margin: 20px;
+}
+
+.navbar-light .navbar-toggler {
+  color: #fff !important;
+  margin-left: 10px;
+}

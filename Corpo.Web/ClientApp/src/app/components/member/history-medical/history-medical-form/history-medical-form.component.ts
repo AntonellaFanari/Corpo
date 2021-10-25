@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Injury } from '../../../../domain/injury';
 
 @Component({
   selector: 'app-history-medical-form',
@@ -16,10 +17,18 @@ export class HistoryMedicalFormComponent implements OnInit {
   inputSurgicalIntervention: boolean = false;
   injury: boolean = false;
   formCreate: FormGroup;
+  upperLimbs: string[] = ["Cervical", "Hombro", "Brazo", "Codo", "Muñeca", "Manos", "Torso"];
+  lowerLimbs: string[] = ["Cadera", "Pierna", "Rodilla", "Tibia", "Tobillo", "Pie"];
+  optionsLimbs: boolean = true;
+  files: Array<File> = [];
+  urls = [];
   unamePattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,15}$";
+  injuries: Injury[] = [];
+  nameInjury: string;
+
   constructor(private formBuilder: FormBuilder) {
     this.formCreate = this.formBuilder.group({
-      gender: ['', Validators.required],
+      gender: ['0', Validators.required],
       period: [''],
       weight: ['', Validators.required],
       allergies: '',
@@ -35,63 +44,72 @@ export class HistoryMedicalFormComponent implements OnInit {
   }
 
   selectGender(event) {
-    console.log(event);
-    if (event === 1) {
-      this.feminine = false;
-    } if (event === 2) {
-      this.feminine = true;
-    }
+    this.feminine = (event == 2)
   }
 
   checkedAllergies(event) {
-    console.log(this.inputAllergies);
-    console.log(event);
-    if (event == 1) {
-      this.inputAllergies = true;
-      console.log(this.inputAllergies);
-    } if (event == 2) {
-      this.inputAllergies = false
-    }
+    this.inputAllergies = (event == 1);
   }
 
   checkedHeartDisease(event) {
-    if (event == 1) {
-      this.inputHeartDisease = true
-    } if (event == 2) {
-      this.inputHeartDisease = false
-    }
+    this.inputHeartDisease = (event == 1);
   }
 
   checkedRespiratoryDisease(event) {
-    if (event == 1) {
-      this.inputRespiratoryDisease = true
-    } if (event == 2) {
-      this.inputRespiratoryDisease = false
-    }
+    this.inputRespiratoryDisease = (event == 1);
   }
 
   checkedHabitualMedication(event) {
-    if (event == 1) {
-      this.inputHabitualMedication = true
-    } if (event == 2) {
-      this.inputHabitualMedication = false
-    }
+    this.inputHabitualMedication = (event == 1);
+     
   }
 
   checkedSurgicalIntervention(event) {
-    if (event == 1) {
-      this.inputSurgicalIntervention = true
-    } if (event == 2) {
-      this.inputSurgicalIntervention = false
-    }
+    this.inputSurgicalIntervention = (event == 1);
   }
 
   checkedInjury(event) {
-    if (event == 1) {
-      this.injury = true
-    } if (event == 2) {
-      this.injury = false
+    this.injury = (event == 1);
+     
+  }
+
+  selectLimb(event) {
+    this.nameInjury = event;
+  }
+
+  checkedLimbs(event) {
+    this.optionsLimbs=!this.optionsLimbs;
+  }
+
+  public onFileSelection(event: any): void {
+    const files: FileList = event.target.files;
+    this.files.splice(0, this.files.length);
+    for (let i = 0; i < files.length; i++) {
+      const file = <File>files.item(i);
+      this.files.push(file);
+      console.log(this.files);
     }
+
+    this.urls = [];
+
+    if (event.target.files && event.target.files[0]) {
+      var filesAmount = event.target.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = (event: any) => {
+          console.log(event.target.result);
+          this.urls.push(event.target.result);
+        }
+        reader.readAsDataURL(event.target.files[i]);
+      }
+    }
+  }
+
+  addInjury() {
+    var newInjury = new Injury();
+    newInjury.name = this.nameInjury;
+    newInjury.file=this.files;
   }
 
 }

@@ -15,6 +15,8 @@ namespace Corpo.Data.Dependencies
         public static void AddDataConfiguration(this IServiceCollection services, string connection)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IMemberRepository, MemberRepository>();
+            services.AddTransient<ISettingsRepository, SettingsRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

@@ -1,0 +1,53 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Acceso para Usuarios</h4>
+      </div>
+      <hr>
+      <section id="no-more-tables">
+        <table class="table table-bordered table-condensed cf scrollme">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Roles</th>
+              <th class="numeric">Administrador</th>
+              <th class="numeric">Profesor/a</th>
+              <th class="numeric">Marketing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-title">Accesos</td>
+              <td data-title="Administrador">
+                <div *ngFor="let checkToAcces of checkboxToAccesAdmin">
+                  <input class="checkbox-access" type="checkbox" [checked]="checkToAcces.checked" (change)="checkToAcces.checked=!checkToAcces.checked">
+                  <span>{{checkToAcces.acces}}</span>
+                </div>
+              </td>
+              <td data-title="Profesor/a">
+                <div *ngFor="let checkToAcces of checkboxToAccesCoach">
+                  <input class="checkbox-access" type="checkbox" [checked]="checkToAcces.checked" (change)="checkToAcces.checked=!checkToAcces.checked">
+                  <span>{{checkToAcces.acces}}</span>
+                </div>
+              </td>
+              <td data-title="Marketing">
+                <div *ngFor="let checkToAcces of checkboxToAccesMarketing">
+                  <input class="checkbox-access" type="checkbox" [checked]="checkToAcces.checked" (change)="checkToAcces.checked=!checkToAcces.checked">
+                  <span>{{checkToAcces.acces}}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <div>
+        <button class="btn btn-secondary pull-left" type="button" [routerLink]="['/']">Cancelar</button>
+        <button class="btn btn-success pull-right" type="submit" (click)="submit()">Guardar</button>
+      </div>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+</section>
+
+

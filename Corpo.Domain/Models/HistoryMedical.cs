@@ -17,7 +17,9 @@ namespace Corpo.Domain.Models
         public string RespiratoryDisease { get; set; }
         public string HabitualMedication { get; set; }
         public string SurgicalIntervention { get; set; }
-        public List<Injury> Injury { get; set; }
+        public List<Injury> Injuries { get; set; }
         public string Observations { get; set; }
+        public virtual Member Member { get; set; }
+        public int MemberId { get; set; }
     }
 }

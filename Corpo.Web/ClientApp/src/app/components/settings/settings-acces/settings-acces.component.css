@@ -1,0 +1,13 @@
+.checkbox-access {
+  margin: .5em;
+  transform: scale(1.5);
+}
+
+.table td{
+    vertical-align: middle;
+}
+
+td.td-title {
+  padding-left: 0px !important;
+  text-align: center !important;
+}

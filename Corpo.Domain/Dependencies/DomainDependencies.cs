@@ -14,6 +14,8 @@ namespace Corpo.Domain.Dependencies
         public static void AddDomainConfiguration(this IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMemberService, MemberService>();
+            services.AddTransient<ISettingsService, SettingsService>();
         }
     }
 }

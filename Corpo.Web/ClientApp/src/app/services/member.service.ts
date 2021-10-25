@@ -24,17 +24,11 @@ export class MemberService {
   //}
 
   public getAll() {
-    return this.http.get("https://run.mocky.io/v3/9fa1482c-5bac-46b9-b16d-a30268a76234");
+    return this.http.get<any>(this.url + 'api/member/getAll');
   }
 
-  public add(newMember: Member) {
+  public add(newMember: Member): Promise<any> {
     console.log(newMember);
-    return this.http.post(this.url + 'api/member/add', newMember, httpOptions).
-      subscribe(
-        result => {
-          console.log(result);
-        },
-        error => console.error(error)
-      )
+    return this.http.post<number>(this.url + 'api/member/add', newMember, httpOptions).toPromise();
   }
 }

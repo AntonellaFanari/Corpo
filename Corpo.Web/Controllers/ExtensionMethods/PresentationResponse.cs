@@ -11,7 +11,7 @@ namespace Corpo.Web.Controllers.ExtensionMethods
     {
         public static ActionResult ToActionResult(this DomainResponse domainResponse)
         {
-            if (domainResponse.Success == true)
+            if (domainResponse.Success)
                 return new OkResult();
             else
                 return new BadRequestResult();
@@ -20,8 +20,11 @@ namespace Corpo.Web.Controllers.ExtensionMethods
         public static ActionResult ToActionResult(this ControllerBase controller, DomainResponse domainResponse)
         {
 
-            if (domainResponse.Success == true)
-                return controller.Ok(domainResponse.Message);
+            if (domainResponse.Success)
+                return controller.Ok(new
+                {
+                    Result = domainResponse.Result
+                });
             else
                 return controller.BadRequest(new
                 {

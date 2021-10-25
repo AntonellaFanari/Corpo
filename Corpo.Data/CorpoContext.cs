@@ -28,5 +28,6 @@ namespace Corpo.Data
         public DbSet<HistoryMedical> HistoryMedical { get; set; }
         public DbSet<Injury> Injury { get; set; }
         public DbSet<File> File { get; set; }
+        public DbSet<RoleAcces> RoleAcces { get; set; }
     }
 }

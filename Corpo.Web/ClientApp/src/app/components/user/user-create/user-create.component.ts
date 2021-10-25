@@ -18,15 +18,9 @@ export class UserCreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  //public async submit(): Promise<void>{
-  //  var newUser = this.formUser.createUser();
-  //  console.log(newUser);
-  //  await this.userService.add(newUser);
-  //  this.router.navigate(["/user-list"])
-  //}
 
   public async submit(): Promise<void> {
-    let newUser = this.formUser.createUser();
+    const newUser = this.formUser.createUser();
     await this.userService.add(newUser)
       .then(() => {
         this.router.navigate(["/user-list"])

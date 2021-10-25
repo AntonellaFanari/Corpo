@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20211024032546_MigracionUpdteTableMember")]
+    partial class MigracionUpdteTableMember
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,26 +166,6 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.RoleAcces", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Acces")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("RoleAcces");
-                });
-
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -257,17 +239,6 @@ namespace Corpo.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("History");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.RoleAcces", b =>
-                {
-                    b.HasOne("Corpo.Domain.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>

@@ -39,6 +39,11 @@ namespace Corpo.Data.Repositories
             }
         }
 
+        public Member GetById(int id)
+        {
+            return _context.Member.Find(id);
+        }
+
         public List<Member> GetAll()
         {
             return _context.Member.ToList();

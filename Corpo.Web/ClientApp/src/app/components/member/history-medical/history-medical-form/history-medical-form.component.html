@@ -6,57 +6,54 @@
       <br />
       <form class="form-horizontal style-form" [formGroup]="formCreate">
         <div class="row">
-          <div class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">Sexo:</label>
-            <div class="margLeft formValidators">
-              <select class="form-control" formControlName="gender" (change)="selectGender($event.target.value)">
-                <option value="0" disabled>Seleccionar...</option>
-                <option value="1">Hombre</option>
-                <option value="2">Mujer</option>
-              </select>
-              <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+          <div class="col-lg-6 form-group formBorder">
+            <div class="col-lg-6 form-group pull-left">
+              <label class="col-sm-12 control-label">Sexo:</label>
+              <div class="col-sm-12">
+                <select class="form-control" formControlName="gender" (change)="selectGender($event.target.value)">
+                  <option value="0" disabled>Seleccionar...</option>
+                  <option value="1">Hombre</option>
+                  <option value="2">Mujer</option>
+                </select>
+                <!--<p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>-->
+              </div>
+            </div>
+            <div *ngIf="feminine" class="col-lg-6 form-group pull-left">
+              <label class="col-sm-12 control-label">Periodo:</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="period">
+              </div>
             </div>
           </div>
-          <div *ngIf="feminine" class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">Periodo:</label>
-            <div class="margLeft formValidators">
-              <input type="text" class="form-control" formControlName="period">
+          <div class="col-lg-6 form-group formBorder">
+            <div class="col-lg-6 form-group pull-right">
+              <label class="col-sm-12 control-label">Peso:</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="weight">
+                <!--<p *ngIf="sendForm && f.weight.errors?.required">*el campo es requerido</p>-->
+              </div>
+            </div>
+            <div class="col-lg-6 form-group pull-right">
+              <label class="col-sm-12 control-label">Edad:</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="age">
+                <!--<p *ngIf="sendForm && f.age.errors?.required">*el campo es requerido</p>-->
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">Peso:</label>
-            <div class="margLeft formValidators">
-              <input type="text" class="form-control" formControlName="weight">
-              <p *ngIf="sendForm && f.weight.errors?.required">*el campo es requerido</p>
-            </div>
-          </div>
-          <div class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">¿Tiene alergias conocidas?</label>
-            <div class="margLeft formValidators">
-              <label>
-                <input type="radio" name="allergies" value="1" (change)="checkedAllergies($event.target.value)">
-                <span>Si</span>
-              </label>
-              <label>
-                <input type="radio" name="allergies" value="2" checked (change)="checkedAllergies($event.target.value)">
-                <span>No</span>
-              </label>
-              <input *ngIf="inputAllergies" type="text" class="form-control" formControlName="allergies">
-            </div>
-          </div>
         </div>
         <div class="row">
           <div class="col-lg-6 form-group formMargin">
             <label class="col-sm-6 control-label margLabelForm">¿Padece alguna enfermedad cardiaca?</label>
             <div class="margLeft formValidators">
               <label>
-                <input type="radio" name="heartDisease" value="1" (change)="checkedHeartDisease($event.target.value)">
+                <input type="radio" class="radio-button" name="heartDisease" value="1" (change)="checkedHeartDisease($event.target.value)">
                 <span>Si</span>
               </label>
               <label>
-                <input type="radio" name="heartDisease" value="2" checked (change)="checkedHeartDisease($event.target.value)">
+                <input type="radio" class="radio-button" name="heartDisease" value="2" checked (change)="checkedHeartDisease($event.target.value)">
                 <span>No</span>
               </label>
               <input *ngIf="inputHeartDisease" type="text" class="form-control" formControlName="heartDisease">
@@ -66,11 +63,11 @@
             <label class="col-sm-6 control-label margLabelForm">¿Padece alguna enfermedad respiratoria?</label>
             <div class="margLeft formValidators">
               <label>
-                <input type="radio" name="respiratoryDisease" value="1" (change)="checkedRespiratoryDisease($event.target.value)">
+                <input type="radio" class="radio-button" name="respiratoryDisease" value="1" (change)="checkedRespiratoryDisease($event.target.value)">
                 <span>Si</span>
               </label>
               <label>
-                <input type="radio" name="respiratoryDisease" value="2" checked (change)="checkedRespiratoryDisease($event.target.value)">
+                <input type="radio" class="radio-button" name="respiratoryDisease" value="2" checked (change)="checkedRespiratoryDisease($event.target.value)">
                 <span>No</span>
               </label>
               <input *ngIf="inputRespiratoryDisease" type="text" class="form-control" formControlName="respiratoryDisease">
@@ -82,11 +79,11 @@
             <label class="col-sm-6 control-label margLabelForm">¿Toma algun medicamento de forma habitual?</label>
             <div class="margLeft formValidators">
               <label>
-                <input type="radio" name="habitualMedication" value="1" (change)="checkedHabitualMedication($event.target.value)">
+                <input type="radio" class="radio-button" name="habitualMedication" value="1" (change)="checkedHabitualMedication($event.target.value)">
                 <span>Si</span>
               </label>
               <label>
-                <input type="radio" name="habitualMedication" value="2" checked (change)="checkedHabitualMedication($event.target.value)">
+                <input type="radio" class="radio-button" name="habitualMedication" value="2" checked (change)="checkedHabitualMedication($event.target.value)">
                 <span>No</span>
               </label>
               <input *ngIf="inputHabitualMedication" type="text" class="form-control" formControlName="habitualMedication">
@@ -96,11 +93,11 @@
             <label class="col-sm-6 control-label margLabelForm">¿Tiene alguna intervención quirurgica?</label>
             <div class="margLeft formValidators">
               <label>
-                <input type="radio" name="surgicalIntervention" value="1" (change)="checkedSurgicalIntervention($event.target.value)">
+                <input type="radio" class="radio-button" name="surgicalIntervention" value="1" (change)="checkedSurgicalIntervention($event.target.value)">
                 <span>Si</span>
               </label>
               <label>
-                <input type="radio" name="surgicalIntervention" value="2" checked (change)="checkedSurgicalIntervention($event.target.value)">
+                <input type="radio" class="radio-button" name="surgicalIntervention" value="2" checked (change)="checkedSurgicalIntervention($event.target.value)">
                 <span>No</span>
               </label>
               <input *ngIf="inputSurgicalIntervention" type="text" class="form-control" formControlName="surgicalIntervention">
@@ -112,11 +109,11 @@
             <label class="col-sm-6 control-label margLabelForm">¿Tiene antecedentes de lesiones?</label>
             <div class="margLeft formValidators">
               <label>
-                <input type="radio" name="injury" value="1" (change)="checkedInjury($event.target.value)">
+                <input type="radio" class="radio-button" name="injury" value="1" (change)="checkedInjury($event.target.value)">
                 <span>Si</span>
               </label>
               <label>
-                <input type="radio" name="injury" value="2" checked (change)="checkedInjury($event.target.value)">
+                <input type="radio" class="radio-button" name="injury" value="2" checked (change)="checkedInjury($event.target.value)">
                 <span>No</span>
               </label>
             </div>
@@ -141,41 +138,41 @@
       <h3 class="mb text-center">Detalle de Lesiones</h3>
       <br />
       <br />
-        <div class="row">
-          <div class="col-lg-3 form-group">
-            <input class="col-sm-3" type="radio" name="limbs" value="1" checked (change)="checkedLimbs($event.target.value)">
-            <label class="col-sm-9 control-label float-left">Miembro superior:</label>
-            <div>
-              <select class="form-control" (change)="selectLimb($event.target.value)" [disabled]="!optionsLimbs">
-                <option value="" disabled>Seleccionar...</option>
-                <option *ngFor="let upperLimb of upperLimbs" value="{{upperLimb}}">{{upperLimb}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-lg-3 form-group">
-            <input class="col-sm-3" type="radio" name="limbs" value="2" (change)="checkedLimbs($event.target.value)">  
-            <label class="col-sm-9 control-label">Miembro inferior:</label>
-            <div>
-              <select class="form-control" (change)="selectLimb($event.target.value)" [disabled]="optionsLimbs">
-                <option value="" disabled>Seleccionar...</option>
-                <option *ngFor="let lowerLimb of lowerLimbs" value="{{lowerLimb}}">{{lowerLimb}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-lg-3 form-group">
-            <label>Estudios:</label>
-            <a onclick="document.getElementById('file-button').click();" class="btn btn-secondary form-control">
-              <!--<i class="fas fa-upload"></i>-->
-              Seleccionar
-            </a>
-            <input type="file" id="file-button" [disabled]="isSubmitingData" (change)="onFileSelection($event)" style="display: none;"
-                   multiple />.
-          </div>
-          <div class="col-lg-3 form-group">
-            <label  class="col-sm-6 control-label"></label>
-            <button type="button" class="btn btn-success form-control" (click)="addInjury()">Agregar Lesion</button>
+      <div class="row">
+        <div class="col-lg-3 form-group">
+          <input class="col-sm-3" type="radio" name="limbs" value="1" checked (change)="checkedLimbs($event.target.value)">
+          <label class="col-sm-9 control-label float-left">Miembro superior:</label>
+          <div>
+            <select class="form-control" (change)="selectLimb($event.target.value)" [disabled]="!optionsLimbs">
+              <option value="" disabled>Seleccionar...</option>
+              <option *ngFor="let upperLimb of upperLimbs" value="{{upperLimb}}">{{upperLimb}}</option>
+            </select>
           </div>
         </div>
+        <div class="col-lg-3 form-group">
+          <input class="col-sm-3" type="radio" name="limbs" value="2" (change)="checkedLimbs($event.target.value)">
+          <label class="col-sm-9 control-label">Miembro inferior:</label>
+          <div>
+            <select class="form-control" (change)="selectLimb($event.target.value)" [disabled]="optionsLimbs">
+              <option value="" disabled>Seleccionar...</option>
+              <option *ngFor="let lowerLimb of lowerLimbs" value="{{lowerLimb}}">{{lowerLimb}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3 form-group">
+          <label>Estudios:</label>
+          <a onclick="document.getElementById('file-button').click();" class="btn btn-secondary form-control">
+            <!--<i class="fas fa-upload"></i>-->
+            Seleccionar
+          </a>
+          <input type="file" id="file-button" [disabled]="isSubmitingData" (change)="onFileSelection($event)" style="display: none;"
+                 multiple />.
+        </div>
+        <div class="col-lg-3 form-group">
+          <label class="col-sm-6 control-label"></label>
+          <button type="button" class="btn btn-success form-control" (click)="addInjury()">Agregar Lesion</button>
+        </div>
+      </div>
     </div>
   </div>
   <!-- col-lg-12-->

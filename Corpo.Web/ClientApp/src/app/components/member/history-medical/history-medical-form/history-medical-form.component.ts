@@ -42,6 +42,11 @@ export class HistoryMedicalFormComponent implements OnInit {
   
   ngOnInit() {
   }
+  get f() {
+
+    return this.formCreate.controls;
+
+  }
 
   selectGender(event) {
     this.feminine = (event == 2)

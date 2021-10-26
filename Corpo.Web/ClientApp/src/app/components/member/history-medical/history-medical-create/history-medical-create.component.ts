@@ -12,4 +12,5 @@ export class HistoryMedicalCreateComponent implements OnInit {
   ngOnInit() {
   }
 
+  submit() {}
 }

@@ -3,100 +3,115 @@
     <div class="col-md-12">
       <hr>
       <section id="no-more-tables">
+        <table class="table table-bordered">
+          <tbody>
+            <tr class="header-td">
+              <td colspan="4">FECHA DE CAJA: 22/10/21 vie - CAJA ACTUAL: $10</td>
+            </tr>
+            <tr class="total" data-title="Cuotas">
+              <td class="initial-cash">CI: $100</td>
+              <td class="end-cash">Saldo final: $440700<button class="btn btn-primary m-2"><i class="fa fa-plus"></i></button></td>
+            </tr>
+            <tr>
+              <td data-title="Ingresos" class="text-center">TOTAL: $14.150</td>
+              <td data-title="Egresos" class="text-center">TOTAL: $14.250</td>
+            </tr>
+          </tbody>
+        </table>
         <table class="table table-bordered table-condensed cf">
           <thead class="cf">
+
             <tr class="scrollme">
-              <th colspan="4" class="text-center bg-danger text-center">FECHA DE CAJA: 22/10/21 vie - CAJA ACTUAL: $10</th>
-            </tr>
-            <tr class="scrollme">
-              <th colspan="2" class="text-center">CI: $100</th>
-              <th colspan="2" class="text-center">Saldo final: $440700<button class="btn btn-primary m-2"><i class="fa fa-plus"></i></button></th>
-            </tr>
-            <tr class="scrollme">
-              <th colspan="2" class="text-center">TOTAL: $14.150</th>
-              <th colspan="2" class="text-center">TOTAL: $14.250</th>
-            </tr>
-            <tr class="scrollme">
-              <th colspan="1" class="bg-info">
-                <button class="btn btn-info form-control bg-info">Cuotas</button>
+              <th colspan="1" class="bg-info text-center td-button" (click)="fee()">
+                Cuotas
               </th>
-              <th colspan="1" class="bg-success">
-                <button class="btn btn-success form-control bg-success">Ventas</button>
+              <th colspan="1" class="bg-success text-center td-button" (click)="sales()">
+                Ventas
               </th>
-              <th colspan="1" class="bg-danger">
-                <button class="btn btn-danger form-control bg-danger">Egresos</button>
+              <th colspan="1" class="bg-danger text-center td-button" (click)="outflow()">
+                Egresos
               </th>
-              <th colspan="1" class="bg-secondary bg-secondary">
-                <button class="btn btn-secondary form-control">Retiros</button>
+              <th colspan="1" class="bg-secondary text-center td-button" (click)="withdrawal()">
+                Retiros
               </th>
             </tr>
           </thead>
           <tbody>
             <tr class="scrollme">
-              <td data-title="Cuotas">
-                <table class="table table-bordered table-condensed cf">
+              <td data-title="Cuotas" (click)="fee()">
+                <table class="table table-bordered table-condensed cf table-td">
                   <tbody>
                     <tr>
-                      <td>1200</td>
+                      <td href="">1200</td>
                     </tr>
                     <tr>
-                      <td>1000</td>
+                      <td href="">1000</td>
                     </tr>
                     <tr>
-                      <td>2000</td>
+                      <td href="">2000</td>
                     </tr>
                     <tr>
-                      <td>1500</td>
+                      <td href="">1500</td>
+                    </tr>
+                    <tr class="total-responsive table-td-total">
+                      <td class="bg-info">Total: 5700</td>
                     </tr>
                   </tbody>
                 </table>
               </td>
               <td data-title="Ventas">
-                <table class="table table-bordered table-condensed cf">
+                <table class="table table-bordered table-condensed cf table-td">
                   <tbody>
                     <tr>
-                      <td>300</td>
+                      <td href="">300</td>
                     </tr>
                     <tr>
-                      <td>1200</td>
+                      <td href="">1200</td>
                     </tr>
                     <tr>
-                      <td>1000</td>
+                      <td href="">1000</td>
                     </tr>
                     <tr>
-                      <td>1500</td>
+                      <td href="">1500</td>
                     </tr>
                     <tr>
-                      <td>800</td>
+                      <td href="">800</td>
                     </tr>
                     <tr>
-                      <td>750</td>
+                      <td href="">750</td>
                     </tr>
                     <tr>
-                      <td>2000</td>
+                      <td href="">2000</td>
                     </tr>
                     <tr>
-                      <td>900</td>
+                      <td href="">900</td>
+                    </tr>
+                    <tr class="total-responsive table-td-total">
+                      <td class="bg-success">Total: 8450</td>
                     </tr>
                   </tbody>
                 </table>
               </td>
               <td data-title="Egresos">
-                <table class="table table-bordered table-condensed cf">
+                <table class="table table-bordered table-condensed cf table-td">
                   <tbody>
                     <tr>
-                      <td>2500</td>
+                      <td href="">2500</td>
                     </tr>
                     <tr>
-                      <td>3000</td>
+                      <td href="">3000</td>
                     </tr>
                     <tr>
-                      <td>1500</td>
+                      <td><a href="">1500</a></td>
+                    </tr>
+                    <tr class="total-responsive table-td-total">
+                      <td class="bg-danger">Total: 7000</td>
+                    </tr>
                   </tbody>
                 </table>
               </td>
               <td data-title="Retiros">
-                <table class="table table-bordered table-condensed cf">
+                <table class="table table-bordered table-condensed cf table-td">
                   <tbody>
                     <tr>
                       <td>2150</td>
@@ -110,17 +125,20 @@
                     <tr>
                       <td>2000</td>
                     </tr>
+                    <tr class="total-responsive table-td-total">
+                      <td class="bg-secondary">Total: 7150</td>
+                    </tr>
                   </tbody>
                 </table>
               </td>
             </tr>
           </tbody>
-          <tfoot class="cf">
+          <tfoot class="total-non-responsive table-td-total">
             <tr class="scrollme">
-              <td data-title="Cuotas">5700</td>
-              <td data-title="Ventas">8450</td>
-              <td data-title="Egresos">7000</td>
-              <td data-title="Retiros">7150</td>
+              <td>5700</td>
+              <td>8450</td>
+              <td>7000</td>
+              <td>7150</td>
             </tr>
           </tfoot>
         </table>

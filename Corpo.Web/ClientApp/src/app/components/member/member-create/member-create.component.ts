@@ -21,7 +21,7 @@ export class MemberCreateComponent implements OnInit {
     const newMember = this.formMember.createMember();
      await this.memberService.add(newMember)
        .then((resp) => {
-        this.router.navigate(["/history-medical-create"], { queryParams: { id: resp.result } });
+        this.router.navigate([""], { queryParams: { id: resp.result } });
       })
        .catch((response) => {
         if (response.status === 400) {

@@ -1,1 +1,441 @@
-<p>history-medical-detail works!</p>
+<!--<div class="row mt">
+  <div class="col-lg-12">
+    <div class="form-panel">
+      <h3 class="mb text-center">Ficha de aptitud médica</h3>
+      <br />
+      <hr />
+      <form class="form-horizontal style-form" [formGroup]="formCreate">
+        <div class="row">
+          <h3 class="mb text-center">CARDIO</h3>
+          <hr />
+          <div class="col-lg-12 form-group">
+            <div class="col-lg-12 form-group">
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Hipertensión:</label>
+                <div>
+                  <select class="form-control" formControlName="hypertension" (change)="selectHypertension($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Soplos:</label>
+                <div>
+                  <select class="form-control" formControlName="murmurs" (change)="selectMurmurs($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Intervención quirurgica:</label>
+                <div>
+                  <select class="form-control" formControlName="surgicalIntervention" (change)="selectSurgicalIntervention($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Marcapasos:</label>
+                <div>
+                  <select class="form-control" formControlName="pacemaker" (change)="selectPacemaker($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Infartos:</label>
+                <div>
+                  <select class="form-control" formControlName="heartAttacks" (change)="selectHeartAttacks($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Tratamientos:</label>
+                <div>
+                  <select class="form-control" formControlName="treatmentsCardio" (change)="selectTreatmentsCardio($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 form-group mb-3">
+              <label class="control-label">Otros:</label>
+              <input type="text" class="col-lg-12 form-control" />
+            </div>
+          </div>
+          <br />
+          <hr />
+        </div>
+        <div class="row">
+          <h3 class="mb text-center">RESPIRATORIO</h3>
+          <hr />
+          <div class="col-lg-12 form-group">
+            <div class="col-lg-12 form-group">
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Asma:</label>
+                <div>
+                  <select class="form-control" formControlName="asthma" (change)="selectAsthma($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Broncoespasmos:</label>
+                <div>
+                  <select class="form-control" formControlName="bronchospasm" (change)="selectBronchospasm($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Afección crónica:</label>
+                <div>
+                  <select class="form-control" formControlName="chronicCondition" (change)="selectChronicCondition($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Tratamientos:</label>
+                <div>
+                  <select class="form-control" formControlName="treatmentsRespiratory" (change)="selectTreatmentsRespiratory($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-12 form-group mb-3">
+                <label class="control-label">Otros:</label>
+                <input type="text" class="col-lg-12 form-control" />
+              </div>
+            </div>
+          </div>
+          <br />
+          <hr />
+        </div>
+        <div class="row">
+          <h3 class="mb text-center">LOCOMOTOR</h3>
+          <hr />
+          <div class="col-lg-12 form-group">
+            <div class="col-lg-12 form-group">
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Fracturas:</label>
+                <div>
+                  <select class="form-control" formControlName="fractures" (change)="selectFractures($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Luxaciones:</label>
+                <div>
+                  <select class="form-control" formControlName="dislocations" (change)="selectDislocations($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Esguinces:</label>
+                <div>
+                  <select class="form-control" formControlName="sprains" (change)="selectSprains($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Lesiones musculares:</label>
+                <div>
+                  <select class="form-control" formControlName="muscleInjuries" (change)="selectMuscleInjuries($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+            </div>
+            <br />
+            <br />
+            <div class="col-lg-12 form-group">
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Escoliosis:</label>
+                <div>
+                  <select class="form-control" formControlName="scoliosis" (change)="selectScoliosis($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Cifosis:</label>
+                <div>
+                  <select class="form-control" formControlName="kyphosis" (change)="selectKyphosis($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Hiperlordosis:</label>
+                <div>
+                  <select class="form-control" formControlName="hyperlordosis" (change)="selectHyperlordosis($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-3 form-group pull-left">
+                <label class="control-label">Tratamientos:</label>
+                <div>
+                  <select class="form-control" formControlName="treatmentsLocomotor" (change)="selecTreatmentsLocomotor($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 form-group mb-3">
+              <label class="control-label">Otros:</label>
+              <input type="text" class="col-lg-12 form-control" />
+            </div>
+          </div>
+          <br />
+          <hr />
+        </div>
+        <div class="row">
+          <h3 class="mb text-center">METABOLICO</h3>
+          <hr />
+          <div class="col-lg-12 form-group">
+            <div class="col-lg-12 form-group">
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Hipertiroidismo:</label>
+                <div>
+                  <select class="form-control" formControlName="hyperthyroidism" (change)="selectHyperthyroidism($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Hipotiroidismo:</label>
+                <div>
+                  <select class="form-control" formControlName="hypothyroidism" (change)="selectHypothyroidism($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Diabetes:</label>
+                <div>
+                  <select class="form-control" formControlName="diabetes" (change)="selectDiabetes($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Hipercolesterolemia:</label>
+                <div>
+                  <select class="form-control" formControlName="hypercholesterolemia" (change)="selectHypercholesterolemia($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+              <div class="col-lg-2 form-group pull-left">
+                <label class="control-label">Tratamiento:</label>
+                <div>
+                  <select class="form-control" formControlName="TreatmentMetabolic" (change)="selectTreatmentMetabolic($event.target.value)">
+                    <option value="0" disabled>Seleccionar...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+              </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div class="col-lg-12 form-group mb-3">
+              <label class="control-label">Otros:</label>
+              <input type="text" class="col-lg-12 form-control" />
+            </div>
+          </div>
+          <br />
+          <hr />
+        </div>-->
+<!--<div class="row">
+  <h3 class="mb text-center">OTROS</h3>
+  <hr />
+  <div class="col-lg-12 form-group">
+    <div class="col-lg-12 form-group">
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Fuma:</label>
+        <div>
+          <select class="form-control" formControlName="smokes" (change)="selectSmokes($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Bebe:</label>
+        <div>
+          <select class="form-control" formControlName="baby" (change)="selectBaby($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Dolores de cabeza:</label>
+        <div>
+          <select class="form-control" formControlName="headaches" (change)="selectHeadaches($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Obesidad:</label>
+        <div>
+          <select class="form-control" formControlName="obesity" (change)="selectObesity($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Ansiedad:</label>
+        <div>
+          <select class="form-control" formControlName="anxiety" (change)="selectAnxiety($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+      <br />
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Alergia a medicamentos:</label>
+        <div>
+          <select class="form-control" formControlName="drugAllergy" (change)="selectDrugAllergy($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Hospitalizado en último año:</label>
+        <div>
+          <select class="form-control" formControlName="hospitalizedInTheLastYear" (change)="selectHospitalizedInTheLastYear($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+      <div class="col-lg-3 form-group pull-left">
+        <label class="control-label">Embarazo:</label>
+        <div>
+          <select class="form-control" formControlName="pregnancy" (change)="selectPregnancy($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+          <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 form-group mb-3">
+      <label class="control-label">Fecha de parto:</label>
+      <input type="text" class="col-lg-12 form-control" />
+    </div>
+  </div>-->
+<!--<br />
+        <hr />
+      </div>
+    </form>
+  </div>
+</div>-->
+<!-- col-lg-12-->
+<!--</div>-->
+<section class="wrapper">
+  <app-history-medical-form></app-history-medical-form>
+</section>
+<div class="container">
+  <button class="btn btn-secondary pull-left " type="submit">Volver</button>
+  <button class="btn btn-success pull-right " type="submit" (click)="submit()">Guardar</button>
+</div>
+
+
+

@@ -41,6 +41,11 @@ namespace Corpo.Domain.Services
             };
         }
 
+        public Member GetById(int id)
+        {
+            return _memberRepository.GetById(id);
+        }
+
         public DomainResponse GetAll()
         {
             var respuesta = _memberRepository.GetAll();

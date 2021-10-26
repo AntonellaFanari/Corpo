@@ -28,6 +28,13 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpGet("getById")]
+        public ActionResult<Member> GetById(int id)
+        {
+            var user = _memberService.GetById(id);
+            return Ok(user);
+        }
+
         [HttpPost("Add")]
         public ActionResult Add([FromBody]Member member)
         {

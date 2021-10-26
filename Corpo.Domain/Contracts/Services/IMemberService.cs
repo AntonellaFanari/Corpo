@@ -10,6 +10,7 @@ namespace Corpo.Domain.Contracts.Services
     public interface IMemberService
     {
         DomainResponse GetAll();
+        Member GetById(int id);
         DomainResponse Add(Member member);
     }
 }

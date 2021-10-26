@@ -27,6 +27,7 @@ import { HistoryMedicalDetailComponent } from './components/member/history-medic
 import { HistoryMedicalFormComponent } from './components/member/history-medical/history-medical-form/history-medical-form.component';
 import { SettingsAccesComponent } from './components/settings/settings-acces/settings-acces.component';
 import { CashFormComponent } from './components/cash/cash-form/cash-form.component';
+import { MemberViewComponent } from './components/member/member-view/member-view.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CashFormComponent } from './components/cash/cash-form/cash-form.compone
     HistoryMedicalDetailComponent,
     HistoryMedicalFormComponent,
     SettingsAccesComponent,
-    CashFormComponent
+    CashFormComponent,
+    MemberViewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -71,8 +73,9 @@ import { CashFormComponent } from './components/cash/cash-form/cash-form.compone
       { path: 'member-list', component: MemberListComponent },
       { path: 'member-create', component: MemberCreateComponent },
       { path: 'member-detail', component: MemberDetailComponent },
+      { path: 'member-view', component: MemberViewComponent },
       { path: 'history-medical-create', component: HistoryMedicalCreateComponent },
-      { path: 'history-medical-detail', component: HistoryMedicalCreateComponent },
+      { path: 'history-medical-detail', component: HistoryMedicalDetailComponent },
       { path: 'accesos', component: SettingsAccesComponent },
       { path: 'caja', component: CashFormComponent }
     ])

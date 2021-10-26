@@ -12,4 +12,17 @@ export class CashFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  fee() {
+    alert("cuotas");
+  }
+  sales() {
+  }
+
+  outflow() {
+
+  }
+  withdrawal() {
+
+  }
+
 }

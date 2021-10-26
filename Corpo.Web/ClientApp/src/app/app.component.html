@@ -3,6 +3,10 @@
     <button class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed" [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <!-- logo -->
+    <a class="logo" href="#">
+      <img src="../assets/logo-corpo.png" alt="" class="logo">
+    </a>
     <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
 
       <ul class="navbar-nav">
@@ -55,21 +59,21 @@
           </a>
         </li>
         <!--<li class="nav-item" [routerLink]="['/users']" *ngIf="logueado" (click)="navbarCollapsed = !navbarCollapsed">
-    <i class="fas fa-users"></i>
-    Usuarios
-  </li>-->
+        <i class="fas fa-users"></i>
+        Usuarios
+      </li>-->
         <!--<li class="nav-item" [routerLink]="['/city']" *ngIf="logueado" (click)="navbarCollapsed = !navbarCollapsed">
-    <i class="fas fa-map-marker-alt"></i>
-    Localidades
-  </li>
-  <li class="nav-item" [routerLink]="['/property-create']" *ngIf="logueado" (click)="navbarCollapsed = !navbarCollapsed">
-    <i class="fas fa-home"></i>
-    Nueva Propiedad
-  </li>
-  <li class="nav-item" [routerLink]="['/settings']" *ngIf="logueado" (click)="navbarCollapsed = !navbarCollapsed">
-    <i class="fas fa-cog"></i>
-    Configuraciones
-  </li>-->
+        <i class="fas fa-map-marker-alt"></i>
+        Localidades
+      </li>
+      <li class="nav-item" [routerLink]="['/property-create']" *ngIf="logueado" (click)="navbarCollapsed = !navbarCollapsed">
+        <i class="fas fa-home"></i>
+        Nueva Propiedad
+      </li>
+      <li class="nav-item" [routerLink]="['/settings']" *ngIf="logueado" (click)="navbarCollapsed = !navbarCollapsed">
+        <i class="fas fa-cog"></i>
+        Configuraciones
+      </li>-->
       </ul>
     </div>
   </nav>

@@ -11,5 +11,24 @@ export class HistoryMedicalDetailComponent implements OnInit {
 
   ngOnInit() {
   }
+  submit() {}
+  //selectHypertension(event) { }
+  //selectMurmurs(evnet) { }
+  //selectSurgicalIntervention(event) { }
+  //selectPacemaker(event) { }
+  //selectHeartAttacks(event) { }
+  //selectTreatmentsCardio(event) { }
+  //selectAsthma(event) { }
+  //selectBronchospasm(event) { }
+  //selectChronicCondition(event) { }
+  //selectTreatmentsRespiratory(event) { }
+  //selectFractures(event) { }
+  //selectDislocations(event) { }
+  //selectSprains(event) { }
+  //selectMuscleInjuries(event) { }
+  //selectScoliosis(event) { }
+  //selectKyphosis(event) { }
+  //selectHyperlordosis(event) { }
+  //selecTreatmentsLocomotor(event) { }
 
 }

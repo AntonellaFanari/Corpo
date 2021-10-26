@@ -10,6 +10,7 @@ namespace Corpo.Domain.Contracts.Repositories
     public interface IMemberRepository
     {
         List<Member> GetAll();
+        Member GetById(int id);
         int Add(Member member);
     }
 }

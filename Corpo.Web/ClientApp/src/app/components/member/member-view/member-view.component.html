@@ -1,0 +1,41 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title mt-2">Información del Usuario</h4>
+      </div>
+      <hr>
+      <section id="no-more-tables">
+        <table class="table table-bordered table-condensed cf user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Apellido y Nombre</th>
+              <th class="numeric">Fecha de Nacimiento</th>
+              <th class="numeric">Domicilio</th>
+              <th class="numeric">Teléfono</th>
+              <th class="numeric">Email</th>
+              <th class="numeric">Número de Urgencia</th>
+              <th class="numeric">Contacto de Urgencia</th>
+              <th class="numeric">Instagram</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="scrollme">
+              <td class="numeric" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
+              <td data-title="F. de Nac."><span>{{member.birthDate | date: 'dd/MM/yyyy'}}</span></td>
+              <td data-title="Domicilio"><span>{{member.address}}</span></td>
+              <td data-title="Teléfono"><span>{{member.phone}}</span></td>
+              <td data-title="Email"><span>{{member.email}}</span></td>
+              <td data-title="Tel. Contacto"><span>{{member.emergencyPhone}}</span></td>
+              <td data-title="Tel. Urgencia"><span>{{member.emergencyContact}}</span></td>
+              <td data-title="Instagram"><span>{{member.instagram}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <button type="button" class="btn btn-secondary pull-right" routerLink="/member-list">Volver</button>
+        </div>
+      </section>
+    </div>
+  </div>
+  </section>

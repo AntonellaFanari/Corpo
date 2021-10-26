@@ -5,6 +5,17 @@ a {
   color: #0366d6;
 }
 
+.table-title {
+  display: initial;
+}
+
+img.logo {
+margin-left:10px;
+margin-right:10px;
+ height:50px;
+ width:75px;
+}
+
 code {
   color: #e01a76;
 }

@@ -1,21 +1,21 @@
 <div class="row mt">
   <div class="col-lg-12">
     <div class="form-panel">
-      <h3 class="mb text-center mt-5">Alta de Socios</h3>
+      <h3 class="mb text-center mt-5">Registro de Socios</h3>
       <br />
       <br />
       <form class="form-horizontal style-form" [formGroup]="formCreate">
         <div class="row">
           <div class="col-lg-6 form-group formMargin">
             <label class="col-sm-6 control-label margLabelForm">Apellido:</label>
-            <div class="margLeft">
+            <div class="margLeft formValidators">
               <input type="text" class="form-control" formControlName="lastName">
               <p *ngIf="following && f.lastName.errors?.required">*el campo es requerido</p>
             </div>
           </div>
           <div class="col-lg-6 form-group formMargin">
             <label class="col-sm-6 control-label margLabelForm">Nombre:</label>
-            <div class="margLeft">
+            <div class="margLeft formValidators">
               <input type="text" class="form-control" formControlName="name">
               <p *ngIf="following && f.name.errors?.required">*el campo es requerido</p>
             </div>
@@ -24,14 +24,14 @@
         <div class="row">
           <div class="col-lg-6 form-group formMargin">
             <label class="col-sm-6 control-label margLabelForm">Fecha de Nacimiento:</label>
-            <div class="margLeft">
-              <input type="date" class="form-control" formControlName="birthDate" [ngModel] ="dt | date:'yyyy-MM-dd'">
+            <div class="margLeft formValidators">
+              <input type="date" class="form-control" formControlName="birthDate" [ngModel]="dt | date:'yyyy-MM-dd'">
               <p *ngIf="following && f.birthDate.errors?.required">*el campo es requerido</p>
             </div>
           </div>
           <div class="col-lg-6 form-group formMargin">
             <label class="col-sm-6 control-label margLabelForm">Dirección:</label>
-            <div class="margLeft">
+            <div class="margLeft formValidators">
               <input type="text" class="form-control" formControlName="address">
               <p *ngIf="following && f.address.errors?.required">*el campo es requerido</p>
             </div>
@@ -39,49 +39,30 @@
         </div>
         <div class="row">
           <div class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">Celular:</label>
+            <label class="col-sm-6 control-label margLabelForm">Obra Social:</label>
             <div class="margLeft">
+              <input type="text" class="form-control" formControlName="socialSecurity">
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Celular:</label>
+            <div class="margLeft formValidators">
               <input type="text" class="form-control" formControlName="phone">
               <p *ngIf="following && f.phone.errors?.required">*el campo es requerido</p>
-            </div>
-          </div>
-          <div class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">Email:</label>
-            <div class="margLeft">
-              <input type="text" class="form-control" formControlName="email">
-              <p *ngIf="following && f.email.errors?.required">*el campo es requerido</p>
-              <p *ngIf="following && f.email.errors?.email">*ingresar email valido</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">Contraseña:</label>
-            <div class="margLeft">
-              <input type="text" class="form-control" formControlName="password">
-              <p *ngIf="following && f.password.errors?.required">*el campo es requerido</p>
-              <p *ngIf="following && f.password.errors?.pattern">*Debe contener una mayúscula, ser alfanúmerica y tener entre 8 y 15 caracteres</p>
-            </div>
-          </div>
-          <div class="col-lg-6 form-group formMargin">
-            <label class="col-sm-6 control-label margLabelForm">Repetir Contraseña:</label>
-            <div class="margLeft">
-              <input type="text" class="form-control" formControlName="repeatPassword">
-              <p *ngIf="following && f.repeatPassword.errors?.mustMatch">*las contraseñas no coinciden</p>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-6 form-group formMargin">
             <label class="col-sm-6 control-label margLabelForm">Número de Urgencia:</label>
-            <div class="margLeft">
+            <div class="margLeft formValidators">
               <input type="text" class="form-control" formControlName="emergencyPhone">
               <p *ngIf="following && f.emergencyPhone.errors?.required">*el campo es requerido</p>
             </div>
           </div>
           <div class="col-lg-6 form-group formMargin">
             <label class="col-sm-6 control-label margLabelForm">Contacto de Urgencia:</label>
-            <div class="margLeft">
+            <div class="margLeft formValidators">
               <input type="text" class="form-control" formControlName="emergencyContact">
               <p *ngIf="following && f.emergencyContact.errors?.required">*el campo es requerido</p>
             </div>
@@ -92,6 +73,50 @@
             <label class="col-sm-6 control-label margLabelForm">Instagram:</label>
             <div class="margLeft">
               <input type="text" class="form-control" formControlName="instagram">
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Facebook:</label>
+            <div class="margLeft">
+              <input type="text" class="form-control" formControlName="facebook">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Plan:</label>
+            <div class="margLeft formValidators">
+              <select class="form-control" formControlName="planId"(change)="selectPlan($event.target.value)">
+                <option value="" disabled>Seleccionar</option>
+                <option value=10>Pesonalizado-20</option>
+                <option value=11>Grupal-Libre</option>
+              </select>
+              <p *ngIf="following && f.planId.errors?.required">*el campo es requerido</p>
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Email:</label>
+            <div class="margLeft formValidators">
+              <input type="text" class="form-control" formControlName="email">
+              <p *ngIf="following && f.email.errors?.required">*el campo es requerido</p>
+              <p *ngIf="following && f.email.errors?.email">*ingresar email valido</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Contraseña:</label>
+            <div class="margLeft formValidators">
+              <input type="text" class="form-control" formControlName="password">
+              <p *ngIf="following && f.password.errors?.required">*el campo es requerido</p>
+              <p *ngIf="following && f.password.errors?.pattern">*Debe contener una mayúscula, ser alfanúmerica y tener entre 8 y 15 caracteres</p>
+            </div>
+          </div>
+          <div class="col-lg-6 form-group formMargin">
+            <label class="col-sm-6 control-label margLabelForm">Repetir Contraseña:</label>
+            <div class="margLeft formValidators">
+              <input type="text" class="form-control" formControlName="repeatPassword">
+              <p *ngIf="following && f.repeatPassword.errors?.mustMatch">*las contraseñas no coinciden</p>
             </div>
           </div>
         </div>

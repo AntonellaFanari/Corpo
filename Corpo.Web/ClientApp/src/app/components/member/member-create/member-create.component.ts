@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Account } from '../../../domain/account';
+import { AccountService } from '../../../services/account.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 import { MemberFormComponent } from '../member-form/member-form.component';
@@ -19,20 +21,21 @@ export class MemberCreateComponent implements OnInit {
 
   public async submit(): Promise<any> {
     const newMember = this.formMember.createMember();
-     await this.memberService.add(newMember)
-       .then((resp) => {
-        this.router.navigate([""], { queryParams: { id: resp.result } });
-      })
-       .catch((response) => {
-        if (response.status === 400) {
-          this.customAlertService.displayAlert("Gestión de Socios", response.error.errores);
-        }
-        if (response.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Socios", ["No se pudo guardar el socio."]);
-        }
-
-      });
-
+    if (newMember !== null) {
+      await this.memberService.add(newMember)
+        .then((resp) => {
+          let id = resp.result;
+          this.router.navigate([""], { queryParams: { id: id } });
+        })
+        .catch((response) => {
+          if (response.status === 400) {
+            this.customAlertService.displayAlert("Gestión de Socios", response.error.errores);
+          }
+          if (response.status === 500) {
+            this.customAlertService.displayAlert("Gestión de Socios", ["No se pudo guardar el socio."]);
+          }
+        });
+    }
   }
 
 }

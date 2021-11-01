@@ -21,3 +21,13 @@ td.text-ajust {
     font-size: 13px;
   }
 }
+
+.table-thead {
+  text-align: center;
+  background-color: chartreuse;
+}
+.table-tbody
+{
+  background-color:transparent
+}
+

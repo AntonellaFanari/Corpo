@@ -7,28 +7,32 @@
       <hr>
       <section id="no-more-tables">
         <table class="table table-bordered table-condensed cf user-table">
-          <thead class="cf">
+          <thead class="cf table-thead">
             <tr>
               <th class="numeric">Apellido y Nombre</th>
               <th class="numeric">Fecha de Nacimiento</th>
               <th class="numeric">Domicilio</th>
               <th class="numeric">Teléfono</th>
+              <th class="numeric">Obra Social</th>
               <th class="numeric">Email</th>
               <th class="numeric">Número de Urgencia</th>
               <th class="numeric">Contacto de Urgencia</th>
               <th class="numeric">Instagram</th>
+              <th class="numeric">Facebook</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="scrollme">
+            <tr class="scrollme" *ngIf="member">
               <td class="numeric" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
               <td data-title="F. de Nac."><span>{{member.birthDate | date: 'dd/MM/yyyy'}}</span></td>
               <td data-title="Domicilio"><span>{{member.address}}</span></td>
               <td data-title="Teléfono"><span>{{member.phone}}</span></td>
+              <td data-title="Obra Social"><span>{{member.socialSecurity}}</span></td>
               <td data-title="Email"><span>{{member.email}}</span></td>
               <td data-title="Tel. Contacto"><span>{{member.emergencyPhone}}</span></td>
               <td data-title="Tel. Urgencia"><span>{{member.emergencyContact}}</span></td>
               <td data-title="Instagram"><span>{{member.instagram}}</span></td>
+              <td data-title="Facebook"><span>{{member.facebook}}</span></td>
             </tr>
           </tbody>
         </table>

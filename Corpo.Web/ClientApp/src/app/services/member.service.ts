@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Member } from '../domain/member';
+import { MemberView } from '../domain/member-view';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,15 +20,11 @@ export class MemberService {
     this.url = url;
   }
 
-  //public getAll() {
-  //  return this.http.get<Member[]>(this.url + 'api/member/getAll');
-  //}
-
   public getAll() {
-    return this.http.get<any>(this.url + 'api/member/getAll');
+    return this.http.get<MemberView[]>(this.url + 'api/member/getAll');
   }
   public getById(id: number) {
-    return this.http.get<Member>(this.url + 'api/member/getById?id=' + id);
+    return this.http.get<MemberView>(this.url + 'api/member/getById?id=' + id);
   }
   public add(newMember: Member): Promise<any> {
     console.log(newMember);

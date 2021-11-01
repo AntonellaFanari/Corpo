@@ -1,5 +1,4 @@
-export class Member {
-  id: number;
+export class MemberView {
   lastName: string;
   name: string;
   birthDate: string;
@@ -11,6 +10,5 @@ export class Member {
   instagram: string;
   facebook: string;
   planId: number;
-  email: string;
-  password: string
+  email: string
 }

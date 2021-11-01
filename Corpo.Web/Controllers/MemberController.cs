@@ -1,9 +1,12 @@
 ﻿using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
+using Corpo.Domain.Views;
 using Corpo.Web.Controllers.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,21 +25,23 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult GetAll()
+        public ActionResult<MemberViewModel> GetAll()
         {
             var response = _memberService.GetAll();
-            return this.ToActionResult(response);
+            var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
+            var listMembers = ViewModels.ViewModels.FromDomainMember(result);
+            return Ok(listMembers);
         }
 
         [HttpGet("getById")]
-        public ActionResult<Member> GetById(int id)
+        public ActionResult<MemberViewModel> GetById(int id)
         {
-            var user = _memberService.GetById(id);
-            return Ok(user);
+            var member = ViewModels.ViewModels.FromDomainMember(_memberService.GetById(id));
+            return Ok(member);
         }
 
         [HttpPost("Add")]
-        public ActionResult Add([FromBody]Member member)
+        public ActionResult Add([FromBody]MemberDto member)
         {
             var response = _memberService.Add(member);
             return this.ToActionResult(response);

@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-success pull-right" routerLink="/user-create">Agregar</button>
       </div>
       <hr>
-      <section id="no-more-tables">
+      <section *ngIf="users.length>0 ; else elseBlock" id="no-more-tables">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -31,9 +31,10 @@
                 </span>
               </td>
             </tr>
-          </tbody>  
+          </tbody>
         </table>
       </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
     </div>
     <!-- /content-panel -->
   </div>

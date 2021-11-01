@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { RoleAcces } from '../domain/role-acces';
+import { RoleAccess } from '../domain/role-access';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,12 +19,12 @@ export class SettingsService {
     this.url = url;
   }
 
-  public getRoleAcces() {
-    return this.http.get<any>(this.url + 'api/settings/getRoleAcces');
+  public getRoleAccess() {
+    return this.http.get<any>(this.url + 'api/settings/getRoleAccess');
   }
 
-  public saveAcces(acces: RoleAcces[]): Promise<void> {
-    console.log(acces);
-    return this.http.post<void>(this.url + 'api/settings/saveAcces', acces, httpOptions).toPromise();
+  public saveAccess(access: RoleAccess[]): Promise<void> {
+    console.log(access);
+    return this.http.post<void>(this.url + 'api/settings/saveAccess', access, httpOptions).toPromise();
   }
 }

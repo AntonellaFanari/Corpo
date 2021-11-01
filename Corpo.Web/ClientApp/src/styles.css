@@ -5,16 +5,33 @@ a {
   color: #0366d6;
 }
 
+.formValidators>p{
+    font-size:13px;
+    color:red;
+}
+
 .table-title {
   display: initial;
 }
 
 img.logo {
-margin-left:10px;
-margin-right:10px;
- height:50px;
- width:75px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 50px;
+  width: 75px;
 }
+
+.btn-login {
+  text-align: center;
+  color: white;
+  float: right;
+  margin-right: 10px;
+}
+
+/*.btn-login-i {
+  height: 40px;
+  width: 40px;
+}*/
 
 code {
   color: #e01a76;

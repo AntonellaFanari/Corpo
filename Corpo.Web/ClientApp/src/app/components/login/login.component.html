@@ -1,0 +1,61 @@
+<section class="wrapper">
+  <div id="login-page">
+    <form class="container login-container" [formGroup]="formLogin">
+      <div class="form-login">
+        <h2 class="form-login-heading">Iniciar Sesión</h2>
+        <div class="login-wrap">
+          <input type="text" class="form-control" placeholder="Email" autofocus formControlName="email">
+          <p class="formValidators" *ngIf="sent && f.email.errors?.required">*Ingrese el email.</p>
+          <br>
+          <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+          <p class="formValidators" *ngIf="sent && f.password.errors?.required">*Ingrese la contraseña.</p>
+          <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Recordar
+            <span>
+              <a class="login-passw-modal" data-toggle="modal" href="#myModal">Olvidaste tu contraseña?</a>
+            </span>
+          </label>
+          <button class="btn btn-success btn-sign-in" type="submit" (click)="logIn()">INICIAR SESIÓN</button>
+          <hr>
+          <div class="registration">
+            ¿Aún no tienes una cuenta?<br />
+            <a class="" [routerLink]="['/member-create']">
+              Registrarse
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<!-- modal -->
+<div class="container">
+  <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Olvidaste tu contraseña?</h4>
+          <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+        </div>
+
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <p>Ingresa tu dirección de correo electrónico a continuación para restablecer tu contraseña.</p>
+          <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+        </div>
+
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success">Enviar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -21,17 +21,17 @@ namespace Corpo.Web.Controllers
             _settingsService = settingsService;
         }
 
-        [HttpGet("getRoleAcces")]
-        public ActionResult GetRoleAcces()
+        [HttpGet("getRoleAccess")]
+        public ActionResult GetRoleAccess()
         {
-            var response = _settingsService.GetRoleAcces();
+            var response = _settingsService.GetRoleAccess();
             return this.ToActionResult(response);
         }
 
-        [HttpPost("saveAcces")]
-        public ActionResult SaveAcces(List<RoleAcces> acces)
+        [HttpPost("saveAccess")]
+        public ActionResult SaveAccess(List<RoleAccess> access)
         {
-            var response = _settingsService.SaveAcces(acces);
+            var response = _settingsService.SaveAccess(access);
             return Ok(response);
         }
     }

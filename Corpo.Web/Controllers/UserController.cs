@@ -1,5 +1,7 @@
 ﻿using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
+using Corpo.Domain.Views;
 using Corpo.Web.Controllers.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -24,21 +26,21 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult<User> GetAll()
+        public ActionResult<UserViewModel> GetAll()
         {
-            var listUsers = ViewModels.UserViewModel.FromDomain(_userService.GetAll());
+            var listUsers = ViewModels.ViewModels.FromDomainUser(_userService.GetAll());
             return Ok(listUsers);
         }
 
         [HttpGet("getById")]
-        public ActionResult<User> GetById(int id)
+        public ActionResult<UserViewModel> GetById(int id)
         {
-            var user = _userService.GetById(id);
+            var user = ViewModels.ViewModels.FromDomainUser(_userService.GetById(id));
             return Ok(user);
         }
 
         [HttpPost("[action]")]
-        public ActionResult Add([FromBody]User user)
+        public ActionResult Add([FromBody]UserDto user)
         {
            var response = _userService.Add(user);
             return this.ToActionResult(response);

@@ -21,20 +21,22 @@ export class UserCreateComponent implements OnInit {
 
   public async submit(): Promise<void> {
     const newUser = this.formUser.createUser();
-    await this.userService.add(newUser)
-      .then(() => {
-        this.router.navigate(["/user-list"])
-      })
-      .catch((response) => {
-        if (response.status === 400) {
-          this.customAlertService.displayAlert("Gestión de Usuarios", response.error.errores);
-        }
-        if (response.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Usuarios", ["No se pudo guardar el usuario."]);
-        }
+    if (newUser !== null) {
+      await this.userService.add(newUser)
+        .then(() => {
+          this.router.navigate(["/user-list"])
+        })
+        .catch((response) => {
+          console.log(response);
+          if (response.status === 400) {
+            this.customAlertService.displayAlert("Gestión de Usuarios", response.error.errores);
+          }
+          if (response.status === 500) {
+            this.customAlertService.displayAlert("Gestión de Usuarios", ["No se pudo guardar el usuario."]);
+          }
 
-      });
-
+        });
+    }
   }
 
 }

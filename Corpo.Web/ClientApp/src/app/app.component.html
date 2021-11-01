@@ -1,6 +1,6 @@
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-dark">
-    <button class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed" [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button *ngIf="logueado" class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed" [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- logo -->
@@ -10,25 +10,25 @@
     <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
 
       <ul class="navbar-nav">
-        <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+        <li *access="'caja'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a [routerLink]="['/caja']">
             <i class="fa fa-suitcase"></i>
             Caja
           </a>
         </li>
-        <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+        <li *access="'usuarios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a [routerLink]="['/user-list']">
             <i class="fa fa-user"></i>
             Usuarios
           </a>
         </li>
-        <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+        <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a [routerLink]="['/member-list']">
             <i class="fa fa-user"></i>
             Socios
           </a>
         </li>
-        <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+        <li *access="'deudas'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a href="#">
             <i class="fa fa-usd"></i>
             Deudas
@@ -40,19 +40,19 @@
             Comunicación
           </a>
         </li>
-        <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+        <li *access="'informes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a href="#">
             <i class="fa fa-bar-chart-o"></i>
             Informes
           </a>
         </li>
-        <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+        <li *access="'abm'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a href="#">
             <i class="fas fa-search"></i>
             ABM
           </a>
         </li>
-        <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+        <li *access="'ajustes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a [routerLink]="['/accesos']">
             <i class="fa fa-gear"></i>
             Ajustes
@@ -75,6 +75,23 @@
         Configuraciones
       </li>-->
       </ul>
+    </div>
+    <a *ngIf="!logueado" class="btn-login" [routerLink]="['/login']"><i class="fa fa-user-circle"></i></a>
+    <div *ngIf="logueado" class="showback">
+      <h4><i class="fa fa-angle-right"></i> Dropdown Buttons</h4>
+      <!-- Single button -->
+      <div class="btn-group">
+        <button type="button" class="btn btn-success dropdown-toggle btn-login" data-toggle="dropdown">
+          Mi cuenta <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a (click)="signOff()">Cerrar Sesión</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 

@@ -1,0 +1,24 @@
+<div class="modal-content">
+  <div class="modal-content">
+    <header class="modal-header">Cuotas</header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col card">
+            <div class="row card-body">
+              <div class="col-12">
+                <div class="card-body row">
+                  <label class="form-label">Socio</label>
+                  <input type="text" name="member" list="members" placeholder="Buscar Socio">
+                    <select class="form-control col-12" id="members">
+                      <option *ngFor="let member of members" class="form-control col-12" value={{member.lastName}}{{member.name}}>{{member.lastName}}{{member.name}}</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

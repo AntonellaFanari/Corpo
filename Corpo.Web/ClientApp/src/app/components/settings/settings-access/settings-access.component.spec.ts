@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettingsAccesComponent } from './settings-acces.component';
+import { SettingsAccessComponent } from './settings-access.component';
 
 describe('SettingsAccesComponent', () => {
-  let component: SettingsAccesComponent;
-  let fixture: ComponentFixture<SettingsAccesComponent>;
+  let component: SettingsAccessComponent;
+  let fixture: ComponentFixture<SettingsAccessComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsAccesComponent ]
+      declarations: [ SettingsAccessComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SettingsAccesComponent);
+    fixture = TestBed.createComponent(SettingsAccessComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

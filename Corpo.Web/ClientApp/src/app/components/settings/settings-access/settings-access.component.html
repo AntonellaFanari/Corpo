@@ -19,21 +19,21 @@
             <tr>
               <td class="td-title">Accesos</td>
               <td data-title="Administrador">
-                <div *ngFor="let checkToAcces of checkboxToAccesAdmin">
-                  <input class="checkbox-access" type="checkbox" [checked]="checkToAcces.checked" (change)="checkToAcces.checked=!checkToAcces.checked">
-                  <span>{{checkToAcces.acces}}</span>
+                <div *ngFor="let checkToAccess of checkboxToAccessAdmin">
+                  <input class="checkbox-access" type="checkbox" [checked]="checkToAccess.checked" (change)="checkToAccess.checked=!checkToAccess.checked">
+                  <span>{{checkToAccess.access}}</span>
                 </div>
               </td>
               <td data-title="Profesor/a">
-                <div *ngFor="let checkToAcces of checkboxToAccesCoach">
-                  <input class="checkbox-access" type="checkbox" [checked]="checkToAcces.checked" (change)="checkToAcces.checked=!checkToAcces.checked">
-                  <span>{{checkToAcces.acces}}</span>
+                <div *ngFor="let checkToAccess of checkboxToAccessCoach">
+                  <input class="checkbox-access" type="checkbox" [checked]="checkToAccess.checked" (change)="checkToAccess.checked=!checkToAccess.checked">
+                  <span>{{checkToAccess.access}}</span>
                 </div>
               </td>
               <td data-title="Marketing">
-                <div *ngFor="let checkToAcces of checkboxToAccesMarketing">
-                  <input class="checkbox-access" type="checkbox" [checked]="checkToAcces.checked" (change)="checkToAcces.checked=!checkToAcces.checked">
-                  <span>{{checkToAcces.acces}}</span>
+                <div *ngFor="let checkToAccess of checkboxToAccessMarketing">
+                  <input class="checkbox-access" type="checkbox" [checked]="checkToAccess.checked" (change)="checkToAccess.checked=!checkToAccess.checked">
+                  <span>{{checkToAccess.access}}</span>
                 </div>
               </td>
             </tr>

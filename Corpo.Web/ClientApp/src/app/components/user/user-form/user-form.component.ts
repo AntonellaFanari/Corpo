@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Role } from '../../../domain/role';
 import { User } from '../../../domain/user';
+import { UserView } from '../../../domain/user-view';
 import { UserService } from '../../../services/user.service';
 import { Password } from '../../validations/password';
 
@@ -15,7 +16,7 @@ export class UserFormComponent implements OnInit {
   formCreate: FormGroup;
   sendForm: boolean = false;
   dt: Date = new Date();
-  user: User;
+  user: UserView;
   modeCreate: boolean = true;
   unamePattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,15}$";
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
@@ -25,7 +26,7 @@ export class UserFormComponent implements OnInit {
       birthDate: [this.dt, Validators.required],
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.pattern(this.unamePattern)],
+      password: ['', [Validators.required, Validators.pattern(this.unamePattern)]],
       repeatPassword: '',
       address: ['', Validators.required],
       roleId: ['', Validators.required]
@@ -59,6 +60,8 @@ export class UserFormComponent implements OnInit {
       newUser.email = this.formCreate.value.email;
       newUser.password = this.formCreate.value.password;
       return newUser;
+    } else {
+      return null;
     }
   }
 
@@ -82,8 +85,6 @@ export class UserFormComponent implements OnInit {
         birthDate: new Date(this.user.birthDate),
         phone: this.user.phone,
         email: this.user.email,
-        password: this.user.password,
-        repeatPassword: this.user.password,
         address: this.user.address,
         roleId: this.user.roleId,
       })

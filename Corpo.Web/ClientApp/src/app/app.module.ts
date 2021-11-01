@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -14,20 +14,23 @@ import { UserCreateComponent } from './components/user/user-create/user-create.c
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
-import { UserLoginComponent } from './components/user/user-login/user-login.component';
 import { MemberCreateComponent } from './components/member/member-create/member-create.component';
 import { MemberDetailComponent } from './components/member/member-detail/member-detail.component';
 import { MemberFormComponent } from './components/member/member-form/member-form.component';
 import { MemberListComponent } from './components/member/member-list/member-list.component';
-import { MemberLoginComponent } from './components/member/member-login/member-login.component';
 import { UserViewComponent } from './components/user/user-view/user-view.component';
 import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
 import { HistoryMedicalCreateComponent } from './components/member/history-medical/history-medical-create/history-medical-create.component';
 import { HistoryMedicalDetailComponent } from './components/member/history-medical/history-medical-detail/history-medical-detail.component';
 import { HistoryMedicalFormComponent } from './components/member/history-medical/history-medical-form/history-medical-form.component';
-import { SettingsAccesComponent } from './components/settings/settings-acces/settings-acces.component';
 import { CashFormComponent } from './components/cash/cash-form/cash-form.component';
 import { MemberViewComponent } from './components/member/member-view/member-view.component';
+import { LoginComponent } from './components/login/login.component';
+import { SettingsAccessComponent } from './components/settings/settings-access/settings-access.component';
+import { AuthInterceptor } from './services/authentication-interceptor';
+import { AccessDirectiveDirective } from './directives/access-directive.directive';
+import { AuthGuard } from './guards/auth.guard.service';
+import { ChargeFeeComponent } from './components/cash/charge-fee/charge-fee.component';
 
 @NgModule({
   declarations: [
@@ -40,20 +43,21 @@ import { MemberViewComponent } from './components/member/member-view/member-view
     UserDetailComponent,
     UserFormComponent,
     UserListComponent,
-    UserLoginComponent,
     MemberCreateComponent,
     MemberDetailComponent,
     MemberFormComponent,
     MemberListComponent,
-    MemberLoginComponent,
     UserViewComponent,
     CustomAlertComponent,
     HistoryMedicalCreateComponent,
     HistoryMedicalDetailComponent,
     HistoryMedicalFormComponent,
-    SettingsAccesComponent,
+    SettingsAccessComponent,
     CashFormComponent,
-    MemberViewComponent
+    MemberViewComponent,
+    LoginComponent,
+    AccessDirectiveDirective,
+    ChargeFeeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -76,14 +80,22 @@ import { MemberViewComponent } from './components/member/member-view/member-view
       { path: 'member-view', component: MemberViewComponent },
       { path: 'history-medical-create', component: HistoryMedicalCreateComponent },
       { path: 'history-medical-detail', component: HistoryMedicalDetailComponent },
-      { path: 'accesos', component: SettingsAccesComponent },
-      { path: 'caja', component: CashFormComponent }
+      { path: 'accesos', component: SettingsAccessComponent },
+      { path: 'caja', component: CashFormComponent, canActivate: [AuthGuard] },
+      { path: 'login', component: LoginComponent },
+      { path: 'charge-fee', component: ChargeFeeComponent }
     ])
   ],
   entryComponents: [
     CustomAlertComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

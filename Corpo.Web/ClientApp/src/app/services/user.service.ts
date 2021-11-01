@@ -30,7 +30,7 @@ export class UserService {
   }
 
   public getById(id: number) {
-    return this.http.get<User>(this.url + 'api/user/getById?id=' + id);
+    return this.http.get<UserView>(this.url + 'api/user/getById?id=' + id);
   }
 
   public add(newUser: User): Promise<void> {

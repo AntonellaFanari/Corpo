@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="scrollme">
+            <tr class="scrollme" *ngIf="user">
               <td class="numeric" data-title="Nombre"><span>{{user.lastName}} {{user.name}}</span></td>
               <td data-title="Tipo"><span>{{role}}</span></td>
               <td data-title="F. de Nac."><span>{{user.birthDate  | date: 'dd/MM/yyyy'}}</span></td>

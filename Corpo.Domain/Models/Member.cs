@@ -14,11 +14,14 @@ namespace Corpo.Domain.Models
         public DateTime BirthDate { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string SocialSecurity { get; set; }
         public string EmergencyPhone { get; set; }
         public string EmergencyContact { get; set; }
+        public virtual Plan Plan { get; set; }
+        public int PlanId { get; set; }
         public string Instagram { get; set; }
-       
+        public string Facebook { get; set; }
+        public virtual Account Account { get; set; }
+        public int AccountId { get; set; }
     }
 }

@@ -18,9 +18,9 @@ namespace Corpo.Domain.Services
             _settingsRepository = settingsRepository;
         }
 
-        public DomainResponse GetRoleAcces()
+        public DomainResponse GetRoleAccess()
         {
-            var list = _settingsRepository.GetRoleAcces();
+            var list = _settingsRepository.GetRoleAccess();
             return new DomainResponse
             {
                 Success = true,
@@ -28,9 +28,9 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse SaveAcces(List<RoleAcces> acces)
+        public DomainResponse SaveAccess(List<RoleAccess> access)
         {
-            _settingsRepository.SaveAcces(acces);
+            _settingsRepository.SaveAccess(access);
             return new DomainResponse { Success = true };
         }
     }

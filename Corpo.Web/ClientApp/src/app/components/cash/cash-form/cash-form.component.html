@@ -22,16 +22,16 @@
           <thead class="cf">
 
             <tr class="scrollme">
-              <th colspan="1" class="bg-info text-center td-button" [routerLink]="['/charge-fee']">
+              <th colspan="1" class="bg-info text-center td-button" [routerLink]="['/cuota']">
                 Cuotas
               </th>
-              <th colspan="1" class="bg-success text-center td-button" (click)="sales()">
+              <th colspan="1" class="bg-success text-center td-button" [routerLink]="['/venta']">
                 Ventas
               </th>
-              <th colspan="1" class="bg-danger text-center td-button" (click)="outflow()">
+              <th colspan="1" class="bg-danger text-center td-button" [routerLink]="['/egreso']">
                 Egresos
               </th>
-              <th colspan="1" class="bg-secondary text-center td-button" (click)="withdrawal()">
+              <th colspan="1" class="bg-secondary text-center td-button" [routerLink]="['/retiro']">
                 Retiros
               </th>
             </tr>

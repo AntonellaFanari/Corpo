@@ -11,9 +11,12 @@ namespace Corpo.Domain.Contracts.Repositories
     public interface IUserRepository
     {
         List<Role> GetRoles();
+        List<RoleAccess> GetRoleAccess(int roleId);
         List<User> GetAll();
         void Add(User user);
         User GetById(int id);
+        User GetByIdAccount(int id);
+        User GetByEmail(string email);
         void Update(int id, User user);
         void Delete(int id);
     }

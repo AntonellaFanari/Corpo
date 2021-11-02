@@ -11,11 +11,12 @@ export class AppComponent {
   title = 'app';
   navbarCollapsed = true;
   logueado: boolean = false;
-
+  user = {};
   constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit() {
     this.logueado = this.accountService.isAuthenticated();
+    this.user = this.accountService.getLoggedUser();
   }
 
   signOff() {

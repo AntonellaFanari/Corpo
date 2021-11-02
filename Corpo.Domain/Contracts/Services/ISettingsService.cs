@@ -9,7 +9,7 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface ISettingsService
     {
-        DomainResponse SaveAcces(List<RoleAcces> acces);
-        DomainResponse GetRoleAcces();
+        DomainResponse SaveAccess(List<RoleAccess> access);
+        DomainResponse GetRoleAccess();
     }
 }

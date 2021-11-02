@@ -17,6 +17,7 @@ namespace Corpo.Data.Dependencies
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IMemberRepository, MemberRepository>();
             services.AddTransient<ISettingsRepository, SettingsRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

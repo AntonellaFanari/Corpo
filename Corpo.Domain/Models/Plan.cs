@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Corpo.Domain.Models
 {
-    public class RoleAcces
+    public class Plan
     {
         public int Id { get; set; }
-        public virtual Role Role { get; set; }
-        public int RoleId { get; set; }
-        public string Acces { get; set; }
+        public string Name { get; set; }
+        public int Credits { get; set; }
+        public decimal Price { get; set; }
     }
 }

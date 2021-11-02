@@ -18,18 +18,18 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
-        public List<RoleAcces> GetRoleAcces()
+        public List<RoleAccess> GetRoleAccess()
         {
-            return _context.RoleAcces.Include(x=>x.Role).ToList();
+            return _context.RoleAccess.Include(x=>x.Role).ToList();
         }
 
-        public void SaveAcces(List<RoleAcces> acces)
+        public void SaveAccess(List<RoleAccess> access)
         {
-            _context.RoleAcces.RemoveRange(_context.RoleAcces.ToList());
+            _context.RoleAccess.RemoveRange(_context.RoleAccess.ToList());
             _context.SaveChanges();
-            foreach (var ac in acces)
+            foreach (var ac in access)
             {
-                _context.RoleAcces.Add(ac);
+                _context.RoleAccess.Add(ac);
                 _context.SaveChanges();
             }
             

@@ -15,10 +15,7 @@ namespace Corpo.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
-            builder.Entity<Member>()
+            builder.Entity<Account>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
         }
@@ -28,6 +25,8 @@ namespace Corpo.Data
         public DbSet<HistoryMedical> HistoryMedical { get; set; }
         public DbSet<Injury> Injury { get; set; }
         public DbSet<File> File { get; set; }
-        public DbSet<RoleAcces> RoleAcces { get; set; }
+        public DbSet<RoleAccess> RoleAccess { get; set; }
+        public DbSet<Account> Account { get; set; }
+        public DbSet<Plan> Plan { get; set; }
     }
 }

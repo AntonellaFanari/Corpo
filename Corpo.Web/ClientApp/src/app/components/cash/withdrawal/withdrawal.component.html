@@ -1,0 +1,66 @@
+<div class="wrapper">
+  <div class="modal-content">
+    <div class="modal-content">
+      <header class="modal-header bg-success"><h5>Retiros</h5></header>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="card-body col-3 pull-left">
+                    <label class="form-label">Caja Actual:</label>
+                  </div>
+                  <div class="card-body col-3 pull-left">
+                    <input type="text" readonly class="form-control">
+                  </div>
+                  <div class="card-body col-3 pull-right">
+                    <label class="form-label">Fecha:</label>
+                  </div>
+                  <div class="card-body col-3 pull-right">
+                    <input type="date" readonly class="form-control col-3">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 card bg-light">
+              <div class="row card-body">
+                <div class="col-12">
+                  <div class="card-body row">
+                    <div>
+                      <label class="form-label">Usuario</label>
+                      <select class="form-control col-12">
+                        <option class="form-control col-12" value="" disabled>Seleccionar</option>
+                        <option *ngFor="let plan of plans" class="form-control col-12" value={{plan.id}}>{{plan.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 card bg-light">
+              <div class="row card-body">
+                <div class="col-12">
+                  <div class="card-body col-6 pull-left mb-3">
+                    <label class="form-label">Retiro</label>
+                    <input type="number" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row">
+                <div class="card-body col-3 pull-left">
+                  <button type="button" class="form-control col-3 btn btn-secondary pull-left" [routerLink]="['/caja']">Volver</button>
+                </div>
+                <div class="card-body col-3 pull-right">
+                  <button type="button" class="form-control col-3 btn btn-success pull-right">Aceptar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

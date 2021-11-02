@@ -9,7 +9,7 @@
     </a>
     <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
 
-      <ul class="navbar-nav">
+      <ul *ngIf="logueado" class="navbar-nav">
         <li *access="'caja'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a [routerLink]="['/caja']">
             <i class="fa fa-suitcase"></i>
@@ -85,10 +85,10 @@
           Mi cuenta <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
+          <li><a>Hola, {{user.name}}</a></li>
+          <li><a>Mis datos</a></li>
+          <li><a>Notificaciones</a></li>
+          <hr />
           <li><a (click)="signOff()">Cerrar Sesión</a></li>
         </ul>
       </div>

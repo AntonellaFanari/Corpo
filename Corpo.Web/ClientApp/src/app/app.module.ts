@@ -31,6 +31,9 @@ import { AuthInterceptor } from './services/authentication-interceptor';
 import { AccessDirectiveDirective } from './directives/access-directive.directive';
 import { AuthGuard } from './guards/auth.guard.service';
 import { ChargeFeeComponent } from './components/cash/charge-fee/charge-fee.component';
+import { SaleComponent } from './components/cash/sale/sale.component';
+import { OutflowComponent } from './components/cash/outflow/outflow.component';
+import { WithdrawalComponent } from './components/cash/withdrawal/withdrawal.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { ChargeFeeComponent } from './components/cash/charge-fee/charge-fee.comp
     MemberViewComponent,
     LoginComponent,
     AccessDirectiveDirective,
-    ChargeFeeComponent
+    ChargeFeeComponent,
+    SaleComponent,
+    OutflowComponent,
+    WithdrawalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -83,7 +89,10 @@ import { ChargeFeeComponent } from './components/cash/charge-fee/charge-fee.comp
       { path: 'accesos', component: SettingsAccessComponent },
       { path: 'caja', component: CashFormComponent, canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
-      { path: 'charge-fee', component: ChargeFeeComponent }
+      { path: 'cuota', component: ChargeFeeComponent },
+      { path: 'venta', component: SaleComponent },
+      { path: 'egreso', component: OutflowComponent },
+      { path: 'retiro', component: WithdrawalComponent }
     ])
   ],
   entryComponents: [

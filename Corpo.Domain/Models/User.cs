@@ -13,10 +13,10 @@ namespace Corpo.Domain.Models
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
         public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
         public string Address { get; set; }
         public virtual Role Role { get; set; }
         public int RoleId { get; set; }
+        public virtual Account Account { get; set; }
+        public int AccountId { get; set; }
     }
 }

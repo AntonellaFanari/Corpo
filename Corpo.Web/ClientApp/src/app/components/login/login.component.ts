@@ -23,8 +23,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams
-      .subscribe(params => this.return = params['return'] || '/forums');
   }
 
   get f() {
@@ -45,8 +43,7 @@ export class LoginComponent implements OnInit {
           this.accountService.setToken(result.token);
           this.accountService.setAuthenticated(true);
           this.accountService.setLoggedUser(result.user);
-          this.router.navigateByUrl(this.return);
-          this.ngOnInit();
+          this.router.navigate(['/']);
         },
         error => {
           console.error(error);

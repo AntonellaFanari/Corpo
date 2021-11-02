@@ -37,6 +37,7 @@
     <None Remove="ClientApp\src\app\domain\injury.ts" />
     <None Remove="ClientApp\src\app\domain\member-view.ts" />
     <None Remove="ClientApp\src\app\domain\member.ts" />
+    <None Remove="ClientApp\src\app\domain\plan.ts" />
     <None Remove="ClientApp\src\app\domain\role-access.ts" />
     <None Remove="ClientApp\src\app\domain\role.ts" />
     <None Remove="ClientApp\src\app\domain\user-view.ts" />
@@ -49,6 +50,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\account.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\file.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-view.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\plan.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role-access.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\history-medical.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\injury.ts" />

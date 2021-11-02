@@ -11,6 +11,7 @@ namespace Corpo.Domain.Contracts.Repositories
     {
         List<Member> GetAll();
         Member GetById(int id);
-        int Add(Member member);
+        Member GetByEmail(string email);
+        void Add(Member member);
     }
 }

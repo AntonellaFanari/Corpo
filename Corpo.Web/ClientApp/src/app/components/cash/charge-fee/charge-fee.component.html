@@ -1,18 +1,86 @@
-<div class="modal-content">
+<div class="wrapper">
   <div class="modal-content">
-    <header class="modal-header">Cuotas</header>
-    <div class="modal-body">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col card">
-            <div class="row card-body">
-              <div class="col-12">
-                <div class="card-body row">
-                  <label class="form-label">Socio</label>
-                  <input type="text" name="member" list="members" placeholder="Buscar Socio">
-                    <select class="form-control col-12" id="members">
-                      <option *ngFor="let member of members" class="form-control col-12" value={{member.lastName}}{{member.name}}>{{member.lastName}}{{member.name}}</option>
-                    </select>
+    <div class="modal-content">
+      <header class="modal-header bg-success"><h5>Cuotas</h5></header>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="col-12">
+                  <div class="card-body row">
+                    <label class="form-label">Socio</label>
+                    <input type="text" name="member" list="members" placeholder="Buscar Socio" class="form-control">
+                    <datalist id="members">
+                      <select class="form-control col-12" id="members">
+                        <option *ngFor="let member of members" class="form-control col-12" value={{member.lastName}}{{member.name}}>{{member.lastName}}{{member.name}}</option>
+                      </select>
+                    </datalist>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 card bg-light">
+              <div class="row card-body">
+                <div class="col-12">
+                  <div class="card-body row">
+                    <div>
+                      <label class="form-label">Plan</label>
+                      <select class="form-control col-12" id="members">
+                        <option class="form-control col-12" value="" disabled>Seleccionar</option>
+                        <option *ngFor="let plan of plans" class="form-control col-12" value={{plan.id}}>{{plan.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-6 pull-left mt-3">
+                      <label class="form-label">Desde:</label>
+                      <input type="date" class="form-control col-6" />
+                    </div>
+                    <div class="col-6 pull-right mt-3">
+                      <label class="form-label">Hasta:</label>
+                      <input type="date" class="form-control col-6" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 card bg-light">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="card-body col-3 pull-left">
+                    <label class="form-label">Precio</label>
+                    <input type="number" class="form-control" />
+                  </div>
+                  <div class="card-body col-3 pull-right">
+                    <label class="form-label">Pago</label>
+                    <input type="number" class="form-control" />
+                  </div>
+                </div>
+                <div>
+                  <button class="btn btn-info pull-left mb-2 form-control">Promociones</button>
+                  <button class="btn btn-danger pull-right mb-2 form-control">Calcular</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row">
+                <div class="card-body col-3 pull-left">
+                  <label class="form-label">TOTAL A COBRAR $</label>
+                </div>
+                <div class="card-body col-3 pull-right">
+                  <input type="number" class="form-control col-6 pull-right" />
+                </div>
+                <div class="card-body col-6 pull-right">
+                  <button type="button" class="form-control col-6 btn btn-success">Cargar Créditos</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row">
+                <div class="card-body col-6 pull-left">
+                  <button type="button" class="form-control col-3 btn btn-secondary pull-left" [routerLink]="['/caja']">Volver</button>
+                </div>
+                <div class="card-body col-6 pull-right">
+                  <button type="button" class="form-control col-3 btn btn-success pull-right">Aceptar</button>
                 </div>
               </div>
             </div>

@@ -9,7 +9,7 @@ namespace Corpo.Domain.Contracts.Repositories
 {
     public interface ISettingsRepository
     {
-        void SaveAcces(List<RoleAcces> acces);
-        List<RoleAcces> GetRoleAcces();
+        void SaveAccess(List<RoleAccess> access);
+        List<RoleAccess> GetRoleAccess();
     }
 }

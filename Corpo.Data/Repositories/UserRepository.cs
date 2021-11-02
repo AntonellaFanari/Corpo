@@ -23,8 +23,11 @@ namespace Corpo.Data.Repositories
 
         public List<User> GetAll()
         {
-            return _context.User.
-                Include(x=>x.Role).ToList();
+            var list =_context.User
+                    .Include(x=>x.Role)
+                    .Include(x=>x.Account)
+                    .ToList();
+            return list;
         }
 
         public List<Role> GetRoles()
@@ -32,28 +35,33 @@ namespace Corpo.Data.Repositories
             return _context.Role.ToList();
         }
 
+        public List<RoleAccess> GetRoleAccess(int roleId)
+        {
+            return _context.RoleAccess.Where(x => x.RoleId == roleId).ToList();
+        }
+
         public void Add(User user)
         {
-            try
-            {
                 _context.User.Add(user);
                 _context.SaveChanges();
-            }
-            catch (DbUpdateException ex)
-            {
-                SqlException innerException = ex.InnerException as SqlException;
-                if (innerException != null && innerException.ErrorCode == -2146232060)
-                {
-                    throw new UniqueException();
-                }
-            }
-            
-
         }
 
         public User GetById(int id)
         {
-           return _context.User.Find(id);
+            var user = _context.User
+                    .Include(x => x.Role)
+                    .Include(x => x.Account)
+                   .FirstOrDefault(x => x.Id == id);
+            return user;
+        }
+
+        public User GetByIdAccount(int id)
+        {
+            var user = _context.User
+                    .Include(x => x.Role)
+                    .Include(x => x.Account)
+                   .FirstOrDefault(x => x.AccountId == id);
+            return user;
         }
 
         public void Delete(int id)
@@ -68,6 +76,11 @@ namespace Corpo.Data.Repositories
             user.Id = id;
             _context.User.Update(user);
             _context.SaveChanges();
+        }
+
+        public User GetByEmail(string email)
+        {
+            return _context.User.Find(email);
         }
     }
 }

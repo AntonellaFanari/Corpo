@@ -19,6 +19,31 @@ namespace Corpo.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Corpo.Domain.Models.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.ToTable("Account");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.File", b =>
                 {
                     b.Property<int>("Id")
@@ -110,19 +135,22 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("EmergencyContact")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmergencyPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Facebook")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Instagram")
@@ -134,19 +162,43 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SocialSecurity")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("PlanId");
 
                     b.ToTable("Member");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Credits")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plan");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Role", b =>
@@ -164,14 +216,14 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.RoleAcces", b =>
+            modelBuilder.Entity("Corpo.Domain.Models.RoleAccess", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Acces")
+                    b.Property<string>("Access")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
@@ -181,7 +233,7 @@ namespace Corpo.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleAcces");
+                    b.ToTable("RoleAccess");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>
@@ -191,22 +243,19 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -217,9 +266,7 @@ namespace Corpo.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("RoleId");
 
@@ -259,7 +306,26 @@ namespace Corpo.Data.Migrations
                     b.Navigation("History");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.RoleAcces", b =>
+            modelBuilder.Entity("Corpo.Domain.Models.Member", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.Plan", "Plan")
+                        .WithMany()
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.RoleAccess", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Role", "Role")
                         .WithMany()
@@ -272,11 +338,19 @@ namespace Corpo.Data.Migrations
 
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>
                 {
+                    b.HasOne("Corpo.Domain.Models.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Corpo.Domain.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Account");
 
                     b.Navigation("Role");
                 });

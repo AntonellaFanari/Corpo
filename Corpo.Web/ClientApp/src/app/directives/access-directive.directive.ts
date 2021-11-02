@@ -14,14 +14,10 @@ export class AccessDirectiveDirective {
   @Input("access") access: string;
 
   ngOnInit() {
-    let permitedAccess = this.accountService.getAccess();
-    console.log(permitedAccess);
-    if (permitedAccess != null && permitedAccess.find(x=>x == this.access)) {
+    let allowedAccesses = this.accountService.getAccess();
+    if (allowedAccesses != null && allowedAccesses.find(x=>x == this.access)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
-
-    }
-    console.log(this.access);
-   
+    }  
   }
 
 }

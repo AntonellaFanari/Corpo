@@ -10,6 +10,7 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public string Path { get; set; }
+        public string Name { get; set; }
         public virtual Injury Injury { get; set; }
         public int InjuryId { get; set; }
     }

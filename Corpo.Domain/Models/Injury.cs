@@ -10,8 +10,8 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public HistoryMedical History { get; set; }
-        public int HistoryMedicalId { get; set; }
+        public MedicalHistory History { get; set; }
+        public int MedicalHistoryId { get; set; }
         public List<File> Files { get; set; }
 
     }

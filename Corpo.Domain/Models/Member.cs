@@ -23,5 +23,6 @@ namespace Corpo.Domain.Models
         public string Facebook { get; set; }
         public virtual Account Account { get; set; }
         public int AccountId { get; set; }
+        public List<Sale> Sale { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 <section class="wrapper">
   <div class="row mt">
-    <div class="col-md-12">
+    <div class="col-lg-12">
       <div class="task-panel ">
         <h4 class="table-title">Socios</h4>
         <button type="button" class="btn btn-success pull-right" routerLink="/member-create">Agregar</button>
@@ -32,10 +32,11 @@
               <td data-title="Acción">
                 <span class="btn-action-container">
                   <button class="btn btn-success btn-xs btn-action-list"><i class="fa fa-usd"></i></button>
-                  <button class="btn btn-primary btn-xs btn-action-list" [routerLink]="['/member-view']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
-                  <button class="btn btn-warning btn-xs btn-action-list"><i class="fa fa-pencil-square-o "></i></button>
-                  <button class="btn btn-danger btn-xs btn-action-list"><i class="fa fa-trash-o "></i></button>
-                  <button class="btn btn-info btn-xs btn-action-list" [routerLink]="['/history-medical-detail']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
+                  <button class="btn btn-primary btn-xs btn-action-list" [routerLink]="['/']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
+                  <button class="btn btn-info btn-xs btn-action-list" [routerLink]="['/historia-médica-crear']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
+                  <button class="btn btn-primary btn-xs btn-action-list" [routerLink]="['/member-view']" [queryParams]="{id:member.id}"><i class="fa fa-info-circle"></i></button>
+                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/member-detail']" [queryParams]="{id:member.id}"><i class="fa fa-pencil-square-o "></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(member.id)"><i class="fa fa-trash-o "></i></button>
                 </span>
               </td>
             </tr>

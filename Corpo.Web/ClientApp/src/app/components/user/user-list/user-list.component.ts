@@ -28,17 +28,17 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  async delete(id) {
+  delete(id, email) {
     console.log("delete");
-    this.customAlertService.displayAlert("Gestión de usuarios", ["¿Está seguro que desea eliminar este usuario?"], async () => {
-      await this.userService.delete(id)
-        .then(() => {
+    this.customAlertService.displayAlert("Gestión de usuarios", ["¿Está seguro que desea eliminar este usuario?"], () => {
+      this.userService.delete(id, email).subscribe(
+        result => {
           this.getAll();
-        })
-        .catch((error) => {
-          console.log(error)
+        },
+        error => {
+          console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar el usuario."]);
-        });
+        })
     }, true);
   }
 

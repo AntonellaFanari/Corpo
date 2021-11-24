@@ -1,0 +1,91 @@
+<section class="wrapper">
+  <div class="modal-content">
+    <header class="modal-header bg-success"><h3 class="mb text-center">Ficha de antecedentes de lesiones</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 card">
+            <div class="row card-body">
+              <div class="row">
+                <div class="col-lg-3 form-group">
+                  <input class="col-sm-3" type="radio" name="limbs" value="1" checked (change)="checkedLimbs($event.target.value)">
+                  <label class="col-sm-9 control-label float-left margLabelForm">Miembro superior:</label>
+                  <div>
+                    <select id="UpperLimb" class="form-control" (change)="selectLimb($event.target.value)" [disabled]="!optionsLimbs">
+                      <option value="" disabled>Seleccionar...</option>
+                      <option *ngFor="let upperLimb of upperLimbs" value="{{upperLimb}}">{{upperLimb}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3 form-group">
+                  <input class="col-sm-3" type="radio" name="limbs" value="2" (change)="checkedLimbs($event.target.value)">
+                  <label class="col-sm-9 control-label margLabelForm">Miembro inferior:</label>
+                  <div>
+                    <select id="LowerLimb" class="form-control" (change)="selectLimb($event.target.value)" [disabled]="optionsLimbs">
+                      <option value="" disabled>Seleccionar...</option>
+                      <option *ngFor="let lowerLimb of lowerLimbs" value="{{lowerLimb}}">{{lowerLimb}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3 form-group">
+                  <label class="margLabelForm">Estudios:</label>
+                  <a onclick="document.getElementById('file-button').click();" class="btn btn-secondary form-control">
+                    <!--<i class="fas fa-upload"></i>-->
+                    Seleccionar
+                  </a>
+                  <input type="file" id="file-button" [disabled]="isSubmitingData" (change)="onFileSelection($event)" style="display: none;"
+                         multiple />
+                </div>
+                <div class="col-lg-3 form-group">
+                  <label class="col-sm-6 control-label margLabelForm"></label>
+                  <button type="button" class="btn btn-success form-control margLabelForm" (click)="addInjury()">Agregar Lesión</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="injuries.length>0" class="col-lg-12 col-md-6 col-xs-6 card bg-light">
+    <table class="table table-bordered table-condensed cf scrollme detail-table">
+      <thead class="cf">
+        <tr>
+          <th>
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-xs-6"><label>Miembro Lesionado:</label></div>
+              <div class="col-lg-6 col-md-6 col-xs-6">
+                <div class="form-group col-lg-3 col-md-6 col-xs-6">
+                  <select class="form-control" data-style="btn-success" (change)="selectInjury($event.target.value)">
+                    <option value="" disabled>Seleccionar</option>
+                    <option value="all">Todos</option>
+                    <option *ngFor="let injury of injuries; index as i" value="{{i}}">{{injury.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of injuryFiles">
+          <td>
+              {{file.name}}
+          </td>
+          <td class="td-title">
+            <span class="btn-action-container">
+              <button type="button" class="btn btn-primary btn-xs btn-action-list pull-left"><i class="fa fa-download"></i></button>
+              <button class="btn btn-danger btn-xs btn-action-list pull-right" (click)="deleteFile(file.id)"><i class="fa fa-trash-o "></i></button>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-3 col-lg-12">
+    <button class="btn btn-secondary pull-left " type="submit" (click)="return()">Volver</button>
+    <button class="btn btn-success pull-right " type="submit" [routerLink]="['/member-list']">Guardar</button>
+  </div>
+</section>
+

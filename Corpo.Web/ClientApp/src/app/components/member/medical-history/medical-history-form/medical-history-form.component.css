@@ -1,0 +1,16 @@
+.formBorder {
+  border: 1px solid #adb5bd;  
+}
+
+.margLabelForm {
+  margin-top: 15px;
+}
+
+.formMargin {
+    margin-left:1px;
+}
+
+.radio-button {
+  margin-right: 7px;
+  margin-left: 15px;
+}

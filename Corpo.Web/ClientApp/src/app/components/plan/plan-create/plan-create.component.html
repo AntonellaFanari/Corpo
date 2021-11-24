@@ -1,0 +1,76 @@
+<section class="wrapper">
+  <div class="modal-content modal-lg">
+    <header class="modal-header bg-success"><h3 class="mb text-center">Nuevo Plan</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <form [formGroup]="formCreate">
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="col-sm-12 pull-left">
+                    <label class="col-sm-12 control-label">Nombre:</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" formControlName="name">
+                      <p *ngIf="sendForm && f.name.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="col-sm-6 pull-left">
+                    <label class="col-sm-12 control-label">Tipo de Plan:</label>
+                    <select class="form-control" formControlName="type" (change)="selectType($event.target.value)">
+                      <option value="" disabled>Seleccionar...</option>
+                      <option value="1">Personalizado</option>
+                      <option value="2">Grupal</option>
+                    </select>
+                    <p *ngIf="sendForm && f.type.errors?.required">*el campo es requerido</p>
+                  </div>
+                  <div class="col-sm-6 pull-left">
+                    <label class="col-sm-12 control-label">Asignar Clases:</label>
+                    <ng-multiselect-dropdown [settings]="classDropdownSettings"
+                                             [data]="classes"
+                                              [placeholder]="'Seleccionar...'"
+                                             formControlName="classes">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="col-sm-6 pull-left">
+                    <label class="col-sm-12 control-label">Créditos:</label>
+                    <div class="col-sm-12">
+                      <input type="number" class="form-control" formControlName="credits">
+                      <p *ngIf="sendForm && f.credits.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="col-sm-12 control-label">Precio:</label>
+                    <div class="col-sm-12">
+                      <input type="number" class="form-control" formControlName="price">
+                      <p *ngIf="sendForm && f.price.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/plan-list']">Cancelar</button>
+        <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+

@@ -1,0 +1,118 @@
+<button id="modal-detail" data-toggle="modal" href="#myModalSale"></button>
+
+<div class="container">
+  <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+  <div class="modal fade" id="myModalSale">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Detalle de la Venta</h4>
+          <br />
+          <h6 class="modal-title">Registro: {{userRegisterSale.lastName}} {{userRegisterSale.name}}</h6>
+          <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+        </div>
+
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <table class="table table-bordered table-condensed cf scrollme user-table">
+            <thead class="cf">
+              <tr>
+                <th colspan="2">Socio: {{memberSale}}</th>
+                <th colspan="1">Fecha: {{dateSale | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
+                <th colspan="1">
+                  Estado: {{status}}
+                  <a *ngIf="cancelStatus" data-toggle="modal" href="#myModalCancel"><i class="fa fa-info-circle"></i></a>
+                </th>
+              </tr>
+              <tr>
+                <th>Descripcion</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of detailsSale" class="scrollme">
+                <td class="td-title">{{detail.product.description}}</td>
+                <td class="td-title">{{detail.quantity}}</td>
+                <td class="td-title">{{detail.price}}</td>
+                <td class="td-title">{{detail.quantity*detail.price}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- pie del diálogo -->
+          <div class="modal-footer">
+            <button *ngIf="!cancelStatus" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button *ngIf="!cancelStatus" type="button" class="btn btn-success" data-toggle="modal" href="#myModalCancelSale">Anular</button>
+            <button *ngIf="cancelStatus" type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+    <div class="modal fade" id="myModalCancelSale">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- cabecera del diálogo -->
+          <div class="modal-header modal-title">
+            <h4 class="modal-title">Anulación de Venta</h4>
+            <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+          </div>
+
+          <!-- cuerpo del diálogo -->
+          <div class="modal-body">
+            <input type="text" class="form-control" placeholder="Ingrese el motivo de la anulación" [(ngModel)]="reasonCancel" />
+
+            <!-- pie del diálogo -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-success" (click)="cancel()">Anular</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="cancelSale" class="container">
+      <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+      <div class="modal fade" id="myModalCancel">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+
+            <!-- cabecera del diálogo -->
+            <div class="modal-header modal-title">
+              <h4 class="modal-title">Detalle de la Anulación</h4>
+              <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+            </div>
+
+            <!-- cuerpo del diálogo -->
+            <div class="modal-body">
+              <table>
+                <tr class="scrollme">
+                  Fecha: {{cancelSale.date | date: 'dd/MM/yyyy h:mm:ss a'}}
+                </tr>
+                <tr>Motivo: {{cancelSale.reason}}</tr>
+                <tr>Usuario: {{userCancelSale.lastName}} {{userCancelSale.name}}</tr>
+              </table>
+
+              <!-- pie del diálogo -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>

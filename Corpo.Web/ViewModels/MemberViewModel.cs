@@ -21,5 +21,6 @@ namespace Corpo.Web.ViewModels
         public string Instagram { get; set; }
         public string Facebook { get; set; }
         public string Email { get; set; }
+        public int PlanType { get; set; }
     }
 }

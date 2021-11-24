@@ -60,11 +60,19 @@ namespace Corpo.Domain.Services
             {
                 int id = _accountRepository.Add(newAccount);
                 newUser.AccountId = id;
-                _userRepository.Add(newUser);
-                return new DomainResponse
+                try
                 {
-                    Success = true
-                };
+                    _userRepository.Add(newUser);
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
+                catch (Exception ex)
+                {
+                    _accountRepository.Delete(id);
+                    return new DomainResponse(false, ex.Message, "Error al guardar el usuario");
+                }
             }
             catch (UniqueException ex)
             {
@@ -78,18 +86,31 @@ namespace Corpo.Domain.Services
             return _userRepository.GetById(id);
         }
 
-        public void Delete(int id)
+        public DomainResponse Delete(int id, string email)
         {
+            var account = _accountRepository.GetByEmail(email);
             _userRepository.Delete(id);
+            _accountRepository.Delete(account.Id);
+            return new DomainResponse
+            {
+                Success = true
+            };
         }
 
         public DomainResponse Update(int id, User user)
         {
-            _userRepository.Update(id, user);
+
+            var userQuery = _userRepository.GetById(id);
+            userQuery.LastName = user.LastName;
+            userQuery.Name = user.Name;
+            userQuery.Phone = user.Phone;
+            userQuery.RoleId = user.RoleId;
+            userQuery.Address = user.Address;
+            userQuery.BirthDate = user.BirthDate;
+            _userRepository.Update(userQuery);
             return new DomainResponse
             {
-                Success = true,
-                Message = "Usuario modificado"
+                Success = true
             };
         }
 

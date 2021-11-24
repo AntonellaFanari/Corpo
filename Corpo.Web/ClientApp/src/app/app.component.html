@@ -47,10 +47,22 @@
           </a>
         </li>
         <li *access="'abm'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-          <a href="#">
-            <i class="fas fa-search"></i>
-            ABM
-          </a>
+          <div class="dropdown">
+            <a class="dropdown-toggle" id="dropdown1" data-toggle="dropdown">
+              <i class="fa fa-search"></i>
+              ABM
+            </a>
+            <div class="dropdown-menu">
+              <!--<a class="dropdown-item" href="">Turnos</a>-->
+              <a class="dropdown-item" [routerLink]="['/class-list']">Clases</a>
+              <a class="dropdown-item" [routerLink]="['/plan-list']">Planes</a>
+              <!--<a class="dropdown-item" href="">Promociones</a>-->
+              <a class="dropdown-item" [routerLink]="['/product-list']">Productos</a>
+              <!--<a class="dropdown-item" href="">Egresos</a>
+              <a class="dropdown-item" href="">Retiros</a>
+              <a class="dropdown-item" href="">WODS</a>-->
+            </div>
+          </div>
         </li>
         <li *access="'ajustes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
           <a [routerLink]="['/accesos']">

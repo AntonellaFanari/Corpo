@@ -3,7 +3,7 @@ export class UserView {
   name: string;
   birthDate: string;
   address: string;
-  nameRole: string;
+  roleName: string;
   roleId: number;
   phone: string;
   email: string

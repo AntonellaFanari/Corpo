@@ -11,5 +11,6 @@ namespace Corpo.Domain.Contracts.Services
     {
         DomainResponse Add(Account account);
         DomainResponse LogIn(Account account);
+
     }
 }

@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
 
   constructor(private accountService: AccountService, private router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let access = state.url.slice(1);
+    let access = route.data.name;
     console.log(access);
     let allowedAccesses = this.accountService.getAccess();
     if (this.accountService.getLoggedUser() && allowedAccesses.find(x => x == access)) {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Injury } from '../../../domain/injury';
+import { MedicalHistory } from '../../../domain/medical-history';
 import { MemberView } from '../../../domain/member-view';
 import { MemberService } from '../../../services/member.service';
 @Component({
@@ -11,6 +13,11 @@ export class MemberViewComponent implements OnInit {
   id: number;
   role: string;
   member: MemberView;
+  medicalHistory: MedicalHistory;
+  age: number;
+  injuries = [];
+  injuryFiles: File[] = [];
+  medicalHistoryId: number;
   constructor(private memberService: MemberService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.id = parseInt(params['id'])
@@ -25,6 +32,57 @@ export class MemberViewComponent implements OnInit {
       },
       error => console.error(error)
     );
+    this.memberService.getMedicalHistoryByIdMember(this.id).subscribe(
+      result => {
+        console.log(result.result);
+        this.medicalHistory = result.result;
+        this.medicalHistoryId = this.medicalHistory.id;
+        for (const property in this.medicalHistory) {
+          if (this.medicalHistory[property] == null) {
+            this.medicalHistory[property] = "-";
+          } if (this.medicalHistory[property] == 'man') {
+            this.medicalHistory[property] = 'Hombre';
+          } if (this.medicalHistory[property] == 'woman') {
+            this.medicalHistory[property] = 'Mujer';
+          } 
+        };
+        this.getAllInjuries(this.medicalHistoryId);
+      },
+      error => console.error(error)
+    );
+    this.memberService.getAge(this.id).subscribe(
+      result => {
+        console.log(result.result.age);
+        this.age = result.result.age;
+      },
+      error => console.error(error)
+    );
   }
 
+  getAllInjuries(id) {
+    this.injuryFiles = [];
+    this.memberService.getAllInjuries(this.medicalHistoryId).subscribe(
+      result => {
+        console.log(result);
+        this.injuries = result;
+        for (var i = 0; i < this.injuries.length; i++) {
+          var files = this.injuries[i].files;
+          for (var j = 0; j < files.length; j++) {
+            this.injuryFiles.push(files[j]);
+          }
+        }
+      },
+      error => console.error(error)
+    );
+  }
+
+  selectInjury(event) {
+    console.log(event);
+    if (event == "all") {
+      this.getAllInjuries(this.medicalHistoryId);
+    } else {
+      this.injuryFiles = this.injuries[event].files;
+    }
+
+  }
 }

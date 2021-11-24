@@ -1,0 +1,44 @@
+<div section="wrapper">
+  <div class="modal-content">
+    <div class="modal-content">
+      <header class="modal-header bg-success"><h5>{{title}}</h5></header>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <form [formGroup]="formProduct">
+                <div class="row card-body card">
+                  <div class="col-md-12 col-sm-12">
+                    <label class="form-label">Descripcion:</label>
+                    <input type="text" name="member" class="form-control" formControlName="description">
+                    <p class="formValidators" *ngIf="sent && f.description.errors?.required">*Ingrese la descripción.</p>
+                  </div>
+                </div>
+                <div class="row card-body card bg-light">
+                  <div class="col-md-12 col-sm-12">
+                    <div class="card-body col-md-4 col-sm-12 pull-left">
+                      <label class="form-label">Stock</label>
+                      <input type="number" class="form-control" formControlName="stock" />
+                    </div>
+                    <div class="card-body col-md-4 col-sm-12 pull-left">
+                      <label class="form-label">Precio</label>
+                      <input type="number" class="form-control" formControlName="price" />
+                      <p class="formValidators" *ngIf="sent && f.price.errors?.required">*Ingrese el precio.</p>
+                    </div>
+                    <div class="card-body col-md-4 col-sm-12 pull-right">
+                      <label class="form-label">Punto de Resposición</label>
+                      <input type="number" class="form-control" formControlName="replenishmentPoint" />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

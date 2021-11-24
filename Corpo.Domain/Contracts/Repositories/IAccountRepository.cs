@@ -11,5 +11,6 @@ namespace Corpo.Domain.Contracts.Repositories
     {
         int Add(Account account);
         Account GetByEmail(string email);
+        void Delete(int id);
     }
 }

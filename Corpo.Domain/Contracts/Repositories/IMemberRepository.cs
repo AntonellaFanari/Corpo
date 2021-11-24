@@ -12,6 +12,19 @@ namespace Corpo.Domain.Contracts.Repositories
         List<Member> GetAll();
         Member GetById(int id);
         Member GetByEmail(string email);
-        void Add(Member member);
+        int Add(Member member);
+        int Update(Member member);
+        int Delete(int id);
+        int AddMedicalHistory(MedicalHistory historyMedical);
+        MedicalHistory GetMedicalHistoryByIdMember(int id);
+        MedicalHistory GetMedicalHistoryById(int id);
+        int UpdateMedicalHistory(MedicalHistory medicalHistory);
+        void DeleteMedicalHistory(int id);
+        int AddInjury(Injury injury);
+        void AddFile(File file);
+        List<Injury> GetAllInjuries(int id);
+        List<File> GetAllFiles(int id);
+        int DeleteFile(int id);
+        void DeleteInjury(int id);
     }
 }

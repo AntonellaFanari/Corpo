@@ -46,7 +46,8 @@ namespace Corpo.Web.ViewModels
                 PlanId = member.PlanId,
                 Instagram = member.Instagram,
                 Facebook = member.Facebook,
-                Email = member.Account.Email
+                Email = member.Account.Email,
+                PlanType = (int)member.Plan.Type
             };
         }
 

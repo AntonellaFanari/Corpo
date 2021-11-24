@@ -1,0 +1,135 @@
+<div class="modal-content">
+  <header class="modal-header bg-success"><h3 class="mb text-center">Ficha de aptitud médica</h3></header>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <form [formGroup]="formCreate">
+          <div class="col-12 card">
+            <div class="row card-body">
+              <div class="row">
+                <div class="col-sm-4 pull-left">
+                  <label class="col-sm-12 control-label">Edad:</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="age">
+                  </div>
+                </div>
+                <div class="col-sm-4 pull-left">
+                  <label class="col-sm-12 control-label">Sexo:</label>
+                  <select class="form-control" formControlName="gender" (change)="selectGender($event.target.value)">
+                    <option value="" disabled>Seleccionar...</option>
+                    <option value="man">Hombre</option>
+                    <option value="woman">Mujer</option>
+                  </select>
+                  <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
+                </div>
+                <div class="col-sm-4 pull-right">
+                  <label class="col-sm-12 control-label">Periodo:</label>
+                  <input type="text" class="form-control" formControlName="period">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 card">
+            <div class="row card-body">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label class="col-sm-12 control-label margLabelForm">Peso:</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="weight">
+                    <p *ngIf="sendForm && f.weight.errors?.required">*el campo es requerido</p>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <label class="col-sm-6 control-label margLabelForm">Alergias:</label>
+                  <label class="col-sm-6 control-label margLabelForm pull-right">
+                    <input type="radio" class="radio-button" value="yes" formControlName="allergiesChecked" (change)="enableInput($event.target.value, 'allergies')">
+                    <span>Si</span>
+                    <input type="radio" class="radio-button" value="no" formControlName="allergiesChecked" (change)="enableInput($event.target.value, 'allergies')">
+                    <span>No</span>
+                  </label>
+                  <div class="margLeft formValidators">
+                    <input type="text" class="form-control" formControlName="allergies">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <label class="col-sm-6 control-label margLabelForm">Cirugias:</label>
+                  <label class="col-sm-6 control-label margLabelForm pull-right">
+                    <input type="radio" class="radio-button" value="yes" formControlName="surgicalInterventionChecked" (change)="enableInput($event.target.value, 'surgicalIntervention')">
+                    <span>Si</span>
+                    <input type="radio" class="radio-button" value="no" formControlName="surgicalInterventionChecked" (change)="enableInput($event.target.value, 'surgicalIntervention')">
+                    <span>No</span>
+                  </label>
+                  <div class="margLeft formValidators">
+                    <input type="text" class="form-control" formControlName="surgicalIntervention">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 card">
+            <div class="row card-body">
+              <div class="row">
+                <div class="col-sm-4">
+                  <label class="col-sm-6 control-label margLabelForm">Enfermedad cardiaca:</label>
+                  <label class="col-sm-6 control-label margLabelForm pull-right">
+                    <input type="radio" class="radio-button" value="yes" formControlName="heartDiseaseChecked" (change)="enableInput($event.target.value, 'heartDisease')">
+                    <span>Si</span>
+                    <input type="radio" class="radio-button" value="no" formControlName="heartDiseaseChecked" (change)="enableInput($event.target.value, 'heartDisease')">
+                    <span>No</span>
+                  </label>
+                  <div class="margLeft formValidators">
+                    <input type="text" class="form-control" formControlName="heartDisease">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <label class="col-sm-6 control-label margLabelForm">Enfermedad respiratoria:</label>
+                  <label class="col-sm-6 control-label margLabelForm pull-right">
+                    <input type="radio" class="radio-button" value="yes" formControlName="respiratoryDiseaseChecked" (change)="enableInput($event.target.value, 'respiratoryDisease')">
+                    <span>Si</span>
+                    <input type="radio" class="radio-button" value="no" formControlName="respiratoryDiseaseChecked" (change)="enableInput($event.target.value, 'respiratoryDisease')">
+                    <span>No</span>
+                  </label>
+                  <div class="margLeft formValidators">
+                    <input type="text" class="form-control" formControlName="respiratoryDisease">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div>
+                    <label class="col-sm-6 control-label margLabelForm">Medicación habitual:</label>
+                    <label class="col-sm-6 control-label margLabelForm pull-right">
+                      <input type="radio" class="radio-button" value="yes" formControlName="habitualMedicationChecked" (change)="enableInput($event.target.value, 'habitualMedication')">
+                      <span>Si</span>
+                      <input type="radio" class="radio-button" value="no" formControlName="habitualMedicationChecked" (change)="enableInput($event.target.value, 'habitualMedication')">
+                      <span>No</span>
+                    </label>
+                  </div>
+                  <br />
+                  <div class="margLeft formValidators">
+                    <input type="text" class="form-control" formControlName="habitualMedication">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 card">
+            <div class="row card-body">
+              <div class="row">
+                <div class="col-sm-12 pull-left">
+                  <div class="col-lg-12 col-sm-12 col-xs-12 form-group formMargin">
+                    <label class="col-lg-12 col-sm-12 col-xs-12 control-label margLabelForm">Observaciones:</label>
+                    <div class="margLeft formValidators">
+                      <input type="text" class="form-control" formControlName="observations">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

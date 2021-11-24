@@ -1,39 +1,5 @@
-<!--<div class="row mt">
-  <div class="col-md-12">
-    <div class="task-panel ">
-      <h4 class="table-title">Informacion del Socio</h4>
-    </div>
-    <hr>
-    <section id="no-more-tables">
-      <table class="table table-bordered table-condensed cf">
-        <thead class="cf">
-          <tr>
-            <th class="numeric">Apellido y Nombre</th>
-            <th class="numeric">Fecha de Nacimiento</th>
-            <th class="numeric">Domicilio</th>
-            <th class="numeric">Teléfono</th>
-            <th class="numeric">Email</th>
-            <th class="numeric">Número de Urgencia</th>
-            <th class="numeric">Contacto de Urgencia</th>
-            <th class="numeric">Instagram</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="scrollme">
-            <td class="numeric" data-title="Apellido y Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
-            <td data-title="Fecha de Nacimiento"><span>{{member.birthDate}}</span></td>
-            <td data-title="Domicilio"><span>{{member.address}}</span></td>
-            <td data-title="Teléfono"><span>{{member.phone}}</span></td>
-            <td data-title="Email"><span>{{member.email}}</span></td>
-            <td data-title="Número de Urgencia"><span>{{member.emergencyPhone}}</span></td>
-            <td data-title="Contacto de Urgencia"><span>{{member.emergencyContact}}</span></td>
-            <td data-title="Instagram"><span>{{member.instagram}}</span></td>
-          </tr>
-        </tbody>
-      </table>
-      <div>
-        <button type="button" class="btn btn-success pull-right" routerLink="/member-list">Volver</button>
-      </div>
-    </section>
-  </div>
-</div>-->
+<div class="container">
+  <app-member-form></app-member-form>
+  <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/member-list']">Cancelar</button>
+  <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">Guardar</button>
+</div>

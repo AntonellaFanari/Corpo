@@ -32,14 +32,22 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\components\validations\password.ts" />
     <None Remove="ClientApp\src\app\domain\account.ts" />
+    <None Remove="ClientApp\src\app\domain\cancel-sale.ts" />
+    <None Remove="ClientApp\src\app\domain\class.ts" />
+    <None Remove="ClientApp\src\app\domain\details-sale.ts" />
     <None Remove="ClientApp\src\app\domain\file.ts" />
-    <None Remove="ClientApp\src\app\domain\history-medical.ts" />
     <None Remove="ClientApp\src\app\domain\injury.ts" />
+    <None Remove="ClientApp\src\app\domain\medical-history.ts" />
     <None Remove="ClientApp\src\app\domain\member-view.ts" />
     <None Remove="ClientApp\src\app\domain\member.ts" />
+    <None Remove="ClientApp\src\app\domain\order-products.ts" />
     <None Remove="ClientApp\src\app\domain\plan.ts" />
+    <None Remove="ClientApp\src\app\domain\product.ts" />
+    <None Remove="ClientApp\src\app\domain\purchase.ts" />
     <None Remove="ClientApp\src\app\domain\role-access.ts" />
     <None Remove="ClientApp\src\app\domain\role.ts" />
+    <None Remove="ClientApp\src\app\domain\sale.ts" />
+    <None Remove="ClientApp\src\app\domain\status.ts" />
     <None Remove="ClientApp\src\app\domain\user-view.ts" />
     <None Remove="ClientApp\src\app\domain\user.ts" />
     <None Remove="ClientApp\src\app\services\authentication-interceptor.ts" />
@@ -48,13 +56,21 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\validations\password.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\account.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\cancel-sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\class.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\file.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-view.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\order-products.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\plan.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\product.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role-access.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\domain\history-medical.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\medical-history.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\injury.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\status.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member.ts" />
@@ -64,6 +80,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Corpo.Data\Corpo.Data.csproj" />
     <ProjectReference Include="..\Corpo.Domain\Corpo.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\components\product\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

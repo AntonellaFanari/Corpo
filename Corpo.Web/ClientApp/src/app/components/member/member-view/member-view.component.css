@@ -16,7 +16,11 @@ td.text-ajust {
   #no-more-tables td {
     padding-left: 35%;
   }
-
+  .detail-table {
+    font-size: 13px;
+    border: 1px solid #808080;
+    margin-top: 2px;
+  }
   .user-table {
     font-size: 13px;
   }
@@ -30,4 +34,5 @@ td.text-ajust {
 {
   background-color:transparent
 }
+
 

@@ -20,14 +20,14 @@
           <tbody>
             <tr *ngFor="let user of users" class="scrollme span-margin">
               <td class="td-title" data-title="Nombre"><span>{{user.lastName}} {{user.name}}</span></td>
-              <td class="td-title" data-title="Tipo"><span>{{user.nameRole}}</span></td>
+              <td class="td-title" data-title="Tipo"><span>{{user.roleName}}</span></td>
               <td class="td-title" data-title="Teléfono"><span>{{user.phone}}</span></td>
               <td class="td-title text-ajust" data-title="Email"><span>{{user.email}}</span></td>
               <td class="td-title" data-title="Acción">
                 <span class="btn-action-container">
                   <button class="btn btn-primary btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}"><i class="fa fa-check"></i></button>
                   <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/user-detail']" [queryParams]="{id:user.id}"><i class="fa fa-pencil-square-o "></i></button>
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(user.id)"><i class="fa fa-trash-o "></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(user.id, user.email)"><i class="fa fa-trash-o "></i></button>
                 </span>
               </td>
             </tr>

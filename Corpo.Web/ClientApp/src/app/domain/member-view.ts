@@ -1,4 +1,5 @@
 export class MemberView {
+  id: number;
   lastName: string;
   name: string;
   birthDate: string;
@@ -11,4 +12,5 @@ export class MemberView {
   facebook: string;
   planId: number;
   email: string
+  planType: number
 }

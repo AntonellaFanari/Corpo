@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Account } from '../../../domain/account';
 import { Role } from '../../../domain/role';
 import { User } from '../../../domain/user';
 import { UserView } from '../../../domain/user-view';
@@ -14,6 +15,7 @@ import { Password } from '../../validations/password';
 export class UserFormComponent implements OnInit {
   roles: Role[] = [];
   formCreate: FormGroup;
+  formAccount: FormGroup;
   sendForm: boolean = false;
   dt: Date = new Date();
   user: UserView;
@@ -24,12 +26,14 @@ export class UserFormComponent implements OnInit {
       lastName: ['', Validators.required],
       name: ['', Validators.required],
       birthDate: [this.dt, Validators.required],
-      phone: ['', Validators.required],
+      phone: ['', Validators.required], 
+      address: ['', Validators.required],
+      roleId: ['', Validators.required]
+    });
+    this.formAccount = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(this.unamePattern)]],
       repeatPassword: '',
-      address: ['', Validators.required],
-      roleId: ['', Validators.required]
     }, { validators: Password.mustMatch('password', 'repeatPassword') })
   }
   ngOnInit() {
@@ -45,7 +49,10 @@ export class UserFormComponent implements OnInit {
   get f() {
 
     return this.formCreate.controls;
+  }
 
+  get fAccount() {
+    return this.formAccount.controls;
   }
   createUser() {
     this.sendForm = true;
@@ -57,9 +64,24 @@ export class UserFormComponent implements OnInit {
       newUser.birthDate = this.formCreate.value.birthDate;
       newUser.phone = this.formCreate.value.phone;
       newUser.address = this.formCreate.value.address;
-      newUser.email = this.formCreate.value.email;
-      newUser.password = this.formCreate.value.password;
+      if (this.modeCreate) {
+        var account = this.createAccount();
+        newUser.email = account.email;
+        newUser.password = account.password;
+      }
       return newUser;
+    } else {
+      return null;
+    }
+  }
+
+  createAccount() {
+    this.sendForm = true;
+    if (this.formAccount.valid) {
+      var newAccount = new Account();
+      newAccount.email = this.formAccount.value.email;
+      newAccount.password = this.formAccount.value.password;
+      return newAccount;
     } else {
       return null;
     }
@@ -88,8 +110,5 @@ export class UserFormComponent implements OnInit {
         address: this.user.address,
         roleId: this.user.roleId,
       })
-
     }
-
-   
  }

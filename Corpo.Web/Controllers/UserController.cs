@@ -54,9 +54,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpDelete("[action]")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, string email)
         {
-            _userService.Delete(id);
+            _userService.Delete(id, email);
             return Ok();
         }
     }

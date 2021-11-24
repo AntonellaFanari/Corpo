@@ -1,0 +1,55 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Planes</h4>
+        <button type="button" class="btn btn-success pull-right" routerLink="/clase-crear">Agregar Clase</button>
+        <button type="button" class="btn btn-success pull-right" routerLink="/plan-crear">Agregar Plan</button>
+      </div>
+      <hr>
+      <section *ngIf="plans.length>0 ; else: elseBlock1" id="no-more-tables">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Plan</th>
+              <th class="numeric">Créditos</th>
+              <th class="numeric">Precio</th>
+              <th class="numeric">Clases</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let plan of plans">
+              <td data-title="Plan"><span>{{plan.name}}</span></td>
+              <td data-title="Créditos"><span>{{plan.credits}}</span></td>
+              <td data-title="Precio"><span>{{plan.price}}</span></td>
+              <td data-title="Clases">
+                <table *ngIf="plan.class.length>0 ; else: elseBlock2">
+                  <tbody>
+                    <tr *ngFor="let class of plan.class">
+                      <td>
+                        {{class.name}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td data-title="Acción">
+                <span class="btn-action-container">
+                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/plan-editar']" [queryParams]="{id:plan.id}"><i class="fa fa-pencil-square-o "></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(plan.id)"><i class="fa fa-trash-o "></i></button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock1><h5>No hay registros para mostrar</h5></ng-template>
+      <ng-template #elseBlock2><h6>No hay clases asignadas</h6></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+
+
+</section>

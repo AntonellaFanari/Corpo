@@ -1,0 +1,48 @@
+<section class="wrapper">
+  <div class="modal-content modal-lg">
+    <header class="modal-header bg-success"><h3 class="mb text-center">Nueva Clase</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <form [formGroup]="formCreate">
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="col-sm-12 pull-left">
+                    <label class="col-sm-12 control-label">Nombre:</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" formControlName="name">
+                      <p *ngIf="sendForm && f.name.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="col-sm-12 pull-left">
+                    <label class="col-sm-12 control-label">Personalizada:</label>
+                    <select class="form-control" formControlName="personalized" (change)="selectPersonalized($event.target.value)">
+                      <option value="" disabled>Seleccionar...</option>
+                      <option value="yes">Si</option>
+                      <option value="no">No</option>
+                    </select>
+                    <p *ngIf="sendForm && f.personalized.errors?.required">*el campo es requerido</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/plan-list']">Cancelar</button>
+        <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+

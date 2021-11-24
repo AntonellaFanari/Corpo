@@ -45,5 +45,12 @@ namespace Corpo.Data.Repositories
             return account;
 
         }
+
+        public void Delete(int id)
+        {
+            var account = _context.Account.Find(id);
+            _context.Account.Remove(account);
+            _context.SaveChanges();
+        }
     }
 }

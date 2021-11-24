@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberView } from '../../../domain/member-view';
+import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 
 @Component({
@@ -9,9 +10,13 @@ import { MemberService } from '../../../services/member.service';
 })
 export class MemberListComponent implements OnInit {
   members: MemberView[] = [];
-  constructor(private memberService: MemberService) { }
+  constructor(private memberService: MemberService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.getAll();
+  }
+
+  getAll() {
     this.memberService.getAll().subscribe(
       (result) => {
         console.log(result);
@@ -19,6 +24,19 @@ export class MemberListComponent implements OnInit {
       },
       error => console.error(error)
     );
+  }
+
+  delete(id) {
+    this.customAlertService.displayAlert("Gestión de Socios", ["¿Está seguro que desea eliminar este socio?"], () => {
+      this.memberService.delete(id).subscribe(
+        result => {
+          this.getAll();
+        },
+        error => {
+          console.error(error);
+          this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar el socio."]);
+        })
+    }, true);
   }
 
 }

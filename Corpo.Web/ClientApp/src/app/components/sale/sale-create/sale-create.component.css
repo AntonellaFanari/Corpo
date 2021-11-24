@@ -1,0 +1,26 @@
+tr.span-margin > td > span {
+  margin-left: 15px;
+}
+
+td.text-ajust {
+  text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 30%;
+  }
+
+  .detailSale-table {
+    font-size: 13px;
+    border: 1px solid #808080;
+    margin-top: 2px;
+  }
+
+
+  .btn-action-list button {
+    margin-left: 35px !important;
+    margin-right: 35px !important;
+    margin-top: 31px !important;
+  }
+}

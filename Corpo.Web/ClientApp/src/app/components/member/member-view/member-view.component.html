@@ -2,7 +2,7 @@
   <div class="row mt">
     <div class="col-md-12">
       <div class="task-panel ">
-        <h4 class="table-title mt-2">Información del Usuario</h4>
+        <h4 class="table-title mt-2">Información personal</h4>
       </div>
       <hr>
       <section id="no-more-tables">
@@ -36,10 +36,93 @@
             </tr>
           </tbody>
         </table>
-        <div>
-          <button type="button" class="btn btn-secondary pull-right" routerLink="/member-list">Volver</button>
-        </div>
       </section>
     </div>
   </div>
-  </section>
+</section>
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title mt-2">Información médica</h4>
+      </div>
+      <hr>
+      <section id="no-more-tables">
+        <table class="table table-bordered table-condensed cf user-table">
+          <thead class="cf table-thead">
+            <tr>
+              <th class="numeric">Edad</th>
+              <th class="numeric">Sexo</th>
+              <th class="numeric">Periodo</th>
+              <th class="numeric">Peso</th>
+              <th class="numeric">Alergias</th>
+              <th class="numeric">Enfermedad Cardiaca</th>
+              <th class="numeric">Enfermedad Respiratoria</th>
+              <th class="numeric">Medicación Habitual</th>
+              <th class="numeric">Intervención Quirurgica</th>
+              <th class="numeric">Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="scrollme" *ngIf="medicalHistory">
+              <td class="numeric" data-title="Edad"><span>{{age}}</span></td>
+              <td data-title="Sexo"><span>{{medicalHistory.gender}}</span></td>
+              <td data-title="Periodo"><span>{{medicalHistory.period}}</span></td>
+              <td data-title="Peso"><span>{{medicalHistory.weight}}</span></td>
+              <td data-title="Alergias"><span>{{medicalHistory.allergies}}</span></td>
+              <td data-title="E. Cardiaca"><span>{{medicalHistory.heartDisease}}</span></td>
+              <td data-title="E. Respiratoria"><span>{{medicalHistory.respiratoryDisease}}</span></td>
+              <td data-title="Medic. Habitual"><span>{{medicalHistory.habitualMedication}}</span></td>
+              <td data-title="Int. Quirurgica"><span>{{medicalHistory.surgicalIntervention}}</span></td>
+              <td data-title="Observaciones"><span>{{medicalHistory.observations}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</section>
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-lg-12">
+      <div class="task-panel ">
+        <h4 class="table-title mt-2">Información de lesiones</h4>
+      </div>
+      <hr>
+      <div *ngIf="injuries.length>0; else: elseBlock ">
+        <table class="table table-bordered table-condensed cf scrollme detail-table">
+          <thead class="cf">
+            <tr>
+              <th>
+                <div class="row">
+                  <div class="col-lg-3 col-md-6 col-xs-6 "><label>Miembro Lesionado:</label></div>
+                  <div class="col-lg-6 col-md-6 col-xs-6">
+                    <div class="form-group col-lg-3 col-md-6 col-xs-6">
+                      <select class="selectpicker form-control" data-style="btn-success" (change)="selectInjury($event.target.value)">
+                        <option value="" disabled>Seleccionar</option>
+                        <option value="all">Todos</option>
+                        <option *ngFor="let injury of injuries; index as i" value="{{i}}">{{injury.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let file of injuryFiles">
+              <td>
+                <span>{{file.name}}</span>
+                <button type="button" class="btn btn-primary btn-xs pull-right"><i class="fa fa-download"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-secondary pull-left" routerLink="/member-list">Volver</button>
+    </div>
+  </div>
+</section>
+<ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>

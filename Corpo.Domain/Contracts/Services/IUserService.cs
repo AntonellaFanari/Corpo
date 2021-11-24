@@ -16,6 +16,6 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse Add(UserDto user);
         User GetById(int id);
         DomainResponse Update(int id, User user);
-        void Delete(int id);
+        DomainResponse Delete(int id, string email);
     }
 }

@@ -17,6 +17,10 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ISaleService, SaleService>();
+            services.AddTransient<IPlanService, PlanService>();
+            services.AddTransient<IClassService, ClassService>();
         }
     }
 }

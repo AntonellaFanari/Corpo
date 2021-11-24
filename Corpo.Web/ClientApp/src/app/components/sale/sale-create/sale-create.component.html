@@ -1,0 +1,115 @@
+<section class="wrapper">
+  <div class="modal-content">
+    <header class="modal-header bg-success"><h5>Ventas</h5></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <form [formGroup]="formDetailsSale">
+            <div class="col-12 card">
+              <div class="row card-body">
+                <div class="row">
+                  <div class="dropdown card-body col-12 formValidators">
+                    <a class="dropdown-toggle" id="dropdown1" data-toggle="dropdown">
+                      <label class="form-label">Socio</label>
+                      <input type="text" class="form-control" placeholder="Buscar Socio" formControlName="memberName" />
+                    </a>
+                    <p *ngIf="sendDetailSale && f.memberName.errors?.required">*Debe seleccionar un socio.</p>
+                    <div class="dropdown-menu form-control">
+                      <a *ngFor="let member of members" class="dropdown-item" (click)="selectMember(member)">{{member.lastName}} {{member.name}}</a>
+                    </div>
+                  </div>
+                  <div *ngIf="view" class="card-body col-7 pull-left">
+                    <select>
+                      <option *ngFor="let member of members">{{member.lastName}} {{member.name}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card bg-light pull-left">
+              <div class="card-body row">
+                <div class="dropdown card-body col-12 formValidators">
+                  <a class="dropdown-toggle" id="dropdown2" data-toggle="dropdown">
+                    <label class="form-label">Producto</label>
+                    <input type="text" class="form-control" placeholder="Buscar Producto" formControlName="description" />
+                  </a>
+                  <p *ngIf="sendDetailSale && f.description.errors?.required">*Debe seleccionar un producto.</p>
+                  <div class="dropdown-menu form-control">
+                    <a *ngFor="let prod of products" class="dropdown-item" (click)="selectProduct(prod)">{{prod.description}}</a>
+                  </div>
+                </div>
+              </div>
+              <div class="row card-body">
+                <div class="row">
+                  <div class="card-body col-3 pull-left formValidators">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" class="form-control" formControlName="quantity" (blur)="calculateTotal()" />
+                    <p *ngIf="sendDetailSale && f.quantity.errors?.min">*La cantidad debe ser mayor a "0".</p>
+                  </div>
+                  <div class="card-body col-3 pull-right">
+                    <label class="form-label">Precio</label>
+                    <input type="number" class="form-control" formControlName="price" />
+                  </div>
+                  <div class="card-body col-3 pull-right">
+                    <label class="form-label">Total</label>
+                    <input type="number" class="form-control" formControlName="total" />
+                  </div>
+                  <div class="card-body col-3 pull-right">
+                    <button class="btn btn-success ml-35 mr-35 mt-31" (click)="addDetailSale()">OK</button>
+                    <button class="btn btn-success ml-35 mr-35 mt-31" (click)="clearForm()"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="detailsSale.length>0" class="col-12 card bg-light pull-right">
+          <table class="table table-bordered table-condensed cf scrollme detailSale-table">
+            <thead class="cf">
+              <tr>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of detailsSale; index as i" class="scrollme">
+                <td class="td-title">{{detail.description}}</td>
+                <td class="td-title">{{detail.quantity}}</td>
+                <td class="td-title">{{detail.price}}</td>
+                <td class="td-title">{{detail.quantity*detail.price}}</td>
+                <td class="td-title"><button class="btn btn-danger btn-xs" (click)="removeList(i)"><i class="fa fa-trash-o "></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-12 card">
+          <div class="row col-6 pull-right">
+            <div class="card-body col-3 pull-right">
+              <label class="form-label">TOTAL A COBRAR $</label>
+            </div>
+            <div class="card-body col-3 pull-right">
+              <input type="number" class="form-control col-6 pull-right" [(ngModel)]="total" />
+            </div>
+          </div>
+        </div>
+        <div class="col-12 card">
+          <div class="row">
+            <div class="card-body col-3 pull-left">
+              <button type="button" class="form-control col-3 btn btn-secondary pull-left" [routerLink]="['/caja']">Volver</button>
+            </div>
+            <div class="card-body col-3 pull-right">
+              <button type="button" class="form-control col-3 btn btn-success pull-right" (click)="submit()">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+

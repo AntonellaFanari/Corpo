@@ -1,0 +1,56 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <!--<div class="container">
+        <ul class="nav nav-tabs mt-3">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#no-more-tables">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#opcion2">Compras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#opcion3">Pedidos</a>
+          </li>
+        </ul>
+      </div>-->
+      <div class="task-panel ">
+        <h4 class="table-title">Productos</h4>
+        <button type="button" class="btn btn-success pull-right" routerLink="/product-create">Agregar</button>
+        <button type="button" class="btn btn-success pull-right" routerLink="/venta-agregar">Ventas</button>
+      </div>
+        <hr>
+        <section *ngIf="products.length>0 ; else elseBlock" id="no-more-tables" class="tab-pane fade show active">
+          <table class="table table-bordered table-condensed cf scrollme user-table">
+            <thead class="cf">
+              <tr>
+                <th class="numeric">Descripción</th>
+                <th class="numeric">Stock</th>
+                <th class="numeric">Precio</th>
+                <th class="numeric">Punto de Reposición</th>
+                <th class="numeric">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let prod of products" class="scrollme span-margin">
+                <td class="td-title text-ajust" data-title="Descripción"><span>{{prod.description}}</span></td>
+                <td class="td-title" data-title="Stock"><span>{{prod.stock}}</span></td>
+                <td class="td-title" data-title="Precio"><span>{{prod.price}}</span></td>
+                <td class="td-title" data-title="Punto de Reposición"><span>{{prod.replenishmentPoint}}</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/product-detail']" [queryParams]="{id:prod.id}"><i class="fa fa-pencil-square-o "></i></button>
+                    <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(prod.id)"><i class="fa fa-trash-o "></i></button>
+                    <button class="btn btn-success btn-xs btn-action-list"><i class="fa fa-shopping-cart"></i></button>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+      </div>
+      <!-- /content-panel -->
+    </div>
+  <!-- /col-md-12 -->
+</section>

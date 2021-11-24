@@ -1,0 +1,39 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Clases</h4>
+        <button type="button" class="btn btn-success pull-right" routerLink="/clase-crear">Agregar Clase</button>
+      </div>
+      <hr>
+      <section *ngIf="classes.length>0 ; else: elseBlock" id="no-more-tables">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Nombre</th>
+              <th class="numeric">Personalizada</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let class of classes">
+              <td data-title="Nombre"><span>{{class.name}}</span></td>
+              <td data-title="Personalizada"><span>{{class.personalized}}</span></td>
+              <td data-title="Acción">
+                <span class="btn-action-container">
+                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/clase-editar']" [queryParams]="{id:class.id}"><i class="fa fa-pencil-square-o "></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(class.id)"><i class="fa fa-trash-o "></i></button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+
+
+</section>

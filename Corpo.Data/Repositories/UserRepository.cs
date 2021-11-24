@@ -42,8 +42,14 @@ namespace Corpo.Data.Repositories
 
         public void Add(User user)
         {
+            try
+            {
                 _context.User.Add(user);
                 _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+            }      
         }
 
         public User GetById(int id)
@@ -71,9 +77,8 @@ namespace Corpo.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(int id, User user)
+        public void Update(User user)
         {
-            user.Id = id;
             _context.User.Update(user);
             _context.SaveChanges();
         }

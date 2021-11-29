@@ -57,7 +57,7 @@ namespace Corpo.Domain.Services
                 planQuery.Type = planEdit.Type;
                 planQuery.Credits = planEdit.Credits;
                 planQuery.Price = planEdit.Price;
-                planQuery.Class = planEdit.Class;
+                planQuery.Classes = planEdit.Classes;
                 _planRepository.Update(planQuery);
                 return new DomainResponse
                 {

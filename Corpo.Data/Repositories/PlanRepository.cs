@@ -21,12 +21,12 @@ namespace Corpo.Data.Repositories
         public List<Plan> GetPlans()
         {
             return _context.Plan
-                .Include(x=>x.Class).ToList();
+                .Include(x=>x.Classes).ToList();
         }
 
         public void Add(Plan newPlan)
         {
-            foreach (var clase in newPlan.Class)
+            foreach (var clase in newPlan.Classes)
             {
                 _context.Class.Attach(clase);
             };
@@ -37,7 +37,7 @@ namespace Corpo.Data.Repositories
         public Plan GetById(int id)
         {
             var listPlans = _context.Plan.Where(x => x.Id == id)
-                .Include(x=>x.Class)
+                .Include(x=>x.Classes)
                 .ToList();
             return listPlans.FirstOrDefault(x=>x.Id == id);
         }

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Plan = void 0;
 var Plan = /** @class */ (function () {
     function Plan() {
-        this.class = [];
+        this.classes = [];
     }
     return Plan;
 }());

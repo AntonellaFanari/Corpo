@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserDetailComponent } from './user-detail.component';
+import { ShiftEditComponent } from './shift-edit.component';
 
-describe('UserDetailComponent', () => {
-  let component: UserDetailComponent;
-  let fixture: ComponentFixture<UserDetailComponent>;
+describe('ShiftEditComponent', () => {
+  let component: ShiftEditComponent;
+  let fixture: ComponentFixture<ShiftEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserDetailComponent ]
+      declarations: [ ShiftEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserDetailComponent);
+    fixture = TestBed.createComponent(ShiftEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,174 @@
+<section class="wrapper">
+  <div class="task-panel ">
+    <h4 class="table-title">Turnos</h4>
+    <button type="button" class="btn btn-success pull-right" routerLink="/turno-crear">Agregar</button>
+  </div>
+  <hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 card bg-light">
+        <div class="row card-body">
+          <div class="col-lg-12">
+            <div class="card-body row">
+              <div class="col-lg-3 col-md-6 col-xs-12 pull-left mt-3">
+                <label class="form-label">Desde:</label>
+                <input type="date" class="form-control col-6" [value]="from" />
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-3">
+                <label class="form-label">Hasta:</label>
+                <input type="date" class="form-control col-6" [value]="to" />
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-3">
+                <label class="form-label">Clase:</label>
+                <select class="form-control col-12">
+                  <option class="form-control col-12" value="" disabled>Todos</option>
+                  <option *ngFor="let class of classes" class="form-control col-12" value={{class.id}}>{{class.name}}</option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-4">
+                <div class="mt-4">
+                  <button type="button" class="btn btn-primary form-control col-6 pull-right" routerLink="/turno-list" (click)="toListShift()">Listar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="toList" class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="member" list="members" placeholder="Buscar" class="form-control">
+            <datalist id="members">
+              <select class="form-control col-12" id="members">
+                <option *ngFor="let member of members" class="form-control col-12" value={{member.lastName}}{{member.name}}>{{member.lastName}}{{member.name}}</option>
+              </select>
+            </datalist>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="toList" class="row mt-2">
+    <div class="col-md-12">
+      <section id="no-more-tables">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table table-bordered table-condensed cf mb-0 user-table">
+            <thead class="cf">
+              <tr>
+                <th class="numeric"><span><input type="checkbox" /></span></th>
+                <th class="numeric">Fecha</th>
+                <th class="numeric">Cupo</th>
+                <th class="numeric">Clase</th>
+                <th class="numeric">Profesor</th>
+                <th class="numeric">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme span-margin" *ngFor="let shift of shifts">
+                <td class="td-title" data-title=""><span><input type="checkbox" value="{{shift.id}}" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>{{shift.day}}{{shift.hour}}</span></td>
+                <td class="td-title" data-title="Cupo"><span>{{shift.quota}}</span></td>
+                <td class="td-title" data-title="Clase"><span>{{shift.className}}</span></td>
+                <td class="td-title text-ajust" data-title="Profesor"><span>{{shift.userName}}</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/asistencias']" [queryParams]="{id:shift.id}">ver asistencias</button>
+                  </span>
+                </td>
+              </tr>
+              <tr class="scrollme span-margin">
+                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
+                <td class="td-title" data-title="Cupo"><span>15</span></td>
+                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
+                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
+                  </span>
+                </td>
+              </tr>
+              <tr class="scrollme span-margin">
+                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
+                <td class="td-title" data-title="Cupo"><span>15</span></td>
+                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
+                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
+                  </span>
+                </td>
+              </tr>
+              <tr class="scrollme span-margin">
+                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
+                <td class="td-title" data-title="Cupo"><span>15</span></td>
+                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
+                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
+                  </span>
+                </td>
+              </tr>
+              <tr class="scrollme span-margin">
+                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
+                <td class="td-title" data-title="Cupo"><span>15</span></td>
+                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
+                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
+                  </span>
+                </td>
+              </tr>
+              <tr class="scrollme span-margin">
+                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
+                <td class="td-title" data-title="Cupo"><span>15</span></td>
+                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
+                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
+                  </span>
+                </td>
+              </tr>
+              <tr class="scrollme span-margin">
+                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
+                <td class="td-title" data-title="Cupo"><span>15</span></td>
+                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
+                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
+                <td class="td-title" data-title="Acción">
+                  <span class="btn-action-container">
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div class="col-lg-12 card">
+        <div class="row card-body">
+          <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
+            <button type="button" class="btn btn-success form-control col-6 pull-right" routerLink="/turno-list">Asignar Profesor</button>
+          </div>
+          <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
+            <button type="button" class="btn btn-warning form-control col-6 pull-right" routerLink="/turno-list">Asignar Cupo</button>
+          </div>
+          <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
+            <button type="button" class="btn btn-danger form-control col-6 pull-right" routerLink="/turno-list">Eliminar</button>
+          </div>
+        </div>
+      </div>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+  </div>
+</section>
+
+
+

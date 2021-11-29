@@ -5,11 +5,11 @@ import { ProductService } from '../../../services/product.service';
 import { ProductFormComponent } from '../product-form/product-form.component';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css']
+  selector: 'app-product-edit',
+  templateUrl: './product-edit.component.html',
+  styleUrls: ['./product-edit.component.css']
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductEditComponent implements OnInit {
   id: number;
   @ViewChild(ProductFormComponent, { static: true }) formProduct: ProductFormComponent;
 /*  title = "Modificación de Producto";*/
@@ -29,7 +29,7 @@ export class ProductDetailComponent implements OnInit {
     this.productService.update(this.id, productUpdate).subscribe(
       result => {
         console.log(result);
-        this.router.navigate(['/product-list'])
+        this.router.navigate(['/productos-list'])
       },
       error => {
         console.error(error);

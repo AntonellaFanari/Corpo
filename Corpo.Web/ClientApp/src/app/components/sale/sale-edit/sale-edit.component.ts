@@ -12,11 +12,11 @@ import { SaleService } from '../../../services/sale.service';
 import { UserService } from '../../../services/user.service';
 
 @Component({
-  selector: 'app-sale-detail',
-  templateUrl: './sale-detail.component.html',
-  styleUrls: ['./sale-detail.component.css']
+  selector: 'app-sale-edit',
+  templateUrl: './sale-edit.component.html',
+  styleUrls: ['./sale-edit.component.css']
 })
-export class SaleDetailComponent implements OnInit {
+export class SaleEditComponent implements OnInit {
   userRegisterSale: UserView;
   titleModal: string;
   properties: string[] = [];

@@ -6,5 +6,5 @@ export class Plan {
   credits: number;
   price: number;
   type: number;
-  class: Class[]=[];
+  classes: Class[]=[];
 }

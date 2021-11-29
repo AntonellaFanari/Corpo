@@ -7,11 +7,11 @@ import { UserFormComponent } from '../user-form/user-form.component';
 
 
 @Component({
-  selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css']
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
+  styleUrls: ['./user-edit.component.css']
 })
-export class UserDetailComponent{
+export class UserEditComponent{
   user: User;
   id: number;
   @ViewChild(UserFormComponent, { static: true }) formUser: UserFormComponent;

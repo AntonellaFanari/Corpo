@@ -5,11 +5,11 @@ import { MemberService } from '../../../../services/member.service';
 import { MedicalHistoryFormComponent } from '../medical-history-form/medical-history-form.component';
 
 @Component({
-  selector: 'app-medical-history-detail',
-  templateUrl: './medical-history-detail.component.html',
-  styleUrls: ['./medical-history-detail.component.css']
+  selector: 'app-medical-history-edit',
+  templateUrl: './medical-history-edit.component.html',
+  styleUrls: ['./medical-history-edit.component.css']
 })
-export class MedicalHistoryDetailComponent implements OnInit {
+export class MedicalHistoryEditComponent implements OnInit {
   id: number;
   medicalHistoryId: number;
   age: number;

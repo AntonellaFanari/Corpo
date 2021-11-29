@@ -65,7 +65,7 @@ export class PlanCreateComponent implements OnInit {
       let id = selectedClass[i].id;
       console.log(id);
       let clas = this.classes.find(x => x.id == id);
-      newPlan.class.push(clas);
+      newPlan.classes.push(clas);
     };
     return newPlan;
   }

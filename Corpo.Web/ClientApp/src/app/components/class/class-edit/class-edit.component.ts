@@ -64,7 +64,7 @@ export class ClassEditComponent implements OnInit {
       this.classService.update(this.id, classEdit).subscribe(
         result => {
           console.log(result);
-          this.router.navigate(['/class-list']);
+          this.router.navigate(['/clases-list']);
         },
         error => {
           console.error(error);

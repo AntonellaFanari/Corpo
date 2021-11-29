@@ -35,5 +35,6 @@ namespace Corpo.Data
         public DbSet<CancelSale> CancelSale { get; set; }
         public DbSet<Purchase> Purchase { get; set; }
         public DbSet<OrderProducts> OrderProducts { get; set; }
+        public DbSet<Shift> Shift { get; set; }
     }
 }

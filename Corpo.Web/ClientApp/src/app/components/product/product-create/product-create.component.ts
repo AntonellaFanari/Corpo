@@ -22,7 +22,7 @@ export class ProductCreateComponent implements OnInit {
     this.productService.add(newProduct).subscribe(
       result => {
         console.log(result);
-        this.router.navigate(['/product-list'])
+        this.router.navigate(['/productos-list'])
       },
       error => {
         console.error(error);

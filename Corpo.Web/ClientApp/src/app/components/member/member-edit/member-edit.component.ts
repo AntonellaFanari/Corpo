@@ -5,11 +5,11 @@ import { MemberService } from '../../../services/member.service';
 import { MemberFormComponent } from '../member-form/member-form.component';
 
 @Component({
-  selector: 'app-member-detail',
-  templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.css']
+  selector: 'app-member-edit',
+  templateUrl: './member-edit.component.html',
+  styleUrls: ['./member-edit.component.css']
 })
-export class MemberDetailComponent implements OnInit {
+export class MemberEditComponent implements OnInit {
   id: number;
   @ViewChild(MemberFormComponent, { static: true }) formMember: MemberFormComponent;
 

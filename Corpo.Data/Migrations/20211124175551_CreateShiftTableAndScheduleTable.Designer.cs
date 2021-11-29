@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20211124175551_CreateShiftTableAndScheduleTable")]
+    partial class CreateShiftTableAndScheduleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -439,6 +441,34 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Sale");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Schedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Day")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Hour")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ShiftId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Schedule");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Shift", b =>
                 {
                     b.Property<int>("Id")
@@ -449,13 +479,7 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Day")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Hour")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Quota")
@@ -464,14 +488,9 @@ namespace Corpo.Data.Migrations
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Shift");
                 });
@@ -662,11 +681,11 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.Shift", b =>
+            modelBuilder.Entity("Corpo.Domain.Models.Schedule", b =>
                 {
-                    b.HasOne("Corpo.Domain.Models.Class", "Class")
+                    b.HasOne("Corpo.Domain.Models.Shift", "Shift")
                         .WithMany()
-                        .HasForeignKey("ClassId")
+                        .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -676,9 +695,20 @@ namespace Corpo.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Class");
+                    b.Navigation("Shift");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Shift", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>

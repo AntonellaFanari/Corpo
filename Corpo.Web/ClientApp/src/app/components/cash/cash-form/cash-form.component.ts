@@ -11,7 +11,7 @@ import { AccountService } from '../../../services/account.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { SaleService } from '../../../services/sale.service';
 import { UserService } from '../../../services/user.service';
-import { SaleDetailComponent } from '../../sale/sale-detail/sale-detail.component';
+import { SaleEditComponent } from '../../sale/sale-edit/sale-edit.component';
 import { UserFormComponent } from '../../user/user-form/user-form.component';
 
 @Component({
@@ -23,7 +23,7 @@ export class CashFormComponent implements OnInit {
   sales: Sale[] = [];
   totalSale = 0;
  
-  @ViewChild(SaleDetailComponent, { static: true }) saleDetailComponent: SaleDetailComponent;
+  @ViewChild(SaleEditComponent, { static: true }) saleDetailComponent: SaleEditComponent;
 
   constructor(private saleService: SaleService) { }
 

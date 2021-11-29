@@ -47,6 +47,8 @@
     <None Remove="ClientApp\src\app\domain\role-access.ts" />
     <None Remove="ClientApp\src\app\domain\role.ts" />
     <None Remove="ClientApp\src\app\domain\sale.ts" />
+    <None Remove="ClientApp\src\app\domain\shift-schedule.ts" />
+    <None Remove="ClientApp\src\app\domain\shift.ts" />
     <None Remove="ClientApp\src\app\domain\status.ts" />
     <None Remove="ClientApp\src\app\domain\user-view.ts" />
     <None Remove="ClientApp\src\app\domain\user.ts" />
@@ -70,6 +72,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\injury.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\shift-schedule.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\shift.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\status.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user.ts" />
@@ -80,10 +84,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Corpo.Data\Corpo.Data.csproj" />
     <ProjectReference Include="..\Corpo.Domain\Corpo.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\app\components\product\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

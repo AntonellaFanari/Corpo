@@ -9,11 +9,11 @@ import { Class } from '../../../domain/class';
 import { ClassService } from '../../../services/class.service';
 
 @Component({
-  selector: 'app-plan-detail',
-  templateUrl: './plan-detail.component.html',
-  styleUrls: ['./plan-detail.component.css']
+  selector: 'app-plan-edit',
+  templateUrl: './plan-edit.component.html',
+  styleUrls: ['./plan-edit.component.css']
 })
-export class PlanDetailComponent implements OnInit {
+export class PlanEditComponent implements OnInit {
   formEdit: FormGroup;
   sendForm: boolean = false;
   plan: Plan;
@@ -69,7 +69,7 @@ export class PlanDetailComponent implements OnInit {
       type: this.plan.type,
       credits: this.plan.credits,
       price: this.plan.price,
-      classes: this.plan.class
+      classes: this.plan.classes
     })
   }
 
@@ -84,7 +84,7 @@ export class PlanDetailComponent implements OnInit {
       let id = selectedClass[i].id;
       console.log(id);
       let clas = this.classes.find(x => x.id == id);
-      planEdit.class.push(clas);
+      planEdit.classes.push(clas);
     };
     return planEdit;
   }

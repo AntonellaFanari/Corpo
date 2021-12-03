@@ -24,9 +24,9 @@
               <td data-title="Créditos"><span>{{plan.credits}}</span></td>
               <td data-title="Precio"><span>{{plan.price}}</span></td>
               <td data-title="Clases">
-                <table *ngIf="plan.class.length>0 ; else: elseBlock2">
+                <table *ngIf="plan.classes.length>0 ; else: elseBlock2">
                   <tbody>
-                    <tr *ngFor="let class of plan.class">
+                    <tr *ngFor="let class of plan.classes">
                       <td>
                         {{class.name}}
                       </td>

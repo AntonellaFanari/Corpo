@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Shift } from '../domain/shift';
+import { ShiftList } from '../domain/shift-list';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +21,21 @@ export class ShiftService {
     this.url = url;
   }
 
-  public getAll(from: string, to: string) {
-    return this.http.get<any>(this.url + 'api/shift/getAll?from=' + from + '&&?to=' + to);
+  public getAll(from: string, to: string, classId: number) {
+    return this.http.get<any>(this.url + 'api/shift/getAll?from=' + from + '&to=' + to + '&classId=' + classId);
+  }
+
+  public add(shifts: Shift[]) {
+    console.log(shifts);
+    return this.http.post(this.url + 'api/shift/add', shifts, httpOptions);
+  }
+
+  public update(shifts: Shift[]) {
+    console.log(shifts);
+    return this.http.put(this.url + 'api/shift/update', shifts, httpOptions);
+  }
+
+  public delete(idShifts: number[]) {
+    return this.http.post(this.url + 'api/shift/delete', idShifts, httpOptions);
   }
 }

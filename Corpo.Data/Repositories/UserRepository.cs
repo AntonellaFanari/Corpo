@@ -87,5 +87,11 @@ namespace Corpo.Data.Repositories
         {
             return _context.User.Find(email);
         }
+
+        public List<User> GetAllByNameRole(string role)
+        {
+            var roleId = _context.Role.FirstOrDefault(x => x.Name == role).Id;
+            return _context.User.Where(x => x.RoleId == roleId).ToList();
+        }
     }
 }

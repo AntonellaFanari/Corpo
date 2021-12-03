@@ -85,7 +85,23 @@ namespace Corpo.Domain.Services
         {
             return _userRepository.GetById(id);
         }
-
+        public DomainResponse GetAllByNameRole(string role)
+        {
+            var response = _userRepository.GetAllByNameRole(role);
+            if (response.Count > 0)
+            {
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = response
+                };
+            }
+            else
+            {
+                return new DomainResponse(false, "", "no existen usuarios del tipo Profesor");
+            }
+         
+        }
         public DomainResponse Delete(int id, string email)
         {
             var account = _accountRepository.GetByEmail(email);

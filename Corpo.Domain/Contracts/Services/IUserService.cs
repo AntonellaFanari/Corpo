@@ -15,6 +15,7 @@ namespace Corpo.Domain.Contracts.Services
         List<User> GetAll();
         DomainResponse Add(UserDto user);
         User GetById(int id);
+        DomainResponse GetAllByNameRole(string role);
         DomainResponse Update(int id, User user);
         DomainResponse Delete(int id, string email);
     }

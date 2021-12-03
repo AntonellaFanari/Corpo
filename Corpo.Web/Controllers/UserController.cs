@@ -4,7 +4,9 @@ using Corpo.Domain.Models.Dtos;
 using Corpo.Domain.Views;
 using Corpo.Web.Controllers.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Corpo.Web.Controllers
 {
@@ -37,6 +39,14 @@ namespace Corpo.Web.Controllers
         {
             var user = ViewModels.ViewModels.FromDomainUser(_userService.GetById(id));
             return Ok(user);
+        }
+
+        [HttpGet("getAllByNameRole")]
+        public ActionResult GetAllByNameRole(string role)
+        {
+            var response = _userService.GetAllByNameRole(role);
+            var list = ((IEnumerable)response.Result).Cast<User>().ToList();
+            return Ok(list);
         }
 
         [HttpPost("[action]")]

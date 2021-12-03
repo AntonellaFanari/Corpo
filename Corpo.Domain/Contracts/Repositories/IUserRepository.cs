@@ -17,6 +17,7 @@ namespace Corpo.Domain.Contracts.Repositories
         User GetById(int id);
         User GetByIdAccount(int id);
         User GetByEmail(string email);
+        List<User> GetAllByNameRole(string role);
         void Update(User user);
         void Delete(int id);
     }

@@ -14,8 +14,8 @@ namespace Corpo.Domain.Models
         public int Quota { get; set; }
         public virtual Class Class { get; set; }
         public int ClassId { get; set; }
-        public DateTime Hour { get; set; }
-        public string Day { get; set; }
+        public TimeSpan Hour { get; set; }
+        public DateTime Day { get; set; }
         public virtual User User { get; set; }
         public int UserId { get; set; }
     }

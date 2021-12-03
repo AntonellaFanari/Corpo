@@ -53,6 +53,7 @@ import { ClassListComponent } from './components/class/class-list/class-list.com
 import { ShiftCreateComponent } from './components/shift/shift-create/shift-create.component';
 import { ShiftEditComponent } from './components/shift/shift-edit/shift-edit.component';
 import { ShiftListComponent } from './components/shift/shift-list/shift-list.component';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { ShiftListComponent } from './components/shift/shift-list/shift-list.com
     ClassListComponent,
     ShiftCreateComponent,
     ShiftEditComponent,
-    ShiftListComponent
+    ShiftListComponent,
+    SearchFilterPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -131,16 +133,17 @@ import { ShiftListComponent } from './components/shift/shift-list/shift-list.com
       { path: 'venta-agregar', component: SaleCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'egreso', component: OutflowComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'retiro', component: WithdrawalComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
-      { path: 'product-create', component: ProductCreateComponent, canActivate: [AuthGuard], data: { name: 'ABM' }  },
-      { path: 'productos-list', component: ProductListComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'product-detail', component: ProductEditComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'plan-list', component: PlanListComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'plan-crear', component: PlanCreateComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'plan-editar', component: PlanEditComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'clase-crear', component: ClassCreateComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'clases-list', component: ClassListComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'clase-editar', component: ClassEditComponent, canActivate: [AuthGuard], data: { name: 'ABM' } },
-      { path: 'turnos-list', component: ShiftListComponent }
+      { path: 'product-create', component: ProductCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'productos-list', component: ProductListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'product-detail', component: ProductEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'plan-list', component: PlanListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'plan-crear', component: PlanCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'plan-editar', component: PlanEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'clase-crear', component: ClassCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'clases-list', component: ClassListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'clase-editar', component: ClassEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'turnos-list', component: ShiftListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'turno-crear', component: ShiftCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } }
     ])
   ],
   entryComponents: [

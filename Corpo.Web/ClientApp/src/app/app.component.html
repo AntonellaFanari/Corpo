@@ -74,15 +74,14 @@
       <a *ngIf="!logueado" class="btn-login" [routerLink]="['/login']"><i class="fa fa-user-circle"></i></a>
       <div *ngIf="logueado" class="showback">
         <div class="btn-group">
-          <button type="button" class="btn btn-success dropdown-toggle btn-login" data-toggle="dropdown">
-            Mi cuenta <span class="caret"></span>
-          </button>
+          <p class="text-white">Bienvenido {{user.name }}</p>&nbsp;
+          <a class="text-white dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a>Hola, {{user.name}}</a></li>
-            <li><a>Mis datos</a></li>
-            <li><a>Notificaciones</a></li>
+            <li><a><i class="fa fa-user-o"></i>&nbsp;Mis datos</a></li>
+            <li><a><i class="fa fa-key"></i>&nbsp;Modificar contraseña</a></li>
+            <li><a><i class="fa fa-bell"></i>&nbsp;Notificaciones</a></li>
             <hr />
-            <li><a (click)="signOff()">Cerrar Sesión</a></li>
+            <li><a (click)="signOff()">Cerrar Sesión&nbsp;<i class="fa fa-sign-out"></i></a></li>
           </ul>
         </div>
       </div>

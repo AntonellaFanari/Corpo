@@ -12,50 +12,45 @@
             <div class="card-body row">
               <div class="col-lg-3 col-md-6 col-xs-12 pull-left mt-3">
                 <label class="form-label">Desde:</label>
-                <input type="date" class="form-control col-6" [value]="from" />
+                <input type="date" class="form-control col-6" [(ngModel)]="from" />
               </div>
               <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-3">
                 <label class="form-label">Hasta:</label>
-                <input type="date" class="form-control col-6" [value]="to" />
+                <input type="date" class="form-control col-6" [(ngModel)]="to" />
               </div>
               <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-3">
                 <label class="form-label">Clase:</label>
-                <select class="form-control col-12">
-                  <option class="form-control col-12" value="" disabled>Todos</option>
+                <select class="form-control col-12" (change)="selectClass($event.target.value)">
+                  <option class="form-control col-12" value="0">Todos</option>
                   <option *ngFor="let class of classes" class="form-control col-12" value={{class.id}}>{{class.name}}</option>
                 </select>
               </div>
               <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-4">
                 <div class="mt-4">
-                  <button type="button" class="btn btn-primary form-control col-6 pull-right" routerLink="/turno-list" (click)="toListShift()">Listar</button>
+                  <button type="button" class="btn btn-primary form-control col-6 pull-right" routerLink="/turnos-list" (click)="toListShift()">Listar</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div *ngIf="toList" class="col-12 card">
+      <div *ngIf="toList && shifts.length>0" class="col-12 card">
         <div class="row card-body">
           <div class="col-12">
-            <input type="text" name="member" list="members" placeholder="Buscar" class="form-control">
-            <datalist id="members">
-              <select class="form-control col-12" id="members">
-                <option *ngFor="let member of members" class="form-control col-12" value={{member.lastName}}{{member.name}}>{{member.lastName}}{{member.name}}</option>
-              </select>
-            </datalist>
+            <input type="text" name="filterShift" placeholder="Buscar" class="form-control" [(ngModel)]="filterShift">
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="toList" class="row mt-2">
-    <div class="col-md-12">
+  <div class="row mt-2">
+    <div *ngIf="toList && shifts.length>0; else elseBlock" class="col-md-12">
       <section id="no-more-tables">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
           <table class="table table-bordered table-condensed cf mb-0 user-table">
             <thead class="cf">
               <tr>
-                <th class="numeric"><span><input type="checkbox" /></span></th>
+                <th class="numeric"><span><input type="checkbox" [checked]="checkedAllShifts" (change)="checkedAll()"/></span></th>
                 <th class="numeric">Fecha</th>
                 <th class="numeric">Cupo</th>
                 <th class="numeric">Clase</th>
@@ -64,87 +59,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="scrollme span-margin" *ngFor="let shift of shifts">
-                <td class="td-title" data-title=""><span><input type="checkbox" value="{{shift.id}}" /></span></td>
-                <td class="td-title" data-title="Fecha"><span>{{shift.day}}{{shift.hour}}</span></td>
+              <tr class="scrollme span-margin" *ngFor="let shift of shifts | searchFilter: filterShift">
+                <td class="td-title" data-title=""><span><input type="checkbox" [checked]="shift.checked" value="{{shift.id}}" (change)="checked(shift)" /></span></td>
+                <td class="td-title" data-title="Fecha"><span>{{shift.day}} {{shift.hour}}</span></td>
                 <td class="td-title" data-title="Cupo"><span>{{shift.quota}}</span></td>
                 <td class="td-title" data-title="Clase"><span>{{shift.className}}</span></td>
                 <td class="td-title text-ajust" data-title="Profesor"><span>{{shift.userName}}</span></td>
                 <td class="td-title" data-title="Acción">
                   <span class="btn-action-container">
                     <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/asistencias']" [queryParams]="{id:shift.id}">ver asistencias</button>
-                  </span>
-                </td>
-              </tr>
-              <tr class="scrollme span-margin">
-                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
-                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
-                <td class="td-title" data-title="Cupo"><span>15</span></td>
-                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
-                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
-                <td class="td-title" data-title="Acción">
-                  <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
-                  </span>
-                </td>
-              </tr>
-              <tr class="scrollme span-margin">
-                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
-                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
-                <td class="td-title" data-title="Cupo"><span>15</span></td>
-                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
-                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
-                <td class="td-title" data-title="Acción">
-                  <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
-                  </span>
-                </td>
-              </tr>
-              <tr class="scrollme span-margin">
-                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
-                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
-                <td class="td-title" data-title="Cupo"><span>15</span></td>
-                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
-                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
-                <td class="td-title" data-title="Acción">
-                  <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
-                  </span>
-                </td>
-              </tr>
-              <tr class="scrollme span-margin">
-                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
-                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
-                <td class="td-title" data-title="Cupo"><span>15</span></td>
-                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
-                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
-                <td class="td-title" data-title="Acción">
-                  <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
-                  </span>
-                </td>
-              </tr>
-              <tr class="scrollme span-margin">
-                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
-                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
-                <td class="td-title" data-title="Cupo"><span>15</span></td>
-                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
-                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
-                <td class="td-title" data-title="Acción">
-                  <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
-                  </span>
-                </td>
-              </tr>
-              <tr class="scrollme span-margin">
-                <td class="td-title" data-title=""><span><input type="checkbox" /></span></td>
-                <td class="td-title" data-title="Fecha"><span>Miercoles 08/12 16:00</span></td>
-                <td class="td-title" data-title="Cupo"><span>15</span></td>
-                <td class="td-title" data-title="Clase"><span>Funcional</span></td>
-                <td class="td-title text-ajust" data-title="Profesor"><span>Valentino</span></td>
-                <td class="td-title" data-title="Acción">
-                  <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/user-view']" [queryParams]="{id:user.id, role:user.nameRole}">ver asistencias</button>
                   </span>
                 </td>
               </tr>
@@ -155,20 +78,79 @@
       <div class="col-lg-12 card">
         <div class="row card-body">
           <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
-            <button type="button" class="btn btn-success form-control col-6 pull-right" routerLink="/turno-list">Asignar Profesor</button>
+            <button type="button" class="btn btn-success form-control col-6 pull-right" data-toggle="modal" href="#myModalAssignTeacher" [disabled]="disabled" (click)="createShiftToModify()">Asignar Profesor</button>
           </div>
           <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
-            <button type="button" class="btn btn-warning form-control col-6 pull-right" routerLink="/turno-list">Asignar Cupo</button>
+            <button type="button" class="btn btn-warning form-control col-6 pull-right" data-toggle="modal" href="#myModalAssignQuota" [disabled]="disabled" (click)="createShiftToModify()">Asignar Cupo</button>
           </div>
           <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
-            <button type="button" class="btn btn-danger form-control col-6 pull-right" routerLink="/turno-list">Eliminar</button>
+            <button type="button" class="btn btn-danger form-control col-6 pull-right" [disabled]="disabled" (click)="delete()">Eliminar</button>
           </div>
         </div>
       </div>
-      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
     </div>
+    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
   </div>
 </section>
+<div class="container">
+  <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+  <div class="modal fade" id="myModalAssignTeacher">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Asignar Profesor</h4>
+          <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+        </div>
+
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <label class="form-label">Profesor:</label>
+          <select class="form-control col-12" (change)="selectUser($event.target.value, i)">
+            <option disabled value="">Seleccionar</option>
+            <option *ngFor="let user of users" value={{user.id}}>{{user.lastName}} {{user.name}}</option>
+          </select>
+
+          <!-- pie del diálogo -->
+          <p>Cantidad de clases: {{shiftToModify.length}}</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="assignTeacher()">Aceptar</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+    <div class="modal fade" id="myModalAssignQuota">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+          <!-- cabecera del diálogo -->
+          <div class="modal-header modal-title">
+            <h4 class="modal-title">Asignar Cupo</h4>
+            <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+          </div>
+
+          <!-- cuerpo del diálogo -->
+          <div class="modal-body">
+            <label class="form-label">Cupo:</label>
+            <input type="number" class="form-control col-6" [(ngModel)]="quota" />
+
+            <!-- pie del diálogo -->
+            <p>Cantidad de clases: {{shiftToModify.length}}</p>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal" (click)="assignQuota()">Aceptar</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 

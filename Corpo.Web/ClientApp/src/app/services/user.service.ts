@@ -34,6 +34,10 @@ export class UserService {
     return this.http.get<UserView>(this.url + 'api/user/getById?id=' + id);
   }
 
+  public getAllByNameRole(role: string) {
+    return this.http.get<any>(this.url + 'api/user/getAllByNameRole?role=' + role);
+  }
+
   public add(newUser: User): Promise<void> {
     console.log(newUser);
     return this.http.post<void>(this.url + 'api/user/add', newUser, httpOptions).toPromise();

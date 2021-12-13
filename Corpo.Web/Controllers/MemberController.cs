@@ -3,11 +3,13 @@ using Corpo.Domain.Models;
 using Corpo.Domain.Models.Dtos;
 using Corpo.Domain.Views;
 using Corpo.Web.Controllers.ExtensionMethods;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,14 +43,14 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPost("add")]
-        public ActionResult Add([FromBody]MemberDto member)
+        public ActionResult Add([FromBody] MemberDto member)
         {
             var response = _memberService.Add(member);
             return this.ToActionResult(response);
         }
 
         [HttpPut("update")]
-        public ActionResult Update(int id, [FromBody]Member member)
+        public ActionResult Update(int id, [FromBody] Member member)
         {
             var response = _memberService.Update(id, member);
             return this.ToActionResult(response);
@@ -83,7 +85,7 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("updateMedicalHistory")]
-        public ActionResult UpdateMedicalHistory(int id, [FromBody]MedicalHistory medicalHistory)
+        public ActionResult UpdateMedicalHistory(int id, [FromBody] MedicalHistory medicalHistory)
         {
             var response = _memberService.UpdateMedicalHistory(id, medicalHistory);
             return this.ToActionResult(response);
@@ -109,7 +111,7 @@ namespace Corpo.Web.Controllers
             var response = _memberService.AddFile(id, files);
             return this.ToActionResult(response);
         }
-        
+
         [HttpGet("getAllinjuries")]
         public ActionResult GetAllInjuries(int id)
         {
@@ -132,11 +134,53 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
-        //[HttpGet("download")]
-        //public FileResult Download(string fileName) 
-        //{
-        //    return _memberService.Download(fileName);
-        //}
 
+        [HttpGet("download")]
+        public async Task<FileStreamResult> Download(string fileName)
+        {
+            var memory = new MemoryStream();
+            try
+            {
+                var path = Path.Combine("wwwroot", fileName);
+                using (var stream = new FileStream(path, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+                return new FileStreamResult(memory, GetContentType(path))
+                {
+                    FileDownloadName = path
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
+        }
+
+        private string GetContentType(string path)
+        {
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            if (_mimeTypes.ContainsKey(ext)) return _mimeTypes[ext];
+            return "application/octet-stream";
+        }
+
+        private static Dictionary<string, string> _mimeTypes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { ".txt", "text/plain" },
+            { ".pdf", "application/pdf" },
+            { ".doc", "application/vnd.ms-word" },
+            { ".docx", "application/vnd.ms-word" },
+            { ".xls", "application/vnd.ms-excel" },
+            { ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+            { ".png", "image/png" },
+            { ".jpg", "image/jpeg" },
+            { ".jpeg", "image/jpeg" },
+            { ".gif", "image/gif" },
+            { ".csv", "text/csv" }
+        };
     }
+
 }

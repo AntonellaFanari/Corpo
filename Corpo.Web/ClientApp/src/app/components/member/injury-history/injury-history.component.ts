@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileInjury } from '../../../domain/file';
 import { Injury } from '../../../domain/injury';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
@@ -19,7 +20,7 @@ export class InjuryHistoryComponent implements OnInit {
   injuries = [];
   nameInjury: string;
   medicalHistoryId: number;
-  injuryFiles: File[];
+  injuryFiles: FileInjury[];
   injuryId: number;
   memberId: number;
 
@@ -43,6 +44,7 @@ export class InjuryHistoryComponent implements OnInit {
         for (var i = 0; i < this.injuries.length; i++) {
           var files = this.injuries[i].files;
           for (var j = 0; j < files.length; j++) {
+            files[j].name = files[j].name.substr(0, 20);
             this.injuryFiles.push(files[j]);
           }
         }
@@ -103,7 +105,7 @@ export class InjuryHistoryComponent implements OnInit {
     } else {
       this.injuryFiles = this.injuries[event].files;
     }
-    
+
   }
 
   deleteFile(id) {
@@ -122,36 +124,55 @@ export class InjuryHistoryComponent implements OnInit {
     console.log(this.nameInjury);
     newInjury.name = this.nameInjury;
     newInjury.medicalHistoryId = this.medicalHistoryId;
-    this.memberService.addInjury(newInjury).subscribe(
-      result => {
-        let id = result.result.id;
-        this.memberService.addFile(id, this.files).subscribe(
-          result => {
-            console.log(result);
-            this.getAllInjuries(this.medicalHistoryId);
-          },
-          error => {
-            console.error(error);
-            this.customAlertService.displayAlert("Gestión de antecedentes de lesiones", [error.error]);
-          });
-      },
-      error => {
-        console.error(error);
-        this.customAlertService.displayAlert("Gestión de antecedentes de lesiones", [error.error])
-      })
+    if (newInjury.name != undefined) {
+      this.memberService.addInjury(newInjury).subscribe(
+        result => {
+          let id = result.result.id;
+          this.memberService.addFile(id, this.files).subscribe(
+            result => {
+              console.log(result);
+              this.getAllInjuries(this.medicalHistoryId);
+            },
+            error => {
+              console.error(error);
+              this.customAlertService.displayAlert("Gestión de antecedentes de lesiones", [error.error.errores]);
+            });
+        },
+        error => {
+          console.error(error);
+          this.customAlertService.displayAlert("Gestión de antecedentes de lesiones", [error.error])
+        })
+    } else {
+      this.customAlertService.displayAlert("Gestión de antecedentes de lesiones", ["Debe seleccionar una lesión."]);
+
+    }
+
   }
 
   return() {
     this.router.navigate(['/historia-médica-editar'], { queryParams: { id: this.memberId, medicalHistoryId: this.medicalHistoryId } });
   }
 
-  download(fileName) {
+  download(i) {
+    console.log(i);
+    let fileName = this.injuryFiles[i].path;
+    console.log(fileName);
     this.memberService.download(fileName).subscribe(
-      result => {
-        console.log(result);
-      },
-      error => console.error(error)
+      (response: any) => {
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {
+          type: response.type
+        }));
+        if (fileName)
+          downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
     )
   }
+
+
 
 }

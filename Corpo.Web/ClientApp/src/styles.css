@@ -7,9 +7,34 @@ a {
   color: #0366d6;
 }
 
-.formValidators>p{
-    font-size:13px;
-    color:red;
+  a:link, a:visited, a:active {
+    text-decoration: none;
+    color: black;
+  }
+
+.formValidators > p {
+  font-size: 13px;
+  color: red;
+}
+
+
+.labelFormStyle {
+  text-align: left !important;
+  color: dimgray !important;
+}
+
+
+.margLeft {
+  margin-left: 15px;
+}
+
+.margButton {
+  margin-right: 15px;
+}
+
+
+label {
+  font-weight: 400;
 }
 
 .table-title {

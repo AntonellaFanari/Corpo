@@ -61,4 +61,7 @@ export class CashFormComponent implements OnInit {
     this.saleDetailComponent.getDetailsSale(sale);
   }
 
+  fee() {
+
+  }
 }

@@ -92,7 +92,18 @@ export class MemberService {
     return this.http.delete(this.url + 'api/member/deleteFile?id=' + id);
   }
 
+  //public download(file: string) {
+  //  var body = { fileName: file };
+  //  return this.http.post(this.url + 'api/member/download', body, {
+  //    responseType: 'blob',
+  //    headers: new HttpHeaders().append('Content-Type', 'application/json')
+  //  });
+  //}
+
   public download(fileName: string) {
-    return this.http.get<any>(this.url + 'api/member/download?fileName=' + fileName);
+    return this.http.get(this.url + 'api/member/download?fileName=' + fileName, {
+      responseType: 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
   }
 }

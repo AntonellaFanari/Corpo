@@ -40,14 +40,14 @@ export class SettingsAccessComponent implements OnInit {
   getAccess(roleAccess) {
     for ( let i = 0; i < roleAccess.length; i++) {
       let role = roleAccess[i];
-      if (role.roleId == 4) {
+      if (role.roleId == this.roles[0].id) {
         let nameAccess = role.access;
         this.checkboxToAccessAdmin = this.getCheckboxToAccess(this.checkboxToAccessAdmin, nameAccess);
        }
-      if (role.roleId == 5) {
+      if (role.roleId == this.roles[1].id) {
         let nameAccess = role.acces;
         this.checkboxToAccessCoach = this.getCheckboxToAccess(this.checkboxToAccessCoach, nameAccess);
-      } if (role.roleId == 6) {
+      } if (role.roleId == this.roles[2].id) {
         let nameAccess = role.acces;
         this.checkboxToAccessMarketing = this.getCheckboxToAccess(this.checkboxToAccessMarketing, nameAccess);
       }

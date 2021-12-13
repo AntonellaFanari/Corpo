@@ -37,10 +37,9 @@
     </div>
   </div>
   <div class="row mt-2">
-    <div class="col-md-12">
+    <div class="col-12">
       <section id="no-more-tables">
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
-          <table id="tableShift" class="table table-bordered table-condensed cf mb-0 user-table">
+          <table id="tableShift" class="table table-bordered table-condensed cf mb-0">
             <thead class="cf">
               <tr>
                 <th class="numeric">Hora</th>
@@ -51,46 +50,41 @@
                 <th class="numeric">Viernes</th>
                 <th class="numeric">Sábado</th>
                 <th class="numeric">Profesor</th>
-                <th></th>
+                <th class="numeric">Acción</th>
               </tr>
             </thead>
             <tbody>
               <tr class="scrollme span-margin" *ngFor="let schedule of schedules; index as i">
-                <td class="td-title" data-title="Hora"><span><input type="time" value={{schedule.hour}} (change)="selectHour($event.target.value, i)" /></span></td>
-                <td class="td-title" data-title="Lunes"><span><input type="checkbox" [checked]="schedule.monday" (change)="schedule.monday=!schedule.monday" /></span></td>
-                <td class="td-title" data-title="Martes"><span><input type="checkbox" [checked]="schedule.tuesday" (change)="schedule.tuesday=!schedule.tuesday" /></span></td>
-                <td class="td-title" data-title="Miercoles"><span><input type="checkbox" [checked]="schedule.wednesday" (change)="schedule.wednesday=!schedule.wednesday" /></span></td>
-                <td class="td-title" data-title="Jueves"><span><input type="checkbox" [checked]="schedule.thursday" (change)="schedule.thursday=!schedule.thursday" /></span></td>
-                <td class="td-title" data-title="Viernes"><span><input type="checkbox" [checked]="schedule.friday" (change)="schedule.friday=!schedule.friday" /></span></td>
-                <td class="td-title" data-title="Sábado"><span><input type="checkbox" [checked]="schedule.saturday" (change)="schedule.saturday=!schedule.saturday" /></span></td>
+                <td class="td-title" data-title="Hora"><div class="row col-12 col-lg-12 col-sm-6 mx-0"><input type="time" class="form-control" value={{schedule.hour}} (change)="selectHour($event.target.value, i)" /></div></td>
+                <td class="td-title" data-title="Lunes" (click)="selectMonday()"><span><input type="checkbox" [checked]="monday" (change)="schedule.monday=!schedule.monday" /></span></td>
+                <td class="td-title" data-title="Martes" (click)="selectTuesday()"><span><input type="checkbox" [checked]="tuesday" (change)="schedule.tuesday=!schedule.tuesday" /></span></td>
+                <td class="td-title" data-title="Miercoles" (click)="selectWednesday()"><span><input type="checkbox" [checked]="wednesday" (change)="schedule.wednesday=!schedule.wednesday" /></span></td>
+                <td class="td-title" data-title="Jueves" (click)="selectThursday()"><span><input type="checkbox" [checked]="thursday" (change)="schedule.thursday=!schedule.thursday" /></span></td>
+                <td class="td-title" data-title="Viernes" (click)="selectFriday()"><span><input type="checkbox" [checked]="friday" (change)="schedule.friday=!schedule.friday" /></span></td>
+                <td class="td-title" data-title="Sábado" (click)="selectSaturday()"><span><input type="checkbox" [checked]="saturday" (change)="schedule.saturday=!schedule.saturday" /></span></td>
                 <td class="td-title" data-title="Profesor">
-                  <select class="form-control col-12" (change)="selectUser($event.target.value, i)">
-                    <option disabled value="">Seleccionar</option>
-                    <option *ngFor="let user of users" value={{user.id}}>{{user.lastName}} {{user.name}}</option>
-                  </select>
+                  <div class="row col-12 col-lg-12 col-sm-6 mx-0">
+                    <select class="form-control" (change)="selectUser($event.target.value, i)">
+                      <option disabled value="">Seleccionar</option>
+                      <option *ngFor="let user of users" value={{user.id}}>{{user.lastName}} {{user.name}}</option>
+                    </select>
+                  </div>
                 </td>
-                <td>
+                <td class="td-title" data-title="Acción">
                   <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(i)"><i class="fa fa-trash-o "></i></button>
                 </td>
               </tr>
             </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="9">
-                  <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-2 text-center">
-                      <button class="btn btn-success form-control" (click)="addRow()">Agregar</button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
           </table>
-        </div>
+          <div class="row card col-12 mx-0 justify-content-center align-items-center">
+            <div class="col-lg-2 col-md-3 col-3 text-center m-2">
+              <button class="btn btn-success form-control" (click)="addRow()">Agregar</button>
+            </div>
+          </div>
       </section>
     </div>
   </div>
-  <div class="container">
+  <div class="col-12">
     <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/turnos-list']">Cancelar</button>
     <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">Guardar</button>
   </div>

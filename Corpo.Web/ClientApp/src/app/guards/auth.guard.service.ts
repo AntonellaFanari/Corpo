@@ -11,16 +11,23 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let access = route.data.name;
     console.log(access);
+    let user = this.accountService.getLoggedUser();
+    console.log(user);
     let allowedAccesses = this.accountService.getAccess();
-    if (this.accountService.getLoggedUser() && allowedAccesses.find(x => x == access)) {
+    if (user.userType == 2) {
       return true;
-    } if (this.accountService.getLoggedUser() && !allowedAccesses.find(x => x == access)) {
+    } else {
+      if (this.accountService.isAuthenticated() && allowedAccesses.find(x => x == access)) {
+        return true;
+      } if (this.accountService.isAuthenticated() && !allowedAccesses.find(x => x == access)) {
         this.router.navigate(['/login']);
         return false;
-    } else {
-      this.router.navigate(['/login']);
-      console.log(state.url);
-      return false;
+      }
+      else {
+        this.router.navigate(['/login']);
+        console.log(state.url);
+        return false;
+      }
     }
   }
 }

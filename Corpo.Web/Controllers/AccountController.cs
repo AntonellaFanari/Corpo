@@ -83,5 +83,19 @@ namespace Corpo.Web.Controllers
             });
 
         }
+
+        [HttpPut("updateEmail")]
+        public ActionResult UpdateEmail([FromBody]Account account)
+        {
+            var response = _accountService.UpdateEmail(account);
+            return this.ToActionResult(response);
+        }
+
+        [HttpPut("updatePassword")]
+        public ActionResult UpdatePassword([FromBody] AccountDto account)
+        {
+            var response = _accountService.UpdatePassword(account);
+            return this.ToActionResult(response);
+        }
     }
 }

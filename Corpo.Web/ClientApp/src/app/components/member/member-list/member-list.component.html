@@ -6,8 +6,8 @@
         <button type="button" class="btn btn-success pull-right" routerLink="/member-create">Agregar</button>
       </div>
       <hr>
-      <section *ngIf="members.length>0 ; else: elseBlock" id="no-more-tables">
-        <table class="table table-bordered table-condensed cf scrollme user-table">
+      <section *ngIf="members.length>0 ; else: elseBlock"  id="no-more-tables">
+        <table class="table table-hover table-bordered table-condensed  cf scrollme user-table">
           <thead class="cf">
             <tr>
               <th class="numeric">Estado</th>
@@ -22,22 +22,20 @@
           </thead>
           <tbody>
             <tr *ngFor="let member of members">
-              <td data-title="Estado"><span class="badge bg-success">Activo</span></td>
-              <td data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
-              <td data-title="Teléfono"><span>{{member.phone}}</span></td>
-              <td data-title="Plan"><span>Personalizado - 20</span></td>
-              <td data-title="Créditos"><span>0</span></td>
-              <td data-title="Vencimiento"><span>07/11/2021</span></td>
-              <td data-title="Negativos"><span>0</span></td>
-              <td data-title="Acción">
-                <span class="btn-action-container">
-                  <button class="btn btn-success btn-xs btn-action-list"><i class="fa fa-usd"></i></button>
-                  <button class="btn btn-primary btn-xs btn-action-list" [routerLink]="['/']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
-                  <button class="btn btn-info btn-xs btn-action-list" [routerLink]="['/historia-médica-crear']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
-                  <button class="btn btn-primary btn-xs btn-action-list" [routerLink]="['/member-view']" [queryParams]="{id:member.id}"><i class="fa fa-info-circle"></i></button>
-                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/member-detail']" [queryParams]="{id:member.id}"><i class="fa fa-pencil-square-o "></i></button>
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(member.id)"><i class="fa fa-trash-o "></i></button>
-                </span>
+              <td class="td-title" data-title="Estado"><span class="badge bg-success">Activo</span></td>
+              <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
+              <td class="td-title" data-title="Teléfono"><span>{{member.phone}}</span></td>
+              <td class="td-title" data-title="Plan"><span>Personalizado - 20</span></td>
+              <td class="td-title" data-title="Créditos"><span>0</span></td>
+              <td class="td-title" data-title="Vencimiento"><span>07/11/2021</span></td>
+              <td class="td-title" data-title="Negativos"><span>0</span></td>
+              <td class="td-title td-padding-action" data-title="Acción">
+                <button class="btn btn-success btn-action-list"><i class="fa fa-usd"></i></button>
+                <button class="btn btn-primary btn-action-list" [routerLink]="['/']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
+                <button class="btn btn-info btn-action-list" [routerLink]="['/historia-médica-crear']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
+                <button class="btn btn-primary btn-action-list" [routerLink]="['/member-view']" [queryParams]="{id:member.id}"><i class="fa fa-info-circle"></i></button>
+                <button class="btn btn-warning btn-action-list" [routerLink]="['/member-edit']" [queryParams]="{id:member.id}"><i class="fa fa-pencil-square-o "></i></button>
+                <button class="btn btn-danger btn-action-list" (click)="delete(member.id)"><i class="fa fa-trash-o "></i></button>
               </td>
             </tr>
           </tbody>

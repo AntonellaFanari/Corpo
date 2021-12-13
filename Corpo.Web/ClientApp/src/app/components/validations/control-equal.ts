@@ -1,7 +1,7 @@
 import { FormGroup } from "@angular/forms";
 
 
-export class Password {
+export class ControlEqual {
   static mustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];

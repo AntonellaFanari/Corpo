@@ -1,0 +1,32 @@
+.btn-action-list {
+  height: 35px;
+  width: 35px;
+  margin: 2px;
+  font-size: 13px;
+}
+
+tr.span-margin > td > span {
+  margin-left: 15px;
+}
+
+td.text-ajust {
+  text-overflow: ellipsis;
+}
+
+.td-padding-action {
+  padding: 0rem;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 30%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
+  .td-padding-action {
+    padding: 0.5rem;
+  }
+}

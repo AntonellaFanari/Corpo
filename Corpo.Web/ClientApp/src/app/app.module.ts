@@ -54,6 +54,9 @@ import { ShiftCreateComponent } from './components/shift/shift-create/shift-crea
 import { ShiftEditComponent } from './components/shift/shift-edit/shift-edit.component';
 import { ShiftListComponent } from './components/shift/shift-list/shift-list.component';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { PersonalInformationComponent } from './components/user-menu/personal-information/personal-information.component';
+import { PasswordEditComponent } from './components/user-menu/password-edit/password-edit.component';
+import { EmailEditComponent } from './components/user-menu/email-edit/email-edit.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +104,10 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
     ShiftCreateComponent,
     ShiftEditComponent,
     ShiftListComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    PersonalInformationComponent,
+    PasswordEditComponent,
+    EmailEditComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -118,10 +124,10 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
       { path: 'user-view', component: UserViewComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
-      { path: 'user-detail', component: UserEditComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
+      { path: 'user-edit', component: UserEditComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
       { path: 'member-list', component: MemberListComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
-      { path: 'member-create', component: MemberCreateComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
-      { path: 'member-detail', component: MemberEditComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
+      { path: 'member-create', component: MemberCreateComponent },
+      { path: 'member-edit', component: MemberEditComponent, canActivate: [AuthGuard]  },
       { path: 'member-view', component: MemberViewComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
       { path: 'historia-médica-crear', component: MedicalHistoryCreateComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
       { path: 'historia-médica-editar', component: MedicalHistoryEditComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
@@ -143,7 +149,10 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
       { path: 'clases-list', component: ClassListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'clase-editar', component: ClassEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'turnos-list', component: ShiftListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'turno-crear', component: ShiftCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } }
+      { path: 'turno-crear', component: ShiftCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'datos-personales', component: PersonalInformationComponent },
+      { path: 'modificar-email', component: EmailEditComponent },
+      { path: 'modificar-contraseña', component: PasswordEditComponent }
     ])
   ],
   entryComponents: [

@@ -108,7 +108,7 @@
         <!-- cuerpo del diálogo -->
         <div class="modal-body">
           <label class="form-label">Profesor:</label>
-          <select class="form-control col-12" (change)="selectUser($event.target.value, i)">
+          <select class="form-control col-12" (change)="selectUser($event.target.value)">
             <option disabled value="">Seleccionar</option>
             <option *ngFor="let user of users" value={{user.id}}>{{user.lastName}} {{user.name}}</option>
           </select>

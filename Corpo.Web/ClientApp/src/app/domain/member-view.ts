@@ -1,4 +1,4 @@
-export class MemberView {
+export class MemberView implements User{
   id: number;
   lastName: string;
   name: string;
@@ -11,6 +11,6 @@ export class MemberView {
   instagram: string;
   facebook: string;
   planId: number;
-  email: string
+  email: string;
   planType: number
 }

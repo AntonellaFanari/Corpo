@@ -1,4 +1,5 @@
 ﻿using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Corpo.Domain.Contracts.Services
     {
         DomainResponse Add(Account account);
         DomainResponse LogIn(Account account);
+        DomainResponse UpdateEmail(Account account);
+        DomainResponse UpdatePassword(AccountDto account);
 
     }
 }

@@ -5,7 +5,7 @@ import { Role } from '../../../domain/role';
 import { User } from '../../../domain/user';
 import { UserView } from '../../../domain/user-view';
 import { UserService } from '../../../services/user.service';
-import { Password } from '../../validations/password';
+import { ControlEqual } from '../../validations/control-equal';
 
 @Component({
   selector: 'app-user-form',
@@ -34,7 +34,7 @@ export class UserFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(this.unamePattern)]],
       repeatPassword: '',
-    }, { validators: Password.mustMatch('password', 'repeatPassword') })
+    }, { validators: ControlEqual.mustMatch('password', 'repeatPassword') })
   }
   ngOnInit() {
     this.userService.getRoles().

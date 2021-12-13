@@ -1,4 +1,4 @@
-export class UserView {
+export class UserView implements User{
   lastName: string;
   name: string;
   birthDate: string;

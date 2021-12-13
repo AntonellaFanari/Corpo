@@ -41,6 +41,9 @@ export class ClassEditComponent implements OnInit {
   get f() {
     return this.formEdit.controls;
   }
+  selectPersonalized(event) {
+    this.formEdit.value.personalized = event;
+  }
 
   toCompleteForm() {
     console.log(this.class.name);

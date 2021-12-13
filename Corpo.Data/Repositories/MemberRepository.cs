@@ -36,6 +36,14 @@ namespace Corpo.Data.Repositories
                     .FirstOrDefault(x => x.Id == id);
         }
 
+        public Member GetByAccountId(int id)
+        {
+            return _context.Member
+                    .Include(x => x.Plan)
+                    .Include(x => x.Account)
+                    .FirstOrDefault(x => x.AccountId == id);
+        }
+
         public List<Member> GetAll()
         {
             var list = _context.Member

@@ -19,7 +19,8 @@ namespace Corpo.Domain.Models.Dtos
                 RoleName = user.User.Role.Name,
                 RoleId = user.User.RoleId,
                 UserType = user.User.Account.UserType,
-                Access = user.Access.Select(x =>  x.Access.ToLower() ).ToList()
+                Access = user.Access.Select(x =>  x.Access.ToLower() ).ToList(),
+                AccountId = user.User.AccountId
             };
         }
 
@@ -31,7 +32,8 @@ namespace Corpo.Domain.Models.Dtos
                 LastName = member.LastName,
                 Name = member.Name,
                 RoleName = "member",
-                UserType = member.Account.UserType
+                UserType = member.Account.UserType,
+                AccountId = member.AccountId
             };
         }
     }

@@ -63,6 +63,14 @@ export class PlanEditComponent implements OnInit {
     )
   }
 
+  get f() {
+    return this.formEdit.controls;
+  }
+
+  selectType(event) {
+    this.formEdit.value.type = event;
+  }
+
   toCompleteForm() {
     this.formEdit.patchValue({
       name: this.plan.name,

@@ -26,6 +26,12 @@ export class ShiftCreateComponent implements OnInit {
   quota: number = 0;
   selectedClass: number;
   shifts: Shift[] = [];
+  monday: boolean = false;
+  tuesday: boolean = false;
+  wednesday: boolean = false;
+  thursday: boolean = false;
+  friday: boolean = false;
+  saturday: boolean = false;
 
   constructor(private dp: DatePipe, private userService: UserService, private classService: ClassService,
     private shiftService: ShiftService, private router: Router, private customAlertService: CustomAlertService) {
@@ -69,6 +75,32 @@ export class ShiftCreateComponent implements OnInit {
     console.log(event, i);
     this.schedules[i].userId = event
   }
+
+
+  selectMonday() {
+    this.monday = !this.monday;
+  }
+
+  selectTuesday() {
+    this.tuesday = !this.tuesday;
+  }
+
+  selectWednesday() {
+    this.wednesday = !this.wednesday;
+  }
+
+  selectThursday() {
+    this.thursday = !this.thursday;
+  }
+
+  selectFriday() {
+    this.friday = !this.friday;
+  }
+
+  selectSaturday() {
+    this.saturday = !this.saturday;
+  }
+
 
   addRow() {
     let schedule = this.createSchedule();

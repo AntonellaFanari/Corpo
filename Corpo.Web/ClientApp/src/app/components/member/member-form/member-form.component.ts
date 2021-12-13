@@ -7,7 +7,7 @@ import { MemberView } from '../../../domain/member-view';
 import { Plan } from '../../../domain/plan';
 import { MemberService } from '../../../services/member.service';
 import { PlanService } from '../../../services/plan.service';
-import { Password } from '../../validations/password';
+import { ControlEqual } from '../../validations/control-equal';
 
 @Component({
   selector: 'app-member-form',
@@ -43,7 +43,7 @@ export class MemberFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(this.unamePattern)]],
       repeatPassword: '',
-    }, { validators: Password.mustMatch('password', 'repeatPassword') })
+    }, { validators: ControlEqual.mustMatch('password', 'repeatPassword') })
   }
   ngOnInit() {
     this.planService.getAll().subscribe(

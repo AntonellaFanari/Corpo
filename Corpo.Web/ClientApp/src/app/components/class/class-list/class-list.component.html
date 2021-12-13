@@ -20,10 +20,8 @@
               <td data-title="Nombre"><span>{{class.name}}</span></td>
               <td data-title="Personalizada"><span>{{class.personalized}}</span></td>
               <td data-title="Acción">
-                <span class="btn-action-container">
-                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/clase-editar']" [queryParams]="{id:class.id}"><i class="fa fa-pencil-square-o "></i></button>
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(class.id)"><i class="fa fa-trash-o "></i></button>
-                </span>
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/clase-editar']" [queryParams]="{id:class.id}"><i class="fa fa-pencil-square-o "></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(class.id)"><i class="fa fa-trash-o "></i></button>
               </td>
             </tr>
           </tbody>

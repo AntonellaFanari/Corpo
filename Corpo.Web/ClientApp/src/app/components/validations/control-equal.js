@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Password = void 0;
-var Password = /** @class */ (function () {
-    function Password() {
+exports.ControlEqual = void 0;
+var ControlEqual = /** @class */ (function () {
+    function ControlEqual() {
     }
-    Password.mustMatch = function (controlName, matchingControlName) {
+    ControlEqual.mustMatch = function (controlName, matchingControlName) {
         return function (formGroup) {
             var control = formGroup.controls[controlName];
             var matchingControl = formGroup.controls[matchingControlName];
@@ -25,9 +25,9 @@ var Password = /** @class */ (function () {
             }
         };
     };
-    return Password;
+    return ControlEqual;
 }());
-exports.Password = Password;
+exports.ControlEqual = ControlEqual;
 //  static equalPassword(form: FormGroup): ValidationErrors | null {
 //    var password = form.get('password').value;
 //    var repeatPassword = form.get('repeatPassword').value;

@@ -47,7 +47,7 @@ namespace Corpo.Domain.Services
                     }
                     if (accountQuery.UserType == UserType.Member)
                     {
-                        var member = _memberRepository.GetById(accountQuery.Id);
+                        var member = _memberRepository.GetByAccountId(accountQuery.Id);
                         return new SuccessDomainResponse("member", member);
                     } return null;
                 }
@@ -55,6 +55,59 @@ namespace Corpo.Domain.Services
 
             }
             return new FailedDomainResponse("Email no registrado");
+        }
+
+        public DomainResponse UpdateEmail(Account account)
+        {
+            try
+            {
+                var accountQuery = _accounRepository.GetById(account.Id);
+                var password = this.GetHashString(account.Password);
+                if (password == accountQuery.Password)
+                {
+                    accountQuery.Email = account.Email;
+                    _accounRepository.UpdateEmail(accountQuery);
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new DomainResponse(false, "La contraseña no es correcta", "No se pudo modificar el email.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo modificar el email");
+            }
+        }
+
+        public DomainResponse UpdatePassword(AccountDto account)
+        {
+            try
+            {
+                var accountQuery = _accounRepository.GetById(account.Id);
+                var password = this.GetHashString(account.Password);
+                if (password == accountQuery.Password)
+                {
+                    var newPassword = this.GetHashString(account.NewPassword);
+                    accountQuery.Password = newPassword;
+                    _accounRepository.UpdatePassword(accountQuery);
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new DomainResponse(false, "La contraseña actual no es correcta", "No se pudo modificar la contraseña.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo modificar la contraseña.");
+            }
         }
 
         private byte[] GetHash(string inputString)

@@ -1,0 +1,9 @@
+.label {
+    text-align: left;
+    font-weight:bold;
+}
+
+.dataUserBox {
+  padding: 0px;
+  padding-left: 2rem;
+}

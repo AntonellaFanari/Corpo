@@ -1,10 +1,12 @@
 <section class="wrapper">
   <div class="row mt">
-    <div class="col-md-12">
-      <div class="task-panel ">
-        <h4 class="table-title">Planes</h4>
-        <button type="button" class="btn btn-success pull-right" routerLink="/clase-crear">Agregar Clase</button>
-        <button type="button" class="btn btn-success pull-right" routerLink="/plan-crear">Agregar Plan</button>
+    <div class="col-12">
+      <div class="task-panel row">
+        <h4 class="table-title col-12 col-lg-6">Planes</h4>
+        <div class="col-12 col-lg-6">
+          <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add" routerLink="/plan-crear">Agregar Plan</button>
+          <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add" routerLink="/clase-crear">Agregar Clase</button>
+        </div>
       </div>
       <hr>
       <section *ngIf="plans.length>0 ; else: elseBlock1" id="no-more-tables">
@@ -24,11 +26,11 @@
               <td data-title="Créditos"><span>{{plan.credits}}</span></td>
               <td data-title="Precio"><span>{{plan.price}}</span></td>
               <td data-title="Clases">
-                <table *ngIf="plan.classes.length>0 ; else: elseBlock2">
+                <table *ngIf="plan.classes.length>0 ; else: elseBlock2" id="table-class">
                   <tbody>
                     <tr *ngFor="let class of plan.classes">
-                      <td>
-                        {{class.name}}
+                      <td >
+                        <span>{{class.name}}</span>
                       </td>
                     </tr>
                   </tbody>
@@ -45,7 +47,7 @@
         </table>
       </section>
       <ng-template #elseBlock1><h5>No hay registros para mostrar</h5></ng-template>
-      <ng-template #elseBlock2><h6>No hay clases asignadas</h6></ng-template>
+      <ng-template #elseBlock2><p class="no-class">No hay clases asignadas</p></ng-template>
     </div>
     <!-- /content-panel -->
   </div>

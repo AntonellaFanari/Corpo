@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Account } from '../domain/account';
+import { LoggedUser } from '../domain/logged-user';
+import { AccountNewPassword } from '../domain/new-password';
 import { RoleAccess } from '../domain/role-access';
 
 const httpOptions = {
@@ -31,6 +33,16 @@ export class AccountService {
     return this.http.post<any>(this.url + 'api/account/logIn?account', account);
   }
 
+  updateEmail(account: Account) {
+    console.log(account);
+    return this.http.put(this.url + 'api/account/updateEmail', account, httpOptions);
+  }
+
+  updatePassword(account: AccountNewPassword) {
+    console.log(account);
+    return this.http.put(this.url + 'api/account/updatePassword', account, httpOptions);
+  }
+
   getToken() {
     return localStorage.getItem('token');
   }
@@ -49,7 +61,7 @@ export class AccountService {
   }
 
   getLoggedUser() {
-    return JSON.parse(localStorage.getItem('user'));
+    return JSON.parse(localStorage.getItem('user')) as LoggedUser;
   }
 
   setLoggedUser(user) {

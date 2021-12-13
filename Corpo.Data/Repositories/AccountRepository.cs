@@ -45,6 +45,22 @@ namespace Corpo.Data.Repositories
             return account;
 
         }
+        public Account GetById(int id)
+        {
+            return _context.Account.Find(id);
+        }
+
+        public void UpdateEmail(Account account)
+        {
+            _context.Account.Update(account);
+            _context.SaveChanges();
+        }
+
+        public void UpdatePassword(Account account)
+        {
+            _context.Account.Update(account);
+            _context.SaveChanges();
+        }
 
         public void Delete(int id)
         {

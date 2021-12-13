@@ -13,6 +13,10 @@ td.text-ajust {
   text-overflow: ellipsis;
 }
 
+.td-padding-action {
+    padding: 0rem;
+}
+
 @media only screen and (max-width: 800px) {
   #no-more-tables td {
     padding-left: 30%;
@@ -20,5 +24,9 @@ td.text-ajust {
 
   .user-table {
     font-size: 13px;
+  }
+
+  .td-padding-action {
+    padding: 0.5rem;
   }
 }

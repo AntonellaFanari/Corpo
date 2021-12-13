@@ -15,9 +15,17 @@ import { MemberFormComponent } from '../member-form/member-form.component';
 export class MemberCreateComponent implements OnInit {
   id: number;
   @ViewChild(MemberFormComponent, { static: false }) formMember: MemberFormComponent;
-  constructor(private memberService: MemberService, private router: Router, private customAlertService: CustomAlertService) { }
+  constructor(private memberService: MemberService, private router: Router, private customAlertService: CustomAlertService, private accountService: AccountService) { }
 
   ngOnInit() {
+  }
+
+  return() {
+    if (this.accountService.isAuthenticated()) {
+      this.router.navigate(['/member-list']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   submit() {

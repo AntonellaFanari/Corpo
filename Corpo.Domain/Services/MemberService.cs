@@ -252,10 +252,10 @@ namespace Corpo.Domain.Services
             {
                 foreach (var file in files)
                 {
-                    var path = Path.Combine("wwwroot", "studies", file.FileName);
+                    var path = Path.Combine("wwwroot", "medical-check-up", file.FileName);
                     var newFile = new Models.File()
                     {
-                        Path = Path.Combine("studies", file.FileName),
+                        Path = Path.Combine("medical-check-up", file.FileName),
                         Name = file.FileName,
                         InjuryId = id
                     };
@@ -271,7 +271,7 @@ namespace Corpo.Domain.Services
             }
             else
             {
-                return new DomainResponse(false, "no hay estudios de lesiones para guardar", "no se guardaron los estudios de lesiones.");
+                return new DomainResponse(false, "no hay estudios de lesiones para guardar", "No se seleccionaron archivos.");
             }
         }
 

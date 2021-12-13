@@ -3,3 +3,24 @@
   width: 38px;
   margin: 2px;
 }
+
+.btn-add {
+  float: right;
+  margin-left: 5px;
+}
+
+@media only screen and (max-width: 576px) {
+  #no-more-tables td {
+    padding-left: 50%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
+  .btn-add {
+    float: none;
+    margin-left: 0px;
+    width: 100%;
+  }
+}

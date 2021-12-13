@@ -16,5 +16,6 @@ namespace Corpo.Domain.Views
         public int RoleId { get; set; }
         public UserType UserType { get; set; }
         public List<string> Access { get; set; }
+        public int AccountId { get; set; }
     }
 }

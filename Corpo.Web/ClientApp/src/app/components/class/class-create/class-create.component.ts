@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,7 +15,8 @@ export class ClassCreateComponent implements OnInit {
   formCreate: FormGroup;
   sendForm: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private classService: ClassService, private customAlertService: CustomAlertService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private classService: ClassService, private customAlertService: CustomAlertService,
+    private router: Router, private location: Location) {
     this.formCreate = this.formBuilder.group({
       name: ['', Validators.required],
       personalized: ['', Validators.required]
@@ -40,7 +42,7 @@ export class ClassCreateComponent implements OnInit {
       this.classService.add(newClass).subscribe(
         result => {
           console.log(result);
-          this.router.navigate(['/plan-list']);
+          this.return();
         },
         error => {
           console.error(error);
@@ -52,6 +54,10 @@ export class ClassCreateComponent implements OnInit {
           }
         })
     }
+  }
+
+  return() {
+    this.location.back();
   }
 
 }

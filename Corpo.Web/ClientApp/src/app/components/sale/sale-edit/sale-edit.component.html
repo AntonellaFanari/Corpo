@@ -1,4 +1,4 @@
-<button id="modal-detail" data-toggle="modal" href="#myModalSale"></button>
+<button id="modal-detail" data-toggle="modal" href="#myModalSale" class="d-none"></button>
 
 <div class="container">
   <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
@@ -11,7 +11,7 @@
         <div class="modal-header modal-title">
           <h4 class="modal-title">Detalle de la Venta</h4>
           <br />
-          <h6 class="modal-title">Registro: {{userRegisterSale.lastName}} {{userRegisterSale.name}}</h6>
+          <h6 *ngIf="userRegisterSale" class="modal-title">Registro: {{userRegisterSale.lastName}} {{userRegisterSale.name}}</h6>
           <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
         </div>
 
@@ -45,10 +45,10 @@
           </table>
 
           <!-- pie del diálogo -->
-          <div class="modal-footer">
-            <button *ngIf="!cancelStatus" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-            <button *ngIf="!cancelStatus" type="button" class="btn btn-success" data-toggle="modal" href="#myModalCancelSale">Anular</button>
-            <button *ngIf="cancelStatus" type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+          <div class="modal-footer p-0">
+            <button *ngIf="!cancelStatus" type="button" class="btn btn-danger col-3 col-lg-2" data-dismiss="modal">Cancelar</button>
+            <button *ngIf="!cancelStatus" type="button" class="btn btn-success col-3 col-lg-2" data-toggle="modal" href="#myModalCancelSale">Anular</button>
+            <button *ngIf="cancelStatus" type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
           </div>
 
         </div>
@@ -74,15 +74,16 @@
             <input type="text" class="form-control" placeholder="Ingrese el motivo de la anulación" [(ngModel)]="reasonCancel" />
 
             <!-- pie del diálogo -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-success" (click)="cancel()">Anular</button>
+            <div class="modal-footer p-0">
+              <button type="button" class="btn btn-danger col-3" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-success col-3" (click)="cancel()">Anular</button>
             </div>
 
           </div>
         </div>
       </div>
     </div>
+  </div>
 
     <div *ngIf="cancelSale" class="container">
       <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
@@ -116,3 +117,4 @@
           </div>
         </div>
       </div>
+    </div>

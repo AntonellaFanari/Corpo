@@ -32,8 +32,7 @@ import { SettingsAccessComponent } from './components/settings/settings-access/s
 import { AuthInterceptor } from './services/authentication-interceptor';
 import { AccessDirectiveDirective } from './directives/access-directive.directive';
 import { AuthGuard } from './guards/auth.guard.service';
-import { ChargeFeeComponent } from './components/cash/charge-fee/charge-fee.component';
-import { OutflowComponent } from './components/cash/outflow/outflow.component';
+import { ChargeFeeComponent } from './components/cash/charge-fee/charge-fee.component'
 import { WithdrawalComponent } from './components/cash/withdrawal/withdrawal.component';
 import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { ProductEditComponent } from './components/product/product-edit/product-edit.component';
@@ -53,10 +52,27 @@ import { ClassListComponent } from './components/class/class-list/class-list.com
 import { ShiftCreateComponent } from './components/shift/shift-create/shift-create.component';
 import { ShiftEditComponent } from './components/shift/shift-edit/shift-edit.component';
 import { ShiftListComponent } from './components/shift/shift-list/shift-list.component';
-import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { SearchFilterShiftPipe } from './pipes/search-filter-shift.pipe';
 import { PersonalInformationComponent } from './components/user-menu/personal-information/personal-information.component';
 import { PasswordEditComponent } from './components/user-menu/password-edit/password-edit.component';
 import { EmailEditComponent } from './components/user-menu/email-edit/email-edit.component';
+import { PurchaseCreateComponent } from './components/purchase/purchase-create/purchase-create.component';
+import { PurchaseListComponent } from './components/purchase/purchase-list/purchase-list.component';
+import { SearchFilterMemberPipe } from './pipes/search-filter-member.pipe';
+import { SearchFilterProductPipe } from './pipes/search-filter-product.pipe';
+import { PurchaseDetailComponent } from './components/purchase/purchase-detail/purchase-detail.component';
+import { SearchFilterClassPipe } from './pipes/search-filter-class.pipe';
+import { SearchFilterPlanPipe } from './pipes/search-filter-plan.pipe';
+import { SearchFilterUserPipe } from './pipes/search-filter-user.pipe';
+import { OutflowTypeCreateComponent } from './components/outflow-type/outflow-type-create/outflow-type-create.component';
+import { OutflowTypeEditComponent } from './components/outflow-type/outflow-type-edit/outflow-type-edit.component';
+import { OutflowTypeListComponent } from './components/outflow-type/outflow-type-list/outflow-type-list.component';
+import { SearchFilterOutflowPipe } from './pipes/search-filter-outflow.pipe';
+import { OutflowCreateComponent } from './components/outflow/outflow-create/outflow-create.component';
+import { OutflowDetailComponent } from './components/outflow/outflow-detail/outflow-detail.component';
+import { FeeCreateComponent } from './components/fee/fee-create/fee-create.component';
+import { FeeEditComponent } from './components/fee/fee-edit/fee-edit.component';
+
 
 @NgModule({
   declarations: [
@@ -84,7 +100,6 @@ import { EmailEditComponent } from './components/user-menu/email-edit/email-edit
     LoginComponent,
     AccessDirectiveDirective,
     ChargeFeeComponent,
-    OutflowComponent,
     WithdrawalComponent,
     ProductCreateComponent,
     ProductEditComponent,
@@ -104,10 +119,26 @@ import { EmailEditComponent } from './components/user-menu/email-edit/email-edit
     ShiftCreateComponent,
     ShiftEditComponent,
     ShiftListComponent,
-    SearchFilterPipe,
+    SearchFilterShiftPipe,
     PersonalInformationComponent,
     PasswordEditComponent,
     EmailEditComponent,
+    PurchaseCreateComponent,
+    PurchaseListComponent,
+    SearchFilterMemberPipe,
+    SearchFilterProductPipe,
+    PurchaseDetailComponent,
+    SearchFilterClassPipe,
+    SearchFilterPlanPipe,
+    SearchFilterUserPipe,
+    OutflowTypeCreateComponent,
+    OutflowTypeEditComponent,
+    OutflowTypeListComponent,
+    SearchFilterOutflowPipe,
+    OutflowCreateComponent,
+    OutflowDetailComponent,
+    FeeCreateComponent,
+    FeeEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -127,19 +158,19 @@ import { EmailEditComponent } from './components/user-menu/email-edit/email-edit
       { path: 'user-edit', component: UserEditComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
       { path: 'member-list', component: MemberListComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
       { path: 'member-create', component: MemberCreateComponent },
-      { path: 'member-edit', component: MemberEditComponent, canActivate: [AuthGuard]  },
-      { path: 'member-view', component: MemberViewComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
-      { path: 'historia-médica-crear', component: MedicalHistoryCreateComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
-      { path: 'historia-médica-editar', component: MedicalHistoryEditComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
-      { path: 'antecedentes-lesiones', component: InjuryHistoryComponent, canActivate: [AuthGuard], data: { name: 'socios' } },
+      { path: 'member-edit', component: MemberEditComponent },
+      { path: 'member-view', component: MemberViewComponent },
+      { path: 'historia-médica-crear', component: MedicalHistoryCreateComponent },
+      { path: 'historia-médica-editar', component: MedicalHistoryEditComponent },
+      { path: 'antecedentes-lesiones', component: InjuryHistoryComponent },
       { path: 'accesos', component: SettingsAccessComponent },
       { path: 'caja', component: CashFormComponent, canActivate: [AuthGuard], data: { name: 'caja' } },
       { path: 'login', component: LoginComponent },
-      { path: 'cuota', component: ChargeFeeComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
+      { path: 'cuota-agregar', component: FeeCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'venta-agregar', component: SaleCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
-      { path: 'egreso', component: OutflowComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
+      { path: 'egreso', component: OutflowCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'retiro', component: WithdrawalComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
-      { path: 'product-create', component: ProductCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'product-agregar', component: ProductCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'productos-list', component: ProductListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'product-detail', component: ProductEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'plan-list', component: PlanListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
@@ -152,7 +183,13 @@ import { EmailEditComponent } from './components/user-menu/email-edit/email-edit
       { path: 'turno-crear', component: ShiftCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'datos-personales', component: PersonalInformationComponent },
       { path: 'modificar-email', component: EmailEditComponent },
-      { path: 'modificar-contraseña', component: PasswordEditComponent }
+      { path: 'modificar-contraseña', component: PasswordEditComponent },
+      { path: 'compras-list', component: PurchaseListComponent },
+      { path: 'compra-crear', component: PurchaseCreateComponent },
+      { path: 'purchase-detail', component: PurchaseDetailComponent },
+      { path: 'egreso-crear', component: OutflowTypeCreateComponent },
+      { path: 'egreso-editar', component: OutflowTypeEditComponent },
+      { path: 'egresos-list', component: OutflowTypeListComponent }
     ])
   ],
   entryComponents: [

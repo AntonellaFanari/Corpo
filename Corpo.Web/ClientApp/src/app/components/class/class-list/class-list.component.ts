@@ -11,6 +11,7 @@ import { CustomAlertService } from '../../../services/custom-alert.service';
 })
 export class ClassListComponent implements OnInit {
   classes: Class[] = [];
+  filterClass = "";
 
   constructor(private classService: ClassService, private customAlertService: CustomAlertService) { }
 

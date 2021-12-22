@@ -38,6 +38,7 @@
     <None Remove="ClientApp\src\app\domain\account.ts" />
     <None Remove="ClientApp\src\app\domain\cancel-sale.ts" />
     <None Remove="ClientApp\src\app\domain\class.ts" />
+    <None Remove="ClientApp\src\app\domain\detail-purchase.ts" />
     <None Remove="ClientApp\src\app\domain\details-sale.ts" />
     <None Remove="ClientApp\src\app\domain\file.ts" />
     <None Remove="ClientApp\src\app\domain\injury.ts" />
@@ -48,6 +49,8 @@
     <None Remove="ClientApp\src\app\domain\member.ts" />
     <None Remove="ClientApp\src\app\domain\new-password.ts" />
     <None Remove="ClientApp\src\app\domain\order-products.ts" />
+    <None Remove="ClientApp\src\app\domain\outflow.ts" />
+    <None Remove="ClientApp\src\app\domain\outflowType.ts" />
     <None Remove="ClientApp\src\app\domain\plan.ts" />
     <None Remove="ClientApp\src\app\domain\product.ts" />
     <None Remove="ClientApp\src\app\domain\purchase.ts" />
@@ -68,6 +71,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\account.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\cancel-sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\class.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\detail-purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\file.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\iuser.ts" />
@@ -75,6 +79,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\new-password.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\order-products.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\outflow.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\outflowType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\plan.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\product.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\purchase.ts" />

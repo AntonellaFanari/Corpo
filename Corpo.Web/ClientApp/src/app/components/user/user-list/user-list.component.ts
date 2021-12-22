@@ -11,6 +11,8 @@ import { UserService } from '../../../services/user.service';
 })
 export class UserListComponent implements OnInit {
   users: UserView[] = [];
+  filterUser = "";
+
   constructor(private userService: UserService, private customAlertService: CustomAlertService, private router: Router) { }
 
   ngOnInit() {

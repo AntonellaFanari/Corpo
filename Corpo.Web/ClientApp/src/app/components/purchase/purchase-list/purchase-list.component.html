@@ -1,0 +1,43 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-12">
+      <div class="task-panel row">
+        <h4 class="table-title col-12 col-lg-6">Compras</h4>
+        <div class="col-12 col-lg-6">
+          <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add pull-right" routerLink="/compra-crear">Agregar</button>
+        </div>
+      </div>
+      <hr>
+      <section *ngIf="purchases.length>0 ; else elseBlock" id="no-more-tables" class="tab-pane fade show active">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Fecha</th>
+              <th class="numeric">Proveedor</th>
+              <th class="numeric">Total</th>
+              <th class="numeric">Usuario</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let purchase of purchases" class="scrollme span-margin">
+              <td class="td-title text-ajust" data-title="Fecha"><span>{{purchase.date | date: 'dd/MM/yyyy h:mm:ss a'}}</span></td>
+              <td class="td-title" data-title="Proveedor"><span>{{purchase.supplier}}</span></td>
+              <td class="td-title" data-title="Total"><span>{{purchase.total}}</span></td>
+              <td class="td-title" data-title="Usuario"><span>{{purchase.user.lastName}} {{purchase.user.name}}</span></td>
+              <td class="td-title" data-title="Acción">
+                <span class="btn-action-container">
+                  <button class="btn btn-info btn-xs btn-action-list" [routerLink]="['/purchase-detail']" [queryParams]="{id:purchase.id}"><i class="fa fa-info-circle"></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(purchase.id)"><i class="fa fa-trash-o "></i></button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+</section>

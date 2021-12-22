@@ -1,0 +1,91 @@
+<section class="wrapper">
+  <div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success"><h3 class="text-center text-white">Cuotas</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 card pb-0">
+            <div class="row card-body p-0">
+              <div class="dropdown card-body col-12 formValidators">
+                <a class="dropdown-toggle" id="dropdown1" data-toggle="dropdown">
+                  <label class="form-label text-black">Socio:</label>
+                  <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" />
+                </a>
+                <p *ngIf="sendDetailSale && f.memberName.errors?.required">*Debe seleccionar un socio.</p>
+                <div class="dropdown-menu form-control">
+                  <a *ngFor="let member of members  | searchFilterMember: filterMember " class="dropdown-item" (click)="selectMember(member)">{{member.lastName}} {{member.name}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 card bg-light">
+            <div class="row card-body p-0">
+              <div class="col-12">
+                <div class="card-body row ps-0 pe-0">
+                  <div>
+                    <label class="form-label">Plan:</label>
+                    <select class="form-control col-12" id="members">
+                      <option class="form-control col-12" value="" disabled>Seleccionar</option>
+                      <option *ngFor="let plan of plans" class="form-control col-12" value={{plan.id}}>{{plan.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-lg-6 pull-left mt-3">
+                    <label class="form-label">Desde:</label>
+                    <input type="date" class="form-control col-6" />
+                  </div>
+                  <div class="col-12 col-lg-6 pull-right mt-3">
+                    <label class="form-label">Hasta:</label>
+                    <input type="date" class="form-control col-6" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 card bg-light">
+            <div class="row card-body p-0">
+              <div class="col-12">
+                <div class="col-6 pull-left mt-3 padding-right">
+                  <label class="form-label">Precio:</label>
+                  <input type="number" class="form-control col-6" />
+                </div>
+                <div class="col-6 pull-right mt-3 padding-left">
+                  <label class="form-label">Pago:</label>
+                  <input type="number" class="form-control col-6" />
+                </div>
+              </div>
+              <div class="col-12 mb-2 margin-top">
+                <div class="col-6 pull-left mt-3 padding-right">
+                  <button class="btn btn-info pull-left form-control col-2 col-lg-2 btn-create">Promociones</button>
+                </div>
+                <div class="col-6 pull-left mt-3 padding-left">
+                  <button class="btn btn-danger pull-right form-control col-2 col-lg-2 btn-create">Calcular</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 card">
+            <div class="row card-body p-0">
+              <div class="col-12 col-lg-6 pull-left p-0">
+                <div class="card-body col-6 pull-left ">
+                  <label class="form-label">Total a cobrar $</label>
+                </div>
+                <div class="card-body col-6 pull-right padding-input-total">
+                  <input type="number" class="form-control col-6" />
+                </div>
+              </div>
+              <div class="col-12 col-lg-6 pull-right p-0">
+                <div class="card-body col-12 padding-btn-credit">
+                  <button type="button" class="form-control col-6 btn btn-success">Cargar Créditos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
+  </div>
+</section>

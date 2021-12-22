@@ -42,17 +42,20 @@ namespace Corpo.Domain.Services
         public DomainResponse Add(Sale sale)
         {
             sale.Date = DateTime.Now;
-
-            _saleRepository.Add(sale);
-            //var detailSale = _saleRepository.GetDetailsSale(sale.Id);
-            //foreach (var detail in detailSale)
-            //{
-            //    _productRepository.Update(detail.ProductId,)
-            //}
-            return new DomainResponse
+            try
             {
-                Success = true
-            };
+                _saleRepository.Add(sale);
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new DomainResponse(false, ex.Message, "No se pudo agregar la venta");
+            }
+           
         }
 
         public DomainResponse Cancel(int id, CancelSale cancelSale)

@@ -1,8 +1,10 @@
+import { DetailPurchase } from "./detail-purchase";
+
 export class Purchase {
   id: number;
   date: string;
-  productId: number;
-  quantity: number;
-  cost: number;
-  userId: number
+  supplier: string;
+  userId: number;
+  total: number;
+  detailPurchase: DetailPurchase[];
 }

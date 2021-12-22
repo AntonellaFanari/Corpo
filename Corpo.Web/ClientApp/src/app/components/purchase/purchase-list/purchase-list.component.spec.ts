@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OutflowComponent } from './outflow.component';
+import { PurchaseListComponent } from './purchase-list.component';
 
-describe('OutflowComponent', () => {
-  let component: OutflowComponent;
-  let fixture: ComponentFixture<OutflowComponent>;
+describe('PurchaseListComponent', () => {
+  let component: PurchaseListComponent;
+  let fixture: ComponentFixture<PurchaseListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OutflowComponent ]
+      declarations: [ PurchaseListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OutflowComponent);
+    fixture = TestBed.createComponent(PurchaseListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

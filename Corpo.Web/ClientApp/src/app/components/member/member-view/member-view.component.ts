@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FileInjury } from '../../../domain/file';
 import { Injury } from '../../../domain/injury';
 import { MedicalHistory } from '../../../domain/medical-history';
 import { MemberView } from '../../../domain/member-view';
@@ -16,7 +17,7 @@ export class MemberViewComponent implements OnInit {
   medicalHistory: MedicalHistory;
   age: number;
   injuries = [];
-  injuryFiles: File[] = [];
+  injuryFiles: FileInjury[] = [];
   medicalHistoryId: number;
   constructor(private memberService: MemberService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -68,6 +69,7 @@ export class MemberViewComponent implements OnInit {
         for (var i = 0; i < this.injuries.length; i++) {
           var files = this.injuries[i].files;
           for (var j = 0; j < files.length; j++) {
+            files[j].name = files[j].name.substr(0, 20);
             this.injuryFiles.push(files[j]);
           }
         }
@@ -84,5 +86,26 @@ export class MemberViewComponent implements OnInit {
       this.injuryFiles = this.injuries[event].files;
     }
 
+  }
+
+  download(i) {
+    console.log(i);
+    console.log(this.injuryFiles[i]);
+    let fileName = this.injuryFiles[i].path;
+    console.log(fileName);
+    this.memberService.download(fileName).subscribe(
+      (response: any) => {
+        let binaryData = [];
+        binaryData.push(response);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {
+          type: response.type
+        }));
+        if (fileName)
+          downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
+    )
   }
 }

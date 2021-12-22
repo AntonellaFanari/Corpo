@@ -22,6 +22,8 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<IPlanService, PlanService>();
             services.AddTransient<IClassService, ClassService>();
             services.AddTransient<IShiftService, ShiftService>();
+            services.AddTransient<IPurchaseService, PurchaseService>();
+            services.AddTransient<IOutflowService, OutflowService>();
         }
     }
 }

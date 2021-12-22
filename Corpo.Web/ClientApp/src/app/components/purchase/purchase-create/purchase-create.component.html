@@ -1,0 +1,114 @@
+<section *ngIf="!productCreate" class="wrapper">
+  <div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success"><h3 class="text-center text-white">Registro de Compra</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 card pb-0">
+            <div class="row card-body">
+              <div class="dropdown card-body col-12 formValidators">
+                <label class="form-label text-black">Proveedor:</label>
+                <input type="text" class="form-control" placeholder="Ingresar proveedor" [(ngModel)]="supplier" (change)="getSupplier($event.target.value)" />
+                <p *ngIf="sendDetailPurchase && f.supplier.errors?.required">*Debe ingresar un proveedor.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 card bg-light pb-0">
+            <div class="card-body row pb-0 pt-0">
+              <div class="dropdown card-body col-12 col-lg-10 pb-0">
+                <a class="dropdown-toggle" id="dropdown2" data-toggle="dropdown">
+                  <label class="form-label text-black">Producto:</label>
+                  <input type="text" class="form-control" placeholder="Buscar Producto" [(ngModel)]="filterProduct" />
+                </a>
+                <p *ngIf="sendDetailPurchase && f.productId.errors?.required">*Debe seleccionar un producto.</p>
+                <div class="dropdown-menu form-control">
+                  <a *ngFor="let prod of products | searchFilterProduct: filterProduct" class="dropdown-item" (click)="selectProduct(prod)">{{prod.description}}</a>
+                </div>
+              </div>
+              <div class="card-body col-12 col-lg-2 pull-right div-btn-prod div-btn-add-padding">
+                <div class="justify-content-center align-content-center padding-btn-add">
+                  <button class="btn btn-success text-center col-12 btn-add-prod" (click)="viewProductCreate(true)">Agregar</button>
+                </div>
+              </div>
+            </div>
+            <form [formGroup]="formDetailPurchase">
+              <div class="card-body row pe-0 pt-0">
+                <div class="row col-12 col-lg-10">
+                  <div class="card-body col-3 col-lg-4 pull-left div-input-quantity">
+                    <label class="form-label">Cantidad:</label>
+                    <input type="number" class="form-control" formControlName="quantity" (blur)="calculateTotal()" />
+                    <p *ngIf="sendDetailPurchase && f.quantity.errors?.min">*La cantidad debe ser mayor a "0".</p>
+                  </div>
+                  <div class="card-body col-3 col-lg-4 pull-left div-input-cost">
+                    <label class="form-label">Costo:</label>
+                    <input type="number" class="form-control" formControlName="cost" (blur)="calculateTotal()" />
+                    <p *ngIf="sendDetailPurchase && f.cost.errors?.required">*Debe ingresar el precio de compra.</p>
+                  </div>
+                  <div class="card-body col-3 col-lg-4 pull-left input-total">
+                    <label class="form-label">Total:</label>
+                    <input type="number" class="form-control" formControlName="total" />
+                  </div>
+                </div>
+                <div class="card-body col-12 col-lg-2 pull-right div-btn-prod">
+                  <div class="row justify-content-center align-content-center btn-add-prod">
+                    <button class="btn btn-success text-center col-6 btn-prod" (click)="addDetailPurchase()">OK</button>
+                    <button class="btn btn-success text-center col-6 btn-prod" (click)="cleanForm()"><i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div *ngIf="detailPurchase.length>0" class="row card bg-light p-0">
+          <table class="table table-bordered table-condensed cf scrollme detailSale-table mb-0">
+            <thead class="cf lgView">
+              <tr>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Costo</th>
+                <th>Total</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <thead class="cf smallView">
+              <tr>
+                <th>Descripc.</th>
+                <th>Cant.</th>
+                <th>Cost.</th>
+                <th>Tot.</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of detailPurchase; index as i" class="scrollme">
+                <td class="td-title">{{detail.description}}</td>
+                <td class="td-title">{{detail.quantity}}</td>
+                <td class="td-title">{{detail.cost}}</td>
+                <td class="td-title">{{detail.quantity*detail.cost}}</td>
+                <td class="td-title"><button class="btn btn-danger btn-xs" (click)="removeList(i)"><i class="fa fa-trash-o "></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row card-body card">
+          <div class="card-body pt-0 pb-0">
+            <label class="form-label total-width pull-left">Total a pagar $</label>
+            <input type="number" class="form-control total-width pull-right" [(ngModel)]="total" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button type="button" class="col-3 col-lg-2 btn btn-secondary pull-left btn-create" [routerLink]="['/compras-list']">Volver</button>
+    <button type="button" class="col-3 col-lg-2 btn btn-success pull-right btn-create" (click)="submit()">Aceptar</button>
+  </div>
+</section>
+<app-product-create *ngIf="productCreate" [modeCreateProduct]="productCreate" (purchaseProductCreate)="viewProductCreate($event)"></app-product-create>
+
+
+
+
+
+
+

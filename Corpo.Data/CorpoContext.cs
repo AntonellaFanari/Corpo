@@ -34,7 +34,9 @@ namespace Corpo.Data
         public DbSet<DetailsSale> DetailsSale { get; set; }
         public DbSet<CancelSale> CancelSale { get; set; }
         public DbSet<Purchase> Purchase { get; set; }
-        public DbSet<OrderProducts> OrderProducts { get; set; }
         public DbSet<Shift> Shift { get; set; }
+        public DbSet<DetailPurchase> DetailPurchase { get; set; }
+        public DbSet<Outflow> Outflow { get; set; }
+        public DbSet<OutflowType> OutflowType { get; set; }
     }
 }

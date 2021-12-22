@@ -10,6 +10,8 @@ import { MemberService } from '../../../services/member.service';
 })
 export class MemberListComponent implements OnInit {
   members: MemberView[] = [];
+  filterMember = "";
+
   constructor(private memberService: MemberService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {

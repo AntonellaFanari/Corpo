@@ -1,3 +1,102 @@
+/*.content-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.content-select {
+  max-width: 250px;
+  position: relative;
+}
+
+  .content-select select {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    padding: 7px 10px;
+    height: 42px;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    background: #f0f0f0;
+    color: #7b7b7b;
+    font-size: 1em;
+    color: #999;
+    font-family: 'Quicksand', sans-serif;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.25s ease;
+  }
+
+    .content-select select:hover {
+      background: #B1E8CD;
+    }*/
+
+  /* 
+Creamos la fecha que aparece a la izquierda del select.
+Realmente este elemento es un cuadrado que sólo tienen
+dos bordes con color y que giramos con transform: rotate(-45deg);
+*/
+  /*.content-select i {
+    position: absolute;
+    right: 20px;
+    top: calc(50% - 13px);
+    width: 16px;
+    height: 16px;
+    display: block;
+    border-left: 4px solid #2AC176;
+    border-bottom: 4px solid #2AC176;
+    transform: rotate(-45deg);*/ /* Giramos el cuadrado */
+    /*transition: all 0.25s ease;
+  }
+
+  .content-select:hover i {
+    margin-top: 3px;
+  }
+
+.open i {
+  top:15px;
+  transform: rotate(-225deg);
+}*/
+a {
+  text-decoration: none !important;
+  cursor: pointer;
+}
+.btn-prod {
+  height: 38px;
+  width: 50px;
+  margin-left: 2px;
+  margin-right: 2.5px;
+}
+
+.div-btn-prod {
+  height: 38px;
+  margin-top: 31px;
+}
+
+.div-total-cobrar {
+    padding: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.total-width {
+    width: 50%;
+}
+
+.div-btn-create {
+  padding: 0px;
+  margin-top: 15px;
+}
+
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
+
 tr.span-margin > td > span {
   margin-left: 15px;
 }
@@ -23,4 +122,9 @@ td.text-ajust {
     margin-right: 35px !important;
     margin-top: 31px !important;
   }
+
+  .total-width {
+    width: 50%;
+  }
 }
+

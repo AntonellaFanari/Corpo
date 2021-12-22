@@ -106,6 +106,34 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Class");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.DetailPurchase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("DetailPurchase");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.DetailsSale", b =>
                 {
                     b.Property<int>("Id")
@@ -273,7 +301,7 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Member");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.OrderProducts", b =>
+            modelBuilder.Entity("Corpo.Domain.Models.Outflow", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -283,17 +311,37 @@ namespace Corpo.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("OutflowTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<decimal>("Pay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("OutflowTypeId");
 
-                    b.ToTable("OrderProducts");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Outflow");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.OutflowType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutflowType");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Plan", b =>
@@ -333,9 +381,6 @@ namespace Corpo.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ReplenishmentPoint")
-                        .HasColumnType("int");
-
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
@@ -351,24 +396,19 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<string>("Supplier")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -449,14 +489,14 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Day")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Day")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Hour")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("Hour")
+                        .HasColumnType("time");
 
                     b.Property<int>("Quota")
                         .HasColumnType("int");
@@ -539,6 +579,25 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Sale");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.DetailPurchase", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.Purchase", "Purchase")
+                        .WithMany("DetailPurchase")
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Purchase");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.DetailsSale", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Product", "Product")
@@ -610,22 +669,11 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Plan");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.OrderProducts", b =>
+            modelBuilder.Entity("Corpo.Domain.Models.Outflow", b =>
                 {
-                    b.HasOne("Corpo.Domain.Models.Product", "Product")
+                    b.HasOne("Corpo.Domain.Models.OutflowType", "OutflowType")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Purchase", b =>
-                {
-                    b.HasOne("Corpo.Domain.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("OutflowTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -635,7 +683,18 @@ namespace Corpo.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("OutflowType");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Purchase", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -713,6 +772,11 @@ namespace Corpo.Data.Migrations
             modelBuilder.Entity("Corpo.Domain.Models.Member", b =>
                 {
                     b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Purchase", b =>
+                {
+                    b.Navigation("DetailPurchase");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Sale", b =>

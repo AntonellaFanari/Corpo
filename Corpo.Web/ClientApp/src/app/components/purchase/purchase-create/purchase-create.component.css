@@ -1,0 +1,104 @@
+
+.div-btn-create {
+  padding: 0px;
+  margin-top: 15px;
+}
+
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
+.btn-prod {
+  height: 38px;
+  width: 47px;
+  margin-left: 2px;
+  margin-right: 2.5px;
+  font-size: 15px;
+}
+
+.div-btn-prod {
+  height: 38px;
+  margin-top: 31px;
+}
+
+.btn-add-prod {
+  height: 38px;
+  margin-right: 2.5px;
+}
+
+a {
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.input-total {
+  padding-right: 0px;
+}
+
+
+.div-input-quantity {
+  padding-right: 0px;
+}
+
+.div-input-cost {
+  padding-right: 0px;
+}
+
+.lgView {
+    display: contents;
+}
+
+.smallView {
+  display: none;
+}
+
+@media only screen and (max-width: 1400px) {
+  .div-btn-add-padding {
+    padding-left: 0rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .smallView {
+      display: contents;
+  }
+
+  .lgView {
+      display: none;
+  }
+
+  .div-btn-prod {
+    height: 38px;
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+
+
+  .input-total {
+    padding-right: 0px;
+    padding-left: inherit;
+    margin-right: 0.5rem;
+  }
+
+
+  .div-input-quantity {
+    padding-right: 0px;
+    padding-left: inherit;
+    margin-left:0.3rem;
+  }
+
+  .div-input-cost {
+    padding-right: 0px;
+    padding-left: inherit;
+  }
+
+  .div-btn-add-padding {
+    padding-right: 1rem;
+    padding-top: 0px;
+    padding-left: 1rem;
+  }
+
+}
+

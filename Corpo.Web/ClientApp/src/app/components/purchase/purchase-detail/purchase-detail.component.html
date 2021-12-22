@@ -1,0 +1,33 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title mt-2">Información de la compra</h4>
+      </div>
+      <hr>
+      <section id="no-more-tables">
+        <table class="table table-bordered table-condensed cf user-table">
+          <thead class="cf bg-success text-white">
+            <tr>
+              <th class="numeric">Descripción</th>
+              <th class="numeric">Cantidad</th>
+              <th class="numeric">Costo</th>
+              <th class="numeric">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="scrollme" *ngFor="let detail of detailPurchase">
+              <td class="numeric" data-title="Descripción"><span>{{detail.product.description}}</span></td>
+              <td data-title="Cantidad"><span>{{detail.quantity}}</span></td>
+              <td data-title="Costo"><span>{{detail.cost}}</span></td>
+              <td data-title="Total"><span>{{detail.quantity * detail.cost}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <button type="button" class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" routerLink="/compras-list">Volver</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>

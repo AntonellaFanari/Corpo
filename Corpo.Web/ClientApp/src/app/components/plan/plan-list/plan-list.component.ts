@@ -10,6 +10,7 @@ import { PlanService } from '../../../services/plan.service';
 })
 export class PlanListComponent implements OnInit {
   plans: Plan[] = [];
+  filterPlan = "";
 
   constructor(private planService: PlanService, private customAlertService: CustomAlertService) { }
 

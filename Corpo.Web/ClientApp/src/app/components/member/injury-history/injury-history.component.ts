@@ -155,6 +155,7 @@ export class InjuryHistoryComponent implements OnInit {
 
   download(i) {
     console.log(i);
+    console.log(this.injuryFiles[i]);
     let fileName = this.injuryFiles[i].path;
     console.log(fileName);
     this.memberService.download(fileName).subscribe(

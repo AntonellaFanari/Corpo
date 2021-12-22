@@ -22,6 +22,8 @@ export class SaleCreateComponent implements OnInit {
   members: MemberView[] = [];
   view: boolean = false;
   products: Product[] = [];
+  filterMember: string = '';
+  filterProduct: string = '';
   formDetailsSale: FormGroup;
   userId: number;
   currentDate: string;
@@ -81,11 +83,13 @@ export class SaleCreateComponent implements OnInit {
 
   selectMember(member) {
     this.selectedMember = member;
+    this.filterMember = member.lastName +" "+ member.name;
     this.formDetailsSale.patchValue({ memberName: member.lastName +" "+ member.name });
   }
 
   selectProduct(prod) {
     console.log(prod);
+    this.filterProduct = prod.description;
     if (prod.stock > 0) {
       this.selectedProduct = prod;
       this.formDetailsSale.patchValue({ description: prod.description});
@@ -120,18 +124,18 @@ export class SaleCreateComponent implements OnInit {
     }
   }
 
-  getErrorMemberRequired() {
-    if (this.selectedProduct != undefined) {
-      this.memberRequired = false;
-    } else {
-      this.memberRequired = true;
-    }
-  }
+  //getErrorMemberRequired() {
+  //  if (this.selectedMember != undefined) {
+  //    this.memberRequired = false;
+  //  } else {
+  //    this.memberRequired = true;
+  //  }
+  //}
 
   addDetailSale() {
     this.sendDetailSale = true;
-    this.getErrorMemberRequired();
-    if (this.formDetailsSale.valid && !this.memberRequired) {
+ /*   this.getErrorMemberRequired();*/
+    if (this.formDetailsSale.valid) {
       let existProductIndex = this.detailsSale.findIndex(x => x.productId == this.selectedProduct.id);
       if (existProductIndex != -1) {
         let product = this.detailsSale[existProductIndex];
@@ -172,9 +176,11 @@ export class SaleCreateComponent implements OnInit {
     console.log(this.detailsSale);
   }
 
-  clearForm() {
-    this.descriptionProduct = "";
+  cleanForm() {
+    this.sendDetailSale = false;
     this.getFormDetailsSale();
+    this.formDetailsSale.patchValue({ memberName: this.selectedMember.lastName + " " + this.selectedMember.name });
+    this.filterProduct = '';
   }
 
   removeList(i) {
@@ -195,19 +201,25 @@ export class SaleCreateComponent implements OnInit {
   }
 
   submit() {
-    let newSale = this.createSale();
-    this.saleService.add(newSale).subscribe(
-      result => {
-        console.log(result);
-        this.router.navigate(['/caja']);
-      }, error => {
-        console.error(error);
-        if (error.status === 400) {
-          this.customAlertService.displayAlert("Gestión de Ventas", error.error.errores);
-        }
-        if (error.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Ventas", ["Hubo un problema al intentar cargar la venta."]);
-        }
-      });
+    if (this.detailsSale.length > 0) {
+      let newSale = this.createSale();
+      console.log(newSale);
+      this.saleService.add(newSale).subscribe(
+        result => {
+          console.log(result);
+          this.router.navigate(['/caja']);
+        }, error => {
+          console.error(error);
+          if (error.status === 400) {
+            this.customAlertService.displayAlert("Gestión de Ventas", error.error.errores);
+          }
+          if (error.status === 500) {
+            this.customAlertService.displayAlert("Gestión de Ventas", ["Hubo un problema al intentar cargar la venta."]);
+          }
+        });
+    } else {
+      this.customAlertService.displayAlert("Gestión de Ventas", ["No se seleccionaron productos."]);
+    }
+    
   }
 }

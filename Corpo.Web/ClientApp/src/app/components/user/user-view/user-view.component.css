@@ -4,6 +4,12 @@
   margin: 2px;
 }
 
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
 tr.span-margin > td > span {
   margin-left: 15px;
 }
@@ -21,3 +27,5 @@ td.text-ajust {
     font-size: 13px;
   }
 }
+
+

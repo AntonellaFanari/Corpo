@@ -47,8 +47,8 @@
               Informes
             </a>
           </li>
-          <li *access="'abm'" class="nav-item sub-menu dropdown">
-            <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
+          <li *access="'abm'" class="nav-item sub-menu dropdown ">
+            <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
               <i class="fa fa-search"></i>
               ABM
             </a>
@@ -58,9 +58,10 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/plan-list']">Planes</a></li>
               <!--<li><a class="nav-item" href="">Promociones</a><li>-->
               <li class="nav-item"><a class="nav-link" [routerLink]="['/productos-list']">Productos</a></li>
-              <!--<li><a class="nav-item" href="">Egresos</a></li>
-  <li><a class="nav-item" href="">Retiros</a></li>
-  <li><a class="nav-item" href="">WODS</a></li>-->
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/egresos-list']">Egresos</a></li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>
+              <!--<li><a class="nav-item" href="">Retiros</a></li>
+              <li><a class="nav-item" href="">WODS</a></li>-->
             </ul>
           </li>
           <li *access="'ajustes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">

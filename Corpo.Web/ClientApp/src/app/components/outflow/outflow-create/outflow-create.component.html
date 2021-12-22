@@ -1,0 +1,43 @@
+<section class="wrapper">
+  <div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success"><h3 class="text-white text-center">Egresos</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 card">
+            <div class="row justify-content-center align-content-center">
+              <div class="card-body col-12 text-center">
+                <label class="form-label">Caja Actual:</label>
+                <p class="text-center">12.500</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 card bg-light">
+            <form [formGroup]="formCreate">
+              <div class="row card-body">
+                <div class="col-9 formValidators">
+                  <label class="form-label">Concepto:</label>
+                  <select class="form-control col-12" (change)="selectOutflowType($event.target.value)">
+                    <option class="form-control col-12" value="" disabled>Seleccionar...</option>
+                    <option *ngFor="let outflowType of outflowsTypes" class="form-control col-12" value={{outflowType.id}}>{{outflowType.name}}</option>
+                  </select>
+                  <p *ngIf="send && f.outflowTypeId.errors?.required">*Debe seleccionar un tipo de egreso.</p>
+                </div>
+                <div class="col-3 formValidators">
+                  <label class="form-label">Pago:</label>
+                  <input type="number" class="form-control" formControlName="pay" />
+                  <p *ngIf="send && f.pay.errors?.min">*Debe ingresar un importe mayor a 0.</p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Aceptar</button>
+  </div>
+</section>
+

@@ -59,7 +59,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="scrollme span-margin" *ngFor="let shift of shifts | searchFilter: filterShift">
+              <tr class="scrollme span-margin" *ngFor="let shift of shifts | searchFilterShift: filterShift">
                 <td class="td-title" data-title=""><span><input type="checkbox" [checked]="shift.checked" value="{{shift.id}}" (change)="checked(shift)" /></span></td>
                 <td class="td-title" data-title="Fecha"><span>{{shift.day}} {{shift.hour}}</span></td>
                 <td class="td-title" data-title="Cupo"><span>{{shift.quota}}</span></td>

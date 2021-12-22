@@ -10,7 +10,7 @@
                 <div class="row">
                   <div class="col-12 pull-left">
                     <label class="col-12 control-label">Nombre:</label>
-                    <div class="col-12">
+                    <div class="col-12 formValidators">
                       <input type="text" class="form-control" formControlName="name">
                       <p *ngIf="sendForm && f.name.errors?.required">*el campo es requerido</p>
                     </div>
@@ -21,7 +21,7 @@
             <div class="col-12 card">
               <div class="row card-body justify-content-center align-items-center">
                 <div class="row">
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-6 formValidators">
                     <label class="col-12 control-label">Tipo de Plan:</label>
                     <select class="form-control" formControlName="type" (change)="selectType($event.target.value)">
                       <option value="" disabled>Seleccionar...</option>
@@ -46,14 +46,14 @@
                 <div class="row">
                   <div class="col-12 col-lg-6">
                     <label class="col-12 control-label">Créditos:</label>
-                    <div class="col-12">
+                    <div class="col-12 formValidators">
                       <input type="number" class="form-control" formControlName="credits">
                       <p *ngIf="sendForm && f.credits.errors?.required">*el campo es requerido</p>
                     </div>
                   </div>
                   <div class="col-12 col-lg-6">
                     <label class="col-12 control-label">Precio:</label>
-                    <div class="col-12">
+                    <div class="col-12 formValidators">
                       <input type="number" class="form-control" formControlName="price">
                       <p *ngIf="sendForm && f.price.errors?.required">*el campo es requerido</p>
                     </div>

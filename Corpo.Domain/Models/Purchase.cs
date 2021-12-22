@@ -10,11 +10,10 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public virtual Product Product { get; set; }
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
-        public decimal Cost { get; set; }
+        public string Supplier { get; set; }
         public virtual User User { get; set; }
         public int UserId { get; set; }
+        public decimal Total { get; set; }
+        public List<DetailPurchase> DetailPurchase { get; set; }
     }
 }

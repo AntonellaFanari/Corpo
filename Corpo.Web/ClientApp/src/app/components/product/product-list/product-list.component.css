@@ -9,6 +9,13 @@
   margin-left: 5px;
 }
 
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
+
 @media only screen and (max-width: 576px) {
   #no-more-tables td {
     padding-left: 50%;

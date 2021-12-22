@@ -13,16 +13,21 @@ export class ProductFormComponent implements OnInit {
   sent: boolean = false;
   product: Product;
   @Input() title: string = "Modificación de Producto";
+
   constructor(private formBuilder: FormBuilder, private productService: ProductService) {
     this.formProduct = this.formBuilder.group({
       description: ['', Validators.required],
       stock: 0,
-      price: [0, Validators.required],
-      replenishmentPoint: 0
+      price: [0, Validators.required]
     });
   }
   
   ngOnInit() {
+    if (this.title == "Alta de Producto") {
+      let inputStock = document.getElementById("input-stock");
+      inputStock.setAttribute('readonly', 'true');
+      console.log(inputStock);
+    }
 
   }
   get f() {
@@ -34,7 +39,6 @@ export class ProductFormComponent implements OnInit {
     newProduct.description = this.formProduct.value.description;
     newProduct.stock = this.formProduct.value.quantity;
     newProduct.price = this.formProduct.value.price;
-    newProduct.replenishmentPoint = this.formProduct.value.replenishmentPoint;
     return newProduct;
   }
 
@@ -53,8 +57,7 @@ export class ProductFormComponent implements OnInit {
     this.formProduct.patchValue({
       description: this.product.description,
       stock: this.product.stock,
-      price: this.product.price,
-      replenishmentPoint: this.product.replenishmentPoint,
+      price: this.product.price
     })
   }
 

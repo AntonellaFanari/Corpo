@@ -9,6 +9,13 @@
         </div>
       </div>
       <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterPlan" placeholder="Buscar" class="form-control" [(ngModel)]="filterPlan">
+          </div>
+        </div>
+      </div>
       <section *ngIf="plans.length>0 ; else: elseBlock1" id="no-more-tables">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
@@ -21,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let plan of plans">
+            <tr *ngFor="let plan of plans | searchFilterPlan: filterPlan">
               <td data-title="Plan"><span>{{plan.name}}</span></td>
               <td data-title="Créditos"><span>{{plan.credits}}</span></td>
               <td data-title="Precio"><span>{{plan.price}}</span></td>
@@ -29,7 +36,7 @@
                 <table *ngIf="plan.classes.length>0 ; else: elseBlock2" id="table-class">
                   <tbody>
                     <tr *ngFor="let class of plan.classes">
-                      <td >
+                      <td>
                         <span>{{class.name}}</span>
                       </td>
                     </tr>

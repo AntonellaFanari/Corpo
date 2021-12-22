@@ -6,7 +6,14 @@
         <button type="button" class="btn btn-success pull-right" routerLink="/member-create">Agregar</button>
       </div>
       <hr>
-      <section *ngIf="members.length>0 ; else: elseBlock"  id="no-more-tables">
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterMember" placeholder="Buscar" class="form-control" [(ngModel)]="filterMember">
+          </div>
+        </div>
+      </div>
+      <section *ngIf="members.length>0 ; else: elseBlock" id="no-more-tables">
         <table class="table table-hover table-bordered table-condensed  cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -21,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let member of members">
+            <tr *ngFor="let member of members | searchFilterMember: filterMember">
               <td class="td-title" data-title="Estado"><span class="badge bg-success">Activo</span></td>
               <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
               <td class="td-title" data-title="Teléfono"><span>{{member.phone}}</span></td>
@@ -30,12 +37,16 @@
               <td class="td-title" data-title="Vencimiento"><span>07/11/2021</span></td>
               <td class="td-title" data-title="Negativos"><span>0</span></td>
               <td class="td-title td-padding-action" data-title="Acción">
-                <button class="btn btn-success btn-action-list"><i class="fa fa-usd"></i></button>
-                <button class="btn btn-primary btn-action-list" [routerLink]="['/']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
-                <button class="btn btn-info btn-action-list" [routerLink]="['/historia-médica-crear']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
-                <button class="btn btn-primary btn-action-list" [routerLink]="['/member-view']" [queryParams]="{id:member.id}"><i class="fa fa-info-circle"></i></button>
-                <button class="btn btn-warning btn-action-list" [routerLink]="['/member-edit']" [queryParams]="{id:member.id}"><i class="fa fa-pencil-square-o "></i></button>
-                <button class="btn btn-danger btn-action-list" (click)="delete(member.id)"><i class="fa fa-trash-o "></i></button>
+                <div class="text-center">
+                  <button class="btn btn-success btn-action-list"><i class="fa fa-usd"></i></button>
+                  <button class="btn btn-primary btn-action-list" [routerLink]="['/']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
+                  <button class="btn btn-info btn-action-list" [routerLink]="['/historia-médica-crear']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
+                </div>
+                <div class="text-center">
+                  <button class="btn btn-primary btn-action-list" [routerLink]="['/member-view']" [queryParams]="{id:member.id}"><i class="fa fa-info-circle"></i></button>
+                  <button class="btn btn-warning btn-action-list" [routerLink]="['/member-edit']" [queryParams]="{id:member.id}"><i class="fa fa-pencil-square-o "></i></button>
+                  <button class="btn btn-danger btn-action-list" (click)="delete(member.id)"><i class="fa fa-trash-o "></i></button>
+                </div>
               </td>
             </tr>
           </tbody>

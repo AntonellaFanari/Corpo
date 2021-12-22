@@ -22,16 +22,16 @@
           <thead class="cf">
 
             <tr class="scrollme">
-              <th colspan="1" class="bg-info text-center td-button" [routerLink]="['/cuota']">
+              <th colspan="1" class="bg-info text-center td-button text-white" [routerLink]="['/cuota-agregar']">
                 Cuotas
               </th>
-              <th colspan="1" class="bg-success text-center td-button" [routerLink]="['/venta-agregar']">
+              <th colspan="1" class="bg-success text-center td-button text-white" [routerLink]="['/venta-agregar']">
                 Ventas
               </th>
-              <th colspan="1" class="bg-danger text-center td-button" [routerLink]="['/egreso']">
+              <th colspan="1" class="bg-danger text-center td-button text-white" [routerLink]="['/egreso']">
                 Egresos
               </th>
-              <th colspan="1" class="bg-secondary text-center td-button" [routerLink]="['/retiro']">
+              <th colspan="1" class="bg-secondary text-center td-button text-white" [routerLink]="['/retiro']">
                 Retiros
               </th>
             </tr>
@@ -54,7 +54,7 @@
                       <td href="">1500</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-info">Total: 5700</td>
+                      <td class="bg-info cursor">Total: 5700</td>
                     </tr>
                   </tbody>
                 </table>
@@ -62,11 +62,14 @@
               <td data-title="Ventas">
                 <table class="table table-bordered table-condensed cf table-td">
                   <tbody>
+                    <tr class="total-responsive table-td-total">
+                      <td class="cursor" (click)="alert()">Agregar</td>
+                    </tr>
                     <tr *ngFor="let sale of sales; index as i">
-                      <td [ngStyle]="{'color':sale.status==2?'red':'#09b4f5'}" (click)="getDetailsSale(sale)">{{sale.total}}</td>
+                      <td [ngStyle]="{'color':sale.status==2?'red':'#09b4f5'}" class="cursor" (click)="getDetailsSale(sale)">{{sale.total}}</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-success">Total: {{totalSale}}</td>
+                      <td class="bg-success cursor">Total: {{totalSale}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -74,17 +77,11 @@
               <td data-title="Egresos">
                 <table class="table table-bordered table-condensed cf table-td">
                   <tbody>
-                    <tr>
-                      <td href="">2500</td>
-                    </tr>
-                    <tr>
-                      <td href="">3000</td>
-                    </tr>
-                    <tr>
-                      <td><a href="">1500</a></td>
+                    <tr *ngFor="let outflow of outflows; index as i">
+                      <td class="cursor" (click)="getDetailOutflow(outflow)">{{outflow.pay}}</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-danger">Total: 7000</td>
+                      <td class="bg-success cursor">Total: {{totalOutflow}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -105,7 +102,7 @@
                       <td>2000</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-secondary">Total: 7150</td>
+                      <td class="bg-secondary cursor">Total: 7150</td>
                     </tr>
                   </tbody>
                 </table>
@@ -114,10 +111,10 @@
           </tbody>
           <tfoot class="total-non-responsive table-td-total">
             <tr class="scrollme">
-              <td>5700</td>
-              <td>{{totalSale}}</td>
-              <td>7000</td>
-              <td>7150</td>
+              <td class="cursor">5700</td>
+              <td class="cursor">{{totalSale}}</td>
+              <td class="cursor">{{totalOutflow}}</td>
+              <td class="cursor">7150</td>
             </tr>
           </tfoot>
         </table>
@@ -129,4 +126,6 @@
   <!-- /col-md-12 -->
 </section>
 
-<app-sale-edit (updateSales)="getAll()"></app-sale-edit>
+<app-sale-edit (updateSales)="getAllSale()"></app-sale-edit>
+
+<app-outflow-detail (updateOutflows)="getAllOutflow()"></app-outflow-detail>

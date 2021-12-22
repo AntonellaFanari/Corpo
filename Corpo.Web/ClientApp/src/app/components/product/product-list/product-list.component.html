@@ -4,11 +4,19 @@
       <div class="task-panel row">
         <h4 class="table-title col-12 col-lg-6">Productos</h4>
         <div class="col-12 col-lg-6">
-          <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add" routerLink="/product-create">Agregar</button>
+          <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add" routerLink="/product-agregar">Agregar</button>
           <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add" routerLink="/venta-agregar">Ventas</button>
+          <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add" routerLink="/compras-list">Compras</button>
         </div>
       </div>
       <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterProduct" placeholder="Buscar" class="form-control" [(ngModel)]="filterProduct">
+          </div>
+        </div>
+      </div>
       <section *ngIf="products.length>0 ; else elseBlock" id="no-more-tables" class="tab-pane fade show active">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
@@ -16,16 +24,14 @@
               <th class="numeric">Descripción</th>
               <th class="numeric">Stock</th>
               <th class="numeric">Precio</th>
-              <th class="numeric">Punto de Reposición</th>
               <th class="numeric">Acción</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let prod of products" class="scrollme span-margin">
+            <tr *ngFor="let prod of products | searchFilterProduct: filterProduct" class="scrollme span-margin">
               <td class="td-title text-ajust" data-title="Descripción"><span>{{prod.description}}</span></td>
               <td class="td-title" data-title="Stock"><span>{{prod.stock}}</span></td>
               <td class="td-title" data-title="Precio"><span>{{prod.price}}</span></td>
-              <td class="td-title" data-title="Punto de Reposición"><span>{{prod.replenishmentPoint}}</span></td>
               <td class="td-title" data-title="Acción">
                 <span class="btn-action-container">
                   <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/product-detail']" [queryParams]="{id:prod.id}"><i class="fa fa-pencil-square-o "></i></button>

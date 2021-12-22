@@ -10,7 +10,7 @@
                 <div class="row">
                   <div class="col-12">
                     <label class="col-12 control-label">Nombre:</label>
-                    <div class="col-12">
+                    <div class="col-12 formValidators">
                       <input type="text" class="form-control" formControlName="name">
                       <p *ngIf="sendForm && f.name.errors?.required">*el campo es requerido</p>
                     </div>
@@ -21,7 +21,7 @@
             <div class="col-12 card">
               <div class="row card-body justify-content-center align-content-center">
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 formValidators">
                     <label class="col-12 control-label">Personalizada:</label>
                     <select class="form-control" formControlName="personalized" (change)="selectPersonalized($event.target.value)">
                       <option value="" disabled>Seleccionar...</option>
@@ -38,9 +38,9 @@
       </div>
     </div>
   </div>
-  <div class="div-btn-create">
-    <button class="btn btn-secondary pull-left" type="button" [routerLink]="['/clases-list']">Cancelar</button>
-    <button class="btn btn-success pull-right" type="submit" (click)="submit()">Guardar</button>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/clases-list']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 

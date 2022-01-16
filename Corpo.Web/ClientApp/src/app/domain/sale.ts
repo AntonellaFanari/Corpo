@@ -7,5 +7,6 @@ export class Sale {
   memberId: number;
   detailsSale: DetailsSale[];
   total: number;
-  status: number
+  status: number;
+  pay: number
 }

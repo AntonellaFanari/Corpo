@@ -28,12 +28,12 @@ namespace Corpo.Web.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("add")]
-        public ActionResult Add(Account account)
-        {
-            var response = _accountService.Add(account);
-            return this.ToActionResult(response);
-        }
+        //[HttpPost("add")]
+        //public ActionResult Add(Account account)
+        //{
+        //    var response = _accountService.Add(account);
+        //    return this.ToActionResult(response);
+        //}
 
         [HttpPost("logIn")]
         public IActionResult LogIn([FromBody]Account account)

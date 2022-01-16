@@ -33,6 +33,7 @@ namespace Corpo.Data.Repositories
             return _context.Member
                     .Include(x => x.Plan)
                     .Include(x => x.Account)
+                    .Include(x=>x.Credit)
                     .FirstOrDefault(x => x.Id == id);
         }
 
@@ -47,8 +48,9 @@ namespace Corpo.Data.Repositories
         public List<Member> GetAll()
         {
             var list = _context.Member
-                    .Include(x=>x.Plan)
+                    .Include(x => x.Plan)
                     .Include(x => x.Account)
+                    .Include(x=>x.Credit)
                     .ToList();
             return list;
         }

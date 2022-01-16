@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Corpo.Web.Controllers.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPost("add")]
-        public ActionResult Add(Sale newSale)
+        public ActionResult Add(SaleDto newSale)
         {
             var response = _saleService.Add(newSale);
             return this.ToActionResult(response);
@@ -57,6 +58,13 @@ namespace Corpo.Web.Controllers
         public ActionResult<DetailsSale> GetCancelSale(int idSale)
         {
             var response = _saleService.GetCancelSale(idSale);
+            return Ok(response);
+        }
+
+        [HttpGet("getSaleById")]
+        public ActionResult<Sale> GetSaleById(int id)
+        {
+            var response = _saleService.GetSaleById(id);
             return Ok(response);
         }
     }

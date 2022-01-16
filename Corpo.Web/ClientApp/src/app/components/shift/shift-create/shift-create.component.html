@@ -56,12 +56,12 @@
             <tbody>
               <tr class="scrollme span-margin" *ngFor="let schedule of schedules; index as i">
                 <td class="td-title" data-title="Hora"><div class="row col-12 col-lg-12 col-sm-6 mx-0"><input type="time" class="form-control" value={{schedule.hour}} (change)="selectHour($event.target.value, i)" /></div></td>
-                <td class="td-title" data-title="Lunes" (click)="selectMonday()"><span><input type="checkbox" [checked]="monday" (change)="schedule.monday=!schedule.monday" /></span></td>
-                <td class="td-title" data-title="Martes" (click)="selectTuesday()"><span><input type="checkbox" [checked]="tuesday" (change)="schedule.tuesday=!schedule.tuesday" /></span></td>
-                <td class="td-title" data-title="Miercoles" (click)="selectWednesday()"><span><input type="checkbox" [checked]="wednesday" (change)="schedule.wednesday=!schedule.wednesday" /></span></td>
-                <td class="td-title" data-title="Jueves" (click)="selectThursday()"><span><input type="checkbox" [checked]="thursday" (change)="schedule.thursday=!schedule.thursday" /></span></td>
-                <td class="td-title" data-title="Viernes" (click)="selectFriday()"><span><input type="checkbox" [checked]="friday" (change)="schedule.friday=!schedule.friday" /></span></td>
-                <td class="td-title" data-title="Sábado" (click)="selectSaturday()"><span><input type="checkbox" [checked]="saturday" (change)="schedule.saturday=!schedule.saturday" /></span></td>
+                <td class="td-title" data-title="Lunes" (click)="selectMonday(i)"><span><input type="checkbox" [checked]="schedule.monday" (change)="schedule.monday=!schedule.monday"/></span></td>
+                <td class="td-title" data-title="Martes" (click)="selectTuesday(i)"><span><input type="checkbox" [checked]="schedule.tuesday" (change)="schedule.tuesday=!schedule.tuesday" /></span></td>
+                <td class="td-title" data-title="Miercoles" (click)="selectWednesday(i)"><span><input type="checkbox" [checked]="schedule.wednesday" (change)="schedule.wednesday=!schedule.wednesday" /></span></td>
+                <td class="td-title" data-title="Jueves" (click)="selectThursday(i)"><span><input type="checkbox" [checked]="schedule.thursday" (change)="schedule.thursday=!schedule.thursday" /></span></td>
+                <td class="td-title" data-title="Viernes" (click)="selectFriday(i)"><span><input type="checkbox" [checked]="schedule.friday" (change)="schedule.friday=!schedule.friday" /></span></td>
+                <td class="td-title" data-title="Sábado" (click)="selectSaturday(i)"><span><input type="checkbox" [checked]="schedule.saturday" (change)="schedule.saturday=!schedule.saturday" /></span></td>
                 <td class="td-title" data-title="Profesor">
                   <div class="row col-12 col-lg-12 col-sm-6 mx-0">
                     <select class="form-control" (change)="selectUser($event.target.value, i)">

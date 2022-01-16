@@ -10,10 +10,11 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IAccountService
     {
-        DomainResponse Add(Account account);
+        int Add(Account account);
         DomainResponse LogIn(Account account);
         DomainResponse UpdateEmail(Account account);
         DomainResponse UpdatePassword(AccountDto account);
+        void Delete(int id);
 
     }
 }

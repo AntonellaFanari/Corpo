@@ -1,0 +1,32 @@
+.div-btn-create {
+  padding: 0px;
+  margin-top: 15px;
+}
+
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
+.div-percentage {
+  background: #ced4da;
+  height: 38px;
+  width: 47px;
+  text-align: center;
+}
+
+.title-add {
+  height: 40px !important;
+  text-align: center !important;
+  background: #0dcaf0 !important;
+  background-color: white !important;
+  text-transform: uppercase !important;
+}
+/*.btn-prod {
+  height: 38px;
+  width: 47px;
+  margin-left: 2px;
+  margin-right: 2.5px;
+  font-size: 15px;
+}*/

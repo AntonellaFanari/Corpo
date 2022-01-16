@@ -18,6 +18,12 @@
             </a>
           </li>
           <li *access="'usuarios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+            <a [routerLink]="['/asistencias']">
+              <i class="fa fa-user"></i>
+              Asistencias
+            </a>
+          </li>
+          <li *access="'usuarios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/user-list']">
               <i class="fa fa-user"></i>
               Usuarios
@@ -30,7 +36,7 @@
             </a>
           </li>
           <li *access="'deudas'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a href="#">
+            <a [routerLink]="['/deudas-list']">
               <i class="fa fa-usd"></i>
               Deudas
             </a>
@@ -47,7 +53,7 @@
               Informes
             </a>
           </li>
-          <li *access="'abm'" class="nav-item sub-menu dropdown ">
+          <li *access="'abm'" class="nav-item sub-menu dropdown">
             <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
               <i class="fa fa-search"></i>
               ABM
@@ -56,12 +62,18 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/turnos-list']">Turnos</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/clases-list']">Clases</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/plan-list']">Planes</a></li>
-              <!--<li><a class="nav-item" href="">Promociones</a><li>-->
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/promociones-list']">Promociones</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/productos-list']">Productos</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/egresos-list']">Egresos</a></li>
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>
-              <!--<li><a class="nav-item" href="">Retiros</a></li>
-              <li><a class="nav-item" href="">WODS</a></li>-->
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/retiros-list']">Retiros</a></li>
+              <li class="nav-item dropend sub-menu dropdown">
+                <a class="nav-link dropdown-toggle" id="dropdown2" data-bs-toggle="dropdown" role="button">WODS</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/categorias-list']">Categorias</a></li>
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/tags-list']">Tags</a></li>
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
           <li *access="'ajustes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
@@ -80,6 +92,7 @@
           <ul class="dropdown-menu" role="menu">
             <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user-o"></i>&nbsp;Mis datos</a></li>
             <li><a [routerLink]="['/modificar-contraseña']"><i class="fa fa-key"></i>&nbsp;Modificar contraseña</a></li>
+            <li><a [routerLink]="['/mis-deudas']"><i class="fa fa-usd"></i>&nbsp;Mis deudas</a></li>
             <li><a><i class="fa fa-bell"></i>&nbsp;Notificaciones</a></li>
             <hr />
             <li><a (click)="signOff()">Cerrar Sesión&nbsp;<i class="fa fa-sign-out"></i></a></li>

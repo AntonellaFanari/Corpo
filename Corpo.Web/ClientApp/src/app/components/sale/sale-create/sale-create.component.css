@@ -126,5 +126,13 @@ td.text-ajust {
   .total-width {
     width: 50%;
   }
+  .btn-prod {
+    height: 38px;
+    width: 44px;
+    margin-left: 2px;
+    margin-right: 2.5px;
+    font-size: 13px;
+  }
+
 }
 

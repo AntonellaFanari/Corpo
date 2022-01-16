@@ -1,0 +1,58 @@
+.btn-action-list {
+  height: 35px;
+  width: 38px;
+  margin: 2px;
+}
+
+.btn-add {
+  float: right;
+  margin-left: 5px;
+}
+
+#table-class table tbody tr td {
+  border: 0px;
+}
+
+tr.span-margin > td > span {
+  margin-left: 15px;
+}
+
+td.text-ajust {
+  text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 30%;
+  }
+
+  #table-class tr {
+    border: 0px;
+  }
+
+  #table-class td {
+    border: 0;
+    padding-left: 0px !important;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+}
+
+.no-class {
+  color: #9d9797;
+}
+
+@media only screen and (max-width: 576px) {
+
+  .user-table {
+    font-size: 13px;
+  }
+
+  .btn-add {
+    float: none;
+    margin-left: 0px;
+    width: 100%;
+  }
+}

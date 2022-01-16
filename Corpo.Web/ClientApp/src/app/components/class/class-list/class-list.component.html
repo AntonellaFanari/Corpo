@@ -9,7 +9,7 @@
       <div class="col-12 card">
         <div class="row card-body">
           <div class="col-12">
-            <input type="text" name="filterClass" placeholder="Buscar" class="form-control" [(ngModel)]="filterClass">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let class of classes | searchFilterClass: filterClass">
+            <tr *ngFor="let class of classes | searchFilterName: filterName">
               <td data-title="Nombre"><span>{{class.name}}</span></td>
               <td data-title="Personalizada"><span>{{class.personalized}}</span></td>
               <td data-title="Acción">

@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Contracts.Services;
+using Corpo.Domain.Exceptions;
 using Corpo.Domain.Models;
 using Corpo.Domain.Models.Dtos;
 using Corpo.Domain.Views;
@@ -14,25 +15,33 @@ namespace Corpo.Domain.Services
 {
     public class AccountService: IAccountService
     {
-        private IAccountRepository _accounRepository;
+        private IAccountRepository _accountRepository;
         private IUserRepository _userRepository;
         private IMemberRepository _memberRepository;
 
         public AccountService(IAccountRepository accounRepository, IUserRepository userRepository, IMemberRepository memberRepository)
         {
-            _accounRepository = accounRepository;
+            _accountRepository = accounRepository;
             _userRepository = userRepository;
             _memberRepository = memberRepository;
         }
 
-        public DomainResponse Add(Account account)
+        public int Add(Account account)
         {
-            throw new NotImplementedException();
+
+                int id = _accountRepository.Add(account);
+                return id;
+
+        }
+
+        public void Delete(int id)
+        {
+            _accountRepository.Delete(id);
         }
 
         public DomainResponse LogIn(Account account)
         {
-            var accountQuery = _accounRepository.GetByEmail(account.Email);
+            var accountQuery = _accountRepository.GetByEmail(account.Email);
             if (accountQuery != null)
             {
                 var password = this.GetHashString(account.Password); 
@@ -61,12 +70,12 @@ namespace Corpo.Domain.Services
         {
             try
             {
-                var accountQuery = _accounRepository.GetById(account.Id);
+                var accountQuery = _accountRepository.GetById(account.Id);
                 var password = this.GetHashString(account.Password);
                 if (password == accountQuery.Password)
                 {
                     accountQuery.Email = account.Email;
-                    _accounRepository.UpdateEmail(accountQuery);
+                    _accountRepository.UpdateEmail(accountQuery);
                     return new DomainResponse
                     {
                         Success = true
@@ -87,13 +96,13 @@ namespace Corpo.Domain.Services
         {
             try
             {
-                var accountQuery = _accounRepository.GetById(account.Id);
+                var accountQuery = _accountRepository.GetById(account.Id);
                 var password = this.GetHashString(account.Password);
                 if (password == accountQuery.Password)
                 {
                     var newPassword = this.GetHashString(account.NewPassword);
                     accountQuery.Password = newPassword;
-                    _accounRepository.UpdatePassword(accountQuery);
+                    _accountRepository.UpdatePassword(accountQuery);
                     return new DomainResponse
                     {
                         Success = true

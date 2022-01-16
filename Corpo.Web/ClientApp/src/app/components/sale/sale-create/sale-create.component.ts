@@ -2,12 +2,15 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BalanceToPay, TransactionType } from '../../../domain/balance-to-pay';
 import { DetailsSale } from '../../../domain/details-sale';
 import { MemberView } from '../../../domain/member-view';
 import { Product } from '../../../domain/product';
 import { Sale } from '../../../domain/sale';
+import { SaleDto } from '../../../domain/sale-dto';
 import { Status } from '../../../domain/status';
 import { AccountService } from '../../../services/account.service';
+import { BalanceService } from '../../../services/balance.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 import { ProductService } from '../../../services/product.service';
@@ -36,9 +39,13 @@ export class SaleCreateComponent implements OnInit {
   viewListDetails: boolean = false;
   sendDetailSale: boolean = false;
   memberRequired: boolean = false;
+  pay = 0;
+  //positiveBalance = 0;
+  //positiveBalanceSaleDto = 0;
 
   constructor(private memberService: MemberService, private productService: ProductService, private formBuilder: FormBuilder,
-    private accountService: AccountService, private dp: DatePipe, private saleService: SaleService, private router: Router, private customAlertService: CustomAlertService) {
+    private accountService: AccountService, private dp: DatePipe, private saleService: SaleService, private router: Router,
+    private customAlertService: CustomAlertService, private balanceService: BalanceService) {
     this.userId = this.accountService.getLoggedUser().id;
     this.getFormDetailsSale();
   }
@@ -62,6 +69,21 @@ export class SaleCreateComponent implements OnInit {
     );
   }
 
+  //getPositiveBalance(id) {
+  //  this.balanceService.getPositiveBalanceByIdMember(id).subscribe(
+  //    result => {
+  //      console.log(result);
+  //      if (result.resul != null) {
+  //        this.positiveBalance = result.result.balance * (-1);
+  //      } else {
+  //        this.positiveBalance = 0;
+  //      }
+       
+  //    },
+  //    error => console.error(error)
+  //  )
+  //}
+
   getFormDetailsSale() {
     return this.formDetailsSale = this.formBuilder.group({
       memberName: ['', Validators.required],
@@ -83,8 +105,9 @@ export class SaleCreateComponent implements OnInit {
 
   selectMember(member) {
     this.selectedMember = member;
-    this.filterMember = member.lastName +" "+ member.name;
-    this.formDetailsSale.patchValue({ memberName: member.lastName +" "+ member.name });
+    this.filterMember = member.lastName + " " + member.name;
+    this.formDetailsSale.patchValue({ memberName: member.lastName + " " + member.name });
+  /*  this.getPositiveBalance(member.id);*/
   }
 
   selectProduct(prod) {
@@ -92,7 +115,7 @@ export class SaleCreateComponent implements OnInit {
     this.filterProduct = prod.description;
     if (prod.stock > 0) {
       this.selectedProduct = prod;
-      this.formDetailsSale.patchValue({ description: prod.description});
+      this.formDetailsSale.patchValue({ description: prod.description });
       console.log(this.formDetailsSale.value.description);
       let existProduct = this.detailsSale.find(x => x.productId == prod.id);
       if (existProduct) {
@@ -109,14 +132,14 @@ export class SaleCreateComponent implements OnInit {
     } else {
       this.customAlertService.displayAlert("Gestión de Ventas", ["Producto sin stock."]);
     }
-    
+
   }
 
   calculateTotal() {
     if (this.selectedProduct.stock) {
       this.formDetailsSale.patchValue({
         total: (this.formDetailsSale.value.quantity * this.selectedProduct.price)
-      })
+      });
     } else {
       this.formDetailsSale.patchValue({
         total: 0
@@ -134,7 +157,7 @@ export class SaleCreateComponent implements OnInit {
 
   addDetailSale() {
     this.sendDetailSale = true;
- /*   this.getErrorMemberRequired();*/
+    /*   this.getErrorMemberRequired();*/
     if (this.formDetailsSale.valid) {
       let existProductIndex = this.detailsSale.findIndex(x => x.productId == this.selectedProduct.id);
       if (existProductIndex != -1) {
@@ -146,7 +169,19 @@ export class SaleCreateComponent implements OnInit {
           currentquantity = currentStock + product.quantity;
           this.detailsSale.splice(existProductIndex, 1);
           this.createDetailSale();
-          this.total = this.total - totalProduct + this.formDetailsSale.value.total;
+          this.total = this.total - totalProduct + (this.formDetailsSale.value.quantity * this.formDetailsSale.value.price);
+          this.pay = this.total;
+        //  if (this.positiveBalance > this.total) {
+        //    this.positiveBalanceSaleDto = this.positiveBalance - this.total;
+        //    this.pay = 0
+        //  } if (this.positiveBalance == this.total) {
+        //    this.positiveBalanceSaleDto = 0;
+        //    this.pay = 0
+        //  }
+        //  else {
+        //    this.positiveBalanceSaleDto = this.positiveBalance;
+        //    this.pay = this.total - this.positiveBalance;
+        //  }
         }
         else {
           this.customAlertService.displayAlert("Gestión de Ventas", ["La cantidad seleccionada supera el stock disponible."]);
@@ -158,10 +193,35 @@ export class SaleCreateComponent implements OnInit {
           });
           this.detailsSale.splice(existProductIndex, 1);
           this.total = this.total - totalProduct;
+
+          //if (this.positiveBalance > this.total) {
+          //  this.positiveBalanceSaleDto = this.positiveBalance - this.total;
+          //  this.pay = 0
+          //} if (this.positiveBalance == this.total) {
+          //  this.positiveBalanceSaleDto = 0;
+          //  this.pay = 0
+          //}
+          //else {
+          //  this.positiveBalanceSaleDto = this.positiveBalance;
+          //  this.pay = this.total - this.positiveBalance;
+          //}
+          this.pay = this.total;
         }
       } else {
         this.createDetailSale();
-        this.total = this.total + this.formDetailsSale.value.total;
+        this.total = this.total + (this.formDetailsSale.value.quantity * this.formDetailsSale.value.price);
+        this.pay = this.total;
+        //if (this.positiveBalance > this.total) {
+        //  this.positiveBalanceSaleDto = this.positiveBalance - this.total;
+        //  this.pay = 0
+        //} if (this.positiveBalance == this.total) {
+        //  this.positiveBalanceSaleDto = 0;
+        //  this.pay = 0
+        //}
+        //else {
+        //  this.positiveBalanceSaleDto = this.positiveBalance;
+        //  this.pay = this.total - this.positiveBalance;
+        //}
       }
     }
   }
@@ -189,13 +249,18 @@ export class SaleCreateComponent implements OnInit {
   }
 
   createSale() {
-    let newSale = new Sale();
+    let newSale = new SaleDto();
     newSale.userId = this.userId;
     newSale.memberId = this.selectedMember.id;
     newSale.date = this.currentDate;
     newSale.total = this.total;
+    newSale.pay = this.pay;
     newSale.detailsSale = this.detailsSale;
     newSale.status = Status.valid;
+    newSale.transaction = TransactionType.sale;
+    newSale.balance = this.total - this.pay;
+    /*newSale.balance = this.total - this.positiveBalanceSaleDto - this.pay;*/
+    //newSale.positiveBalance = this.positiveBalanceSaleDto;
     console.log(newSale);
     return newSale;
   }
@@ -220,6 +285,6 @@ export class SaleCreateComponent implements OnInit {
     } else {
       this.customAlertService.displayAlert("Gestión de Ventas", ["No se seleccionaron productos."]);
     }
-    
+
   }
 }

@@ -77,27 +77,27 @@ export class ShiftCreateComponent implements OnInit {
   }
 
 
-  selectMonday() {
+  selectMonday(i) {
     this.monday = !this.monday;
   }
 
-  selectTuesday() {
+  selectTuesday(i) {
     this.tuesday = !this.tuesday;
   }
 
-  selectWednesday() {
+  selectWednesday(i) {
     this.wednesday = !this.wednesday;
   }
 
-  selectThursday() {
+  selectThursday(i) {
     this.thursday = !this.thursday;
   }
 
-  selectFriday() {
+  selectFriday(i) {
     this.friday = !this.friday;
   }
 
-  selectSaturday() {
+  selectSaturday(i) {
     this.saturday = !this.saturday;
   }
 
@@ -184,7 +184,7 @@ export class ShiftCreateComponent implements OnInit {
           this.customAlertService.displayAlert("Gestión de Turnos", error.error.errores);
         }
         if (error.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Turnos", ["Hubo un problema al intentar crear lso turnos."]);
+          this.customAlertService.displayAlert("Gestión de Turnos", ["Hubo un problema al intentar crear los turnos."]);
         }
       })
   }

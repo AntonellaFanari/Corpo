@@ -9,7 +9,7 @@
       <div class="col-12 card">
         <div class="row card-body">
           <div class="col-12">
-            <input type="text" name="filterOutflow" placeholder="Buscar" class="form-control" [(ngModel)]="filterOutflow">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let outflow of outflowType  | searchFilterOutflow: filterOutflow">
+            <tr *ngFor="let outflow of outflowType  | searchFilterName: filterName">
               <td data-title="Nombre"><span>{{outflow.name}}</span></td>
               <td data-title="Acción">
                 <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/egreso-editar']" [queryParams]="{id:outflow.id}"><i class="fa fa-pencil-square-o "></i></button>

@@ -47,7 +47,11 @@ namespace Corpo.Web.ViewModels
                 Instagram = member.Instagram,
                 Facebook = member.Facebook,
                 Email = member.Account.Email,
-                PlanType = (int)member.Plan.Type
+                PlanType = (int)member.Plan.Type,
+                CreditId = member.Credit.Id,
+                Credit = member.Credit.InitialCredit,
+                Negative = member.Credit.Negative,
+                Expiration = member.Credit.Expiration
             };
         }
 

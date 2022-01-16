@@ -16,6 +16,7 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse Add(MemberDto member);
         DomainResponse Update(int id, Member member);
         DomainResponse Delete(int id);
+        DomainResponse UpdateDueDate(CreditExpirationDto expiration);
         DomainResponse AddMedicalHistory(int memberId, MedicalHistory medicalHistory);
         DomainResponse UpdateMedicalHistory(int id, MedicalHistory medicalHistory);
         DomainResponse GetMedicalHistoryById(int id);

@@ -63,6 +63,13 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpPut("updateDueDate")]
+        public ActionResult UpdateDueDate(CreditExpirationDto expiration)
+        {
+            var response = _memberService.UpdateDueDate(expiration);
+            return this.ToActionResult(response);
+        }
+
         [HttpPost("addMedicalHistory")]
         public ActionResult AddMedicalHistory(int memberId, [FromBody] MedicalHistory medicalHistory)
         {

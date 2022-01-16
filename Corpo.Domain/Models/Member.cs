@@ -17,12 +17,15 @@ namespace Corpo.Domain.Models
         public string SocialSecurity { get; set; }
         public string EmergencyPhone { get; set; }
         public string EmergencyContact { get; set; }
-        public virtual Plan Plan { get; set; }
-        public int PlanId { get; set; }
         public string Instagram { get; set; }
         public string Facebook { get; set; }
+        public Plan Plan { get; set; }
+        public int PlanId { get; set; }
         public virtual Account Account { get; set; }
         public int AccountId { get; set; }
         public List<Sale> Sale { get; set; }
+        public List<Fee> Fee { get; set; }
+        public Credit Credit { get; set; }
+        public int CreditId { get; set; }
     }
 }

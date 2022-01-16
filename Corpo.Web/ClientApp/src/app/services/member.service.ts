@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { CreditExpiration } from '../domain/credit-expiration';
 import { Injury } from '../domain/injury';
 import { MedicalHistory } from '../domain/medical-history';
 import { Member } from '../domain/member';
@@ -23,6 +24,8 @@ export class MemberService {
     this.url = url;
   }
 
+  // member
+
   public getAll() {
     return this.http.get<MemberView[]>(this.url + 'api/member/getAll');
   }
@@ -43,7 +46,11 @@ export class MemberService {
     return this.http.delete(this.url + 'api/member/delete?id=' + id);
   }
 
+  public updateDueDate(expiration: CreditExpiration) {
+    return this.http.put(this.url + 'api/member/updateDueDate', expiration, httpOptions);
+  }
 
+  //medicalHistory
   public addMedicalHistory(memberId: number, medicalHistory: MedicalHistory) {
     console.log(medicalHistory);
     return this.http.post<any>(this.url + 'api/member/addMedicalHistory?memberId=' + memberId, medicalHistory, httpOptions);
@@ -64,6 +71,8 @@ export class MemberService {
   public getAge(id: number) {
     return this.http.get<any>(this.url + 'api/member/getAge?id=' + id);
   }
+
+  //injury
 
   public addInjury(injury: Injury) {
     return this.http.post<any>(this.url + 'api/member/addInjury', injury,  httpOptions);
@@ -106,4 +115,8 @@ export class MemberService {
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
   }
+
+  //public getPlanExists(id, idPlan) {
+  //  return this.http.get(this.url + 'api/member/getPlanExists?id=' + id, idPlan);
+  //}
 }

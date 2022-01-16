@@ -10,9 +10,10 @@ namespace Corpo.Domain.Contracts.Repositories
     public interface ISaleRepository
     {
         List<Sale> GetAll();
-        void Add(Sale sale);
+        int Add(Sale sale);
         List<DetailsSale> GetDetailsSale(int idSale);
         void Cancel(int id, CancelSale cancelSale);
         CancelSale GetCancelSale(int idSale);
+        Sale GetSaleById(int id);
     }
 }

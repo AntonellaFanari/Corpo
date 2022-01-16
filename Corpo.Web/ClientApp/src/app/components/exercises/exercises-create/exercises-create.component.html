@@ -1,0 +1,70 @@
+<section class="wrapper">
+  <div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success"><h3 class="mb text-center text-white">Nuevo Ejercicio</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <form [formGroup]="formCreate">
+            <div class="col-12 card">
+              <div class="row card-body justify-content-center align-items-center">
+                <div class="row">
+                  <div class="col-12 col-lg-6 pull-left">
+                    <label class="col-12 control-label">Nombre:</label>
+                    <div class="col-12 formValidators">
+                      <input type="text" class="form-control" formControlName="name">
+                      <p *ngIf="sendForm && f.name.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6 formValidators">
+                    <label class="col-12 control-label">Categoria:</label>
+                    <select class="form-control" formControlName="categoryExerciseId" (change)="selectCategory($event.target.value)">
+                      <option value="" disabled>Seleccionar...</option>
+                      <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+                    </select>
+                    <p *ngIf="sendForm && f.categoryExerciseId.errors?.required">*el campo es requerido</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row card-body justify-content-center align-items-center">
+                <div class="row">
+                  <div class="col-12pull-left">
+                    <label class="col-12 control-label">Video:</label>
+                    <div class="col-12 formValidators">
+                      <input type="text" class="form-control" formControlName="video">
+                      <p *ngIf="sendForm && f.video.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card">
+              <div class="row card-body justify-content-center align-items-center">
+                <div class="row">
+                  <div class="col-12">
+                    <label class="col-12 control-label">Tags:</label>
+                    <div *ngIf="checkboxToTags.length>0 ; else: elseBlock" class="row">
+                      <div *ngFor="let checkToTag of checkboxToTags" class="col-md-4">
+                        <input class="checkbox-tags" type="checkbox" [checked]="checkToTag.checked" (change)="checkToTag.checked=!checkToTag.checked">
+                        <span>{{checkToTag.tag}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/ejercicios-list']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
+  </div>
+</section>
+<ng-template #elseBlock><h5>No hay tag registrados para este ejercicio</h5></ng-template>
+
+
+

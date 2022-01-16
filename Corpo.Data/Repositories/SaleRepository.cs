@@ -25,10 +25,10 @@ namespace Corpo.Data.Repositories
 
         public List<DetailsSale> GetDetailsSale(int idSale)
         {
-            return _context.DetailsSale.Where(x=>x.SaleId == idSale).Include(x => x.Product).ToList();
+            return _context.DetailsSale.Where(x=>x.SaleId == idSale).Include(x => x.Product).Include(x=>x.Sale).ToList();
         }
 
-        public void Add(Sale sale)
+        public int Add(Sale sale)
         {
             _context.Sale.Add(sale);
             _context.SaveChanges();
@@ -38,7 +38,8 @@ namespace Corpo.Data.Repositories
                 product.Stock -= detailSale.Quantity;
                 _context.Update(product);
                 _context.SaveChanges();
-            }
+            };
+            return sale.Id;
         }
 
         public void Cancel(int id, CancelSale cancelSale )
@@ -55,6 +56,11 @@ namespace Corpo.Data.Repositories
         {
             var cancelSale = _context.CancelSale.FirstOrDefault(x=>x.SaleId == idSale);
             return cancelSale;
+        }
+
+        public Sale GetSaleById(int id)
+        {
+            return _context.Sale.Include(x=>x.Member).FirstOrDefault(x=>x.Id == id);
         }
     }
 }

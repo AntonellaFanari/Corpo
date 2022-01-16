@@ -15,6 +15,7 @@ namespace Corpo.Domain.Models
         public int MemberId { get; set; }
         public virtual List<DetailsSale> DetailsSale { get; set; }
         public decimal Total { get; set; }
+        public decimal Pay { get; set; }
         public Status Status { get; set; }
     }
 }

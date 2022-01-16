@@ -1,48 +1,44 @@
 <button id="modal-outflow-detail" data-toggle="modal" href="#myModalOutflow" class="d-none"></button>
 
-<div class="container">
-  <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+<section class="modal mt-4" id="myModalOutflow">
+  <div class="container-fluid modal-content modal-lg p-0">
 
-  <div class="modal fade" id="myModalOutflow">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
+    <!-- cabecera del diálogo -->
+    <div class="modal-header modal-title bg-success d-block">
+      <h4 class="modal-title text-white text-center">Detalle del Egreso</h4>
+      <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+    </div>
 
-        <!-- cabecera del diálogo -->
-        <div class="modal-header modal-title">
-          <h4 class="modal-title">Detalle del Egreso</h4>
-          <br />
-          <h6 *ngIf="userRegisterOutflow" class="modal-title">Registro: {{userRegisterOutflow.lastName}} {{userRegisterOutflow.name}}</h6>
-          <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
-        </div>
+    <!-- cuerpo del diálogo -->
+    <div class="modal-body">
+      <table class="table table-bordered table-condensed cf scrollme user-table" *ngIf="outflow">
+        <thead class="cf">
+          <tr>
+            <th colspan="3" *ngIf="userRegisterOutflow" class="modal-title">Registro: {{userRegisterOutflow.lastName}} {{userRegisterOutflow.name}}</th>
+          </tr>
+          <tr>
+            <th>Fecha:</th>
+            <th>Egreso:</th>
+            <th>Pago:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="scrollme">
+            <td class="td-title">{{outflow.date  | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
+            <td class="td-title">{{outflow.outflowType.name}}</td>
+            <td class="td-title">{{outflow.pay}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <!-- cuerpo del diálogo -->
-        <div class="modal-body">
-          <table class="table table-bordered table-condensed cf scrollme user-table">
-            <thead class="cf">
-              <tr>
-                <th>Fecha:</th>
-                <th>Egreso:</th>
-                <th>Pago:</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="scrollme">
-                <td class="td-title">{{outflow.date  | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
-                <td class="td-title">{{outflow.outflowType.name}}</td>
-                <td class="td-title">{{outflow.pay}}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- pie del diálogo -->
-          <div class="modal-footer p-0">
-            <button type="button" class="btn btn-danger col-3 col-lg-2 d-none" id="button-close-modal" data-dismiss="modal"></button>
-            <button type="button" class="btn btn-danger col-3 col-lg-2" (click)="delete(outflow.id)">Eliminar</button>
-            <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
-          </div>
-
-        </div>
+      <!-- pie del diálogo -->
+      <div class="modal-footer p-0">
+        <button type="button" class="btn btn-danger col-3 col-lg-2 d-none" id="button-close-modal" data-dismiss="modal"></button>
+        <button type="button" class="btn btn-danger col-3 col-lg-2" (click)="delete(outflow.id)">Eliminar</button>
+        <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
       </div>
+
     </div>
   </div>
-</div>
+</section>
+

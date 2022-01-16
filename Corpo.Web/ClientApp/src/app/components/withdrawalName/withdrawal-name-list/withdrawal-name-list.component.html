@@ -1,0 +1,42 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Retiros</h4>
+        <button type="button" class="btn btn-success pull-right" routerLink="/retiro-crear">Agregar</button>
+      </div>
+      <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+          </div>
+        </div>
+      </div>
+      <section *ngIf="withdrawalsName.length>0 ; else: elseBlock" id="no-more-tables">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Nombre</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let withdrawal of withdrawalsName  | searchFilterName: filterName">
+              <td data-title="Nombre"><span>{{withdrawal.name}}</span></td>
+              <td data-title="Acción">
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/retiro-editar']" [queryParams]="{id:withdrawal.id}"><i class="fa fa-pencil-square-o "></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(withdrawal.id)"><i class="fa fa-trash-o "></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+
+
+</section>

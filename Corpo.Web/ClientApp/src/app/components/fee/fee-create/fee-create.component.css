@@ -8,6 +8,9 @@
   padding-right: 0px;
   text-align: center;
 }
+.margin-btn {
+    margin-top: 2rem;
+}
 
 a {
   text-decoration: none !important;
@@ -32,12 +35,50 @@ a {
   padding-right: 0.7rem;
 }
 
+.padding-btn-price-pay {
+    padding: 0px;
+}
+
 .padding-input-total {
   padding-right: 0.9rem;
 }
 
 .margin-top {
   margin-top: 1.5rem;
+}
+
+.table-font {
+    font-size: small;
+}
+
+.span-font {
+    font-size: 13px;
+}
+
+.margin-div-promotion {
+    margin-top: 0.8rem;
+}
+
+.a-link-detail {
+  color: white !important;
+}
+
+.a-link-detail:hover{
+    text-decoration: underline !important;
+    color:blue !important;
+}
+
+.view-debt-detail{
+    display: none;
+}
+
+.div-select-member {
+  margin: 1px;
+}
+
+.div-btn-add-member {
+    margin-top: 32px;
+    margin-left: 1px;
 }
 
 @media only screen and (max-width: 800px) {
@@ -48,6 +89,13 @@ a {
   .padding-input-total {
     padding-left: 0.3rem;
     padding-right: 0.9rem;
+  }
+
+  .padding-btn-price-pay {
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 1rem;
   }
 
 }

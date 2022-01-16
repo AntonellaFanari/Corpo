@@ -9,73 +9,139 @@
               <div class="dropdown card-body col-12 formValidators">
                 <a class="dropdown-toggle" id="dropdown1" data-toggle="dropdown">
                   <label class="form-label text-black">Socio:</label>
-                  <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" />
+                  <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" (click)="clearInput()" (blur)="completeInput()"/>
                 </a>
-                <p *ngIf="sendDetailSale && f.memberName.errors?.required">*Debe seleccionar un socio.</p>
-                <div class="dropdown-menu form-control">
+                <p *ngIf="send && f.memberId.errors?.required">*Debe seleccionar un socio.</p>
+                <div *ngIf ="viewListMembers" class="dropdown-menu form-control">
                   <a *ngFor="let member of members  | searchFilterMember: filterMember " class="dropdown-item" (click)="selectMember(member)">{{member.lastName}} {{member.name}}</a>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-lg-6 card bg-light">
-            <div class="row card-body p-0">
-              <div class="col-12">
-                <div class="card-body row ps-0 pe-0">
-                  <div>
-                    <label class="form-label">Plan:</label>
-                    <select class="form-control col-12" id="members">
-                      <option class="form-control col-12" value="" disabled>Seleccionar</option>
-                      <option *ngFor="let plan of plans" class="form-control col-12" value={{plan.id}}>{{plan.name}}</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-lg-6 pull-left mt-3">
-                    <label class="form-label">Desde:</label>
-                    <input type="date" class="form-control col-6" />
-                  </div>
-                  <div class="col-12 col-lg-6 pull-right mt-3">
-                    <label class="form-label">Hasta:</label>
-                    <input type="date" class="form-control col-6" />
-                  </div>
+                <div *ngIf="fees.length>0">
+                  <section id="no-more-tables">
+                    <table class="table table-bordered table-condensed cf scrollme user-table bg-danger text-white table-font">
+                      <thead>
+                        <tr>
+                          <th>Cantidad</th>
+                          <th>Fecha Alta</th>
+                          <th>Fecha Vcto.</th>
+                          <th>Plan</th>
+                          <th>Promoción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="scrollme" *ngFor="let fee of fees">
+                          <td class="td-title" data-title="Cantidad">{{fee.credits}}</td>
+                          <td class="td-title" data-title="Fecha Alta">{{fee.from | date: 'dd/MM/yyyy'}}</td>
+                          <td class="td-title" data-title="Fecha Vcto.">{{fee.to | date: 'dd/MM/yyyy'}}</td>
+                          <td class="td-title" data-title="Plan">{{fee.planName}}</td>
+                          <td class="td-title" data-title="Promoción"><span *ngIf="fee.promotionId==null">-</span><span *ngIf="fee.promotionId!=null">{{fee.promotion.name}}</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </section>
+                </div>
+                <div *ngIf="balances.length>0">
+                  <section id="no-more-tables">
+                    <table class="table table-bordered table-condensed cf scrollme user-table bg-warning text-white table-font">
+                      <thead>
+                        <tr>
+                          <th colspan="5" class="text-center">Saldos</th>
+                        </tr>
+                        <tr>
+                          <th>Fecha</th>
+                          <th>Concepto</th>
+                          <th>Detalle</th>
+                          <th>Saldo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="scrollme" *ngFor="let balance of balances">
+                          <td class="td-title" data-title="Fecha">{{balance.date | date: 'dd/MM/yyyy'}}</td>
+                          <td data-title="Concepto"><span *ngIf="balance.transaction == 1">Venta</span><span *ngIf="balance.transaction == 2">Cuota</span></td>
+                          <td data-title="Detalle" class="text-center">
+                            <span>
+                              <a class="a-link-detail" (click)="getTransaction(balance)">ver</a>
+                            </span>
+                          </td>
+                          <td data-title="Saldo"><span *ngIf="balance.balance>0">{{balance.balance}}</span><span *ngIf="balance.balance<0">{{balance.balance * -1}} (a favor)</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </section>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-6 card bg-light">
-            <div class="row card-body p-0">
-              <div class="col-12">
-                <div class="col-6 pull-left mt-3 padding-right">
-                  <label class="form-label">Precio:</label>
-                  <input type="number" class="form-control col-6" />
+          <div class="col-12 bg-light">
+            <form [formGroup]="formCreate">
+              <div class="row card-body p-0">
+                <div class="col-12 col-lg-6 card">
+                  <div class="card-body row ps-0 pe-0">
+                    <div>
+                      <label class="form-label">Plan:</label>
+                      <select class="form-control col-12" id="members" formControlName="planId" (change)="selectPlan($event.target.value)">
+                        <option class="form-control col-12" value="" disabled>Seleccionar</option>
+                        <option *ngFor="let plan of plans" class="form-control col-12" value={{plan.id}}>{{plan.name}}</option>
+                      </select>
+                      <p *ngIf="send && f.planId.errors?.required">*Debe seleccionar un plan.</p>
+                    </div>
+                    <div class="col-12 col-lg-6 pull-left mt-3">
+                      <label class="form-label">Desde:</label>
+                      <input type="date" class="form-control col-6" formControlName="from" />
+                      <p *ngIf="send && f.from.errors?.required">*Debe seleccionar una fecha.</p>
+                    </div>
+                    <div class="col-12 col-lg-6 pull-right mt-3">
+                      <label class="form-label">Hasta:</label>
+                      <input type="date" class="form-control col-6" formControlName="to" />
+                      <p *ngIf="send && f.to.errors?.required">*Debe seleccionar una fecha.</p>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-6 pull-right mt-3 padding-left">
-                  <label class="form-label">Pago:</label>
-                  <input type="number" class="form-control col-6" />
+                <div class="col-12 col-lg-6 card">
+                  <div class="card-body row padding-btn-price-pay">
+                    <div class="col-6 pull-left mt-3 padding-right">
+                      <label class="form-label">Precio:</label>
+                      <input type="number" class="form-control col-6" formControlName="price" />
+                      <p *ngIf="send && f.price.errors?.required">*Campo requerido.</p>
+                    </div>
+                    <div class="col-6 pull-right mt-3 padding-left">
+                      <label class="form-label">Promoción:</label>
+                      <input type="number" class="form-control col-6" formControlName="promotion" />
+                    </div>
+                    <div *ngIf="!promotionView">
+                      <div class="card p-2 margin-div-promotion">
+                        <button class="btn btn-info pull-left form-control col-12 btn-create p-2" id="modal-promotion" (click)="openModalPromotions()">Promociones</button>
+                      </div>
+                    </div>
+                    <div *ngIf="promotionView">
+                      <div class="card p-2 ">
+                        <div class="row">
+                          <span class="col-6 pull-left span-font">{{selectedPromotion.name}}</span>
+                          <span class="col-6 pull-right span-font">Descuento:{{selectedPromotion.discountMainMember}}%</span>
+                        </div>
+                        <button class="mt-2 col-12 btn btn-outline-danger btn-block" (click)="deletePromotion()">Quitar promoción</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-12 mb-2 margin-top">
-                <div class="col-6 pull-left mt-3 padding-right">
-                  <button class="btn btn-info pull-left form-control col-2 col-lg-2 btn-create">Promociones</button>
-                </div>
-                <div class="col-6 pull-left mt-3 padding-left">
-                  <button class="btn btn-danger pull-right form-control col-2 col-lg-2 btn-create">Calcular</button>
-                </div>
-              </div>
-            </div>
+            </form>
           </div>
           <div class="col-12 card">
             <div class="row card-body p-0">
-              <div class="col-12 col-lg-6 pull-left p-0">
+              <div class="col-6 p-0">
                 <div class="card-body col-6 pull-left ">
                   <label class="form-label">Total a cobrar $</label>
                 </div>
-                <div class="card-body col-6 pull-right padding-input-total">
-                  <input type="number" class="form-control col-6" />
+                <div class="card-body col-6  pull-left padding-input-total">
+                  <input type="number" class="form-control col-6" [(ngModel)]="total" />
                 </div>
               </div>
-              <div class="col-12 col-lg-6 pull-right p-0">
-                <div class="card-body col-12 padding-btn-credit">
-                  <button type="button" class="form-control col-6 btn btn-success">Cargar Créditos</button>
+              <div class="col-6 p-0">
+                <div class="card-body col-6 pull-left ">
+                  <label class="form-label">Pago $</label>
+                </div>
+                <div class="card-body col-6  pull-left padding-input-total">
+                  <input type="number" class="form-control col-6" [(ngModel)]="pay" />
                 </div>
               </div>
             </div>
@@ -86,6 +152,12 @@
   </div>
   <div class="container-fluid modal-lg div-btn-create">
     <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
-    <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-success col-4 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Cargar Créditos</button>
   </div>
 </section>
+<div [ngClass]="{'view-debt-detail': viewDebts}">
+  <app-debt-detail *ngIf="member"></app-debt-detail>
+</div>
+<div>
+  <app-fee-promotion (addMembersPromotion)="addMembersPromotionFee($event)"></app-fee-promotion>
+</div>

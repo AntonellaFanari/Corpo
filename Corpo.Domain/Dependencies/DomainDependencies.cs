@@ -24,6 +24,12 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<IShiftService, ShiftService>();
             services.AddTransient<IPurchaseService, PurchaseService>();
             services.AddTransient<IOutflowService, OutflowService>();
+            services.AddTransient<IExerciseService, ExerciseService>();
+            services.AddTransient<IBalanceService, BalanceService>();
+            services.AddTransient<IFeeService, FeeService>();
+            services.AddTransient<IPromotionService, PromotionService>();
+            services.AddTransient<ICreditService, CreditService>();
+            services.AddTransient<IWithdrawalService, WithdrawalService>();
         }
     }
 }

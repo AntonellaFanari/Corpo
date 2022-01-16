@@ -22,23 +22,23 @@
               <th class="numeric">Teléfono</th>
               <th class="numeric">Plan</th>
               <th class="numeric">Créditos</th>
-              <th class="numeric">Vencimiento</th>
+              <th class="numeric"><span>Vencimiento</span><i class="fa fa-filter"></i></th>
               <th class="numeric">Negativos</th>
               <th class="numeric">Acción</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let member of members | searchFilterMember: filterMember">
-              <td class="td-title" data-title="Estado"><span class="badge bg-success">Activo</span></td>
+              <td class="td-title" data-title="Estado"><span *ngIf="member.status =='Activo'" class="badge bg-success">Activo</span><span *ngIf="member.status == 'No Activo'" class="badge bg-danger">No Activo</span></td>
               <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
               <td class="td-title" data-title="Teléfono"><span>{{member.phone}}</span></td>
-              <td class="td-title" data-title="Plan"><span>Personalizado - 20</span></td>
-              <td class="td-title" data-title="Créditos"><span>0</span></td>
-              <td class="td-title" data-title="Vencimiento"><span>07/11/2021</span></td>
-              <td class="td-title" data-title="Negativos"><span>0</span></td>
+              <td class="td-title" data-title="Plan"><span>{{member.namePlan}}</span></td>
+              <td class="td-title" data-title="Créditos"><span>{{member.credit}}</span></td>
+              <td class="td-title" data-title="Vencimiento"><span>{{member.expiration | date: 'dd/MM/yyyy'}}</span></td>
+              <td class="td-title" data-title="Negativos"><span>{{member.negative}}</span></td>
               <td class="td-title td-padding-action" data-title="Acción">
                 <div class="text-center">
-                  <button class="btn btn-success btn-action-list"><i class="fa fa-usd"></i></button>
+                  <button class="btn btn-success btn-action-list" data-toggle="modal" href="#myModalFee" (click)="getDetailsFee(member.id)"><i class="fa fa-usd"></i></button>
                   <button class="btn btn-primary btn-action-list" [routerLink]="['/']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
                   <button class="btn btn-info btn-action-list" [routerLink]="['/historia-médica-crear']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
                 </div>
@@ -56,7 +56,69 @@
     </div>
     <!-- /content-panel -->
   </div>
-  <!-- /col-md-12 -->
+</section>
 
+<section class="modal mt-4" id="myModalFee">
+  <div class="container-fluid modal-content modal-lg p-0">
 
+    <!-- cabecera del diálogo -->
+    <div class="modal-header modal-title bg-success d-block">
+      <h4 class="modal-title text-white text-center">Créditos</h4>
+      <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+    </div>
+
+    <!-- cuerpo del diálogo -->
+    <div class="modal-body">
+      <div class="row justify-content-center align-items-center mb-2">
+        <div class="col-lg-4 text-center">
+          <button type="button" class="btn btn-success col-8 col-lg-12 btn-font" (click)="viewChangeDueDate()">Cambiar fecha de vencimiento</button>
+        </div>
+      </div>
+      <div *ngIf="viewDueDate">
+        <div class="row justify-content-center align-items-center m-auto">
+          <div class="col-lg-4 center card">
+            <label class="form-label text-center mt-1">Ingresar nueva fecha</label>
+            <div class="row">
+              <div class="col-12 mb-2">
+                <input type="date" class="form-control col-12" [(ngModel)]="dueDate" />
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center mb-2">
+              <div class="col-6 text-center">
+                <button type="button" class="btn btn-success col-12" (click)="changeDueDate()">Confirmar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="fees.length>0" class="mt-2">
+        <section id="no-more-tables">
+          <table class="table table-bordered table-condensed cf scrollme user-table bg-danger text-white table-fee-font">
+            <thead>
+              <tr>
+                <th>Cantidad</th>
+                <th>Fecha Alta</th>
+                <th>Fecha Vcto.</th>
+                <th>Plan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme" *ngFor="let fee of fees">
+                <td class="td-title" data-title="Cantidad">{{fee.credits}}</td>
+                <td class="td-title" data-title="Fecha Alta">{{fee.from | date: 'dd/MM/yyyy'}}</td>
+                <td class="td-title" data-title="Fecha Vcto.">{{fee.to | date: 'dd/MM/yyyy'}}</td>
+                <td class="td-title" data-title="Plan">{{fee.planName}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <!-- pie del diálogo -->
+      <div class="modal-footer p-0">
+        <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal" (click)="viewChangeDueDate()">Aceptar</button>
+      </div>
+
+    </div>
+  </div>
 </section>

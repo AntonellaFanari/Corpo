@@ -1,0 +1,81 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Deudas</h4>
+      </div>
+      <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+          </div>
+        </div>
+      </div>
+      <section *ngIf="balancesToPay.length>0 ; else: elseBlock" id="no-more-tables">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Socio</th>
+              <th class="numeric">Saldo</th>
+              <th class="numeric">Observación</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let balance of balancesToPay | searchFilterName: filterName">
+              <td data-title="Socio"><span>{{balance.lastName}} {{balance.name}}</span></td>
+              <td data-title="Saldo"><span>{{(balance.balance-balance.pay)}}</span></td>
+              <td data-title="Observación"><span *ngIf="balance.balance<0">(A Favor)</span><span *ngIf="balance.balance>0">-</span></td>
+              <td data-title="Acción">
+                <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/deudas-detalle']" [queryParams]="{id:balance.idMember}">ver</button>
+                <button class="btn btn-warning btn-xs btn-action-list text-white" data-toggle="modal" href="#myModalPay" (click)="selectBalance(balance)">Pagar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+</section>
+
+<!--<button id="modal-pay" data-toggle="modal" href="#myModalPay" class="d-none"></button>-->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+<section class="modal mt-4" id="myModalPay">
+  <div class="container-fluid modal-content modal-sm p-0">
+
+    <!-- cabecera del diálogo -->
+    <div class="modal-header modal-title bg-success d-block">
+      <h4 class="modal-title text-white text-center">Saldo a pagar</h4>
+      <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+    </div>
+
+    <!-- cuerpo del diálogo -->
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12 mt-2 pull-left">
+          <input type="radio" id="totalPayment" name="pay" checked (change)="checked()">
+          <label for="totalPayment" class="col-9 control-label labelFormStyle marginLabel">Pagar todo</label>
+        </div>
+        <div class="col-6 mt-2 pull-right">
+          <input type="radio" id="partialPayment" name="pay" (change)="checked()">
+          <label for="partialPayment" class="col-9 control-label labelFormStyle marginLabel">Pago parcial</label>
+        </div>
+        <div *ngIf="!totalPayment" class="col-6 mt-1">
+          <input type="text" class="form-control" [(ngModel)]="partialPay" />
+        </div>
+      </div>
+    </div>
+
+    <!-- pie del diálogo -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger col-3" data-dismiss="modal">Cancelar</button>
+      <button type="button" class="btn btn-success col-3 btn-create" data-dismiss="modal" (click)="submit()">Aceptar</button>
+    </div>
+
+  </div>
+</section>

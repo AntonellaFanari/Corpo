@@ -38,5 +38,15 @@ namespace Corpo.Data
         public DbSet<DetailPurchase> DetailPurchase { get; set; }
         public DbSet<Outflow> Outflow { get; set; }
         public DbSet<OutflowType> OutflowType { get; set; }
+        public DbSet<Exercise> Exercise { get; set; }
+        public DbSet<CategoryExercise> CategoryExercise { get; set; }
+        public DbSet<Tag> Tag { get; set; }
+        public DbSet<BalanceToPay> BalanceToPay { get; set; }
+        public DbSet<Fee> Fee { get; set; }
+        public DbSet<Promotion> Promotion { get; set; }
+        public DbSet<Credit> Credit { get; set; }
+        public DbSet<PromotionAnotherMember> PromotionAnotherMember { get; set; }
+        public DbSet<WithdrawalName> WithdrawalName { get; set; }
+        public DbSet<Withdrawal> Withdrawal { get; set; }
     }
 }

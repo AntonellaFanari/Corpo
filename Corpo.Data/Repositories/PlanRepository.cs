@@ -54,5 +54,6 @@ namespace Corpo.Data.Repositories
             _context.Plan.Remove(plan);
             _context.SaveChanges();
         }
+
     }
 }

@@ -9,7 +9,7 @@ import { OutflowService } from '../../../services/outflow.service';
   styleUrls: ['./outflow-type-list.component.css']
 })
 export class OutflowTypeListComponent implements OnInit {
-  filterOutflow = "";
+  filterName = "";
   outflowType: OutflowType[] = [];
 
   constructor(private outflowService: OutflowService, private customAlertService: CustomAlertService) { }

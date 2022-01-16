@@ -42,4 +42,8 @@ export class SaleService {
   public getCancelSale(idSale) {
     return this.http.get<any>(this.url + 'api/sale/getCancelSale?idSale=' + idSale);
   }
+
+  public getSaleById(id: number) {
+    return this.http.get<any>(this.url + 'api/sale/getSaleById?id=' + id);
+  }
 }

@@ -1,0 +1,59 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Promociones</h4>
+        <button type="button" class="btn btn-success pull-right" routerLink="/promocion-crear">Agregar</button>
+      </div>
+      <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+          </div>
+        </div>
+      </div>
+      <section *ngIf="promotions.length>0; else: elseblock" id="no-more-tables">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Promocion</th>
+              <th class="numeric">Dto. Socio Principal</th>
+              <th class="numeric">Dto. Resto de Socios</th>
+              <th class="numeric">Cant. máx. de socios agregados</th>
+              <th class="numeric">Vigencia</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let promotion of promotions | searchFilterName: filterName">
+              <td data-title="Promocion"><span>{{promotion.name}}</span></td>
+              <td data-title="Dto. Socio Principal"><span>{{promotion.discountMainMember}}%</span></td>
+              <td data-title="Dto. Resto de Socios">
+                <table *ngIf="promotion.promotionAnotherMember.length>0" id="table-discount">
+                  <tbody>
+                    <tr *ngFor="let discount of promotion.promotionAnotherMember; index as i">
+                      <td>Socio{{i+1}} {{discount.discount}}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <span *ngIf="promotion.promotionAnotherMember.length == 0">-</span>
+              </td>
+              <td data-title="Socios agregados"><span>{{promotion.promotionAnotherMember.length}}</span></td>
+              <td data-title="Vigencia"><span>{{promotion.from | date: 'dd/MM/yyyy'}} - {{promotion.to | date: 'dd/MM/yyyy'}}</span></td>
+              <td data-title="Acción">
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/promocion-editar']" [queryParams]="{id:promotion.id}"><i class="fa fa-pencil-square-o "></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(promotion.id)"><i class="fa fa-trash-o "></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+
+
+</section>

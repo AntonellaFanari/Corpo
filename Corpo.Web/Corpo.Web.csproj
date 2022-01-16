@@ -30,49 +30,74 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ClientApp\src\app\domain\Interface.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ClientApp\src\app\components\validations\control-equal.ts" />
     <None Remove="ClientApp\src\app\domain\account.ts" />
+    <None Remove="ClientApp\src\app\domain\balance-to-pay-view.ts" />
+    <None Remove="ClientApp\src\app\domain\balance-to-pay.ts" />
     <None Remove="ClientApp\src\app\domain\cancel-sale.ts" />
+    <None Remove="ClientApp\src\app\domain\category-exercises.ts" />
     <None Remove="ClientApp\src\app\domain\class.ts" />
+    <None Remove="ClientApp\src\app\domain\credit-expiration.ts" />
+    <None Remove="ClientApp\src\app\domain\credit.ts" />
     <None Remove="ClientApp\src\app\domain\detail-purchase.ts" />
     <None Remove="ClientApp\src\app\domain\details-sale.ts" />
+    <None Remove="ClientApp\src\app\domain\exercise.ts" />
+    <None Remove="ClientApp\src\app\domain\fee-dto.ts" />
+    <None Remove="ClientApp\src\app\domain\fee-view.ts" />
+    <None Remove="ClientApp\src\app\domain\fee.ts" />
     <None Remove="ClientApp\src\app\domain\file.ts" />
     <None Remove="ClientApp\src\app\domain\injury.ts" />
     <None Remove="ClientApp\src\app\domain\iuser.ts" />
     <None Remove="ClientApp\src\app\domain\logged-user.ts" />
     <None Remove="ClientApp\src\app\domain\medical-history.ts" />
+    <None Remove="ClientApp\src\app\domain\member-promotion.ts" />
     <None Remove="ClientApp\src\app\domain\member-view.ts" />
     <None Remove="ClientApp\src\app\domain\member.ts" />
     <None Remove="ClientApp\src\app\domain\new-password.ts" />
     <None Remove="ClientApp\src\app\domain\order-products.ts" />
     <None Remove="ClientApp\src\app\domain\outflow.ts" />
     <None Remove="ClientApp\src\app\domain\outflowType.ts" />
+    <None Remove="ClientApp\src\app\domain\pay-cancel-balance.ts" />
     <None Remove="ClientApp\src\app\domain\plan.ts" />
     <None Remove="ClientApp\src\app\domain\product.ts" />
+    <None Remove="ClientApp\src\app\domain\promotion-another-member.ts" />
+    <None Remove="ClientApp\src\app\domain\promotion.ts" />
     <None Remove="ClientApp\src\app\domain\purchase.ts" />
     <None Remove="ClientApp\src\app\domain\role-access.ts" />
     <None Remove="ClientApp\src\app\domain\role.ts" />
+    <None Remove="ClientApp\src\app\domain\sale-dto.ts" />
     <None Remove="ClientApp\src\app\domain\sale.ts" />
     <None Remove="ClientApp\src\app\domain\shift-list.ts" />
     <None Remove="ClientApp\src\app\domain\shift-schedule.ts" />
     <None Remove="ClientApp\src\app\domain\shift.ts" />
     <None Remove="ClientApp\src\app\domain\status.ts" />
+    <None Remove="ClientApp\src\app\domain\tag.ts" />
     <None Remove="ClientApp\src\app\domain\user-view.ts" />
     <None Remove="ClientApp\src\app\domain\user.ts" />
+    <None Remove="ClientApp\src\app\domain\withdrawal-name.ts" />
+    <None Remove="ClientApp\src\app\domain\withdrawal.ts" />
     <None Remove="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\validations\control-equal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\account.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay-view.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\cancel-sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\category-exercises.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\class.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\credit-expiration.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\credit.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\detail-purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\member-promotion.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\pay-cancel-balance.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\promotion-another-member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\exercise.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\fee-dto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\fee-view.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\fee.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\file.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\iuser.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\logged-user.ts" />
@@ -83,19 +108,24 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\outflowType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\plan.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\product.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\promotion.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role-access.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\medical-history.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\injury.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\sale-dto.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\shift-list.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\shift-schedule.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\shift.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\status.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\tag.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal-name.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 

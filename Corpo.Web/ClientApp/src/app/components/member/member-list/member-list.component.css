@@ -5,6 +5,10 @@
   font-size: 13px;
 }
 
+.btn-font {
+    font-size: 15px;
+}
+
 tr.span-margin > td > span {
   margin-left: 15px;
 }
@@ -16,6 +20,15 @@ td.text-ajust {
 .td-padding-action {
     padding: 0rem;
 }
+
+.table-fee-font {
+  font-size: small;
+}
+
+.span-fee-font {
+  font-size: 13px;
+}
+
 
 @media only screen and (max-width: 800px) {
   #no-more-tables td {

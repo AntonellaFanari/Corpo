@@ -17,12 +17,16 @@ namespace Corpo.Domain.Services
     public class MemberService : IMemberService
     {
         private IMemberRepository _memberRepository;
-        private IAccountRepository _accountRepository;
+        private IAccountService _accountService;
+        private IPlanRepository _planRepository;
+        private ICreditService _creditService;
 
-        public MemberService(IMemberRepository memberRepository, IAccountRepository accountRepository)
+        public MemberService(IMemberRepository memberRepository, IAccountService accountService, IPlanRepository planRepository, ICreditService creditService)
         {
             _memberRepository = memberRepository;
-            _accountRepository = accountRepository;
+            _accountService = accountService;
+            _planRepository = planRepository;
+            _creditService = creditService;
         }
 
         public DomainResponse Add(MemberDto member)
@@ -30,13 +34,20 @@ namespace Corpo.Domain.Services
             var day = member.BirthDate.Day;
             var month = member.BirthDate.Month;
             var year = member.BirthDate.Year;
-            
+
             var newAccount = new Account()
             {
                 Email = member.Email,
                 Password = GetHashString(member.Password),
                 UserType = UserType.Member
             };
+
+            var newCredit = new Credit();
+            newCredit.InitialCredit = 0;
+            newCredit.CreditConsumption = 0;
+            newCredit.Negative = 0;
+            newCredit.Expiration = DateTime.Now;
+
             var newMember = new Member()
             {
                 LastName = member.LastName,
@@ -47,14 +58,17 @@ namespace Corpo.Domain.Services
                 Phone = member.Phone,
                 EmergencyContact = member.EmergencyContact,
                 EmergencyPhone = member.EmergencyPhone,
-                PlanId = member.PlanId,
                 Instagram = member.Instagram,
-                Facebook = member.Facebook
+                Facebook = member.Facebook,
+                PlanId = member.PlanId
             };
             try
             {
-                int id = _accountRepository.Add(newAccount);
-                newMember.AccountId = id;
+                var idAccount = _accountService.Add(newAccount);
+                newMember.AccountId = idAccount;
+                var idCredit = _creditService.Add(newCredit);
+                newMember.CreditId = idCredit;
+
                 try
                 {
                     int memberId = _memberRepository.Add(newMember);
@@ -66,15 +80,15 @@ namespace Corpo.Domain.Services
                 }
                 catch (Exception ex)
                 {
-                    _accountRepository.Delete(id);
+                    _accountService.Delete(idAccount);
                     return new DomainResponse(false, ex.Message, "Error al guardar el usuario");
                 }
-
             }
             catch (UniqueException ex)
             {
                 return new DomainResponse(false, ex.Message, "El email ya se encuentra registrado.");
             }
+     
         }
 
         public Member GetById(int id)
@@ -117,13 +131,32 @@ namespace Corpo.Domain.Services
         public DomainResponse Delete(int id)
         {
             var accountId = _memberRepository.Delete(id);
-            _accountRepository.Delete(accountId);
+            _accountService.Delete(accountId);
             return new DomainResponse
             {
                 Success = true
             };
         }
 
+        public DomainResponse UpdateDueDate(CreditExpirationDto expiration)
+        {
+
+            var memberQuery = _memberRepository.GetById(expiration.Id);
+            var credit = memberQuery.Credit;
+            credit.Expiration = expiration.Expiration;
+            try
+            {
+                _creditService.Update(credit);
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo modificar la fecha de vencimiento.");
+            }
+        }
 
         public DomainResponse AddMedicalHistory(int memberId, MedicalHistory medicalHistory)
         {
@@ -228,7 +261,7 @@ namespace Corpo.Domain.Services
             };
         }
 
-        
+
         public DomainResponse AddInjury(Injury injury)
         {
             try
@@ -308,6 +341,8 @@ namespace Corpo.Domain.Services
                 Success = true
             };
         }
+
+       
 
         //public DomainResponse Download(string fileName)
         //{

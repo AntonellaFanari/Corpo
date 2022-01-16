@@ -4,7 +4,7 @@
     <div class="modal-body">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12 card pb-0">
+          <div class="col-12 card p-0">
             <div class="row card-body">
               <div class="dropdown card-body col-12 formValidators">
                 <a class="dropdown-toggle" id="dropdown1" data-toggle="dropdown">
@@ -18,7 +18,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 card bg-light pb-0">
+          <div class="col-12 card bg-light p-0">
             <div class="card-body row pb-0">
               <div class="dropdown card-body col-12 pb-0 formValidators">
                 <a class="dropdown-toggle" id="dropdown2" data-toggle="dropdown">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="card-body col-6 col-lg-3 pull-left">
                   <label class="form-label">Total:</label>
-                  <input type="number" class="form-control" formControlName="total" />
+                  <input type="number" class="form-control" formControlName="total" (blur)="calculateTotal()" />
                 </div>
                 <div class="card-body col-6 col-lg-3 pull-right div-btn-prod">
                   <div class="justify-content-center align-content-center">
@@ -78,10 +78,18 @@
             </tbody>
           </table>
         </div>
-        <div class="row card-body card">
-          <div class="card-body">
-            <label class="form-label total-width pull-left">Total a cobrar $</label>
-            <input type="number" class="form-control total-width pull-right" [(ngModel)]="total" />
+        <div class="row">
+          <div class="card card-body col-12 col-lg-6 pull-left">
+            <label class="form-label">Total a cobrar $</label>
+            <input type="number" class="form-control" [(ngModel)]="total" />
+          </div>
+          <!--<div class="card card-body col-12 col-lg-4 pull-left">
+            <label class="form-label">A favor $</label>
+            <input type="number" class="form-control" [(ngModel)]="positiveBalance" />
+          </div>-->
+          <div class="card card-body col-12 col-lg-6 pull-right">
+            <label class="form-label">Pago $</label>
+            <input type="number" class="form-control col-6" [(ngModel)]="pay" (keyup)="calculateTotal()" />
           </div>
         </div>
       </div>

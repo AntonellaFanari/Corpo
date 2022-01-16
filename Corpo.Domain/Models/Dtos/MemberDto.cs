@@ -17,7 +17,6 @@ namespace Corpo.Domain.Models.Dtos
         public string SocialSecurity { get; set; }
         public string EmergencyPhone { get; set; }
         public string EmergencyContact { get; set; }
-        public virtual Plan Plan { get; set; }
         public int PlanId { get; set; }
         public string Instagram { get; set; }
         public string Facebook { get; set; }

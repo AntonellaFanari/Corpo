@@ -72,6 +72,34 @@ import { OutflowCreateComponent } from './components/outflow/outflow-create/outf
 import { OutflowDetailComponent } from './components/outflow/outflow-detail/outflow-detail.component';
 import { FeeCreateComponent } from './components/fee/fee-create/fee-create.component';
 import { FeeEditComponent } from './components/fee/fee-edit/fee-edit.component';
+import { ExercisesCreateComponent } from './components/exercises/exercises-create/exercises-create.component';
+import { ExercisesEditComponent } from './components/exercises/exercises-edit/exercises-edit.component';
+import { ExercisesListComponent } from './components/exercises/exercises-list/exercises-list.component';
+import { SearchFilterExercisePipe } from './pipes/search-filter-exercise.pipe';
+import { CategoryExercisesCreateComponent } from './components/category-exercises/category-exercises-create/category-exercises-create.component';
+import { CategoryExercisesEditComponent } from './components/category-exercises/category-exercises-edit/category-exercises-edit.component';
+import { CategoryExercisesListComponent } from './components/category-exercises/category-exercises-list/category-exercises-list.component';
+import { SearchFilterNamePipe } from './pipes/search-filter-name.pipe';
+import { TagListComponent } from './components/tag/tag-list/tag-list.component';
+import { TagCreateComponent } from './components/tag/tag-create/tag-create.component';
+import { TagEditComponent } from './components/tag/tag-edit/tag-edit.component';
+import { FeeDetailComponent } from './components/fee/fee-detail/fee-detail.component';
+import { PromotionCreateComponent } from './components/promotion/promotion-create/promotion-create.component';
+import { PromotionEditComponent } from './components/promotion/promotion-edit/promotion-edit.component';
+import { PromotionListComponent } from './components/promotion/promotion-list/promotion-list.component';
+import { DebtListComponent } from './components/debt/debt-list/debt-list.component';
+import { DebtDetailComponent } from './components/debt/debt-detail/debt-detail.component';
+import { DebtEditComponent } from './components/debt/debt-edit/debt-edit.component';
+import { FeePromotionComponent } from './components/fee/fee-promotion/fee-promotion.component';
+import { WithdrawalCreateComponent } from './components/withdrawal/withdrawal-create/withdrawal-create.component';
+import { WithdrawalDetailComponent } from './components/withdrawal/withdrawal-detail/withdrawal-detail.component';
+import { WithdrawalNameCreateComponent } from './components/withdrawalName/withdrawal-name-create/withdrawal-name-create.component';
+import { WithdrawalNameEditComponent } from './components/withdrawalName/withdrawal-name-edit/withdrawal-name-edit.component';
+import { WithdrawalNameListComponent } from './components/withdrawalName/withdrawal-name-list/withdrawal-name-list.component';
+import { MyDebtsComponent } from './components/user-menu/my-debts/my-debts.component';
+import { DatepickerRangeComponent } from './components/datepicker-range/datepicker-range/datepicker-range.component';
+import { AttendanceListComponent } from './components/attendance/attendance-list/attendance-list.component';
+import { AttendanceShiftsListComponent } from './components/attendance/attendance-shifts-list/attendance-shifts-list.component';
 
 
 @NgModule({
@@ -138,7 +166,35 @@ import { FeeEditComponent } from './components/fee/fee-edit/fee-edit.component';
     OutflowCreateComponent,
     OutflowDetailComponent,
     FeeCreateComponent,
-    FeeEditComponent
+    FeeEditComponent,
+    ExercisesCreateComponent,
+    ExercisesEditComponent,
+    ExercisesListComponent,
+    SearchFilterExercisePipe,
+    CategoryExercisesCreateComponent,
+    CategoryExercisesEditComponent,
+    CategoryExercisesListComponent,
+    SearchFilterNamePipe,
+    TagListComponent,
+    TagCreateComponent,
+    TagEditComponent,
+    FeeDetailComponent,
+    PromotionCreateComponent,
+    PromotionEditComponent,
+    PromotionListComponent,
+    DebtListComponent,
+    DebtDetailComponent,
+    DebtEditComponent,
+    FeePromotionComponent,
+    WithdrawalCreateComponent,
+    WithdrawalDetailComponent,
+    WithdrawalNameCreateComponent,
+    WithdrawalNameEditComponent,
+    WithdrawalNameListComponent,
+    MyDebtsComponent,
+    DatepickerRangeComponent,
+    AttendanceListComponent,
+    AttendanceShiftsListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -169,7 +225,7 @@ import { FeeEditComponent } from './components/fee/fee-edit/fee-edit.component';
       { path: 'cuota-agregar', component: FeeCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'venta-agregar', component: SaleCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'egreso', component: OutflowCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
-      { path: 'retiro', component: WithdrawalComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
+      { path: 'retiro', component: WithdrawalCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'product-agregar', component: ProductCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'productos-list', component: ProductListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'product-detail', component: ProductEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
@@ -184,12 +240,32 @@ import { FeeEditComponent } from './components/fee/fee-edit/fee-edit.component';
       { path: 'datos-personales', component: PersonalInformationComponent },
       { path: 'modificar-email', component: EmailEditComponent },
       { path: 'modificar-contraseña', component: PasswordEditComponent },
+      { path: 'mis-deudas', component: MyDebtsComponent },
       { path: 'compras-list', component: PurchaseListComponent },
       { path: 'compra-crear', component: PurchaseCreateComponent },
       { path: 'purchase-detail', component: PurchaseDetailComponent },
       { path: 'egreso-crear', component: OutflowTypeCreateComponent },
       { path: 'egreso-editar', component: OutflowTypeEditComponent },
-      { path: 'egresos-list', component: OutflowTypeListComponent }
+      { path: 'egresos-list', component: OutflowTypeListComponent },
+      { path: 'ejercicios-list', component: ExercisesListComponent },
+      { path: 'ejercicio-crear', component: ExercisesCreateComponent },
+      { path: 'ejercicio-editar', component: ExercisesEditComponent },
+      { path: 'categoria-crear', component: CategoryExercisesCreateComponent },
+      { path: 'categorias-list', component: CategoryExercisesListComponent },
+      { path: 'categoria-editar', component: CategoryExercisesEditComponent },
+      { path: 'tags-list', component: TagListComponent },
+      { path: 'tag-crear', component: TagCreateComponent },
+      { path: 'tag-editar', component: TagEditComponent },
+      { path: 'promociones-list', component: PromotionListComponent },
+      { path: 'promocion-crear', component: PromotionCreateComponent },
+      { path: 'promocion-editar', component: PromotionEditComponent },
+      { path: 'deudas-list', component: DebtListComponent },
+      { path: 'deudas-detalle', component: DebtDetailComponent },
+      { path: 'deuda-editar', component: DebtEditComponent },
+      { path: 'retiro-crear', component: WithdrawalNameCreateComponent },
+      { path: 'retiro-editar', component: WithdrawalNameEditComponent },
+      { path: 'retiros-list', component: WithdrawalNameListComponent },
+      { path: 'asistencias', component: AttendanceShiftsListComponent }
     ])
   ],
   entryComponents: [

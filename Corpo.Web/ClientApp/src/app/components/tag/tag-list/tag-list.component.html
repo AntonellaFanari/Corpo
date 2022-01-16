@@ -1,0 +1,44 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Tags</h4>
+        <button type="button" class="btn btn-success pull-right" routerLink="/tag-crear">Agregar</button>
+      </div>
+      <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+          </div>
+        </div>
+      </div>
+      <section id="no-more-tables"  *ngIf="tags.length>0 ; else: elseBlock" >
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Nombre</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tag of tags | searchFilterName: filterName">
+              <td data-title="Nombre"><span>{{tag.name}}</span></td>
+              <td data-title="Acción">
+                <span class="btn-action-container">
+                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/tag-editar']" [queryParams]="{id:tag.id}"><i class="fa fa-pencil-square-o "></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(tag.id)"><i class="fa fa-trash-o "></i></button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+
+
+</section>

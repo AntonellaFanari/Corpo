@@ -12,5 +12,10 @@ export class MemberView implements User{
   facebook: string;
   planId: number;
   email: string;
-  planType: number
+  planType: number;
+  creditId: number;
+  credit: number;
+  expiration: string;
+  negative: number;
+  status: string;
 }

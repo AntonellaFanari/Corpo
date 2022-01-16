@@ -1,0 +1,27 @@
+.btn-action-list {
+  height: 35px;
+  width: auto;
+  margin: 2px;
+}
+
+tr.span-margin > td > span {
+  margin-left: 15px;
+}
+
+td.text-ajust {
+  text-overflow: ellipsis;
+}
+
+.view-debts {
+    display: none;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 40%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+}

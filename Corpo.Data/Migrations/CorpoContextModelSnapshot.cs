@@ -59,6 +59,41 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Account");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.BalanceToPay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Pay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Statement")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Transaction")
+                        .HasColumnType("int");
+
+                    b.Property<int>("transactionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("BalanceToPay");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.CancelSale", b =>
                 {
                     b.Property<int>("Id")
@@ -88,6 +123,21 @@ namespace Corpo.Data.Migrations
                     b.ToTable("CancelSale");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.CategoryExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoryExercise");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Class", b =>
                 {
                     b.Property<int>("Id")
@@ -104,6 +154,30 @@ namespace Corpo.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Class");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Credit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreditConsumption")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Expiration")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InitialCredit")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Negative")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Credit");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.DetailPurchase", b =>
@@ -160,6 +234,78 @@ namespace Corpo.Data.Migrations
                     b.HasIndex("SaleId");
 
                     b.ToTable("DetailsSale");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Exercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryExerciseId");
+
+                    b.ToTable("Exercise");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Fee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Credits")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Pay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PlanName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PromotionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPromotion")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("PromotionId");
+
+                    b.ToTable("Fee");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.File", b =>
@@ -265,6 +411,9 @@ namespace Corpo.Data.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("CreditId")
+                        .HasColumnType("int");
+
                     b.Property<string>("EmergencyContact")
                         .HasColumnType("nvarchar(max)");
 
@@ -295,6 +444,8 @@ namespace Corpo.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
+
+                    b.HasIndex("CreditId");
 
                     b.HasIndex("PlanId");
 
@@ -389,6 +540,50 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Promotion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DiscountMainMember")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Promotion");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.PromotionAnotherMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PromotionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PromotionId");
+
+                    b.ToTable("PromotionAnotherMember");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Purchase", b =>
                 {
                     b.Property<int>("Id")
@@ -463,6 +658,9 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Pay")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -516,6 +714,21 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Shift");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tag");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -553,6 +766,64 @@ namespace Corpo.Data.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Withdrawal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Pay")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WithdrawalNameId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WithdrawalNameId");
+
+                    b.ToTable("Withdrawal");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.WithdrawalName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WithdrawalName");
+                });
+
+            modelBuilder.Entity("ExerciseTag", b =>
+                {
+                    b.Property<int>("ExercisesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExercisesId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("ExerciseTag");
+                });
+
             modelBuilder.Entity("ClassPlan", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Class", null)
@@ -566,6 +837,17 @@ namespace Corpo.Data.Migrations
                         .HasForeignKey("PlansId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.BalanceToPay", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.CancelSale", b =>
@@ -617,6 +899,34 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Sale");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Exercise", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.CategoryExercise", "CategoryExercise")
+                        .WithMany()
+                        .HasForeignKey("CategoryExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CategoryExercise");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Fee", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Member", "Member")
+                        .WithMany("Fee")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.Promotion", "Promotion")
+                        .WithMany()
+                        .HasForeignKey("PromotionId");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Promotion");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.File", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Injury", "Injury")
@@ -658,6 +968,12 @@ namespace Corpo.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Corpo.Domain.Models.Credit", "Credit")
+                        .WithMany()
+                        .HasForeignKey("CreditId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Corpo.Domain.Models.Plan", "Plan")
                         .WithMany()
                         .HasForeignKey("PlanId")
@@ -665,6 +981,8 @@ namespace Corpo.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+
+                    b.Navigation("Credit");
 
                     b.Navigation("Plan");
                 });
@@ -686,6 +1004,17 @@ namespace Corpo.Data.Migrations
                     b.Navigation("OutflowType");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.PromotionAnotherMember", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Promotion", "Promotion")
+                        .WithMany("PromotionAnotherMember")
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Promotion");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Purchase", b =>
@@ -759,6 +1088,40 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Withdrawal", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.WithdrawalName", "WithdrawalName")
+                        .WithMany()
+                        .HasForeignKey("WithdrawalNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("WithdrawalName");
+                });
+
+            modelBuilder.Entity("ExerciseTag", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Exercise", null)
+                        .WithMany()
+                        .HasForeignKey("ExercisesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Injury", b =>
                 {
                     b.Navigation("Files");
@@ -771,7 +1134,14 @@ namespace Corpo.Data.Migrations
 
             modelBuilder.Entity("Corpo.Domain.Models.Member", b =>
                 {
+                    b.Navigation("Fee");
+
                     b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Promotion", b =>
+                {
+                    b.Navigation("PromotionAnotherMember");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Purchase", b =>

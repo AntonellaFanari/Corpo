@@ -1,0 +1,103 @@
+<section class="wrapper" *ngIf="!diplayReserve">
+  <div class="task-panel ">
+    <h4 class="table-title">Mis Reservas</h4>
+    <button type="button" class="btn btn-success pull-right" (click)="viewReserve()">Reservar</button>
+  </div>
+  <hr>
+  <div *ngIf="attendances.length>0; else elseBlock" class="col-md-12">
+    <section id="no-more-tables">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-bordered table-condensed cf mb-0 user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Fecha</th>
+              <th class="numeric">Clase</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="scrollme span-margin" *ngFor="let attendance of attendances">
+              <td class="td-title" data-title="Fecha"><span>{{attendance.shift.day}} {{attendance.shift.hour}}</span></td>
+              <td class="td-title text-ajust" data-title="Clase"><span>{{attendance.shift.className}}</span></td>
+              <td class="td-title" data-title="Acción">
+                <span class="btn-action-container">
+                  <button *ngIf="attendance.status == 1" class="btn btn-danger btn-xs btn-action-list" (click)="cancell(attendance.id)">Cancelar</button>
+                  <button *ngIf="attendance.status == 3" class="btn btn-warning btn-xs btn-action-list text-white">Cancelado</button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <ng-template #elseBlock><h5>No tienes reservas.</h5></ng-template>
+</section>
+
+<section class="wrapper" *ngIf="diplayReserve">
+  <div *ngIf="shifts.length>0; else elseBlock" class="col-md-12">
+    <section id="no-more-tables">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-bordered table-condensed cf mb-0 user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Fecha</th>
+              <th class="numeric">Clase</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="scrollme span-margin" *ngFor="let shift of shifts">
+              <td class="td-title" data-title="Fecha"><span>{{shift.day}} - {{shift.hour}}</span></td>
+              <td class="td-title text-ajust" data-title="Clase"><span>{{shift.className}}</span></td>
+              <td class="td-title"  data-title="Acción">
+                <span class="btn-action-container">
+                  <button *ngIf="shift.available>0 && !shift.reserved" class="btn btn-primary btn-xs btn-action-list" data-toggle="modal" href="#myModalReserve" (click)="reserve(shift.id, shift.className)">Reservar</button>
+                  <button *ngIf="shift.reserved" class="btn btn-success btn-xs btn-action-list">Reservado</button>
+                  <button *ngIf="shift.available==0 && !shift.reserved" class="btn btn-success btn-xs btn-action-list text-white">No Disponible</button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <ng-template #elseBlock><h5>No hay turnos disponibles</h5></ng-template>
+</section>
+
+
+<button id="modal-reserve" data-toggle="modal" href="#myModalReserve" class="d-none"></button>
+<section class="modal mt-4" id="myModalReserve" *ngIf="credit">
+  <div class="container-fluid modal-content modal-sm p-0">
+
+    <!-- cabecera del diálogo -->
+    <div class="modal-header modal-title bg-success d-block">
+      <h4 class="modal-title text-white text-center">{{className}}</h4>
+      <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+    </div>
+
+    <!-- cuerpo del diálogo -->
+    <div class="modal-body">
+      <div *ngIf="currentCredit !=0">
+        <div>
+          <p>Tienes {{currentCredit}} disponibles</p>
+        </div>
+        <div>
+          <button class="btn btn-success btn-xs btn-action-list" (click)="confirmReserve()">Reservar</button>
+        </div>
+      </div>
+      <div *ngIf="currentCredit == 0" class="row justify-content-center aling-items-center">
+        <div class="text-center col-12">
+          <p>No tienes créditos sificientes</p>
+        </div>
+        <div class="text-center col-12">
+          <p>Tienes {{availableNegative}} negativos disponible</p>
+          <button *ngIf="availableNegative != 0" class="btn btn-danger btn-xs btn-action-list" (click)="confirmReserve()">Utilizar Negativo</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+

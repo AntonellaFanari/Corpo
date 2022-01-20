@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Shift } from '../../../domain/shift';
 import { ShiftList } from '../../../domain/shift-list';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { ShiftService } from '../../../services/shift.service';
+import { AttendanceComponent } from '../attendance/attendance.component';
 
 @Component({
   selector: 'app-attendance-shifts-list',
@@ -14,12 +15,14 @@ export class AttendanceShiftsListComponent implements OnInit {
   shifts: ShiftList[] = [];
   from: string;
   to: string;
+  @ViewChild(AttendanceComponent, { static: true }) attendancesComponent: AttendanceComponent;
+
 
   constructor(private shiftService: ShiftService, private dp: DatePipe, private customAlertService: CustomAlertService) {
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
     console.log(this.from);
     let to = new Date();
-    this.to = this.dp.transform(to.setDate(to.getDate() + 7), 'yyyy-MM-dd');
+    this.to = this.dp.transform(to.setDate(to.getDate() + 30), 'yyyy-MM-dd');
     console.log(this.to);
   }
 
@@ -37,9 +40,6 @@ export class AttendanceShiftsListComponent implements OnInit {
       },
       error => {
         console.error(error);
-        //if (error.status === 400) {
-        //  this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
-        //}
       }
     )
   }
@@ -53,6 +53,7 @@ export class AttendanceShiftsListComponent implements OnInit {
       shiftList.day = this.getDayShift(shift.day) + " " + shift.day.substr(8, 2) + "/" + shift.day.substr(5, 2);
       shiftList.hour = shift.hour.substr(0, 5);
       shiftList.quota = shift.quota;
+      shiftList.available = shift.available;
       shiftList.classId = shift.class.id;
       shiftList.className = shift.class.name;
       shiftList.userId = shift.user.id;
@@ -86,4 +87,8 @@ export class AttendanceShiftsListComponent implements OnInit {
     return dayShift;
   }
 
+  goToAttendances(id) {
+    this.attendancesComponent.modalClick();
+    this.attendancesComponent.getShift(id);
+  }
 }

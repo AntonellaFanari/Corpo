@@ -29,7 +29,7 @@ namespace Corpo.Data.Repositories
         {
             if (classId == 0)
             {
-                return _context.Shift.Where(x => x.Day >= from && x.Day <= to)
+                return _context.Shift.Where(x => x.Day >= from && x.Day <= to).OrderBy(x=> x.Day).ThenBy(x=> x.Hour)
                                  .Include(x => x.Class)
                                  .Include(x => x.User).ToList();
             }
@@ -42,15 +42,24 @@ namespace Corpo.Data.Repositories
             
         }
 
-        public Shift GetById(int id)
+        public Task<Shift> GetById(int id)
         {
-            return _context.Shift.Find(id);
+            return _context.Shift.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public void Update(Shift shift)
         {
-            _context.Shift.Update(shift);
-            _context.SaveChanges();
+            try
+            {
+                _context.Shift.Update(shift);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+            
+            
         }
 
         public void Delete(int id)

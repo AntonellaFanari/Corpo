@@ -6,5 +6,8 @@ export class LoggedUser {
   roleId: number;
   userType: number;
   access: string[];
-  accountId: number
+  accountId: number;
+  credit: number;
+  creditId: number;
+  expiration: string
 }

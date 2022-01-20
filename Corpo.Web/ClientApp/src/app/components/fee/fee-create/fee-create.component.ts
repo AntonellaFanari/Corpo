@@ -53,7 +53,6 @@ export class FeeCreateComponent implements OnInit {
   memberDiscount: number;
   viewAddedMembers: boolean = false;
   feeDto: FeeDto;
-  viewListMembers = true;
   @ViewChild(FeePromotionComponent, { static: true }) promotionModal: FeePromotionComponent;
 
   constructor(private memberService: MemberService, private planService: PlanService, private formBuilder: FormBuilder,
@@ -96,8 +95,6 @@ export class FeeCreateComponent implements OnInit {
   }
 
   selectPlan(event) {
-    let from = this.formCreate.value.from;
-    /*    this.getPlanExists(this.member.id, event);*/
     this.plan = this.plans.find(x => x.id == event);
     console.log(this.plan);
     this.formCreate.patchValue({
@@ -109,14 +106,6 @@ export class FeeCreateComponent implements OnInit {
     this.pay = this.total;
   }
 
-  //getPlanExists(id, idPlan) {
-  //  this.memberService.getPlanExists(id, idPlan).subscribe(
-  //    result => {
-  //      console.log(result);
-  //    },
-  //    error => console.error(error)
-  //  )
-  //}
 
   calculateTotalFee() {
     this.total = this.formCreate.value.price - this.formCreate.value.promotion;
@@ -130,7 +119,6 @@ export class FeeCreateComponent implements OnInit {
     this.selectPlan(this.member.planId);
     this.getFees(this.member.id);
     this.getBalances(this.member.id);
-    this.viewListMembers = false;
   }
 
   getBalances(id) {
@@ -208,12 +196,15 @@ export class FeeCreateComponent implements OnInit {
 
   clearInput() {
     this.filterMember = "";
-    this.viewListMembers = true;
+    console.log(this.filterMember);
+       
   }
 
   completeInput() {
-    this.filterMember = this.member.lastName + " " + this.member.name;
-    this.viewListMembers = false;
+    console.log(this.member);
+    if (this.member) {
+      this.filterMember = this.member.lastName + " " + this.member.name;
+    }
   }
 
   submit() {

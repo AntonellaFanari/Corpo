@@ -24,4 +24,12 @@ export class CreditService {
   public add(feeDto: FeeDto) {
     return this.http.post<any>(this.url + 'api/credit/add', feeDto, httpOptions);
   }
+
+  public update(credit: Credit) {
+    return this.http.put<any>(this.url + 'api/credit/update', credit, httpOptions);
+  }
+
+  public getById(id: number) {
+    return this.http.get<any>(this.url + 'api/credit/getById?id=' + id);
+  }
 }

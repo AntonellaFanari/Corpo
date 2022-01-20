@@ -12,7 +12,7 @@
                   <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" (click)="clearInput()" (blur)="completeInput()"/>
                 </a>
                 <p *ngIf="send && f.memberId.errors?.required">*Debe seleccionar un socio.</p>
-                <div *ngIf ="viewListMembers" class="dropdown-menu form-control">
+                <div class="dropdown-menu form-control">
                   <a *ngFor="let member of members  | searchFilterMember: filterMember " class="dropdown-item" (click)="selectMember(member)">{{member.lastName}} {{member.name}}</a>
                 </div>
                 <div *ngIf="fees.length>0">

@@ -11,5 +11,6 @@ namespace Corpo.Domain.Contracts.Repositories
     {
         int Add(Credit credit);
         void Update(Credit credit);
+        Task<Credit> GetById(int id);
     }
 }

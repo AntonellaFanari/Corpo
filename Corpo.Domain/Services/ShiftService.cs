@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Domain.Services
 {
-    public class ShiftService: IShiftService
+    public class ShiftService : IShiftService
     {
         private IShiftRepository _shiftRespository;
 
@@ -54,20 +54,20 @@ namespace Corpo.Domain.Services
             {
                 return new DomainResponse(false, "no hay registros", "no hay turnos para estas fechas");
             }
-            
+
         }
 
-        public DomainResponse Update(List<Shift> shifts)
+        async public Task<DomainResponse> Update(List<Shift> shifts)
         {
             try
             {
                 foreach (var shift in shifts)
                 {
-                    var shiftQuery = _shiftRespository.GetById(shift.Id);
+                    var shiftQuery = await _shiftRespository.GetById(shift.Id);
                     shiftQuery.UserId = shift.UserId;
                     shiftQuery.Quota = shift.Quota;
                     _shiftRespository.Update(shiftQuery);
-                   
+
                 }
                 return new DomainResponse
                 {
@@ -98,5 +98,33 @@ namespace Corpo.Domain.Services
             }
         }
 
+        async public Task<DomainResponse> GetById(int id)
+        {
+            var response = await _shiftRespository.GetById(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        async public Task<DomainResponse> UpdateById(int id, StatusAttendance status)
+        {
+            var shift = await _shiftRespository.GetById(id);
+            if (status == StatusAttendance.Reserved )
+            {
+                shift.Available --;
+            }
+            else
+            {
+                shift.Available ++;
+            };
+            _shiftRespository.Update(shift);
+            return new DomainResponse
+            {
+                Success = true
+            };
+
+        }
     }
 }

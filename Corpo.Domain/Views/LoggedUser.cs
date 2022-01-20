@@ -17,5 +17,8 @@ namespace Corpo.Domain.Views
         public UserType UserType { get; set; }
         public List<string> Access { get; set; }
         public int AccountId { get; set; }
+        public int Credit { get; set; }
+        public int CreditId { get; set; }
+        public DateTime Expiration { get; set; }
     }
 }

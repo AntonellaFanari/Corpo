@@ -27,5 +27,6 @@ namespace Corpo.Domain.Models
         public List<Fee> Fee { get; set; }
         public Credit Credit { get; set; }
         public int CreditId { get; set; }
+        public List<Attendance> Attendance { get; set; }
     }
 }

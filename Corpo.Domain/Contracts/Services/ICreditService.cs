@@ -12,5 +12,6 @@ namespace Corpo.Domain.Contracts.Services
     {
         int Add(Credit credit);
         DomainResponse Update(Credit credit);
+        Task<DomainResponse> GetById(int id);
     }
 }

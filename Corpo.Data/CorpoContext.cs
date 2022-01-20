@@ -48,5 +48,6 @@ namespace Corpo.Data
         public DbSet<PromotionAnotherMember> PromotionAnotherMember { get; set; }
         public DbSet<WithdrawalName> WithdrawalName { get; set; }
         public DbSet<Withdrawal> Withdrawal { get; set; }
+        public DbSet<Attendance> Attendance { get; set; }
     }
 }

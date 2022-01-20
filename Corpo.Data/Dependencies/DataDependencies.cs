@@ -31,6 +31,7 @@ namespace Corpo.Data.Dependencies
             services.AddTransient<IPromotionRepository, PromotionRepository>();
             services.AddTransient<ICreditRepository, CreditRepository>();
             services.AddTransient<IWithdrawalRepository, WithdrawalRepository>();
+            services.AddTransient<IAttendanceRepository, AttendanceRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

@@ -145,6 +145,7 @@ export class ShiftCreateComponent implements OnInit {
     newShift.from = this.from;
     newShift.to = this.to;
     newShift.quota = this.quota;
+    newShift.available = this.quota;
     newShift.classId = this.selectedClass;
     newShift.hour = schedule.hour;
     newShift.userId = schedule.userId;

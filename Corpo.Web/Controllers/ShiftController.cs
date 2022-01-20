@@ -45,9 +45,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("update")]
-        public ActionResult Update(List<Shift> shifts)
+        async public Task<ActionResult> Update(List<Shift> shifts)
         {
-            var response = _shiftService.Update(shifts);
+            var response = await _shiftService.Update(shifts);
             return this.ToActionResult(response);
         }
 
@@ -57,5 +57,13 @@ namespace Corpo.Web.Controllers
             var response = _shiftService.Delete(idShifts);
             return this.ToActionResult(response);
         }
+
+        [HttpGet("getById")]
+        async public Task<ActionResult<Shift>> GetById(int id)
+        {
+            var response = await _shiftService.GetById(id);
+            return Ok(response);
+        }
+
     }
 }

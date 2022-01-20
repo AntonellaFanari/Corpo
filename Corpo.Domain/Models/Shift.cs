@@ -12,6 +12,7 @@ namespace Corpo.Domain.Models
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public int Quota { get; set; }
+        public int Available { get; set; }
         public virtual Class Class { get; set; }
         public int ClassId { get; set; }
         public TimeSpan Hour { get; set; }

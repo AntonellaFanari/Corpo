@@ -97,9 +97,9 @@ import { WithdrawalNameCreateComponent } from './components/withdrawalName/withd
 import { WithdrawalNameEditComponent } from './components/withdrawalName/withdrawal-name-edit/withdrawal-name-edit.component';
 import { WithdrawalNameListComponent } from './components/withdrawalName/withdrawal-name-list/withdrawal-name-list.component';
 import { MyDebtsComponent } from './components/user-menu/my-debts/my-debts.component';
-import { DatepickerRangeComponent } from './components/datepicker-range/datepicker-range/datepicker-range.component';
-import { AttendanceListComponent } from './components/attendance/attendance-list/attendance-list.component';
 import { AttendanceShiftsListComponent } from './components/attendance/attendance-shifts-list/attendance-shifts-list.component';
+import { AttendanceComponent } from './components/attendance/attendance/attendance.component';
+import { MyReservationsComponent } from './components/user-menu/my-reservations/my-reservations.component';
 
 
 @NgModule({
@@ -192,9 +192,9 @@ import { AttendanceShiftsListComponent } from './components/attendance/attendanc
     WithdrawalNameEditComponent,
     WithdrawalNameListComponent,
     MyDebtsComponent,
-    DatepickerRangeComponent,
-    AttendanceListComponent,
-    AttendanceShiftsListComponent
+    AttendanceShiftsListComponent,
+    AttendanceComponent,
+    MyReservationsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -241,31 +241,33 @@ import { AttendanceShiftsListComponent } from './components/attendance/attendanc
       { path: 'modificar-email', component: EmailEditComponent },
       { path: 'modificar-contraseña', component: PasswordEditComponent },
       { path: 'mis-deudas', component: MyDebtsComponent },
-      { path: 'compras-list', component: PurchaseListComponent },
-      { path: 'compra-crear', component: PurchaseCreateComponent },
-      { path: 'purchase-detail', component: PurchaseDetailComponent },
-      { path: 'egreso-crear', component: OutflowTypeCreateComponent },
-      { path: 'egreso-editar', component: OutflowTypeEditComponent },
-      { path: 'egresos-list', component: OutflowTypeListComponent },
-      { path: 'ejercicios-list', component: ExercisesListComponent },
-      { path: 'ejercicio-crear', component: ExercisesCreateComponent },
-      { path: 'ejercicio-editar', component: ExercisesEditComponent },
-      { path: 'categoria-crear', component: CategoryExercisesCreateComponent },
-      { path: 'categorias-list', component: CategoryExercisesListComponent },
-      { path: 'categoria-editar', component: CategoryExercisesEditComponent },
-      { path: 'tags-list', component: TagListComponent },
-      { path: 'tag-crear', component: TagCreateComponent },
-      { path: 'tag-editar', component: TagEditComponent },
-      { path: 'promociones-list', component: PromotionListComponent },
-      { path: 'promocion-crear', component: PromotionCreateComponent },
-      { path: 'promocion-editar', component: PromotionEditComponent },
-      { path: 'deudas-list', component: DebtListComponent },
-      { path: 'deudas-detalle', component: DebtDetailComponent },
-      { path: 'deuda-editar', component: DebtEditComponent },
-      { path: 'retiro-crear', component: WithdrawalNameCreateComponent },
-      { path: 'retiro-editar', component: WithdrawalNameEditComponent },
-      { path: 'retiros-list', component: WithdrawalNameListComponent },
-      { path: 'asistencias', component: AttendanceShiftsListComponent }
+      { path: 'mis-reservas', component: MyReservationsComponent },
+      { path: 'compras-list', component: PurchaseListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'compra-crear', component: PurchaseCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'purchase-detail', component: PurchaseDetailComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'egreso-crear', component: OutflowTypeCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'egreso-editar', component: OutflowTypeEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'egresos-list', component: OutflowTypeListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'ejercicios-list', component: ExercisesListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'ejercicio-crear', component: ExercisesCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'ejercicio-editar', component: ExercisesEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'categoria-crear', component: CategoryExercisesCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'categorias-list', component: CategoryExercisesListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'categoria-editar', component: CategoryExercisesEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'tags-list', component: TagListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'tag-crear', component: TagCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'tag-editar', component: TagEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'promociones-list', component: PromotionListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'promocion-crear', component: PromotionCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'promocion-editar', component: PromotionEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'deudas-list', component: DebtListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'deudas-detalle', component: DebtDetailComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'deuda-editar', component: DebtEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'retiro-crear', component: WithdrawalNameCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'retiro-editar', component: WithdrawalNameEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'retiros-list', component: WithdrawalNameListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'asistencias-turnos', component: AttendanceShiftsListComponent },
+      { path: 'asistencia', component: AttendanceComponent }
     ])
   ],
   entryComponents: [

@@ -59,6 +59,35 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Account");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Attendance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("DateCancellation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateReservation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShiftId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("Attendance");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.BalanceToPay", b =>
                 {
                     b.Property<int>("Id")
@@ -684,6 +713,9 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Available")
+                        .HasColumnType("int");
+
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
@@ -837,6 +869,17 @@ namespace Corpo.Data.Migrations
                         .HasForeignKey("PlansId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Attendance", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Member", "Member")
+                        .WithMany("Attendance")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.BalanceToPay", b =>
@@ -1134,6 +1177,8 @@ namespace Corpo.Data.Migrations
 
             modelBuilder.Entity("Corpo.Domain.Models.Member", b =>
                 {
+                    b.Navigation("Attendance");
+
                     b.Navigation("Fee");
 
                     b.Navigation("Sale");

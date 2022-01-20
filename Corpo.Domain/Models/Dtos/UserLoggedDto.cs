@@ -33,7 +33,10 @@ namespace Corpo.Domain.Models.Dtos
                 Name = member.Name,
                 RoleName = "member",
                 UserType = member.Account.UserType,
-                AccountId = member.AccountId
+                AccountId = member.AccountId,
+                CreditId = member.CreditId,
+                Expiration = member.Credit.Expiration,
+                Credit = DateTime.Now > member.Credit.Expiration ? 0 : member.Credit.InitialCredit - member.Credit.CreditConsumption ,
             };
         }
     }

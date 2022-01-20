@@ -11,7 +11,7 @@ namespace Corpo.Domain.Contracts.Repositories
     {
         List<Shift> GetAll(DateTime from, DateTime to, int classId);
         void Add(Shift shift);
-        Shift GetById(int id);
+        Task<Shift> GetById(int id);
         void Update(Shift shift);
         void Delete(int id);
     }

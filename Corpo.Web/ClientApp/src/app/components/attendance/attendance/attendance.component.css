@@ -1,0 +1,19 @@
+.div-btn-create {
+  padding: 0px;
+  margin-top: 15px;
+}
+
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
+.margin-btn {
+  margin-top: 2rem;
+}
+
+a {
+  text-decoration: none !important;
+  cursor: pointer;
+}

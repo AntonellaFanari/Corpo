@@ -32,6 +32,8 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\components\validations\control-equal.ts" />
     <None Remove="ClientApp\src\app\domain\account.ts" />
+    <None Remove="ClientApp\src\app\domain\attendance-reservation.ts" />
+    <None Remove="ClientApp\src\app\domain\attendance.ts" />
     <None Remove="ClientApp\src\app\domain\balance-to-pay-view.ts" />
     <None Remove="ClientApp\src\app\domain\balance-to-pay.ts" />
     <None Remove="ClientApp\src\app\domain\cancel-sale.ts" />
@@ -50,6 +52,7 @@
     <None Remove="ClientApp\src\app\domain\iuser.ts" />
     <None Remove="ClientApp\src\app\domain\logged-user.ts" />
     <None Remove="ClientApp\src\app\domain\medical-history.ts" />
+    <None Remove="ClientApp\src\app\domain\member-attendance.ts" />
     <None Remove="ClientApp\src\app\domain\member-promotion.ts" />
     <None Remove="ClientApp\src\app\domain\member-view.ts" />
     <None Remove="ClientApp\src\app\domain\member.ts" />
@@ -82,6 +85,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\validations\control-equal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\account.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\attendance-reservation.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\cancel-sale.ts" />
@@ -91,6 +96,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\credit.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\detail-purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\member-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-promotion.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\pay-cancel-balance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\promotion-another-member.ts" />

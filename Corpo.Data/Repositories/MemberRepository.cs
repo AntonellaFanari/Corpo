@@ -42,6 +42,7 @@ namespace Corpo.Data.Repositories
             return _context.Member
                     .Include(x => x.Plan)
                     .Include(x => x.Account)
+                    .Include(x=> x.Credit)
                     .FirstOrDefault(x => x.AccountId == id);
         }
 

@@ -26,6 +26,16 @@ namespace Corpo.Domain.Services
             return id;
         }
 
+        async public Task<DomainResponse> GetById(int id)
+        {
+            var response = _creditRepository.GetById(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response.Result
+            };
+        }
+
         public DomainResponse Update(Credit credit)
         {
             

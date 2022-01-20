@@ -3,6 +3,7 @@ export class Shift {
   from: string;
   to: string;
   quota: number;
+  available: number;
   classId: number;
   hour: string;
   day: string;

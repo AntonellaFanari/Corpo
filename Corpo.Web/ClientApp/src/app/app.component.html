@@ -18,7 +18,7 @@
             </a>
           </li>
           <li *access="'usuarios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a [routerLink]="['/asistencias']">
+            <a [routerLink]="['/asistencias-turnos']">
               <i class="fa fa-user"></i>
               Asistencias
             </a>
@@ -93,6 +93,7 @@
             <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user-o"></i>&nbsp;Mis datos</a></li>
             <li><a [routerLink]="['/modificar-contraseña']"><i class="fa fa-key"></i>&nbsp;Modificar contraseña</a></li>
             <li><a [routerLink]="['/mis-deudas']"><i class="fa fa-usd"></i>&nbsp;Mis deudas</a></li>
+            <li><a [routerLink]="['/mis-reservas']"><i class="fa fa-clipboard"></i>&nbsp;Mis reservas</a></li>
             <li><a><i class="fa fa-bell"></i>&nbsp;Notificaciones</a></li>
             <hr />
             <li><a (click)="signOff()">Cerrar Sesión&nbsp;<i class="fa fa-sign-out"></i></a></li>

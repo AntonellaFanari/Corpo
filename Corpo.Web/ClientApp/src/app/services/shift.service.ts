@@ -38,4 +38,8 @@ export class ShiftService {
   public delete(idShifts: number[]) {
     return this.http.post(this.url + 'api/shift/delete', idShifts, httpOptions);
   }
+
+  public getById(id: number) {
+    return this.http.get<any>(this.url + 'api/shift/getById?id=' + id);
+  }
 }

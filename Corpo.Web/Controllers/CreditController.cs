@@ -22,10 +22,18 @@ namespace Corpo.Web.Controllers
             _creditService = creditService;
         }
 
-        //[HttpPost("add")]
-        //public ActionResult Add([FromBody] FeeDto feeDto)
-        //{
-           
-        //}
+        [HttpGet("getById")]
+        async public Task<ActionResult<Credit>> GetById(int id)
+        {
+            var response = await _creditService.GetById(id);
+            return Ok(response);
+        }
+
+        [HttpPut("update")]
+        public ActionResult Update([FromBody] Credit credit)
+        {
+            var response = _creditService.Update(credit);
+            return this.ToActionResult(response);
+        }
     }
 }

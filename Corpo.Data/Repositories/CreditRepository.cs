@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace Corpo.Data.Repositories
             _context.Credit.Add(credit);
             _context.SaveChanges();
             return credit.Id;
+        }
+
+        public Task<Credit> GetById(int id)
+        {
+            return _context.Credit.FirstOrDefaultAsync(x=> x.Id == id);
         }
 
         public void Update(Credit credit)

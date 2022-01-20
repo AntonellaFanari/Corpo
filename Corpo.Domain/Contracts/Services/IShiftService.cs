@@ -11,7 +11,9 @@ namespace Corpo.Domain.Contracts.Services
     {
         DomainResponse GetAll(string from, string to, int classId);
         DomainResponse Add(List<Shift> shifts);
-        DomainResponse Update(List<Shift> shifts);
+        Task<DomainResponse> Update(List<Shift> shifts);
         DomainResponse Delete(List<int> idShifts);
+        Task<DomainResponse> GetById(int id);
+        Task<DomainResponse> UpdateById(int id, StatusAttendance status);
     }
 }

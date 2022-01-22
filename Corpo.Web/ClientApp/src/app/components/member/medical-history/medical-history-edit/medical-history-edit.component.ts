@@ -1,5 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoggedUser } from '../../../../domain/logged-user';
+import { AccountService } from '../../../../services/account.service';
 import { CustomAlertService } from '../../../../services/custom-alert.service';
 import { MemberService } from '../../../../services/member.service';
 import { MedicalHistoryFormComponent } from '../medical-history-form/medical-history-form.component';
@@ -14,11 +17,18 @@ export class MedicalHistoryEditComponent implements OnInit {
   medicalHistoryId: number;
   age: number;
   planType: number;
+  user: LoggedUser;
   @ViewChild(MedicalHistoryFormComponent, { static: true }) formMedicalHistory: MedicalHistoryFormComponent;
-  constructor(private router: Router, private route: ActivatedRoute, private customAlertService: CustomAlertService, private memberService: MemberService) {
-    this.route.queryParams.subscribe(
-      params => { this.id = parseInt(params['id']), this.medicalHistoryId = parseInt(params['medicalHistoryId']) }
-    )
+  constructor(private router: Router, private route: ActivatedRoute, private customAlertService: CustomAlertService,
+    private memberService: MemberService, private accountService: AccountService, private location: Location) {
+    this.user = this.accountService.getLoggedUser();
+    if (this.user.userType == 2) {
+      this.id = this.user.id;
+    } else {
+      this.route.queryParams.subscribe(params => {
+        this.id = parseInt(params['id'])
+      });
+    }
   }
 
   ngOnInit() {
@@ -37,15 +47,16 @@ export class MedicalHistoryEditComponent implements OnInit {
       },
       error => console.error(error)
     );
-    this.formMedicalHistory.getMedicalHistoryUpdate(this.medicalHistoryId);
+    this.formMedicalHistory.getMedicalHistoryUpdate(this.id);
   }
 
   submit() {
     var newMedicalHistory = this.formMedicalHistory.createMedicalHistory();
+    this.medicalHistoryId = this.formMedicalHistory.medicalHistory.id;
     this.memberService.updateMedicalHistory(this.medicalHistoryId, newMedicalHistory).subscribe(
       result => {
         if (this.planType == 2) {
-          this.router.navigate(['/member-list']);
+          this.location.back;
         } else {
           this.router.navigate(['/antecedentes-lesiones'], { queryParams: { medicalHistoryId: this.medicalHistoryId, id: this.id } });
         }

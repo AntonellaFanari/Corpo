@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileInjury } from '../../../domain/file';
 import { Injury } from '../../../domain/injury';
+import { AccountService } from '../../../services/account.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 
@@ -23,8 +24,10 @@ export class InjuryHistoryComponent implements OnInit {
   injuryFiles: FileInjury[];
   injuryId: number;
   memberId: number;
+  userType: number;
 
-  constructor(private memberService: MemberService, private route: ActivatedRoute, private router: Router, private customAlertService: CustomAlertService) {
+  constructor(private accountService: AccountService, private memberService: MemberService, private route: ActivatedRoute, private router: Router, private customAlertService: CustomAlertService) {
+    this.userType = this.accountService.getLoggedUser().userType;
     this.route.queryParams.subscribe(params => {
       this.memberId = parseInt(params['id']),
         this.medicalHistoryId = parseInt(params['medicalHistoryId'])
@@ -172,6 +175,14 @@ export class InjuryHistoryComponent implements OnInit {
         downloadLink.click();
       }
     )
+  }
+
+  submit() {
+    if (this.userType == 1) {
+      this.router.navigate(['/member-list']);
+    } else {
+      this.router.navigate(['/datos-personales'])
+    }
   }
 
 

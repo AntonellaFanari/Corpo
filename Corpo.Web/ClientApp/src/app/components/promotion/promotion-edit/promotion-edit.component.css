@@ -15,3 +15,13 @@
   width: 47px;
   text-align: center;
 }
+
+.diplay-view {
+  display: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .diplay-view {
+    display: block;
+  }
+}

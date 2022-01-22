@@ -43,7 +43,7 @@
       <div *ngIf="viewSelectAddMember" class="card card-body">
         <a class="dropdown-toggle" id="dropdown1" data-toggle="dropdown">
           <label class="form-label text-black">Socio:</label>
-          <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" (click)="clearInput()" (blur)="completeInput()" />
+          <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" (click)="clearInput()" />
         </a>
         <div class="dropdown-menu form-control">
           <a *ngFor="let member of members  | searchFilterMember: filterMember " class="dropdown-item" (click)="selectMember(member)">{{member.lastName}} {{member.name}}</a>

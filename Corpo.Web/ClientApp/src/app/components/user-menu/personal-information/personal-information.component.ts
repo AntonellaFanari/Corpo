@@ -51,6 +51,10 @@ export class PersonalInformationComponent implements OnInit {
     }
   }
 
+  modifyMedicalHistory() {
+    this.router.navigate(['/historia-médica-editar']);
+  }
+
   modifyEmail() {
     this.router.navigate(['/modificar-email']);
   }

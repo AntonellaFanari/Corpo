@@ -13,7 +13,17 @@
   margin-top: 2rem;
 }
 
+
 a {
   text-decoration: none !important;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 800px) {
+  .btn-action-list {
+    height: 35px;
+    width: 70px;
+    margin: 2px;
+    font-size: 10px;
+  }
 }

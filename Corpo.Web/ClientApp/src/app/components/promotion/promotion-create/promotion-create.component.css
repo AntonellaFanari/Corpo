@@ -30,3 +30,12 @@
   margin-right: 2.5px;
   font-size: 15px;
 }*/
+.diplay-view {
+    display: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .diplay-view {
+    display: block;
+  }
+}

@@ -52,14 +52,11 @@
       <table class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
-            <th *ngIf="userRegister" colspan="4">Registro:: {{userRegister.lastName}} {{userRegister.name}}</th>
+            <th *ngIf="userRegister" colspan="4">Registro: {{userRegister.lastName}} {{userRegister.name}}</th>
           </tr>
           <tr>
             <th colspan="2">Socio: {{member.lastName}} {{member.name}}</th>
-            <th colspan="1">Fecha: {{sale.date | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
-            <th colspan="1" *ngIf="status">
-              Estado: <span *ngIf="status == 1">Vigente</span><span *ngIf="status == 2">Cancelada</span>
-            </th>
+            <th colspan="2">Fecha: {{sale.date | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
           </tr>
           <tr>
             <th>Descripcion</th>

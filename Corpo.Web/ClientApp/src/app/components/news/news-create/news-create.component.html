@@ -1,0 +1,55 @@
+<section class="wrapper">
+  <div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success"><h3 class="text-center text-white">Nueva Noticia</h3></header>
+    <div class="modal-body ps-0 pe-0">
+      <div class="container-fluid">
+        <div class="row card-body">
+          <form [formGroup]="formCreate">
+            <div class="row">
+              <div class="col-12 formValidators">
+                <label class="form-label">Título:</label>
+                <input type="text" class="form-control" formControlName="title" />
+                <p *ngIf="send && f.title.errors?.required">*Campo requerido.</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-lg-6 pull-left mt-3 formValidators">
+                <label class="form-label">Desde:</label>
+                <input type="datetime-local" class="form-control col-6" formControlName="from" />
+                <p *ngIf="send && f.from.errors?.required">*Debe seleccionar una fecha de inicio.</p>
+              </div>
+              <div class="col-12 col-lg-6 pull-right mt-3 formValidators">
+                <label class="form-label">Hasta:</label>
+                <input type="datetime-local" class="form-control col-6" formControlName="to" />
+                <p *ngIf="send && f.to.errors?.required">*Debe seleccionar una fecha de fin.</p>
+              </div>
+            </div>
+            <div class="row  mt-3 justify-content-center align-items-center">
+              <div class="col-6 text-center mb-2">
+                <label class=" mt-2">Seleccionar Imagenes:</label>
+              </div>
+              <div class="col-12 text-center">
+                <a id="select" onclick="document.getElementById('file-button').click();" class="btn btn-primary form-control btn-action">
+                  <!--<i class="fas fa-upload"></i>-->
+                  Seleccionar
+                </a>
+                <input type="file" id="file-button" (change)="onFileSelection($event)" style="display: none;" />
+              </div>
+              <div class="row col-12 justify-content-center align-items-center text-center mt-3" *ngFor='let url of urls'>
+                <img [src]="url" height="200" class="preview-picture text-center"> <br />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button class="btn btn-secondary col-3 col-lg-2  pull-left btn-create" type="button" [routerLink]="['/noticias-list']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2  pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
+  </div>
+</section>
+
+
+
+

@@ -31,6 +31,7 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<ICreditService, CreditService>();
             services.AddTransient<IWithdrawalService, WithdrawalService>();
             services.AddTransient<IAttendanceService, AttendanceService>();
+            services.AddTransient<INewsService, NewsService>();
         }
     }
 }

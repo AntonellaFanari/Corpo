@@ -31,16 +31,18 @@ export class AttendanceComponent implements OnInit {
   quotaAvailable: number;
   currentDate = new Date(Date.now());
   @Output() getAllShifts = new EventEmitter();
+  viewList: boolean = false;
 
   constructor(private attendanceService: AttendanceService, private memberService: MemberService,
     private customAlertService: CustomAlertService, private creditService: CreditService, private shiftService: ShiftService,
-    private dp: DatePipe) {
+    private dp: DatePipe, private route: ActivatedRoute) {
+    
   }
 
   ngOnInit() {
-    console.log(this.shiftId);
     this.getAllMembers();
     console.log(this.currentDate);
+   
   }
 
   modalClick() {
@@ -50,6 +52,7 @@ export class AttendanceComponent implements OnInit {
   }
 
   getShift(id) {
+    this.shiftId = id;
     this.shiftService.getById(id).subscribe(
       result => {
         console.log(result);
@@ -109,22 +112,17 @@ export class AttendanceComponent implements OnInit {
 
   viewSelectListMember() {
     this.viewSelectAddMember = !this.viewSelectAddMember;
-    this.viewBtnAddMember = false;
+    this.viewBtnAddMember = !this.viewBtnAddMember;
+    this.member = null;
+    this.clearInput();
   
   }
 
 
-  clearInput() {
-    this.filterMember = "";
-  }
 
-  completeInput() {
-    if (this.member) {
-      this.filterMember = this.member.lastName + " " + this.member.name;
-    }
-  }
 
   selectMember(event) {
+    console.log(event);
     this.member = event;
     console.log(this.member);
     this.filterMember = this.member.lastName + " " + this.member.name;
@@ -140,6 +138,14 @@ export class AttendanceComponent implements OnInit {
       error => console.error(error)
     )
   }
+
+  clearInput() {
+    this.filterMember = "";
+  }
+
+  //completeInput() {
+  //  this.filterMember = this.member.lastName + " " + this.member.name;
+  //}
 
   createAttendance() {
     let newAttendance = new Attendance();

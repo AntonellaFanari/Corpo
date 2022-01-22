@@ -27,7 +27,7 @@ export class PromotionEditComponent implements OnInit {
     this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) });
     this.formEdit = this.formBuilder.group({
       name: ['', Validators.required],
-      discountMainMembers: ['', Validators.required],
+      discountMainMember: ['', Validators.required],
       from: ['', Validators.required],
       to: ['', Validators.required]
     })
@@ -53,7 +53,7 @@ export class PromotionEditComponent implements OnInit {
   toCompleteForm(promotion) {
     this.formEdit.patchValue({
       name: promotion.name,
-      discountMainMembers: promotion.discountMainMember,
+      discountMainMember: promotion.discountMainMember,
       from: this.from,
       to: this.to
     });

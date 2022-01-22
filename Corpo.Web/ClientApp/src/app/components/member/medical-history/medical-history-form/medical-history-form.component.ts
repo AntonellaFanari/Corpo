@@ -102,7 +102,7 @@ export class MedicalHistoryFormComponent implements OnInit {
 
 
   getMedicalHistoryUpdate(id) {
-    this.memberService.getMedicalHistoryById(id).subscribe(
+    this.memberService.getMedicalHistoryByIdMember(id).subscribe(
       result => {
         this.medicalHistory = result.result;
         this.toCompleteForm();
@@ -112,12 +112,12 @@ export class MedicalHistoryFormComponent implements OnInit {
   }
 
   toCompleteForm() {
-    if (this.medicalHistory.gender == 'woman') this.formCreate.get('period').enable();
-    if (this.medicalHistory.allergies != null) this.formCreate.get('allergies').enable();      
-    if (this.medicalHistory.heartDisease != null) this.formCreate.get('heartDisease').enable();
-    if (this.medicalHistory.habitualMedication != null) this.formCreate.get('habitualMedication').enable();
-    if (this.medicalHistory.respiratoryDisease != null) this.formCreate.get('respiratoryDisease').enable();
-    if (this.medicalHistory.surgicalIntervention != null) this.formCreate.get('surgicalIntervention').enable();
+    if (this.medicalHistory.gender == 'woman') this.formCreate.get('period').enable(); 
+    if (this.medicalHistory.allergies != null) { this.formCreate.get('allergies').enable(); this.formCreate.patchValue({ allergiesChecked: 'yes' }) }
+    if (this.medicalHistory.heartDisease != null) { this.formCreate.get('heartDisease').enable(); this.formCreate.patchValue({ heartDiseaseChecked: 'yes' }) }
+    if (this.medicalHistory.habitualMedication != null) { this.formCreate.get('habitualMedication').enable(); this.formCreate.patchValue({ habitualMedicationChecked: 'yes' }) }
+    if (this.medicalHistory.respiratoryDisease != null) { this.formCreate.get('respiratoryDisease').enable(); this.formCreate.patchValue({ respiratoryDiseaseChecked: 'yes'}) }
+    if (this.medicalHistory.surgicalIntervention != null) { this.formCreate.get('surgicalIntervention').enable(); this.formCreate.patchValue({ surgicalInterventionChecked: 'yes' }) }
     this.formCreate.patchValue({
       gender: this.medicalHistory.gender,
       period: this.medicalHistory.period,

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Domain.Services
 {
-    public class AccountService: IAccountService
+    public class AccountService : IAccountService
     {
         private IAccountRepository _accountRepository;
         private IUserRepository _userRepository;
@@ -29,8 +29,8 @@ namespace Corpo.Domain.Services
         public int Add(Account account)
         {
 
-                int id = _accountRepository.Add(account);
-                return id;
+            int id = _accountRepository.Add(account);
+            return id;
 
         }
 
@@ -41,29 +41,37 @@ namespace Corpo.Domain.Services
 
         public DomainResponse LogIn(Account account)
         {
-            var accountQuery = _accountRepository.GetByEmail(account.Email);
-            if (accountQuery != null)
+            try
             {
-                var password = this.GetHashString(account.Password); 
-                if (password == accountQuery.Password)
+                var accountQuery = _accountRepository.GetByEmail(account.Email);
+                if (accountQuery != null)
                 {
-                    if (accountQuery.UserType == UserType.User)
+                    var password = this.GetHashString(account.Password);
+                    if (password == accountQuery.Password)
                     {
-                        var userFound = _userRepository.GetByIdAccount(accountQuery.Id);
-                        var accessUser = _userRepository.GetRoleAccess(userFound.RoleId);
-                        var user = new UserAccessDto{ User = userFound, Access = accessUser};
-                        return new SuccessDomainResponse("user", user);
+                        if (accountQuery.UserType == UserType.User)
+                        {
+                            var userFound = _userRepository.GetByIdAccount(accountQuery.Id);
+                            var accessUser = _userRepository.GetRoleAccess(userFound.RoleId);
+                            var user = new UserAccessDto { User = userFound, Access = accessUser };
+                            return new SuccessDomainResponse("user", user);
+                        }
+                        if (accountQuery.UserType == UserType.Member)
+                        {
+                            var member = _memberRepository.GetByAccountId(accountQuery.Id);
+                            return new SuccessDomainResponse("member", member);
+                        }
+                        return null;
                     }
-                    if (accountQuery.UserType == UserType.Member)
-                    {
-                        var member = _memberRepository.GetByAccountId(accountQuery.Id);
-                        return new SuccessDomainResponse("member", member);
-                    } return null;
-                }
-                return new FailedDomainResponse("Contraseña incorrecta");
+                    return new FailedDomainResponse("Contraseña incorrecta");
 
+                }
+                return new FailedDomainResponse("Email no registrado");
             }
-            return new FailedDomainResponse("Email no registrado");
+            catch (Exception ex)
+            {
+                return new FailedDomainResponse("error: " + ex.Message + " " + ((ex.InnerException != null) ? ex.InnerException : ""));
+            }
         }
 
         public DomainResponse UpdateEmail(Account account)

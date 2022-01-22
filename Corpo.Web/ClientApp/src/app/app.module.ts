@@ -100,6 +100,9 @@ import { MyDebtsComponent } from './components/user-menu/my-debts/my-debts.compo
 import { AttendanceShiftsListComponent } from './components/attendance/attendance-shifts-list/attendance-shifts-list.component';
 import { AttendanceComponent } from './components/attendance/attendance/attendance.component';
 import { MyReservationsComponent } from './components/user-menu/my-reservations/my-reservations.component';
+import { NewsCreateComponent } from './components/news/news-create/news-create.component';
+import { NewsEditComponent } from './components/news/news-edit/news-edit.component';
+import { NewsListComponent } from './components/news/news-list/news-list.component';
 
 
 @NgModule({
@@ -194,7 +197,10 @@ import { MyReservationsComponent } from './components/user-menu/my-reservations/
     MyDebtsComponent,
     AttendanceShiftsListComponent,
     AttendanceComponent,
-    MyReservationsComponent
+    MyReservationsComponent,
+    NewsCreateComponent,
+    NewsEditComponent,
+    NewsListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -267,7 +273,10 @@ import { MyReservationsComponent } from './components/user-menu/my-reservations/
       { path: 'retiro-editar', component: WithdrawalNameEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'retiros-list', component: WithdrawalNameListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'asistencias-turnos', component: AttendanceShiftsListComponent },
-      { path: 'asistencia', component: AttendanceComponent }
+      { path: 'asistencias', component: AttendanceComponent },
+      { path: 'noticias-list', component: NewsListComponent },
+      { path: 'noticia-crear', component: NewsCreateComponent },
+      { path: 'noticia-editar', component: NewsEditComponent }
     ])
   ],
   entryComponents: [

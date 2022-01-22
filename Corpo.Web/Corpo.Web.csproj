@@ -57,6 +57,8 @@
     <None Remove="ClientApp\src\app\domain\member-view.ts" />
     <None Remove="ClientApp\src\app\domain\member.ts" />
     <None Remove="ClientApp\src\app\domain\new-password.ts" />
+    <None Remove="ClientApp\src\app\domain\news-view.ts" />
+    <None Remove="ClientApp\src\app\domain\news.ts" />
     <None Remove="ClientApp\src\app\domain\order-products.ts" />
     <None Remove="ClientApp\src\app\domain\outflow.ts" />
     <None Remove="ClientApp\src\app\domain\outflowType.ts" />
@@ -98,6 +100,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-promotion.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\news-view.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\news.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\pay-cancel-balance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\promotion-another-member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\exercise.ts" />

@@ -1,0 +1,33 @@
+.btn-action-list {
+  height: 35px;
+  width: 38px;
+  margin: 2px;
+}
+
+tr.span-margin > td > span {
+  margin-left: 15px;
+}
+
+td.text-ajust {
+  text-overflow: ellipsis;
+}
+
+.download-icon {
+  margin-left: 6px;
+}
+
+a {
+  text-decoration: underline !important;
+  color: #0d6efd !important;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 40%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+}

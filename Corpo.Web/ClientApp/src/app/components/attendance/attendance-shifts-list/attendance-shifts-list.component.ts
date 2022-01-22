@@ -87,6 +87,7 @@ export class AttendanceShiftsListComponent implements OnInit {
     return dayShift;
   }
 
+
   goToAttendances(id) {
     this.attendancesComponent.modalClick();
     this.attendancesComponent.getShift(id);

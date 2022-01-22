@@ -41,11 +41,15 @@
               Deudas
             </a>
           </li>
-          <li class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a href="#">
+          <li *access="'comunicación'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+            <a  class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
               <i class="fa fa-exclamation-circle"></i>
               Comunicación
             </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/noticias-list']">Noticias</a></li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/tablero']">Tablero</a></li>
+            </ul>
           </li>
           <li *access="'informes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a href="#">

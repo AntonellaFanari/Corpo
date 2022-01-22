@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'oidc-client';
 import { Class } from '../../../domain/class';
 import { Shift } from '../../../domain/shift';
@@ -9,6 +9,7 @@ import { ClassService } from '../../../services/class.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { ShiftService } from '../../../services/shift.service';
 import { UserService } from '../../../services/user.service';
+import { AttendanceComponent } from '../../attendance/attendance/attendance.component';
 
 @Component({
   selector: 'app-shift-list',
@@ -29,6 +30,7 @@ export class ShiftListComponent implements OnInit {
   quota: number;
   disabled: boolean = true;
   checkedAllShifts: boolean = false;
+  @ViewChild(AttendanceComponent, { static: true }) attendancesComponent: AttendanceComponent;
 
   constructor(private shiftService: ShiftService, private dp: DatePipe, private classService: ClassService,
     private userService: UserService, private customAlertService: CustomAlertService) {
@@ -235,5 +237,10 @@ export class ShiftListComponent implements OnInit {
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar turnos."]);
         })
     }, true);
+  }
+
+  goToAttendances(id) {
+    this.attendancesComponent.modalClick();
+    this.attendancesComponent.getShift(id);
   }
 }

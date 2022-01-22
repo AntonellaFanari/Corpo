@@ -1,0 +1,48 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Noticias</h4>
+        <button type="button" class="btn btn-success pull-right" routerLink="/noticia-crear">Agregar</button>
+      </div>
+      <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+          </div>
+        </div>
+      </div>
+      <section id="no-more-tables" *ngIf="newsList.length; else: elseBlock">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Título</th>
+              <th class="numeric">Imagen</th>
+              <th class="numeric">Vigencia</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let news of newsList | searchFilterName: filterName; index as i">
+              <td data-title="Título"><span>{{news.title}}</span></td>
+              <td class="fw-bold" data-title="Imagen">
+                <a (click)="download(i)" download="{{news.path}}"><p class="overflow-clip">{{news.name}}&nbsp;<i class="fa fa-download download-icon"></i></p></a>
+              </td>
+              <td data-title="Titulo"><span>{{news.from | date: 'dd/MM/yyyy'}} - {{news.to | date: 'dd/MM/yyyy'}}</span></td>
+              <td data-title="Acción">
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/noticia-editar']" [queryParams]="{id:news.id}"><i class="fa fa-pencil-square-o "></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(news.id)"><i class="fa fa-trash-o "></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay noticias para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+
+
+</section>

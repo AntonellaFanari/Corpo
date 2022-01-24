@@ -3517,8 +3517,6 @@ ul.chat-available-user li a:hover {
   color: #fff;
 }
 
-
-
 .fade {
   opacity: 0;
   .transition(opacity .15s linear);

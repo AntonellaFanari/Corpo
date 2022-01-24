@@ -35,6 +35,12 @@
               Socios
             </a>
           </li>
+          <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+            <a [routerLink]="['/wod-template']">
+              <i class="fa fa-user"></i>
+              Plantillas WOD
+            </a>
+          </li>
           <li *access="'deudas'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/deudas-list']">
               <i class="fa fa-usd"></i>
@@ -55,6 +61,12 @@
             <a href="#">
               <i class="fa fa-bar-chart-o"></i>
               Informes
+            </a>
+          </li>
+          <li *access="'deudas'" class="nav-item">
+            <a [routerLink]="['/member-report']">
+              <i class="fa fa-usd"></i>
+              Estadísticas totales
             </a>
           </li>
           <li *access="'abm'" class="nav-item sub-menu dropdown">

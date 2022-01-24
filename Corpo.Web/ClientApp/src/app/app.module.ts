@@ -103,7 +103,9 @@ import { MyReservationsComponent } from './components/user-menu/my-reservations/
 import { NewsCreateComponent } from './components/news/news-create/news-create.component';
 import { NewsEditComponent } from './components/news/news-edit/news-edit.component';
 import { NewsListComponent } from './components/news/news-list/news-list.component';
-
+import { WodTemplateComponent } from './components/workout/wod-template/wod-template.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MemberReportComponent } from './components/reports/member-report/member-report.component';
 
 @NgModule({
   declarations: [
@@ -200,7 +202,9 @@ import { NewsListComponent } from './components/news/news-list/news-list.compone
     MyReservationsComponent,
     NewsCreateComponent,
     NewsEditComponent,
-    NewsListComponent
+    NewsListComponent,
+    WodTemplateComponent,
+    MemberReportComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -210,9 +214,12 @@ import { NewsListComponent } from './components/news/news-list/news-list.compone
     NgbModule,
     NgbCollapseModule,
     NgMultiSelectDropDownModule.forRoot(),
+    NgSelectModule,  
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
+      { path: 'member-report', component: MemberReportComponent },
+      { path: 'wod-template', component: WodTemplateComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },

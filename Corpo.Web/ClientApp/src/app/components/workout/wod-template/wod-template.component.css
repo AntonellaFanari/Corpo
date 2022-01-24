@@ -1,0 +1,25 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.div-btn-create {
+  padding: 0px;
+  margin-top: 15px;
+}
+
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
+.checkbox-tags {
+  margin: 0.5em;
+  transform: scale(1.5);
+}

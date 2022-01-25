@@ -41,6 +41,7 @@ namespace Corpo.Data.Repositories
                 Expiration = x.Member.Credit.Expiration,
                 RemainingCredit = (x.Member.Credit.InitialCredit - x.Member.Credit.CreditConsumption),
                 CreditId = x.Member.CreditId,
+                Attended = x.Attended,
                 Status = x.Status
             }).ToListAsync();
         }
@@ -65,6 +66,18 @@ namespace Corpo.Data.Repositories
         public Task<Attendance> GetById(int id)
         {
             return _context.Attendance.FirstOrDefaultAsync(x=> x.Id == id);
+        }
+
+        public void Update(Attendance attendance)
+        {
+            _context.Attendance.Update(attendance);
+            _context.SaveChanges();
+        }
+
+        public List<DateTime> AttendanceByIdMemberByMonth(int id, int month)
+        {
+            var date = DateTime.Now;
+            return _context.Attendance.Where(x => x.MemberId == id && x.DateShift.Month == month && x.DateShift<date && x.Attended).Select(x => x.DateShift).ToList();
         }
     }
 }

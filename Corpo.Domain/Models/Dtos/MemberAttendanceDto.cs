@@ -14,6 +14,7 @@ namespace Corpo.Domain.Models.Dtos
         public int RemainingCredit { get; set; }
         public DateTime Expiration { get; set; }
         public int CreditId { get; set; }
+        public bool Attended { get; set; }
         public StatusAttendance Status { get; set; }
 
     }

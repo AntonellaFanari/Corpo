@@ -15,12 +15,15 @@ namespace Corpo.Domain.Services
         private IFeeRepository _feeRepository;
         private ICreditService _creditService;
         private IBalanceService _balanceService;
+        private IMemberService _memberService;
 
-        public FeeService(IFeeRepository feeRepository, ICreditService creditService, IBalanceService balanceService)
+        public FeeService(IFeeRepository feeRepository, ICreditService creditService, 
+            IBalanceService balanceService, IMemberService memberService)
         {
             _feeRepository = feeRepository;
             _creditService = creditService;
             _balanceService = balanceService;
+            _memberService = memberService;
         }
 
         public DomainResponse Add(FeeDto feeDto)
@@ -57,8 +60,10 @@ namespace Corpo.Domain.Services
             credit.Id = feeDto.CreditId;
             try
             {
+                var date = DateTime.Now;
+                var lastPayment = _feeRepository.GetLastPayment(feeDto.MemberId);
                 var fee = new Fee();
-                fee.Date = DateTime.Now;
+                fee.Date = date;
                 fee.UserId = feeDto.UserId;
                 fee.MemberId = memberId;
                 fee.Credits = feeDto.Credits;
@@ -70,6 +75,12 @@ namespace Corpo.Domain.Services
                 fee.Total = feeDto.Total;
                 fee.Pay = feeDto.Pay;
                 var idFee = _feeRepository.Add(fee);
+                if (lastPayment < date.AddDays(-31))
+                {
+                    var member = _memberService.GetById(feeDto.MemberId);
+                    member.ReEntryDate = date;
+                    _memberService.Update(member.Id, member);
+                };
                 _creditService.Update(credit);
                 if (feeDto.Balance != 0)
                 {
@@ -100,7 +111,7 @@ namespace Corpo.Domain.Services
                         Success = true
                     };
                 }
-               
+
             }
             catch (Exception ex)
             {

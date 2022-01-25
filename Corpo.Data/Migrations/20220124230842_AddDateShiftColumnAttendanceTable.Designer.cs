@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20220124230842_AddDateShiftColumnAttendanceTable")]
+    partial class AddDateShiftColumnAttendanceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,6 +312,9 @@ namespace Corpo.Data.Migrations
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("LastPayment")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -475,9 +480,6 @@ namespace Corpo.Data.Migrations
 
                     b.Property<int>("PlanId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("ReEntryDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("SocialSecurity")
                         .HasColumnType("nvarchar(max)");

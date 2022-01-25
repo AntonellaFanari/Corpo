@@ -86,6 +86,15 @@ namespace Corpo.Domain.Services
             };
         }
 
+        async public Task<DomainResponse> GetAllExercisesByIdCategoryAsync(int id)
+        {
+            var response = await _exerciseRepository.GetAllExercisesByIdCategoryAsync(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
 
         //categoryExercice
         public DomainResponse GetAllCategories()
@@ -250,5 +259,6 @@ namespace Corpo.Domain.Services
                 Success = true
             };
         }
+
     }
 }

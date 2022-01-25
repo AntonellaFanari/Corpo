@@ -3,6 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { Attendance, Status } from '../../../domain/attendance';
+import { AttendanceRegister } from '../../../domain/attendance-register';
 import { Credit } from '../../../domain/credit';
 import { MemberAttendance } from '../../../domain/member-attendance';
 import { MemberView } from '../../../domain/member-view';
@@ -32,6 +33,8 @@ export class AttendanceComponent implements OnInit {
   currentDate = new Date(Date.now());
   @Output() getAllShifts = new EventEmitter();
   viewList: boolean = false;
+  checkedAllAttendances = true;
+  attendancesRegister: AttendanceRegister[] = [];
 
   constructor(private attendanceService: AttendanceService, private memberService: MemberService,
     private customAlertService: CustomAlertService, private creditService: CreditService, private shiftService: ShiftService,
@@ -94,6 +97,10 @@ export class AttendanceComponent implements OnInit {
       result => {
         console.log(result);
         this.attendances = result.result;
+        var absences = this.attendances.find(x => x.attended == false);
+        if (absences) {
+          this.checkedAllAttendances = false
+        }
         this.quotaAvailable = this.shift.quota - this.attendances.length;
       },
       error => console.error(error)
@@ -118,7 +125,14 @@ export class AttendanceComponent implements OnInit {
   
   }
 
-
+  checkedAll() {
+    this.checkedAllAttendances = !this.checkedAllAttendances;
+    if (this.checkedAllAttendances) {
+      for (var i = 0; i < this.attendances.length; i++) {
+        this.attendances[i].attended = true;
+      }
+    }
+  }
 
 
   selectMember(event) {
@@ -222,5 +236,39 @@ export class AttendanceComponent implements OnInit {
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar cancelar la reserva del turno."]);
         })
     }, true);
+  }
+
+  createAttendedRegister() {
+    for (var i = 0; i < this.attendances.length; i++) {
+      let attendanceRegister = new AttendanceRegister();
+      if (!this.attendances[i].attended && this.attendances[i].status == Status.reserved) {
+        attendanceRegister.id = this.attendances[i].id;
+        attendanceRegister.attended = this.attendances[i].attended;
+        this.attendancesRegister.push(attendanceRegister);
+      } if (this.attendances[i].attended && this.attendances[i].status == Status.cancelled) {
+        attendanceRegister.id = this.attendances[i].id;
+        attendanceRegister.attended = this.attendances[i].attended;
+        this.attendancesRegister.push(attendanceRegister);
+      }
+    }
+  }
+
+  registerAttendance() {
+    this.createAttendedRegister();
+    if (this.attendancesRegister.length>0) {
+      this.attendanceService.updateAttended(this.attendancesRegister).subscribe(
+        result => {
+          console.log(result);
+        },
+        error => {
+          console.error(error);
+          if (error.status === 400) {
+            this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
+          }
+          if (error.status === 500) {
+            this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al registrar las asistencias."]);
+          }
+        })
+    }
   }
 }

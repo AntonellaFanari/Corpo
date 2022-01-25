@@ -15,6 +15,7 @@ namespace Corpo.Domain.Contracts.Repositories
         void UpdateExercise(Exercise exerciseEdit);
         Exercise GetExerciseById(int id);
         void DeleteExercise(int id);
+        Task<List<Exercise>> GetAllExercisesByIdCategoryAsync(int id);
 
         //CategoryExercise
         List<CategoryExercise> GetAllCategories();

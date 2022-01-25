@@ -16,6 +16,7 @@
       <table *ngIf="attendances.length>0; else: elseBlock" class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
+            <th class="numeric"><span><input type="checkbox" [checked]="checkedAllAttendances" (change)="checkedAll()" /></span></th>
             <th class="numeric">{{shift.day}} {{shift.hour}}</th>
             <th class="numeric">Créditos restantes</th>
             <th class="numeric">Vencimiento</th>
@@ -24,12 +25,13 @@
         </thead>
         <tbody>
           <tr *ngFor="let attendance of attendances">
+            <td class="td-title" data-title=""><span><input type="checkbox" [checked]="attendance.attended" value="{{attendance.id}}" (change)="checkedAll()" /></span></td>
             <td data-title="Turno"><span>{{attendance.name}}</span></td>
             <td data-title="Créditos restantes"><span>{{(attendance.remainingCredit)}}</span></td>
             <td data-title="Vencimiento"><span>{{attendance.expiration | date: 'dd/MM/yyyy'}}</span></td>
             <td data-title="Acción">
               <button *ngIf="attendance.status == 1" class="btn btn-danger btn-xs btn-action-list" (click)="cancell(attendance.id, attendance.memberId)"><i class="fa fa-trash-o "></i></button>
-              <button *ngIf="attendance.status == 3" class="btn btn-warning btn-xs btn-action-list text-white">Cancelado</button>
+              <button *ngIf="attendance.status == 2" class="btn btn-warning btn-xs btn-action-list text-white">Cancelado</button>
             </td>
           </tr>
         </tbody>
@@ -55,9 +57,10 @@
       </div>
 
       <!-- pie del diálogo -->
-
-      <div class="modal-footer p-0">
-        <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
+      <hr />
+      <div class="container-fluid modal-lg div-btn-create">
+        <button type="button" class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" data-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-success col-3 col-lg-2 pull-right btn-create" (click)="registerAttendance()">Aceptar</button>
       </div>
 
     </div>

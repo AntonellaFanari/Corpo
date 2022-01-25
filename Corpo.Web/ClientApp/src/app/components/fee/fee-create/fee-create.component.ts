@@ -197,15 +197,13 @@ export class FeeCreateComponent implements OnInit {
   clearInput() {
     this.filterMember = "";
     console.log(this.filterMember);
-       
+
   }
 
-  completeInput() {
-    console.log(this.member);
-    if (this.member) {
-      this.filterMember = this.member.lastName + " " + this.member.name;
-    }
-  }
+  //completeInput() {
+  //  this.filterMember = this.member.lastName + " " + this.member.name;
+  //  this.selectMember(this.member);
+  //}
 
   submit() {
     this.send = true;

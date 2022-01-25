@@ -15,6 +15,8 @@ namespace Corpo.Domain.Contracts.Repositories
         void CancelReservation(Attendance attendance);
         Task<Attendance> GetById(int id);
         Task<List<AttendanceReservationDto>> GetAllReservations(int id);
+        void Update(Attendance attendance);
+        List<DateTime> AttendanceByIdMemberByMonth(int id, int month);
 
 
     }

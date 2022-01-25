@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Attendance } from '../domain/attendance';
+import { AttendanceRegister } from '../domain/attendance-register';
 import { Credit } from '../domain/credit';
 
 const httpOptions = {
@@ -34,5 +35,9 @@ export class AttendanceService {
 
   public getAllReservations(id: number) {
     return this.http.get<any>(this.url + 'api/attendance/getAllReservations?id=' + id);
+  }
+
+  public updateAttended(attendancesRegister: AttendanceRegister[]) {
+    return this.http.put(this.url + 'api/attendance/update-attended', attendancesRegister, httpOptions);
   }
 }

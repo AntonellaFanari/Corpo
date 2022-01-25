@@ -7,5 +7,6 @@ export class MemberAttendance {
   remainingCredit: number;
   expiration: string;
   creditId: number;
-  status: Status
+  status: Status;
+  attended: boolean;
 }

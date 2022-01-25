@@ -9,7 +9,7 @@
               <div class="dropdown card-body col-12 formValidators">
                 <a class="dropdown-toggle" id="dropdown1" data-toggle="dropdown">
                   <label class="form-label text-black">Socio:</label>
-                  <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" (click)="clearInput()" (blur)="completeInput()"/>
+                  <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" (click)="clearInput()" />
                 </a>
                 <p *ngIf="send && f.memberId.errors?.required">*Debe seleccionar un socio.</p>
                 <div class="dropdown-menu form-control">

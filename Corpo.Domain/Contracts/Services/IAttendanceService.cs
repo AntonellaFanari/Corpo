@@ -9,10 +9,13 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IAttendanceService
     {
-        DomainResponse Add(Attendance attendance);
+        Task<DomainResponse> Add(Attendance attendance);
         Task<DomainResponse> GetAllByIdShift(int id);
         Task<DomainResponse> CancelReservation(int id, Credit credit);
         Task<DomainResponse> GetAllReservations(int id);
+        Task<DomainResponse> UpdateAttended(List<Attendance> attendancesRegister);
+        DomainResponse AttendanceByIdMemberByMonth(int id, int month);
+
 
     }
 }

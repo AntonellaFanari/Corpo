@@ -58,6 +58,13 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpGet("get-by-category")]
+        public async Task<ActionResult> GetAllExercisesByIdCategoryAsync(int id)
+        {
+            var response =await _exerciseService.GetAllExercisesByIdCategoryAsync(id);
+            return this.ToActionResult(response);
+        }
+
         //categoryExercice
         [HttpGet("getAllCategories")]
         public ActionResult GetAllCategories()

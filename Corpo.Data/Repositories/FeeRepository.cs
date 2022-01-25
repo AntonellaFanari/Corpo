@@ -41,6 +41,10 @@ namespace Corpo.Data.Repositories
             return _context.Fee.Include(x => x.Member).Include(x=>x.Member.Plan).FirstOrDefault(x => x.Id == id);
         }
 
-       
+        public DateTime GetLastPayment(int id)
+        {
+           var lastFee = _context.Fee.Where(x => x.MemberId == id).OrderBy(x => x.Date).Last();
+            return lastFee.Date;
+        }
     }
 }

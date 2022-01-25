@@ -1,9 +1,11 @@
 ﻿using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
 using Corpo.Domain.Models.Dtos;
+using Corpo.Domain.Views;
 using Corpo.Web.Controllers.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AttendanceController : ControllerBase
+    public class AttendanceController : CorpoBaseController
     {
         private IAttendanceService _attendanceService;
 
@@ -30,9 +32,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPost("add")]
-        public ActionResult Add([FromBody] Attendance attendance)
+        public async Task<ActionResult> Add([FromBody] Attendance attendance)
         {
-            var response = _attendanceService.Add(attendance);
+            var response = await _attendanceService.Add(attendance);
             return this.ToActionResult(response);
         }
 
@@ -50,5 +52,19 @@ namespace Corpo.Web.Controllers
             return Ok(response);
         }
 
+        [HttpPut("update-attended")]
+        public ActionResult UpdateAttended([FromBody] List<Attendance> attendancesRegister)
+        {
+            var response = _attendanceService.UpdateAttended(attendancesRegister);
+            return Ok(response);
+        }
+
+        [HttpGet("get-by-id-member-by-month")]
+        public ActionResult AttendanceByIdMemberByMonth(int month)
+        {
+            var user = GetUser();
+            var response = _attendanceService.AttendanceByIdMemberByMonth(user.Id, month);
+            return this.ToActionResult(response);
+        }
     }
 }

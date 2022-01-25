@@ -15,6 +15,7 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse UpdateExercise(int id, Exercise exerciseEdit);
         DomainResponse GetExerciseById(int id);
         DomainResponse DeleteExercise(int id);
+        Task<DomainResponse> GetAllExercisesByIdCategoryAsync(int id);
         //CategoryExercise
         DomainResponse GetAllCategories();
         DomainResponse AddCategory(CategoryExercise newCategory);

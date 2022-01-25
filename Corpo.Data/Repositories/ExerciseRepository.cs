@@ -55,6 +55,12 @@ namespace Corpo.Data.Repositories
             _context.Exercise.Remove(exercise);
             _context.SaveChanges();
         }
+
+        public Task<List<Exercise>> GetAllExercisesByIdCategoryAsync(int id)
+        {
+           return _context.Exercise.Where(x => x.CategoryExerciseId == id).ToListAsync();
+        }
+
         //categoryExercice
         public List<CategoryExercise> GetAllCategories()
         {

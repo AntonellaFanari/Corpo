@@ -19,6 +19,8 @@ namespace Corpo.Domain.Models
         public string EmergencyContact { get; set; }
         public string Instagram { get; set; }
         public string Facebook { get; set; }
+        public DateTime EntryDate { get; set; }
+        public DateTime? ReEntryDate { get; set; }
         public Plan Plan { get; set; }
         public int PlanId { get; set; }
         public virtual Account Account { get; set; }

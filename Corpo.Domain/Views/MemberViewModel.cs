@@ -23,5 +23,10 @@ namespace Corpo.Domain.Views
         public string Instagram { get; set; }
         public string Facebook { get; set; }
         public string Email { get; set; }
+        public int PlanType { get; set; }
+        public int CreditId { get; set; }
+        public int Credit { get; set; }
+        public DateTime Expiration { get; set; }
+        public int Negative { get; set; }
     }
 }

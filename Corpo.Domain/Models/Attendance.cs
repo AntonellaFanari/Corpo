@@ -12,15 +12,16 @@ namespace Corpo.Domain.Models
         public Member Member { get; set; }
         public int MemberId { get; set; }
         public int ShiftId { get; set; }
+        public DateTime DateShift { get; set; }
         public DateTime DateReservation { get; set; }
         public DateTime? DateCancellation { get; set; }
+        public bool Attended { get; set; }
         public StatusAttendance Status { get; set; }
     }
 
     public enum StatusAttendance
     {
         Reserved = 1,
-        Attended = 2,
-        Cancelled = 3
+        Cancelled = 2
     }
 }

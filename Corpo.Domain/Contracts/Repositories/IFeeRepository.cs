@@ -14,5 +14,6 @@ namespace Corpo.Domain.Contracts.Repositories
         List<Fee> GetAll();
         Fee GetById(int id);
         List<Fee> GetAllByIdMember(int id);
+        DateTime GetLastPayment(int id);
     }
 }

@@ -1,0 +1,46 @@
+<section class="wrapper">
+  <div class="task-panel ">
+    <h4 class="table-title">Reservas</h4>
+    <button type="button" class="btn btn-secondary pull-right" routerLink="/member-list">Volver</button>
+  </div>
+  <hr>
+  <div class="col-md-12">
+    <section id="no-more-tables">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-bordered table-condensed table-hover table-striped cf mb-0 user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Turno</th>
+              <th class="numeric">Clase</th>
+              <th class="numeric">Fecha de reserva</th>
+              <th class="numeric">Con negativo</th>
+              <th class="numeric">Fecha de cancelación</th>
+              <th class="numeric">Devolución de crédito</th>
+              <th class="numeric">Asistió</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let reservation of reservations">
+            <tr class="tr-bg-color">
+              <td class="td-title" colspan="2"><span>{{reservation.namePlan}}</span></td>
+              <td class="td-title" colspan="2"><span>MOMENTO DE ALTA: {{reservation.feeDate }}</span></td>
+              <td class="td-title" colspan="1"><span>FECHA ALTA: {{reservation.entryDate }}</span></td>
+              <td class="td-title" colspan="2"><span>FECHA VENCE: {{reservation.expiration }}</span></td>
+            </tr>
+            <tr class="scrollme span-margin" *ngFor="let reservation of reservation.reservations">
+              <td class="td-title" data-title="Turno"><span>{{reservation.dateShift}}</span></td>
+              <td class="td-title text-ajust" data-title="Clase"><span>{{reservation.shift.class.name}}</span></td>
+              <td class="td-title" data-title="Fecha de reserva"><span>{{reservation.dateReservation}}</span></td>
+              <td class="td-title text-ajust" data-title="Con negativo"><span *ngIf="reservation.usingNegative">Si</span><span *ngIf="!reservation.usingNegative">-</span></td>
+              <td class="td-title" data-title="Fecha de cancelación"><span>{{reservation.dateCancellation}}</span></td>
+              <td class="td-title text-ajust" data-title="Devolución de crédito"><span *ngIf="reservation.dateCancellation && reservation.returnCredit">Si</span><span *ngIf="reservation.dateCancellation && !reservation.returnCredit">No</span></td>
+              <td class="td-title text-ajust" data-title="Asistió"><span *ngIf="reservation.attended">Si</span><span *ngIf="!reservation.attended">No</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <ng-template #elseBlock><h5>No tienes reservas.</h5></ng-template>
+</section>
+
+

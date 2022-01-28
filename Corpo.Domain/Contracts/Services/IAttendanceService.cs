@@ -13,8 +13,9 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> GetAllByIdShift(int id);
         Task<DomainResponse> CancelReservation(int id, Credit credit);
         Task<DomainResponse> GetAllReservations(int id);
-        Task<DomainResponse> UpdateAttended(List<Attendance> attendancesRegister);
+        Task<DomainResponse> UpdateAttended(int id, List<Attendance> attendancesRegister);
         DomainResponse AttendanceByIdMemberByMonth(int id, int month);
+        Task<DomainResponse> AllReservationsDetail(int id);
 
 
     }

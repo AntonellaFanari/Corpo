@@ -35,5 +35,12 @@ namespace Corpo.Web.Controllers
             var response = _creditService.Update(credit);
             return this.ToActionResult(response);
         }
+
+        [HttpPut("update-recharge")]
+        public ActionResult UpdateRecharge([FromBody] Credit credit)
+        {
+            var response = _creditService.UpdateRecharge(credit);
+            return this.ToActionResult(response);
+        }
     }
 }

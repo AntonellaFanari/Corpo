@@ -106,6 +106,8 @@ import { NewsListComponent } from './components/news/news-list/news-list.compone
 import { WodTemplateComponent } from './components/workout/wod-template/wod-template.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MemberReportComponent } from './components/reports/member-report/member-report.component';
+import { MemberReportListComponent } from './components/reports/member-report-list/member-report-list.component';
+import { ReservationsComponent } from './components/member/reservations/reservations.component';
 
 @NgModule({
   declarations: [
@@ -204,7 +206,9 @@ import { MemberReportComponent } from './components/reports/member-report/member
     NewsEditComponent,
     NewsListComponent,
     WodTemplateComponent,
-    MemberReportComponent
+    MemberReportComponent,
+    MemberReportListComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -283,7 +287,9 @@ import { MemberReportComponent } from './components/reports/member-report/member
       { path: 'asistencias', component: AttendanceComponent },
       { path: 'noticias-list', component: NewsListComponent },
       { path: 'noticia-crear', component: NewsCreateComponent },
-      { path: 'noticia-editar', component: NewsEditComponent }
+      { path: 'noticia-editar', component: NewsEditComponent },
+      { path: 'listado-informe-socios', component: MemberReportListComponent },
+      { path: 'reservas', component: ReservationsComponent }
     ])
   ],
   entryComponents: [

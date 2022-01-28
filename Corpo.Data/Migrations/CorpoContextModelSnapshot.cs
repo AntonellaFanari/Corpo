@@ -66,9 +66,6 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Attended")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("DateCancellation")
                         .HasColumnType("datetime2");
 
@@ -81,11 +78,17 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("ReturnCredit")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ShiftId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<bool>("UsingNegative")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -493,6 +496,24 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Member");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Modality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Modality");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.News", b =>
                 {
                     b.Property<int>("Id")
@@ -749,6 +770,9 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Attended")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Available")
                         .HasColumnType("int");
 
@@ -875,6 +899,54 @@ namespace Corpo.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WithdrawalName");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.WodGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GroupIndex")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ModalityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Units")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WodTemplateId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("ModalityId");
+
+                    b.HasIndex("WodTemplateId");
+
+                    b.ToTable("WodGroup");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.WodTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WodTemplate");
                 });
 
             modelBuilder.Entity("ExerciseTag", b =>
@@ -1186,6 +1258,33 @@ namespace Corpo.Data.Migrations
                     b.Navigation("WithdrawalName");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.WodGroup", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.Modality", "Modality")
+                        .WithMany()
+                        .HasForeignKey("ModalityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.WodTemplate", "WodTemplate")
+                        .WithMany("WodGroup")
+                        .HasForeignKey("WodTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Modality");
+
+                    b.Navigation("WodTemplate");
+                });
+
             modelBuilder.Entity("ExerciseTag", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Exercise", null)
@@ -1233,6 +1332,11 @@ namespace Corpo.Data.Migrations
             modelBuilder.Entity("Corpo.Domain.Models.Sale", b =>
                 {
                     b.Navigation("DetailsSale");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.WodTemplate", b =>
+                {
+                    b.Navigation("WodGroup");
                 });
 #pragma warning restore 612, 618
         }

@@ -33,6 +33,7 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<IAttendanceService, AttendanceService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IWodTemplateService, WodTemplateService>();
         }
     }
 }

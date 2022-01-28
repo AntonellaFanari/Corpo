@@ -53,9 +53,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("update-attended")]
-        public ActionResult UpdateAttended([FromBody] List<Attendance> attendancesRegister)
+        public ActionResult UpdateAttended(int id, [FromBody] List<Attendance> attendancesRegister)
         {
-            var response = _attendanceService.UpdateAttended(attendancesRegister);
+            var response = _attendanceService.UpdateAttended(id, attendancesRegister);
             return Ok(response);
         }
 
@@ -66,5 +66,13 @@ namespace Corpo.Web.Controllers
             var response = _attendanceService.AttendanceByIdMemberByMonth(user.Id, month);
             return this.ToActionResult(response);
         }
+
+        [HttpGet("all-reservations-detail")]
+        async public Task<ActionResult<List<ReservationDto>>> AllReservationsDetail(int id)
+        {
+            var response = await _attendanceService.AllReservationsDetail(id);
+            return Ok(response);
+        }
+
     }
 }

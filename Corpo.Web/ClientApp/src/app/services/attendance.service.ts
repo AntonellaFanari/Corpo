@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Attendance } from '../domain/attendance';
 import { AttendanceRegister } from '../domain/attendance-register';
 import { Credit } from '../domain/credit';
+import { MemberAttendance } from '../domain/member-attendance';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,7 +38,11 @@ export class AttendanceService {
     return this.http.get<any>(this.url + 'api/attendance/getAllReservations?id=' + id);
   }
 
-  public updateAttended(attendancesRegister: AttendanceRegister[]) {
-    return this.http.put(this.url + 'api/attendance/update-attended', attendancesRegister, httpOptions);
+  public update(attendances: MemberAttendance[], shiftId: number) {
+    return this.http.put(this.url + 'api/attendance/update-attended?id=' + shiftId, attendances, httpOptions);
+  }
+
+  public getAllReservationsDetail(id: number) {
+    return this.http.get<any>(this.url + 'api/attendance/all-reservations-detail?id=' + id);
   }
 }

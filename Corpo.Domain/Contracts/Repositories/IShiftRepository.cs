@@ -12,7 +12,7 @@ namespace Corpo.Domain.Contracts.Repositories
         List<Shift> GetAll(DateTime from, DateTime to, int classId);
         void Add(Shift shift);
         Task<Shift> GetById(int id);
-        void Update(Shift shift);
+        Task Update(Shift shift);
         void Delete(int id);
     }
 }

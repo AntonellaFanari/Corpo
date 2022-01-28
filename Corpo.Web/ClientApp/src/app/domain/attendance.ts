@@ -1,11 +1,10 @@
+import { StatusAttendance } from "./status-attendance";
+
 export class Attendance {
   id: number;
   memberId: number;
   shiftId: number;
-  status: Status;
+  status: StatusAttendance;
 }
 
-export enum Status {
-  reserved = 1,
-  cancelled = 2
-}
+

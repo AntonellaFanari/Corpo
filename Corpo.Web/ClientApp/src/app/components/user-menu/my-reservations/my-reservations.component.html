@@ -22,7 +22,7 @@
               <td class="td-title" data-title="Acción">
                 <span class="btn-action-container">
                   <button *ngIf="attendance.status == 1" class="btn btn-danger btn-xs btn-action-list" (click)="cancell(attendance.id)">Cancelar</button>
-                  <button *ngIf="attendance.status == 3" class="btn btn-warning btn-xs btn-action-list text-white">Cancelado</button>
+                  <button *ngIf="attendance.status == 2" class="btn btn-warning btn-xs btn-action-list text-white">Cancelado</button>
                 </span>
               </td>
             </tr>

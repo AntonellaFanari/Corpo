@@ -1,0 +1,45 @@
+<section class="wrapper">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">{{title}}</h4>
+        <button type="button" class="btn btn-secondary pull-right" [routerLink]="['/member-report']">Volver</button>
+      </div>
+      <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+          </div>
+        </div>
+      </div>
+      <section *ngIf="members.length>0 ; else: elseBlock" id="no-more-tables">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Apellido</th>
+              <th class="numeric">Nombre</th>
+              <th class="numeric">Créditos</th>
+              <th class="numeric">Plan</th>
+              <th class="numeric">Vencimiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of members | searchFilterName: filterName">
+              <td data-title="Nombre"><span>{{member.lastName}}</span></td>
+              <td data-title="Nombre"><span>{{member.name}}</span></td>
+              <td data-title="Nombre"><span>{{member.credit}}</span></td>
+              <td data-title="Nombre"><span>{{member.namePlan}}</span></td>
+              <td data-title="Nombre"><span>{{member.expiration | date: 'dd/MM/yyyy'}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+
+
+</section>

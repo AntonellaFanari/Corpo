@@ -19,5 +19,6 @@ namespace Corpo.Domain.Models
         public DateTime Day { get; set; }
         public virtual User User { get; set; }
         public int UserId { get; set; }
+        public bool Attended { get; set; }
     }
 }

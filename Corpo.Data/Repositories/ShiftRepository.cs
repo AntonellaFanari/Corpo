@@ -47,19 +47,11 @@ namespace Corpo.Data.Repositories
             return _context.Shift.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Update(Shift shift)
+        public async Task Update(Shift shift)
         {
-            try
-            {
                 _context.Shift.Update(shift);
-                _context.SaveChanges();
-            }
-            catch (Exception)
-            {
-
-            }
-            
-            
+                await _context.SaveChangesAsync();
+                         
         }
 
         public void Delete(int id)

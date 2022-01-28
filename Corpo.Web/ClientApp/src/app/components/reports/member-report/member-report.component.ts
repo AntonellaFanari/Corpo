@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberReport } from 'src/app/domain/member-report';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-member-report',
@@ -7,23 +8,22 @@ import { MemberReport } from 'src/app/domain/member-report';
   styleUrls: ['./member-report.component.css']
 })
 export class MemberReportComponent implements OnInit {
+  reports: MemberReport;
 
-  report: MemberReport;
-
-  constructor() { }
+  constructor(private reportService: ReportService) { }
 
   ngOnInit() {
-    this.report = {
-      inactiveMembers: 12,
-      active: 23,
-      closeToInactive: 6,
-      news: 5,
-      fistMonthInactive: 20,
-      secondMonthInactive: 30,
-      thirdMonthInactive: 40,
-      reEntrants: 5,
-      birthday: 51,
-    };
+    this.getReports();
+  }
 
+  getReports() {
+    this.reportService.getReports().subscribe(
+      result => {
+        console.log(result);
+        this.reports = result.result;
+      },
+      error => console.error(error)
+
+    )
   }
 }

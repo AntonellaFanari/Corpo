@@ -66,7 +66,7 @@ namespace Corpo.Domain.Services
                     var shiftQuery = await _shiftRespository.GetById(shift.Id);
                     shiftQuery.UserId = shift.UserId;
                     shiftQuery.Quota = shift.Quota;
-                    _shiftRespository.Update(shiftQuery);
+                    await _shiftRespository.Update(shiftQuery);
 
                 }
                 return new DomainResponse
@@ -119,7 +119,7 @@ namespace Corpo.Domain.Services
             {
                 shift.Available ++;
             };
-            _shiftRespository.Update(shift);
+            await _shiftRespository.Update(shift);
             return new DomainResponse
             {
                 Success = true

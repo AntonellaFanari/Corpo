@@ -36,7 +36,7 @@ namespace Corpo.Data.Repositories
             {
                 var product = _context.Product.Find(detailSale.ProductId);
                 product.Stock -= detailSale.Quantity;
-                _context.Update(product);
+                _context.Product.Update(product);
                 _context.SaveChanges();
             };
             return sale.Id;

@@ -34,6 +34,7 @@ namespace Corpo.Data.Dependencies
             services.AddTransient<IAttendanceRepository, AttendanceRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IWodTemplateRepository, WodTemplateRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

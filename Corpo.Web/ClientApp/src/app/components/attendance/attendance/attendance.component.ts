@@ -2,12 +2,13 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
-import { Attendance, Status } from '../../../domain/attendance';
+import { Attendance } from '../../../domain/attendance';
 import { AttendanceRegister } from '../../../domain/attendance-register';
 import { Credit } from '../../../domain/credit';
 import { MemberAttendance } from '../../../domain/member-attendance';
 import { MemberView } from '../../../domain/member-view';
 import { Shift } from '../../../domain/shift';
+import { StatusAttendance } from '../../../domain/status-attendance';
 import { AttendanceService } from '../../../services/attendance.service';
 import { CreditService } from '../../../services/credit.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
@@ -39,13 +40,13 @@ export class AttendanceComponent implements OnInit {
   constructor(private attendanceService: AttendanceService, private memberService: MemberService,
     private customAlertService: CustomAlertService, private creditService: CreditService, private shiftService: ShiftService,
     private dp: DatePipe, private route: ActivatedRoute) {
-    
+
   }
 
   ngOnInit() {
     this.getAllMembers();
     console.log(this.currentDate);
-   
+
   }
 
   modalClick() {
@@ -97,7 +98,15 @@ export class AttendanceComponent implements OnInit {
       result => {
         console.log(result);
         this.attendances = result.result;
-        var absences = this.attendances.find(x => x.attended == false);
+        for (var i = 0; i < this.attendances.length; i++) {
+          let attendance = this.attendances[i];
+          if (attendance.status == StatusAttendance.reserved) {
+            attendance.attended = true;
+          } else {
+            attendance.attended == false;
+          }
+        }
+        var absences = this.attendances.find(x => x.status == StatusAttendance.notAttended || x.status == StatusAttendance.cancelled);
         if (absences) {
           this.checkedAllAttendances = false
         }
@@ -122,7 +131,7 @@ export class AttendanceComponent implements OnInit {
     this.viewBtnAddMember = !this.viewBtnAddMember;
     this.member = null;
     this.clearInput();
-  
+
   }
 
   checkedAll() {
@@ -165,21 +174,8 @@ export class AttendanceComponent implements OnInit {
     let newAttendance = new Attendance();
     newAttendance.memberId = this.member.id;
     newAttendance.shiftId = this.shiftId;
-    newAttendance.status = Status.reserved;
+    newAttendance.status = StatusAttendance.reserved;
     return newAttendance;
-  }
-
-  updateCredit() {
-    console.log(this.credit.expiration);
-    console.log(this.currentDate);
-    let expirationDate = new Date(this.credit.expiration.substr(0, 10));
-    console.log(expirationDate);
-    if (this.currentDate.getTime() > expirationDate.getTime()) {
-      this.credit.negative = this.credit.negative + 1;
-    } else {
-      this.credit.creditConsumption = this.credit.creditConsumption + 1;
-    }
-    
   }
 
 
@@ -187,40 +183,30 @@ export class AttendanceComponent implements OnInit {
     if (this.credit.negative > 5) {
       this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio superó la cantidad de negativos permitidos."]);
     } else {
-    let attendance = this.createAttendance();
-    this.attendanceService.add(attendance).subscribe(
-      result => {
-        console.log(result);
-        this.updateCredit();
-        this.creditService.update(this.credit).subscribe(
-          result => {
-            this.getAll(this.shiftId);
-            this.viewSelectAddMember = false;
-            this.viewBtnAddMember = true;
-            this.getAllShifts.emit();
-          },
-          error => {
-            console.error(error);
-            if (error.status === 400) {
-              this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
-            }
-            if (error.status === 500) {
-              this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al descontar el crédito."]);
-            }
+      let attendance = this.createAttendance();
+      this.attendanceService.add(attendance).subscribe(
+        result => {
+          console.log(result);
+          this.getAll(this.shiftId);
+          this.viewSelectAddMember = false;
+          this.viewBtnAddMember = true;
+          this.getAllShifts.emit();
+        },
+        error => {
+          console.error(error);
+          if (error.status === 400) {
+            this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
           }
-        )     
-      },
-      error => {
-        console.error(error);
-        if (error.status === 400) {
-          this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
-        }
-        if (error.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al reservar."]);
-        }
-      })
+          if (error.status === 500) {
+            this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al reservar el turno."]);
+          }
+        })
     }
 
+  }
+
+  return() {
+    this.getAllShifts.emit();
   }
 
   cancell(id, memberId) {
@@ -238,37 +224,30 @@ export class AttendanceComponent implements OnInit {
     }, true);
   }
 
-  createAttendedRegister() {
+  attendedRegister() {
     for (var i = 0; i < this.attendances.length; i++) {
-      let attendanceRegister = new AttendanceRegister();
-      if (!this.attendances[i].attended && this.attendances[i].status == Status.reserved) {
-        attendanceRegister.id = this.attendances[i].id;
-        attendanceRegister.attended = this.attendances[i].attended;
-        this.attendancesRegister.push(attendanceRegister);
-      } if (this.attendances[i].attended && this.attendances[i].status == Status.cancelled) {
-        attendanceRegister.id = this.attendances[i].id;
-        attendanceRegister.attended = this.attendances[i].attended;
-        this.attendancesRegister.push(attendanceRegister);
+      if (this.attendances[i].attended) {
+        this.attendances[i].status = StatusAttendance.attended
+      } else {
+        this.attendances[i].status = StatusAttendance.notAttended;
       }
     }
   }
 
   registerAttendance() {
-    this.createAttendedRegister();
-    if (this.attendancesRegister.length>0) {
-      this.attendanceService.updateAttended(this.attendancesRegister).subscribe(
-        result => {
-          console.log(result);
-        },
-        error => {
-          console.error(error);
-          if (error.status === 400) {
-            this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
-          }
-          if (error.status === 500) {
-            this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al registrar las asistencias."]);
-          }
-        })
-    }
+    this.attendedRegister();
+    this.attendanceService.update(this.attendances, this.shiftId).subscribe(
+      result => {
+        console.log(result);
+      },
+      error => {
+        console.error(error);
+        if (error.status === 400) {
+          this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
+        }
+        if (error.status === 500) {
+          this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al registrar las asistencias."]);
+        }
+      })
   }
 }

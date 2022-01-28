@@ -15,27 +15,35 @@ namespace Corpo.Domain.Services
         private ICreditService _creditService;
         private IShiftService _shiftService;
         private readonly IShiftRepository _shiftRepository;
+        private IMemberRepository _memberRepository;
 
         public AttendanceService(IAttendanceRepository attendanceRepository, ICreditService creditService, IShiftService shiftService,
-            IShiftRepository shiftRepository)
+            IShiftRepository shiftRepository, IMemberRepository memberRepository)
         {
             _attendanceRepository = attendanceRepository;
             _creditService = creditService;
             _shiftService = shiftService;
             _shiftRepository = shiftRepository;
+            _memberRepository = memberRepository;
         }
 
         public async Task<DomainResponse> Add(Attendance attendance)
         {
             try
             {
+                var creditId = _memberRepository.GetById(attendance.MemberId).CreditId;
+                var credit = (Credit)_creditService.GetById(creditId).Result.Result;
                 var shift = await _shiftRepository.GetById(attendance.ShiftId);
+                if (credit.Expiration < DateTime.Now)
+                {
+                    attendance.UsingNegative = true;
+                };
                 attendance.DateReservation = DateTime.Now;
                 attendance.DateCancellation = null;
-                attendance.Attended = true;
-                _attendanceRepository.Add(attendance);
                 attendance.DateShift = shift.Day.Date.Add(shift.Hour);
-                _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
+                _attendanceRepository.Add(attendance);
+                _creditService.Update(credit);
+                await _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
                 return new DomainResponse
                 {
                     Success = true
@@ -64,14 +72,13 @@ namespace Corpo.Domain.Services
             var attendance = await _attendanceRepository.GetById(id);
             attendance.DateCancellation = DateTime.Now;
             attendance.Status = StatusAttendance.Cancelled;
-            attendance.Attended = false;
             var shift = _shiftService.GetById(attendance.ShiftId);
             var s = shift.Result.Result as Shift;
             var differenceTime = (s.Day - DateTime.Now).TotalMinutes;
             try
             {
                 _attendanceRepository.CancelReservation(attendance);
-                _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
+                await _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
                 if (differenceTime > timeCancellation)
                 {
                     if (credit.Expiration < attendance.DateReservation)
@@ -82,7 +89,7 @@ namespace Corpo.Domain.Services
                     {
                         credit.CreditConsumption--;
                     };
-                    _creditService.Update(credit);
+                    _creditService.UpdateRecharge(credit);
                 };
 
                 return new DomainResponse
@@ -118,17 +125,14 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public async Task<DomainResponse> UpdateAttended(List<Attendance> attendancesRegister)
+        public async Task<DomainResponse> UpdateAttended(int id, List<Attendance> attendancesRegister)
         {
-
+            var shift = await _shiftRepository.GetById(id);
+            shift.Attended = true;
             foreach (var attendance in attendancesRegister)
             {
                 var attendanceQuery = await _attendanceRepository.GetById(attendance.Id);
-                attendanceQuery.Attended = attendance.Attended;
-                if (attendanceQuery.Status == StatusAttendance.Cancelled)
-                {
-                    attendanceQuery.Status = StatusAttendance.Reserved;
-                };
+                attendanceQuery.Status = attendance.Status;
                 try
                 {
                     _attendanceRepository.Update(attendanceQuery);
@@ -142,11 +146,22 @@ namespace Corpo.Domain.Services
                     return new DomainResponse(false, ex.Message, "no se pudo registrar las asistencia");
                 }
             };
+            await _shiftRepository.Update(shift);
             return new DomainResponse
             {
                 Success = true
             };
 
+        }
+
+        public async Task<DomainResponse> AllReservationsDetail(int id)
+        {
+            var response = await _attendanceRepository.AllReservationsDetail(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
         }
     }
 }

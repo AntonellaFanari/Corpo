@@ -25,6 +25,10 @@ export class CreditService {
     return this.http.post<any>(this.url + 'api/credit/add', feeDto, httpOptions);
   }
 
+  public updateRecharge(credit: Credit, shiftId: number) {
+    return this.http.put<any>(this.url + 'api/credit/update-recharge', credit, httpOptions);
+  }
+
   public update(credit: Credit) {
     return this.http.put<any>(this.url + 'api/credit/update', credit, httpOptions);
   }

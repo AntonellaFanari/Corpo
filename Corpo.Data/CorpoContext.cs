@@ -50,5 +50,8 @@ namespace Corpo.Data
         public DbSet<Withdrawal> Withdrawal { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<WodTemplate> WodTemplate { get; set; }
+        public DbSet<WodGroup> WodGroup { get; set; }
+        public DbSet<Modality> Modality { get; set; }
     }
 }

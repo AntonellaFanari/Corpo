@@ -15,13 +15,16 @@ namespace Corpo.Domain.Models
         public DateTime DateShift { get; set; }
         public DateTime DateReservation { get; set; }
         public DateTime? DateCancellation { get; set; }
-        public bool Attended { get; set; }
         public StatusAttendance Status { get; set; }
+        public bool UsingNegative { get; set; }
+        public bool ReturnCredit { get; set; }
     }
 
     public enum StatusAttendance
     {
         Reserved = 1,
-        Cancelled = 2
+        Cancelled = 2,
+        Attended = 3,
+        NotAttended = 4
     }
 }

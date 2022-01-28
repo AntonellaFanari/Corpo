@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Attendance, Status } from '../../../domain/attendance';
+import { Attendance} from '../../../domain/attendance';
 import { AttendanceReservation } from '../../../domain/attendance-reservation';
 import { Credit } from '../../../domain/credit';
 import { ShiftList } from '../../../domain/shift-list';
+import { StatusAttendance } from '../../../domain/status-attendance';
 import { AccountService } from '../../../services/account.service';
 import { AttendanceService } from '../../../services/attendance.service';
 import { CreditService } from '../../../services/credit.service';
@@ -160,16 +161,8 @@ export class MyReservationsComponent implements OnInit {
     let newAttendance = new Attendance();
     newAttendance.memberId = this.idMember;
     newAttendance.shiftId = this.selectedShiftId;
-    newAttendance.status = Status.reserved;
+    newAttendance.status = StatusAttendance.reserved;
     return newAttendance;
-  }
-
-  updateCredit() {
-    if (this.currentCredit>0) {
-      this.credit.creditConsumption = this.credit.creditConsumption + 1;
-    } else {
-      this.credit.negative = this.credit.negative + 1;
-    }
   }
 
   confirmReserve() {
@@ -177,19 +170,6 @@ export class MyReservationsComponent implements OnInit {
     this.attendanceService.add(attendance).subscribe(
       result => {
         console.log(result);
-        this.updateCredit();
-        this.creditService.update(this.credit).subscribe(
-          result => this.getAll(),
-          error => {
-            console.error(error);
-            if (error.status === 400) {
-              this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
-            }
-            if (error.status === 500) {
-              this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al descontar el crédito."]);
-            }
-          }
-        )
       },
       error => {
         console.error(error);
@@ -197,7 +177,7 @@ export class MyReservationsComponent implements OnInit {
           this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
         }
         if (error.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al reservar."]);
+          this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al reservar el turno."]);
         }
       })
   }

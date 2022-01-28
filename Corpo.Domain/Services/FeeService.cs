@@ -81,7 +81,7 @@ namespace Corpo.Domain.Services
                     member.ReEntryDate = date;
                     _memberService.Update(member.Id, member);
                 };
-                _creditService.Update(credit);
+                _creditService.UpdateRecharge(credit);
                 if (feeDto.Balance != 0)
                 {
                     var balance = new BalanceToPay();

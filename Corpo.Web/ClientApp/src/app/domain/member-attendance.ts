@@ -1,4 +1,4 @@
-import { Status } from "./attendance";
+import { StatusAttendance } from "./status-attendance";
 
 export class MemberAttendance {
   id: number;
@@ -7,6 +7,6 @@ export class MemberAttendance {
   remainingCredit: number;
   expiration: string;
   creditId: number;
-  status: Status;
-  attended: boolean;
+  status: StatusAttendance;
+  attended: boolean
 }

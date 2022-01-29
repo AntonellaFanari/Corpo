@@ -4,7 +4,6 @@
       <option value="" disabled>Seleccionar...</option>
       <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
     </select>
-    <p *ngIf="sendForm && f.categoryExerciseId.errors?.required">*el campo es requerido</p>
   </div>
 
   <div class="col-12 card">
@@ -12,7 +11,7 @@
       <div class="row">
         <div class="col-12">
           <label class="col-12 control-label">Tags:</label>
-          <div *ngIf="checkboxToTags.length>0 ; else: elseBlock" class="row">
+          <div *ngIf="checkboxToTags.length>0" class="row">
             <div *ngFor="let checkToTag of checkboxToTags" class="col-md-4">
               <input class="checkbox-tags" type="checkbox" [id]="checkToTag.id" [checked]="checkToTag.checked" (change)="checkToTag.checked=!checkToTag.checked">
               <label [for]="checkToTag.id">{{checkToTag.tag}}</label>

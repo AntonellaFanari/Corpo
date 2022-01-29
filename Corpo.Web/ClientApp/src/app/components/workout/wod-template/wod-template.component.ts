@@ -68,6 +68,9 @@ export class WodTemplateComponent implements OnInit {
 
 	}
 
+  selectCategory(event) {
+
+  }
 
 	createListTags() {
 		let tags: Tag[] = [];

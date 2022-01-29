@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Data.Repositories
 {
-    public class WodTemplateRepository: IWodTemplateRepository
+    public class WodTemplateRepository : IWodTemplateRepository
     {
         private CorpoContext _context;
 
@@ -20,64 +20,47 @@ namespace Corpo.Data.Repositories
 
         public async Task Add(WodTemplate wodTemplate)
         {
-            try
-            {
-                await _context.WodTemplate.AddAsync(wodTemplate);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
 
-            }
-            
+            await _context.WodTemplate.AddAsync(wodTemplate);
+            await _context.SaveChangesAsync();
+
+
         }
 
         public async Task Delete(int id)
         {
-            try
-            {
-                var wodTemplate = _context.WodTemplate.Find(id);
-                _context.WodTemplate.Remove(wodTemplate);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
+            var wodTemplate = _context.WodTemplate.Find(id);
+            _context.WodTemplate.Remove(wodTemplate);
+            await _context.SaveChangesAsync();
 
-            }
-          
+
         }
 
         public async Task<List<WodTemplate>> GetAll()
         {
             return await _context.WodTemplate
-                .Include(x => x.WodGroup)
-                .ThenInclude(x=>x.Modality)
-                  .Include(x => x.WodGroup)
+                .Include(x => x.WodGroups)
+                .ThenInclude(x => x.Modality)
+                  .Include(x => x.WodGroups)
                 .ThenInclude(x => x.Exercise)
                 .ToListAsync();
         }
 
         public Task<WodTemplate> GetById(int id)
         {
-            return _context.WodTemplate.Include(x => x.WodGroup)
+            return _context.WodTemplate.Include(x => x.WodGroups)
                 .ThenInclude(x => x.Modality)
-                  .Include(x => x.WodGroup)
+                  .Include(x => x.WodGroups)
                 .ThenInclude(x => x.Exercise)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Update(WodTemplate wodTemplate)
         {
-            try
-            {
+           
                 _context.WodTemplate.Update(wodTemplate);
                 await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-            }
-
+             
         }
 
     }

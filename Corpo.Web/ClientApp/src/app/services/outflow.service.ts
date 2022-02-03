@@ -47,8 +47,8 @@ export class OutflowService {
     return this.http.post(this.url + 'api/outflow/addOutflow', outflow, httpOptions);
   }
 
-  public getAllOutflow() {
-    return this.http.get<Outflow[]>(this.url + 'api/outflow/getAllOutflow');
+  public getAllOutflow(id: number) {
+    return this.http.get<Outflow[]>(this.url + 'api/outflow/getAllOutflow?id='+ id);
   }
 
   public getOutflowById(id: number) {

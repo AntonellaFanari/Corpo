@@ -16,6 +16,7 @@ namespace Corpo.Domain.Contracts.Repositories
         int Add(Member member);
         int Update(Member member);
         int Delete(int id);
+        Task<List<Member>> ByDateExpiration(DateTime from, DateTime to);
         int AddMedicalHistory(MedicalHistory historyMedical);
         MedicalHistory GetMedicalHistoryByIdMember(int id);
         MedicalHistory GetMedicalHistoryById(int id);

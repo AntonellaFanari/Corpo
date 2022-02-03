@@ -50,6 +50,10 @@ export class MemberService {
     return this.http.put(this.url + 'api/member/updateDueDate', expiration, httpOptions);
   }
 
+  public getByDateExpiration(from: string, to: string) {
+    return this.http.get<any>(this.url + 'api/member/by-date-expiration?from=' + from + '&to=' + to);
+  }
+
   //medicalHistory
   public addMedicalHistory(memberId: number, medicalHistory: MedicalHistory) {
     console.log(medicalHistory);

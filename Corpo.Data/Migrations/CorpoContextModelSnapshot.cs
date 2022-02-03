@@ -161,6 +161,45 @@ namespace Corpo.Data.Migrations
                     b.ToTable("CancelSale");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Cash", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Closing")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("EndingBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Opening")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("StartingBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalFee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalIncome")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalOutflow")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalSale")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalWithdrawal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cash");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.CategoryExercise", b =>
                 {
                     b.Property<int>("Id")
@@ -369,6 +408,32 @@ namespace Corpo.Data.Migrations
                     b.ToTable("File");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Income", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Income");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Injury", b =>
                 {
                     b.Property<int>("Id")
@@ -512,6 +577,24 @@ namespace Corpo.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Modality");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.MonthlyCash", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MonthlyCash");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.News", b =>
@@ -865,11 +948,11 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Pay")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -907,6 +990,9 @@ namespace Corpo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ExerciseId")
                         .HasColumnType("int");
@@ -1087,6 +1173,17 @@ namespace Corpo.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Injury");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Income", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Injury", b =>
@@ -1273,7 +1370,7 @@ namespace Corpo.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Corpo.Domain.Models.WodTemplate", "WodTemplate")
-                        .WithMany("WodGroup")
+                        .WithMany("WodGroups")
                         .HasForeignKey("WodTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1336,7 +1433,7 @@ namespace Corpo.Data.Migrations
 
             modelBuilder.Entity("Corpo.Domain.Models.WodTemplate", b =>
                 {
-                    b.Navigation("WodGroup");
+                    b.Navigation("WodGroups");
                 });
 #pragma warning restore 612, 618
         }

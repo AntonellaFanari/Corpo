@@ -27,6 +27,41 @@
   text-align: right;
 }
 
+.header-cash-positve {
+  background: #38c172;
+  padding-left: 0px !important;
+  text-align: center !important;
+  height: 50px;
+  color: white;
+  font-weight:bold;
+  font-size: 18px;
+}
+
+.header-cash-negative {
+  background: red;
+  padding-left: 0px !important;
+  text-align: center !important;
+  height: 50px;
+  color: wheat;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.btn-opening {
+  height: 100px;
+  font-weight: 700;
+  font-size: larger;
+  margin-top: 2.5rem;
+}
+
+.td-button-opening {
+  height: 200px;
+}
+
+.td-height td {
+  height: 50px;
+}
+
 .cursor {
     cursor: pointer;
 }
@@ -34,11 +69,11 @@
 .total-non-responsive {
   display: normal;
 }
-tr.header-td td {
-  padding-left: 0px !important;
-  text-align: center !important;
-  background-color: red;
+
+.view-btn-add {
+  display: none;
 }
+
 #no-more-tables tr.total > td.initial-cash {
   padding-left: 0px;
   text-align: center;
@@ -49,4 +84,37 @@ tr.header-td td {
   padding-left: 0px;
   text-align: center;
   width: 50%;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables {
+     /* padding-right: 2rem;*/
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
+
+  .header-cash-positve {
+    background: #38c172;
+    height: 70px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .header-cash-negative {
+    background: red;
+    height: 70px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .view-btn-add {
+    display: block;
+    text-align: center;
+  }
+
 }

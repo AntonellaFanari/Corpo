@@ -2,6 +2,6 @@ export class Outflow {
   id: number;
   date: string;
   outflowTypeId: number;
-  UserId: number;
+  userId: number;
   pay: number
 }

@@ -12,11 +12,15 @@ namespace Corpo.Domain.Services
     public class WithdrawalService: IWithdrawalService
     {
         private IWithdrawalRepository _withdrawalRepository;
+        private ICashRepository _cashRepository;
 
-        public WithdrawalService(IWithdrawalRepository withdrawalRepository)
+        public WithdrawalService(IWithdrawalRepository withdrawalRepository, ICashRepository cashRepository)
         {
             _withdrawalRepository = withdrawalRepository;
+            _cashRepository = cashRepository;
         }
+
+
 
         //withdrawalName
         public DomainResponse AddWithdrawalName(WithdrawalName withdrawalName)
@@ -87,9 +91,10 @@ namespace Corpo.Domain.Services
         }
 
         //withdrawal
-        async public Task<DomainResponse> GetAllWithdrawal()
+        async public Task<DomainResponse> GetAllWithdrawal(int id)
         {
-            var response = await _withdrawalRepository.GetAllWithdrawal();
+            var cash = await _cashRepository.ById(id);
+            var response = await _withdrawalRepository.GetAllWithdrawal(cash.Opening, cash.Closing);
             return new DomainResponse
             {
                 Success = true,
@@ -97,12 +102,17 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse AddWithdrawal(Withdrawal withdrawal)
+        public async Task<DomainResponse> AddWithdrawal(int id, Withdrawal withdrawal)
         {
             try
             {
                 withdrawal.Date = DateTime.Now;
+                withdrawal.UserId = id;
                 _withdrawalRepository.AddWithdrawal(withdrawal);
+                if (withdrawal.WithdrawalNameId == 1)
+                {
+                 await _cashRepository.UpdateMonthlyCash(withdrawal.Date, withdrawal.Amount, "withdrawal");
+                }
                 return new DomainResponse
                 {
                     Success = true
@@ -125,9 +135,14 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse DeleteWithdrawal(int id)
+        public async Task<DomainResponse> DeleteWithdrawal(int id)
         {
-            _withdrawalRepository.DeleteWithdrawal(id);
+            var withdrawal = await _withdrawalRepository.GetWithdrawalById(id);
+            await _withdrawalRepository.DeleteWithdrawal(id);
+            if (withdrawal.WithdrawalNameId == 1)
+            {
+                await _cashRepository.UpdateMonthlyCash(withdrawal.Date, -withdrawal.Amount, "withdrawal");
+            }
             return new DomainResponse
             {
                 Success = true

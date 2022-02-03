@@ -34,6 +34,8 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IWodTemplateService, WodTemplateService>();
+            services.AddTransient<IIncomeService, IncomeService>();
+            services.AddTransient<ICashService, CashService>();
         }
     }
 }

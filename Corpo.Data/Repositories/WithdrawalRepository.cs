@@ -49,9 +49,9 @@ namespace Corpo.Data.Repositories
         }
 
         // withdrawal
-        public Task<List<Withdrawal>> GetAllWithdrawal()
+        public Task<List<Withdrawal>> GetAllWithdrawal(DateTime from, DateTime? to)
         {
-            return _context.Withdrawal.ToListAsync();
+            return _context.Withdrawal.Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToListAsync();
         }
 
         public void AddWithdrawal(Withdrawal withdrawal)
@@ -65,11 +65,11 @@ namespace Corpo.Data.Repositories
             return _context.Withdrawal.Include(x=>x.WithdrawalName).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void DeleteWithdrawal(int id)
+        public async Task DeleteWithdrawal(int id)
         {
-            var withdrawal = _context.Withdrawal.Find(id);
+            var withdrawal = await _context.Withdrawal.FindAsync(id);
             _context.Remove(withdrawal);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

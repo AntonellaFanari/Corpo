@@ -17,9 +17,9 @@ namespace Corpo.Domain.Contracts.Repositories
         void UpdateWithdrawalName(WithdrawalName withdrawalName);
 
         //Withdrawal
-        Task<List<Withdrawal>> GetAllWithdrawal();
+        Task<List<Withdrawal>> GetAllWithdrawal(DateTime from, DateTime? to);
         void AddWithdrawal(Withdrawal withdrawal);
         Task<Withdrawal> GetWithdrawalById(int id);
-        void DeleteWithdrawal(int id);
+        Task DeleteWithdrawal(int id);
     }
 }

@@ -10,8 +10,8 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface ISaleService
     {
-        DomainResponse Add(SaleDto sale);
-        DomainResponse GetAll();
+        DomainResponse Add(int id, SaleDto sale);
+        DomainResponse GetAll(int id);
         DomainResponse GetDetailsSale(int idSale);
         DomainResponse Cancel(int id, CancelSale cancelSale);
         DomainResponse GetCancelSale(int idSale);

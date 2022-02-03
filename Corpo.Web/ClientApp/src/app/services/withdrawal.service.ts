@@ -43,8 +43,8 @@ export class WithdrawalService {
   }
 
   //withdrawal
-  public getAllWithdrawal() {
-    return this.http.get<Withdrawal[]>(this.url + 'api/withdrawal/getAllWithdrawal');
+  public getAllWithdrawal(id: number) {
+    return this.http.get<Withdrawal[]>(this.url + 'api/withdrawal/getAllWithdrawal?id=' + id);
   }
 
   public addWithdrawal(withdrawal: Withdrawal) {

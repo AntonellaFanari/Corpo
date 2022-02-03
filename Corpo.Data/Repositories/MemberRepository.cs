@@ -33,7 +33,7 @@ namespace Corpo.Data.Repositories
             return _context.Member
                     .Include(x => x.Plan)
                     .Include(x => x.Account)
-                    .Include(x=>x.Credit)
+                    .Include(x => x.Credit)
                     .FirstOrDefault(x => x.Id == id);
         }
 
@@ -42,7 +42,7 @@ namespace Corpo.Data.Repositories
             return _context.Member
                     .Include(x => x.Plan)
                     .Include(x => x.Account)
-                    .Include(x=> x.Credit)
+                    .Include(x => x.Credit)
                     .FirstOrDefault(x => x.AccountId == id);
         }
 
@@ -51,7 +51,7 @@ namespace Corpo.Data.Repositories
             var list = _context.Member
                     .Include(x => x.Plan)
                     .Include(x => x.Account)
-                    .Include(x=>x.Credit)
+                    .Include(x => x.Credit)
                     .ToList();
             return list;
         }
@@ -68,6 +68,16 @@ namespace Corpo.Data.Repositories
             var member = _context.Member.Find(id);
             _context.Member.Remove(member);
             return member.AccountId;
+        }
+
+        public async Task<List<Member>> ByDateExpiration(DateTime from, DateTime to)
+        {
+            return await _context.Member.Include(x => x.Plan)
+                    .Include(x => x.Account)
+                    .Include(x => x.Credit)
+                    .Where(x => x.Credit.Expiration >= from && x.Credit.Expiration <= to)
+                    .ToListAsync();
+
         }
 
         public Member GetByEmail(string email)
@@ -92,7 +102,7 @@ namespace Corpo.Data.Repositories
 
         public MedicalHistory GetMedicalHistoryByIdMember(int id)
         {
-            return _context.MedicalHistory.FirstOrDefault(x=>x.MemberId == id);
+            return _context.MedicalHistory.FirstOrDefault(x => x.MemberId == id);
         }
 
         public MedicalHistory GetMedicalHistoryById(int id)
@@ -102,7 +112,7 @@ namespace Corpo.Data.Repositories
 
         public void DeleteMedicalHistory(int id)
         {
-            var medicalHistory = _context.MedicalHistory.FirstOrDefault(x=>x.MemberId == id);
+            var medicalHistory = _context.MedicalHistory.FirstOrDefault(x => x.MemberId == id);
             medicalHistory.Injuries.Clear();
             _context.MedicalHistory.Remove(medicalHistory);
             _context.SaveChanges();
@@ -122,8 +132,8 @@ namespace Corpo.Data.Repositories
 
         public List<Injury> GetAllInjuries(int id)
         {
-            return _context.Injury.Where(x=>x.MedicalHistoryId == id).Include(x=>x.Files).ToList();
-            
+            return _context.Injury.Where(x => x.MedicalHistoryId == id).Include(x => x.Files).ToList();
+
         }
 
         public int DeleteFile(int id)

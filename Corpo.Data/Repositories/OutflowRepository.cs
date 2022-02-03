@@ -43,9 +43,9 @@ namespace Corpo.Data.Repositories
             _context.Remove(outflow);
             _context.SaveChanges();
         }
-        public List<Outflow> GetAllOutflow()
+        public List<Outflow> GetAllOutflow(DateTime from, DateTime? to)
         {
-            return _context.Outflow.ToList();
+            return _context.Outflow.Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
         }
 
         public List<OutflowType> GetAllOutflowType()

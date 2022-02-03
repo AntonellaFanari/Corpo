@@ -18,9 +18,10 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
-        public List<Sale> GetAll()
+        public List<Sale> GetAll(DateTime from, DateTime? to)
         {
-            return _context.Sale.Include(x=>x.Member).ToList();
+            return _context.Sale.Include(x=>x.Member).Where(to != null? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
+          
         }
 
         public List<DetailsSale> GetDetailsSale(int idSale)

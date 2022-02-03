@@ -14,7 +14,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SaleController : ControllerBase
+    public class SaleController : CorpoBaseController
     {
         private ISaleService _saleService;
 
@@ -24,9 +24,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult<Sale> GetAll()
+        public ActionResult<Sale> GetAll(int id)
         {
-            var response = _saleService.GetAll();
+            var response = _saleService.GetAll(id);
             var listSales = ((IEnumerable)response.Result).Cast<Sale>().ToList();
             return Ok(listSales);
         }
@@ -42,7 +42,8 @@ namespace Corpo.Web.Controllers
         [HttpPost("add")]
         public ActionResult Add(SaleDto newSale)
         {
-            var response = _saleService.Add(newSale);
+            var user = GetUser();
+            var response = _saleService.Add(user.Id, newSale);
             return this.ToActionResult(response);
         }
 

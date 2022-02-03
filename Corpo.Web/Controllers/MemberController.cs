@@ -63,6 +63,15 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpGet("by-date-expiration")]
+        public async Task<ActionResult<MemberViewModel>> ByDateExpiration(DateTime from, DateTime to)
+        {
+            var response = await _memberService.ByDateExpiration(from, to);
+            var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
+            var listMembers = ViewModels.ViewModels.FromDomainMember(result);
+            return Ok(listMembers);
+        }
+
         [HttpPut("updateDueDate")]
         public ActionResult UpdateDueDate(CreditExpirationDto expiration)
         {

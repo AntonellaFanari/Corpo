@@ -27,7 +27,6 @@ export class SaleEditComponent implements OnInit {
   selectedSale: Sale;
   reasonCancel: string;
   currentDate: string;
-  userId: number;
   status: string;
   userCancelSale: UserView;
   idUserCancel: number;
@@ -41,7 +40,6 @@ export class SaleEditComponent implements OnInit {
 
   ngOnInit() {
     this.currentDate = this.dp.transform(new Date(), 'yyyy-MM-dd');
-    this.userId = this.accountService.getLoggedUser().id;
   }
 
   modalClick() {
@@ -119,7 +117,6 @@ export class SaleEditComponent implements OnInit {
     cancelSale.reason = this.reasonCancel;
     cancelSale.saleId = this.selectedSale.id;
     cancelSale.total = this.selectedSale.total;
-    cancelSale.userId = this.userId;
     return cancelSale;
   }
 

@@ -17,9 +17,9 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> UpdateWithdrawalName(int id, WithdrawalName withdrawalName);
 
         //withdrawal
-        Task<DomainResponse> GetAllWithdrawal();
-        DomainResponse AddWithdrawal(Withdrawal withdrawal);
+        Task<DomainResponse> GetAllWithdrawal(int id);
+        Task<DomainResponse> AddWithdrawal(int id, Withdrawal withdrawal);
         Task<DomainResponse> GetWithdrawalById(int id);
-        DomainResponse DeleteWithdrawal(int id);
+        Task<DomainResponse> DeleteWithdrawal(int id);
     }
 }

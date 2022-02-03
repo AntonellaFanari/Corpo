@@ -37,6 +37,7 @@
     <None Remove="ClientApp\src\app\domain\balance-to-pay-view.ts" />
     <None Remove="ClientApp\src\app\domain\balance-to-pay.ts" />
     <None Remove="ClientApp\src\app\domain\cancel-sale.ts" />
+    <None Remove="ClientApp\src\app\domain\cash.ts" />
     <None Remove="ClientApp\src\app\domain\category-exercises.ts" />
     <None Remove="ClientApp\src\app\domain\class.ts" />
     <None Remove="ClientApp\src\app\domain\credit-expiration.ts" />
@@ -48,6 +49,7 @@
     <None Remove="ClientApp\src\app\domain\fee-view.ts" />
     <None Remove="ClientApp\src\app\domain\fee.ts" />
     <None Remove="ClientApp\src\app\domain\file.ts" />
+    <None Remove="ClientApp\src\app\domain\income.ts" />
     <None Remove="ClientApp\src\app\domain\injury.ts" />
     <None Remove="ClientApp\src\app\domain\iuser.ts" />
     <None Remove="ClientApp\src\app\domain\logged-user.ts" />
@@ -56,6 +58,7 @@
     <None Remove="ClientApp\src\app\domain\member-promotion.ts" />
     <None Remove="ClientApp\src\app\domain\member-view.ts" />
     <None Remove="ClientApp\src\app\domain\member.ts" />
+    <None Remove="ClientApp\src\app\domain\monthly-cash.ts" />
     <None Remove="ClientApp\src\app\domain\new-password.ts" />
     <None Remove="ClientApp\src\app\domain\news-view.ts" />
     <None Remove="ClientApp\src\app\domain\news.ts" />
@@ -94,14 +97,17 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\cancel-sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\cash.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\category-exercises.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\class.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\credit-expiration.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\credit.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\detail-purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\income.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-promotion.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\monthly-cash.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\news-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\news.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\pay-cancel-balance.ts" />

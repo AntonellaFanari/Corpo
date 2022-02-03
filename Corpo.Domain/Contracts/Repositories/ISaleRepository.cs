@@ -9,7 +9,7 @@ namespace Corpo.Domain.Contracts.Repositories
 {
     public interface ISaleRepository
     {
-        List<Sale> GetAll();
+        List<Sale> GetAll(DateTime from, DateTime? to);
         int Add(Sale sale);
         List<DetailsSale> GetDetailsSale(int idSale);
         void Cancel(int id, CancelSale cancelSale);

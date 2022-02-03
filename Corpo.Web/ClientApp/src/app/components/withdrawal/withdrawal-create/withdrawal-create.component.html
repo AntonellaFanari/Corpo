@@ -8,7 +8,7 @@
             <div class="row justify-content-center align-content-center">
               <div class="card-body col-12 text-center">
                 <label class="form-label">Caja Actual:</label>
-                <p class="text-center">12.500</p>
+                <p class="text-center">${{currentCash}}</p>
               </div>
             </div>
           </div>
@@ -24,9 +24,10 @@
                   <p *ngIf="send && f.withdrawalNameId.errors?.required">*Debe seleccionar una opción.</p>
                 </div>
                 <div class="col-3 formValidators">
-                  <label class="form-label">Pago:</label>
-                  <input type="number" class="form-control" formControlName="pay" />
-                  <p *ngIf="send && f.pay.errors?.min">*Debe ingresar un importe mayor a 0.</p>
+                  <label class="form-label">Retiro:</label>
+                  <input type="number" class="form-control" formControlName="amount" />
+                  <p *ngIf="send && f.amount.errors?.min">*Debe ingresar un importe mayor a 0.</p>
+                  <p *ngIf="send && f.amount.errors?.max">*Debe ingresar un importe menor o igual a {{currentCash}}.</p>
                 </div>
               </div>
             </form>

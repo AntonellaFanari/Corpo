@@ -22,8 +22,8 @@ export class SaleService {
     this.url = url;
   }
 
-  public getAll() {
-    return this.http.get<Sale[]>(this.url + 'api/sale/getAll');
+  public getAll(id: number) {
+    return this.http.get<Sale[]>(this.url + 'api/sale/getAll?id='+ id);
   }
 
   public getDetailsSale(idSale) {

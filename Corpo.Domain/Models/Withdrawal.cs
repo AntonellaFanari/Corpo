@@ -14,6 +14,6 @@ namespace Corpo.Domain.Models
         public int WithdrawalNameId { get; set; }
         public virtual User User { get; set; }
         public int UserId { get; set; }
-        public decimal Pay { get; set; }
+        public decimal Amount { get; set; }
     }
 }

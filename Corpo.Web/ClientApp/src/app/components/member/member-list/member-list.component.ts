@@ -19,11 +19,17 @@ export class MemberListComponent implements OnInit {
   viewDueDate: boolean = false;
   dueDate: string;
   id: number;
-  currentDate:string;
+  currentDate: string;
+  from: string;
+  to: string;
+
   constructor(private memberService: MemberService, private customAlertService: CustomAlertService,
     private feeService: FeeService, private dp: DatePipe) {
     this.dueDate = this.dp.transform(new Date(), 'yyyy-MM-dd');
-    
+    this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
+    let date = new Date();
+    this.to = this.dp.transform(date.setDate(date.getDate() + 31), 'yyyy-MM-dd');
+
   }
 
   ngOnInit() {
@@ -35,18 +41,22 @@ export class MemberListComponent implements OnInit {
       (result) => {
         console.log(result);
         this.members = result;
-        this.currentDate = this.dp.transform(new Date(), 'yyy-MM-dd, hh:mm:ss a');
-        for (var i = 0; i < this.members.length; i++) {
-          let member = this.members[i];
-          if (member.expiration >= this.currentDate) {
-            member.status = "Activo"
-          } else {
-            member.status = "No Activo"
-          }
-        }
+        this.getStatusMember();
       },
       error => console.error(error)
     );
+  }
+
+  getStatusMember() {
+    this.currentDate = this.dp.transform(new Date(), 'yyy-MM-dd, hh:mm:ss a');
+    for (var i = 0; i < this.members.length; i++) {
+      let member = this.members[i];
+      if (member.expiration >= this.currentDate) {
+        member.status = "Activo"
+      } else {
+        member.status = "No Activo"
+      }
+    }
   }
 
   //getAllFee() {
@@ -93,6 +103,21 @@ export class MemberListComponent implements OnInit {
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar el socio."]);
         })
     }, true);
+  }
+
+  filter() {
+    this.memberService.getByDateExpiration(this.from, this.to).subscribe(
+      result => {
+        console.log(result);
+        this.members = result;
+        this.getStatusMember();
+      },
+      error => console.error(error)
+    )
+  }
+
+  deleteFilter() {
+    this.getAll();
   }
 
 }

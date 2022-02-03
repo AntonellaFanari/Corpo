@@ -12,31 +12,35 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./outflow-detail.component.css']
 })
 export class OutflowDetailComponent implements OnInit {
-  userRegisterOutflow: UserView;
+  userRegister: UserView;
   userId: number;
   outflow: Outflow;
   @Output() updateOutflows = new EventEmitter<string>();
 
   constructor(private userService: UserService, private accountService: AccountService,
-    private outflowService: OutflowService, private customAlertService: CustomAlertService) {
-    this.userId = this.accountService.getLoggedUser().id;}
+    private outflowService: OutflowService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
-    this.userService.getById(this.userId).subscribe(
+
+  }
+
+  getUser(id) {
+    this.userService.getById(id).subscribe(
       result => {
         console.log(result);
-        this.userRegisterOutflow = result;
+        this.userRegister = result;
       },
       error => console.error(error)
     );
-   
   }
 
   getOutflow(id) {
     this.outflowService.getOutflowById(id).subscribe(
       result => {
         console.log(result);
-        this.outflow = result
+        this.outflow = result;
+        console.log(this.outflow.userId);
+        this.getUser(this.outflow.userId);
       },
       error => console.error(error)
     )

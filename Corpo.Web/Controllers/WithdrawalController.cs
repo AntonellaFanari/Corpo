@@ -13,7 +13,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WithdrawalController : ControllerBase
+    public class WithdrawalController : CorpoBaseController
     {
         private IWithdrawalService _withdrawalService;
 
@@ -63,17 +63,18 @@ namespace Corpo.Web.Controllers
         //withdrawal
 
         [HttpGet("getAllWithdrawal")]
-        async public Task<ActionResult> GetAllWithdrawal()
+        async public Task<ActionResult> GetAllWithdrawal(int id)
         {
-            var response = await _withdrawalService.GetAllWithdrawal();
+            var response = await _withdrawalService.GetAllWithdrawal(id);
             var listWithdrawal = ((IEnumerable)response.Result).Cast<Withdrawal>().ToList();
             return Ok(listWithdrawal);
         }
 
         [HttpPost("addWithdrawal")]
-        public ActionResult AddWithdrawal(Withdrawal withdrawal)
+        public async Task<ActionResult> AddWithdrawal(Withdrawal withdrawal)
         {
-            var response = _withdrawalService.AddWithdrawal(withdrawal);
+            var user = GetUser();
+            var response = await _withdrawalService.AddWithdrawal(user.Id, withdrawal);
             return this.ToActionResult(response);
         }
 
@@ -85,9 +86,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpDelete("deleteWithdrawal")]
-        public ActionResult DeleteWithdrawal(int id)
+        public async Task<ActionResult> DeleteWithdrawal(int id)
         {
-            var response = _withdrawalService.DeleteWithdrawal(id);
+            var response = await _withdrawalService.DeleteWithdrawal(id);
             return this.ToActionResult(response);
         }
 

@@ -138,6 +138,16 @@ namespace Corpo.Domain.Services
             };
         }
 
+        public async Task<DomainResponse> ByDateExpiration(DateTime from, DateTime to)
+        {
+            var response = await _memberRepository.ByDateExpiration(from, to);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
         public DomainResponse UpdateDueDate(CreditExpirationDto expiration)
         {
 

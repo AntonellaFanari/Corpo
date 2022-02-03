@@ -16,26 +16,28 @@ namespace Corpo.Domain.Services
         private ICreditService _creditService;
         private IBalanceService _balanceService;
         private IMemberService _memberService;
+        private ICashRepository _cashRepository;
 
         public FeeService(IFeeRepository feeRepository, ICreditService creditService, 
-            IBalanceService balanceService, IMemberService memberService)
+            IBalanceService balanceService, IMemberService memberService, ICashRepository cashRepository)
         {
             _feeRepository = feeRepository;
             _creditService = creditService;
             _balanceService = balanceService;
             _memberService = memberService;
+            _cashRepository = cashRepository;
         }
 
-        public DomainResponse Add(FeeDto feeDto)
+        public DomainResponse Add(int id, FeeDto feeDto)
         {
             try
             {
                 var totalPromotion = feeDto.TotalPromotion;
-                AddFee(feeDto, totalPromotion, feeDto.MemberId);
+                AddFee(feeDto, id, totalPromotion, feeDto.MemberId);
                 foreach (var member in feeDto.MembersPromotion)
                 {
                     totalPromotion = feeDto.Total * member.Discount / 100;
-                    AddFee(feeDto, totalPromotion, member.MemberId);
+                    AddFee(feeDto, id, totalPromotion, member.MemberId);
                 };
                 return new DomainResponse
                 {
@@ -50,7 +52,7 @@ namespace Corpo.Domain.Services
 
         }
 
-        private DomainResponse AddFee(FeeDto feeDto, decimal totalPromotion, int memberId)
+        private DomainResponse AddFee(FeeDto feeDto, int id,  decimal totalPromotion, int memberId)
         {
             var credit = new Credit();
             credit.CreditConsumption = feeDto.CreditConsumption;
@@ -64,7 +66,7 @@ namespace Corpo.Domain.Services
                 var lastPayment = _feeRepository.GetLastPayment(feeDto.MemberId);
                 var fee = new Fee();
                 fee.Date = date;
-                fee.UserId = feeDto.UserId;
+                fee.UserId = id;
                 fee.MemberId = memberId;
                 fee.Credits = feeDto.Credits;
                 fee.PlanName = feeDto.PlanName;
@@ -119,9 +121,10 @@ namespace Corpo.Domain.Services
             }
         }
 
-        public DomainResponse GetAll()
+        public DomainResponse GetAll(int id)
         {
-            var response = _feeRepository.GetAll();
+            var cash = _cashRepository.ById(id).Result;
+            var response = _feeRepository.GetAll(cash.Opening, cash.Closing);
             return new DomainResponse
             {
                 Success = true,

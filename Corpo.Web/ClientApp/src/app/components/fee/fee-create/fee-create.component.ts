@@ -36,7 +36,6 @@ export class FeeCreateComponent implements OnInit {
   formCreate: FormGroup;
   total = 0;
   member: MemberView;
-  userId: number;
   send: boolean = false;
   pay = 0;
   credit: Credit;
@@ -59,7 +58,6 @@ export class FeeCreateComponent implements OnInit {
     private dp: DatePipe, private accountService: AccountService, private router: Router, private customAlertService: CustomAlertService,
     private balanceService: BalanceService, private feeService: FeeService, private promotionService: PromotionService,
     private creditService: CreditService) {
-    this.userId = this.accountService.getLoggedUser().id;
     let from = this.dp.transform(new Date(), 'yyyy-MM-dd');
     console.log(from);
     let date = new Date();
@@ -165,7 +163,6 @@ export class FeeCreateComponent implements OnInit {
       this.feeDto = new FeeDto();
     };
     this.feeDto.memberId = this.member.id;
-    this.feeDto.userId = this.userId;
     this.feeDto.from = this.formCreate.value.from;
     this.feeDto.to = this.formCreate.value.to;
     this.feeDto.planName = this.plan.name;

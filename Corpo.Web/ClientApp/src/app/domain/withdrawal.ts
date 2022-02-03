@@ -1,7 +1,7 @@
 export class Withdrawal {
   id: number;
   date: string;
-  UserId: number;
+  userId: number;
   withdrawalNameId: number;
-  pay: number
+  amount: number
 }

@@ -28,7 +28,6 @@ export class SaleCreateComponent implements OnInit {
   filterMember: string = '';
   filterProduct: string = '';
   formDetailsSale: FormGroup;
-  userId: number;
   currentDate: string;
   selectedMember: MemberView;
   selectedProduct: Product;
@@ -46,7 +45,6 @@ export class SaleCreateComponent implements OnInit {
   constructor(private memberService: MemberService, private productService: ProductService, private formBuilder: FormBuilder,
     private accountService: AccountService, private dp: DatePipe, private saleService: SaleService, private router: Router,
     private customAlertService: CustomAlertService, private balanceService: BalanceService) {
-    this.userId = this.accountService.getLoggedUser().id;
     this.getFormDetailsSale();
   }
 
@@ -250,7 +248,6 @@ export class SaleCreateComponent implements OnInit {
 
   createSale() {
     let newSale = new SaleDto();
-    newSale.userId = this.userId;
     newSale.memberId = this.selectedMember.id;
     newSale.date = this.currentDate;
     newSale.total = this.total;

@@ -21,8 +21,8 @@ export class FeeService {
     this.url = url;
   }
 
-  public getAll() {
-    return this.http.get<any>(this.url + 'api/fee/getAll');
+  public getAll(id: number) {
+    return this.http.get<any>(this.url + 'api/fee/getAll?id='+ id);
   }
 
   public getById(id: number) {

@@ -15,7 +15,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FeeController : ControllerBase
+    public class FeeController : CorpoBaseController
     {
         private IFeeService _feeService;
 
@@ -25,9 +25,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult GetAll()
+        public ActionResult GetAll(int id)
         {
-            var response = _feeService.GetAll();
+            var response = _feeService.GetAll(id);
             var listFees = ((IEnumerable)response.Result).Cast<Fee>().ToList();
             return Ok(listFees);
         }
@@ -42,7 +42,8 @@ namespace Corpo.Web.Controllers
         [HttpPost("add")]
         public ActionResult Add([FromBody]FeeDto feeDto)
         {
-            var response = _feeService.Add(feeDto);
+            var user = this.GetUser();
+            var response = _feeService.Add(user.Id, feeDto);
             return this.ToActionResult(response);
         }
 

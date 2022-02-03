@@ -11,7 +11,7 @@ namespace Corpo.Domain.Contracts.Repositories
     public interface IFeeRepository
     {
         int Add(Fee fee);
-        List<Fee> GetAll();
+        List<Fee> GetAll(DateTime from, DateTime? to);
         Fee GetById(int id);
         List<Fee> GetAllByIdMember(int id);
         DateTime GetLastPayment(int id);

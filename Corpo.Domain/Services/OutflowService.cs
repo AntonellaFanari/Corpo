@@ -11,16 +11,19 @@ namespace Corpo.Domain.Services
 {
     public class OutflowService: IOutflowService
     {
-        IOutflowRepository _outflowRepository;
+        private IOutflowRepository _outflowRepository;
+        private ICashRepository _cashRepository;
 
-        public OutflowService(IOutflowRepository outflowRepository)
+        public OutflowService(IOutflowRepository outflowRepository, ICashRepository cashRepository)
         {
             _outflowRepository = outflowRepository;
+            _cashRepository = cashRepository;
         }
 
-        public DomainResponse AddOutflow(Outflow outflow)
+        public DomainResponse AddOutflow(int id, Outflow outflow)
         {
             outflow.Date = DateTime.Now;
+            outflow.UserId = id;
             try
             {
                 _outflowRepository.AddOutflow(outflow);
@@ -70,9 +73,10 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse GetAllOutflow()
+        public DomainResponse GetAllOutflow(int id)
         {
-            var response = _outflowRepository.GetAllOutflow();
+            var cash = _cashRepository.ById(id).Result;
+            var response = _outflowRepository.GetAllOutflow(cash.Opening, cash.Closing);
             return new DomainResponse
             {
                 Success = true,

@@ -108,6 +108,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MemberReportComponent } from './components/reports/member-report/member-report.component';
 import { MemberReportListComponent } from './components/reports/member-report-list/member-report-list.component';
 import { ReservationsComponent } from './components/member/reservations/reservations.component';
+import { IncomeCreateComponent } from './components/income/income-create/income-create.component';
+import { IncomeDetailComponent } from './components/income/income-detail/income-detail.component';
 
 @NgModule({
   declarations: [
@@ -208,7 +210,9 @@ import { ReservationsComponent } from './components/member/reservations/reservat
     WodTemplateComponent,
     MemberReportComponent,
     MemberReportListComponent,
-    ReservationsComponent
+    ReservationsComponent,
+    IncomeCreateComponent,
+    IncomeDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -242,7 +246,8 @@ import { ReservationsComponent } from './components/member/reservations/reservat
       { path: 'cuota-agregar', component: FeeCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'venta-agregar', component: SaleCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
       { path: 'egreso', component: OutflowCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
-      { path: 'retiro', component: WithdrawalCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' }  },
+      { path: 'retiro', component: WithdrawalCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' } },
+      { path: 'ingreso', component: IncomeCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' } },
       { path: 'product-agregar', component: ProductCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'productos-list', component: ProductListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'product-detail', component: ProductEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },

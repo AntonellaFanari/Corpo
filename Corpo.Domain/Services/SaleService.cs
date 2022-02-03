@@ -15,17 +15,21 @@ namespace Corpo.Domain.Services
         private ISaleRepository _saleRepository;
         private IProductRepository _productRepository;
         private IBalanceService _balanceService;
+        private ICashRepository _cashRepository;
 
-        public SaleService(ISaleRepository saleRepository, IProductRepository productRepository, IBalanceService balanceService)
+        public SaleService(ISaleRepository saleRepository, IProductRepository productRepository,
+        IBalanceService balanceService, ICashRepository cashRepository)
         {
             _saleRepository = saleRepository;
             _productRepository = productRepository;
             _balanceService = balanceService;
+            _cashRepository = cashRepository;
         }
 
-        public DomainResponse GetAll()
+        public DomainResponse GetAll(int id)
         {
-            var response = _saleRepository.GetAll();
+            var cash = _cashRepository.ById(id).Result;
+            var response = _saleRepository.GetAll(cash.Opening, cash.Closing);
             return new DomainResponse
             {
                 Success = true,
@@ -42,11 +46,11 @@ namespace Corpo.Domain.Services
                 Result = response
             };
         }
-        public DomainResponse Add(SaleDto sale)
+        public DomainResponse Add(int id, SaleDto sale)
         {
             var newSale = new Sale();
             newSale.Date = DateTime.Now;
-            newSale.UserId = sale.UserId;
+            newSale.UserId = id;
             newSale.MemberId = sale.MemberId;
             newSale.Total = sale.Total;
             newSale.Status = sale.Status;
@@ -54,14 +58,14 @@ namespace Corpo.Domain.Services
             newSale.DetailsSale = sale.DetailsSale;
             try
             {
-                var id = _saleRepository.Add(newSale);
+                var idSale = _saleRepository.Add(newSale);
                 if (sale.Balance != 0)
                 {
                     var balance = new BalanceToPay();
                     balance.Date = DateTime.Now;
                     balance.MemberId = sale.MemberId;
                     balance.Transaction = sale.Transaction;
-                    balance.transactionId = id;
+                    balance.transactionId = idSale;
                     balance.Balance = sale.Balance;
                     if (sale.Balance>0)
                     {

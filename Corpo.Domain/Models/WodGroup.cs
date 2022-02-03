@@ -13,6 +13,7 @@ namespace Corpo.Domain.Models
         public int ExerciseId { get; set; }
         public virtual Modality Modality { get; set; }
         public int ModalityId { get; set; }
+        public string Detail { get; set; }
         public string Units { get; set; }
         public string GroupIndex { get; set; }
         public virtual WodTemplate WodTemplate { get; set; }

@@ -53,5 +53,9 @@ namespace Corpo.Data
         public DbSet<WodTemplate> WodTemplate { get; set; }
         public DbSet<WodGroup> WodGroup { get; set; }
         public DbSet<Modality> Modality { get; set; }
+        public DbSet<Cash> Cash { get; set; }
+        public DbSet<Income> Income { get; set; }
+        public DbSet<MonthlyCash> MonthlyCash { get; set; }
+
     }
 }

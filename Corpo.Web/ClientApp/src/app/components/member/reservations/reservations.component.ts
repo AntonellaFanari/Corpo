@@ -42,8 +42,8 @@ export class ReservationsComponent implements OnInit {
         let reservation = reservations[i].reservations[j];
         reservation.dateShift = this.getDayShift(reservation.dateShift) + " " + this.getDate(reservation.dateShift);
         reservation.dateReservation = this.getDayShift(reservation.dateReservation) + " " + this.getDate(reservation.dateReservation);
-        if (reservation.dateCancellation != null) {
-          this.getDayShift(reservation.dateCancellation) + " " + this.getDate(reservation.dateCancellation);
+        if (reservation.dateCancellation !== null) {
+         reservation.dateCancellation = this.getDayShift(reservation.dateCancellation) + " " + this.getDate(reservation.dateCancellation);
         };
       }
     }

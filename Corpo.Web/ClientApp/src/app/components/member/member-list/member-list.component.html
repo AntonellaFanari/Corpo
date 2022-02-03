@@ -8,8 +8,11 @@
       <hr>
       <div class="col-12 card">
         <div class="row card-body">
-          <div class="col-12">
+          <div class="col-9 col-lg-12">
             <input type="text" name="filterMember" placeholder="Buscar" class="form-control" [(ngModel)]="filterMember">
+          </div>
+          <div class="col-3 view-btn-filter">
+            <button class="btn btn-outline-success"><i class="fa fa-filter date-filter" data-toggle="modal" href="#myModalDateFilter"></i></button>
           </div>
         </div>
       </div>
@@ -22,7 +25,7 @@
               <th class="numeric">Teléfono</th>
               <th class="numeric">Plan</th>
               <th class="numeric">Créditos</th>
-              <th class="numeric"><span>Vencimiento</span><i class="fa fa-filter"></i></th>
+              <th class="numeric"><span>Vencimiento</span>&nbsp; <i class="fa fa-filter date-filter" data-toggle="modal" href="#myModalDateFilter"></i></th>
               <th class="numeric">Negativos</th>
               <th class="numeric">Acción</th>
             </tr>
@@ -120,5 +123,45 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<section class="modal mt-4" id="myModalDateFilter">
+  <div class="container-fluid modal-content modal-sm p-0">
+
+    <!-- cabecera del diálogo -->
+    <div class="modal-header modal-title bg-success d-block">
+      <h4 class="modal-title text-white text-center">Seleccionar fechas:</h4>
+      <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+    </div>
+
+    <!-- cuerpo del diálogo -->
+    <div class="modal-body">
+      <div class="row justify-content-center align-items-center m-auto">
+        <div class="col-12 center card">
+          <label class="form-label text-center mt-1">Desde:</label>
+          <div class="row">
+            <div class="col-12 mb-2">
+              <input type="date" class="form-control col-12" [(ngModel)]="from" />
+            </div>
+          </div>
+        </div>
+        <div class="col-12 center card mt-2">
+          <label class="form-label text-center mt-1">Hasta:</label>
+          <div class="row">
+            <div class="col-12 mb-2">
+              <input type="date" class="form-control col-12" [(ngModel)]="to" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pie del diálogo -->
+    <div class="modal-footer p-0 pb-1">
+      <button type="button" class="btn btn-danger col-4" data-dismiss="modal" (click)="deleteFilter()">Quitar</button>
+      <button type="button" class="btn btn-success col-4 me-3" data-dismiss="modal" (click)="filter()">Aplicar</button>
+    </div>
+
   </div>
 </section>

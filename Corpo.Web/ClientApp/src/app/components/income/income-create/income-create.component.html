@@ -1,0 +1,40 @@
+<section class="wrapper">
+  <div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success"><h3 class="text-white text-center">Ingresos</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 card">
+            <div class="row justify-content-center align-content-center">
+              <div class="card-body col-12 text-center">
+                <label class="form-label">Caja Mensual Actual:</label>
+                <p class="text-center">${{monthlyCash}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 card bg-light">
+            <form [formGroup]="formCreate">
+              <div class="row card-body">
+                <div class="col-9 formValidators">
+                  <label class="form-label">Detalle:</label>
+                  <input type="text" class="form-control" formControlName="detail" />
+                </div>
+                <div class="col-3 formValidators">
+                  <label class="form-label">Monto:</label>
+                  <input type="number" class="form-control" formControlName="amount" />
+                  <p *ngIf="send && f.amount.errors?.min">*Debe ingresar un monto mayor a 0.</p>
+                  <p *ngIf="send && f.amount.errors?.max">*Debe ingresar un importe menor o igual a {{monthlyCash}}.</p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Aceptar</button>
+  </div>
+</section>
+

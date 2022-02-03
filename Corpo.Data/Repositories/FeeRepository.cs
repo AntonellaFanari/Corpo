@@ -26,9 +26,9 @@ namespace Corpo.Data.Repositories
             return fee.Id;
         }
 
-        public List<Fee> GetAll()
+        public List<Fee> GetAll(DateTime from, DateTime? to)
         {
-            return _context.Fee.Include(x => x.Member).ToList();
+            return _context.Fee.Include(x => x.Member).Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
         }
 
         public List<Fee> GetAllByIdMember(int id)

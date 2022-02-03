@@ -13,7 +13,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OutflowController : ControllerBase
+    public class OutflowController : CorpoBaseController
     {
         IOutflowService _outflowService;
 
@@ -61,14 +61,15 @@ namespace Corpo.Web.Controllers
         [HttpPost("addOutflow")]
         public ActionResult AddOutflow([FromBody] Outflow outflow)
         {
-            var response = _outflowService.AddOutflow(outflow);
+            var user = GetUser();
+            var response = _outflowService.AddOutflow(user.Id, outflow);
             return this.ToActionResult(response);
         }
 
         [HttpGet("getAllOutflow")]
-        public ActionResult<List<Outflow>> GetAllOutflow()
+        public ActionResult<List<Outflow>> GetAllOutflow(int id)
         {
-            var response = _outflowService.GetAllOutflow();
+            var response = _outflowService.GetAllOutflow(id);
             var listOutflow = ((IEnumerable)response.Result).Cast<Outflow>().ToList();
             return Ok(listOutflow);
         }

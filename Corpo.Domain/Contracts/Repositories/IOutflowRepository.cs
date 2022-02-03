@@ -15,7 +15,7 @@ namespace Corpo.Domain.Contracts.Repositories
         void UpdateOutflowType(OutflowType outflowType);
         OutflowType GetOutflowTypeById(int id);
         void AddOutflow(Outflow outflow);
-        List<Outflow> GetAllOutflow();
+        List<Outflow> GetAllOutflow(DateTime from, DateTime? to);
         Outflow GetOutflowById(int id);
         void DeleteOutflow(int id);
     }

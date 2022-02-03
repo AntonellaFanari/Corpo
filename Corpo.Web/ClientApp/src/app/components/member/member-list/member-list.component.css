@@ -29,6 +29,16 @@ td.text-ajust {
   font-size: 13px;
 }
 
+.date-filter:hover {
+  color: #38c172;
+  cursor: pointer !important;
+}
+
+.view-btn-filter{
+    display: none;
+}
+
+
 
 @media only screen and (max-width: 800px) {
   #no-more-tables td {
@@ -41,5 +51,9 @@ td.text-ajust {
 
   .td-padding-action {
     padding: 0.5rem;
+  }
+
+  .view-btn-filter{
+      display:block;
   }
 }

@@ -14,8 +14,8 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse AddOutflowType(OutflowType outflowType);
         DomainResponse UpdateOutflowType(OutflowType outflowType);
         OutflowType GetOutflowTypeById(int id);
-        DomainResponse AddOutflow(Outflow outflow);
-        DomainResponse GetAllOutflow();
+        DomainResponse AddOutflow(int id, Outflow outflow);
+        DomainResponse GetAllOutflow(int id);
         Outflow GetOutflowById(int id);
         DomainResponse DeleteOutflow(int id);
     }

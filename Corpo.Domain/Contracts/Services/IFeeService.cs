@@ -10,8 +10,8 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IFeeService
     {
-        DomainResponse Add(FeeDto feeDto);
-        DomainResponse GetAll();
+        DomainResponse Add(int id, FeeDto feeDto);
+        DomainResponse GetAll(int id);
         Fee GetById(int id);
         DomainResponse GetAllByIdMember(int id);
     }

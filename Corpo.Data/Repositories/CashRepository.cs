@@ -18,17 +18,17 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
-        public Task<Cash> ById(int id)
+        public Task<Cash> GetById(int id)
         {
             return _context.Cash.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<Cash> LastCash()
+        public Task<Cash> GetLastCash()
         {
             return _context.Cash.OrderBy(x => x.Opening).LastAsync();
         }
 
-        public Task<MonthlyCash> MonthlyCash(DateTime date)
+        public Task<MonthlyCash> GetMonthlyCash(DateTime date)
         {
             return _context.MonthlyCash.FirstOrDefaultAsync(x => x.Date.Month == date.Month && x.Date.Year == date.Year);
         }
@@ -36,7 +36,7 @@ namespace Corpo.Data.Repositories
         public async Task UpdateMonthlyCash(DateTime date, decimal amount, string type)
         {
 
-            var monthlyCash = await MonthlyCash(date);
+            var monthlyCash = await GetMonthlyCash(date);
             if (monthlyCash == null)
             {
                 monthlyCash = await AddMonthlyCash();
@@ -67,7 +67,7 @@ namespace Corpo.Data.Repositories
             
                 _context.Cash.Add(cash);
                 await _context.SaveChangesAsync();
-                var mothlyCash = await this.MonthlyCash(cash.Opening);
+                var mothlyCash = await this.GetMonthlyCash(cash.Opening);
                 if (mothlyCash == null)
                 {
                     await this.AddMonthlyCash();

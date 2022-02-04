@@ -69,6 +69,7 @@ namespace Corpo.Domain.Services
             try
             {
                 var wodTemplateQuery = await _wodTemplateRepository.GetById(wodTemplate.Id);
+                wodTemplateQuery.Name = wodTemplate.Name;
                 wodTemplateQuery.WodGroups = wodTemplate.WodGroups;
                 await _wodTemplateRepository.Update(wodTemplateQuery);
                 return new DomainResponse

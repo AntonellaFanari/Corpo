@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Data.Repositories
 {
-    public class AttendanceRepository: IAttendanceRepository
+    public class AttendanceRepository : IAttendanceRepository
     {
         private CorpoContext _context;
 
@@ -27,7 +27,7 @@ namespace Corpo.Data.Repositories
 
         public void CancelReservation(Attendance attendance)
         {
-           _context.Attendance.Update(attendance);
+            _context.Attendance.Update(attendance);
             _context.SaveChanges();
         }
 
@@ -59,12 +59,12 @@ namespace Corpo.Data.Repositories
 
         private Shift GetShift(int id)
         {
-            return _context.Shift.Include(x=> x.Class).FirstOrDefault(x=> x.Id == id);
+            return _context.Shift.Include(x => x.Class).FirstOrDefault(x => x.Id == id);
         }
 
         public Task<Attendance> GetById(int id)
         {
-            return _context.Attendance.FirstOrDefaultAsync(x=> x.Id == id);
+            return _context.Attendance.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public void Update(Attendance attendance)
@@ -73,46 +73,38 @@ namespace Corpo.Data.Repositories
             _context.SaveChanges();
         }
 
-        public List<DateTime> AttendanceByIdMemberByMonth(int id, int month)
+        public List<DateTime> GetByIdMemberByMonth(int id, int month)
         {
             var date = DateTime.Now;
-            return _context.Attendance.Where(x => x.MemberId == id && x.DateShift.Month == month && x.DateShift<date && x.Status == StatusAttendance.Attended)
+            return _context.Attendance.Where(x => x.MemberId == id && x.DateShift.Month == month && x.DateShift < date && x.Status == StatusAttendance.Attended)
                 .Select(x => x.DateShift).ToList();
         }
 
-        public async Task<List<ReservationDto>> AllReservationsDetail(int id)
+        public async Task<List<ReservationDto>> GetAllReservationsDetail(int id)
         {
-            try
+            var list = await _context.Fee.OrderByDescending(x => x.Date).Where(x => x.MemberId == id).Include(x => x.Member)
+            .Include(x => x.Member.Credit).Include(x => x.Member.Plan)
+            .Include(x => x.Member.Attendance).Select(x => new ReservationDto
             {
-                var list = await _context.Fee.OrderByDescending(x => x.Date).Where(x => x.MemberId == id).Include(x => x.Member)
-                .Include(x => x.Member.Credit).Include(x => x.Member.Plan)
-                .Include(x => x.Member.Attendance).Select(x => new ReservationDto
+                NamePlan = x.PlanName,
+                EntryDate = x.Member.EntryDate,
+                FeeDate = x.Date,
+                Expiration = x.To,
+                Reservations = (List<AttendanceReservationDto>)x.Member.Attendance.Where(y => y.DateShift >= x.Date && y.DateShift <= x.To).OrderByDescending(x => x.DateShift).Select(y => new AttendanceReservationDto
                 {
-                    NamePlan = x.PlanName,
-                    EntryDate = x.Member.EntryDate,
-                    FeeDate = x.Date,
-                    Expiration = x.To,
-                    Reservations = (List<AttendanceReservationDto>)x.Member.Attendance.Where(y => y.DateShift >= x.Date && y.DateShift <= x.To).OrderByDescending(x => x.DateShift).Select(y => new AttendanceReservationDto
-                    {
-                        Id = y.Id,
-                        ShiftId = y.ShiftId,
-                        DateShift = y.DateShift,
-                        Status = y.Status,
-                        DateReservation = y.DateReservation,
-                        DateCancellation = y.DateCancellation,
-                        UsingNegative = y.UsingNegative,
-                        ReturnCredit = y.ReturnCredit,
-                        Shift = _context.Shift.Include(c => c.Class).FirstOrDefault(c => c.Id == y.ShiftId)
-            })
-                }).ToListAsync();
-                return list;
-            }
-            catch (Exception ex)
-            {
+                    Id = y.Id,
+                    ShiftId = y.ShiftId,
+                    DateShift = y.DateShift,
+                    Status = y.Status,
+                    DateReservation = y.DateReservation,
+                    DateCancellation = y.DateCancellation,
+                    UsingNegative = y.UsingNegative,
+                    ReturnCredit = y.ReturnCredit,
+                    Shift = _context.Shift.Include(c => c.Class).FirstOrDefault(c => c.Id == y.ShiftId)
+                })
+            }).ToListAsync();
+            return list;
 
-                throw;
-            }
-            
         }
 
     }

@@ -20,7 +20,7 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> Add()
         {
-            var cashQuery = await _cashRepository.LastCash();
+            var cashQuery = await _cashRepository.GetLastCash();
             var cash = new Cash
             {
                 Opening = DateTime.Now,
@@ -40,9 +40,9 @@ namespace Corpo.Domain.Services
             }
         }
 
-        public async Task<DomainResponse> LastCash()
+        public async Task<DomainResponse> GetLastCash()
         {
-            var response = await _cashRepository.LastCash();
+            var response = await _cashRepository.GetLastCash();
             return new DomainResponse
             {
                 Success = true,
@@ -52,10 +52,10 @@ namespace Corpo.Domain.Services
 
         }
 
-        public async Task<DomainResponse> MonthlyCash()
+        public async Task<DomainResponse> GetMonthlyCash()
         {
             var date = DateTime.Now;
-            var response = await _cashRepository.MonthlyCash(date);
+            var response = await _cashRepository.GetMonthlyCash(date);
             return new DomainResponse
             {
                 Success = true,
@@ -65,7 +65,7 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> UpdateCash(int id, Cash cash)
         {
-            var cashQuery = await _cashRepository.ById(id);
+            var cashQuery = await _cashRepository.GetById(id);
             cashQuery.Closing = DateTime.Now;
             cashQuery.TotalFee = cash.TotalFee;
             cashQuery.TotalSale = cash.TotalSale;

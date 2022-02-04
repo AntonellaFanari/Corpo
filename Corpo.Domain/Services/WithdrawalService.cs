@@ -93,7 +93,7 @@ namespace Corpo.Domain.Services
         //withdrawal
         async public Task<DomainResponse> GetAllWithdrawal(int id)
         {
-            var cash = await _cashRepository.ById(id);
+            var cash = await _cashRepository.GetById(id);
             var response = await _withdrawalRepository.GetAllWithdrawal(cash.Opening, cash.Closing);
             return new DomainResponse
             {

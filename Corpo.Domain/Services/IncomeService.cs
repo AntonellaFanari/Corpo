@@ -53,7 +53,7 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> GetAll(int id)
         {
-            var cash = await _cashRepository.ById(id);
+            var cash = await _cashRepository.GetById(id);
             var response = await _incomeRepository.GetAll(cash.Opening, cash.Closing);
             return new DomainResponse
             {

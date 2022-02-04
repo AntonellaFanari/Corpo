@@ -56,9 +56,9 @@ namespace Corpo.Domain.Services
 
         }
 
-        public DomainResponse AttendanceByIdMemberByMonth(int id, int month)
+        public DomainResponse GetByIdMemberByMonth(int id, int month)
         {
-            var response = _attendanceRepository.AttendanceByIdMemberByMonth(id, month);
+            var response = _attendanceRepository.GetByIdMemberByMonth(id, month);
             return new DomainResponse
             {
                 Success = true,
@@ -154,9 +154,9 @@ namespace Corpo.Domain.Services
 
         }
 
-        public async Task<DomainResponse> AllReservationsDetail(int id)
+        public async Task<DomainResponse> GetAllReservationsDetail(int id)
         {
-            var response = await _attendanceRepository.AllReservationsDetail(id);
+            var response = await _attendanceRepository.GetAllReservationsDetail(id);
             return new DomainResponse
             {
                 Success = true,

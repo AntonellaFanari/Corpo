@@ -16,8 +16,8 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<Attendance> GetById(int id);
         Task<List<AttendanceReservationDto>> GetAllReservations(int id);
         void Update(Attendance attendance);
-        List<DateTime> AttendanceByIdMemberByMonth(int id, int month);
-        Task<List<ReservationDto>> AllReservationsDetail(int id);
+        List<DateTime> GetByIdMemberByMonth(int id, int month);
+        Task<List<ReservationDto>> GetAllReservationsDetail(int id);
 
     }
 }

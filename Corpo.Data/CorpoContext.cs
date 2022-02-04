@@ -56,6 +56,8 @@ namespace Corpo.Data
         public DbSet<Cash> Cash { get; set; }
         public DbSet<Income> Income { get; set; }
         public DbSet<MonthlyCash> MonthlyCash { get; set; }
+        public DbSet<WodMember> WodMember { get; set; }
+        public DbSet<WodGroupMember> WodGroupMember { get; set; }
 
     }
 }

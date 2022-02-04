@@ -22,18 +22,18 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> LastCash()
+        public async Task<ActionResult> GetLastCash()
         {
 
-            var response = await _cashService.LastCash();
+            var response = await _cashService.GetLastCash();
             return this.ToActionResult(response);
         }
 
         [HttpGet("monthly-cash")]
-        public async Task<ActionResult> MonthlyCash()
+        public async Task<ActionResult> GetMonthlyCash()
         {
 
-            var response = await _cashService.MonthlyCash();
+            var response = await _cashService.GetMonthlyCash();
             return this.ToActionResult(response);
         }
 

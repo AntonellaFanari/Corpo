@@ -28,7 +28,7 @@ namespace Corpo.Domain.Services
 
         public DomainResponse GetAll(int id)
         {
-            var cash = _cashRepository.ById(id).Result;
+            var cash = _cashRepository.GetById(id).Result;
             var response = _saleRepository.GetAll(cash.Opening, cash.Closing);
             return new DomainResponse
             {

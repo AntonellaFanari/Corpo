@@ -60,17 +60,17 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("get-by-id-member-by-month")]
-        public ActionResult AttendanceByIdMemberByMonth(int month)
+        public ActionResult GetByIdMemberByMonth(int month)
         {
             var user = GetUser();
-            var response = _attendanceService.AttendanceByIdMemberByMonth(user.Id, month);
+            var response = _attendanceService.GetByIdMemberByMonth(user.Id, month);
             return this.ToActionResult(response);
         }
 
         [HttpGet("all-reservations-detail")]
-        async public Task<ActionResult<List<ReservationDto>>> AllReservationsDetail(int id)
+        async public Task<ActionResult<List<ReservationDto>>> GetAllReservationsDetail(int id)
         {
-            var response = await _attendanceService.AllReservationsDetail(id);
+            var response = await _attendanceService.GetAllReservationsDetail(id);
             return Ok(response);
         }
 

@@ -39,7 +39,7 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Income>> GetByid(int id)
+        public async Task<ActionResult<Income>> GetById(int id)
         {
             var response = await _incomeService.GetById(id);
             return this.ToActionResult(response);

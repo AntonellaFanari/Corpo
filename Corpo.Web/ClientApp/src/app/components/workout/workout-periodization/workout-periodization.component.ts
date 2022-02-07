@@ -58,6 +58,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
   periodizationInit: string = "M";
   selectedWeek: string;
   init: string;
+  type: string;
 
   //public barChartPlugins = [pluginDataLabels];
   constructor() {
@@ -133,13 +134,17 @@ export class WorkoutPeriodizationComponent implements OnInit {
     return this.index;
   }
 
+  openPredominance(){
+    document.getElementById('modal-predominance').click();
+  }
+
   ngOnInit() {
     //Chart.register(ChartDataLabels);
-    /*
-    document.querySelectorAll('td')
-      .forEach(e => e.add9ºListener("click", this.clickHandler.bind(this)));
+    
+    document.querySelectorAll('.periodization td:not(.first-td)')
+      .forEach(e => e.addEventListener("click", this.clickModalHandler.bind(this)));
     this.render();
-*/
+
     var types = ["M", "G"];
     this.renderExpectedChart(types, [50, 50])
   }
@@ -212,6 +217,17 @@ export class WorkoutPeriodizationComponent implements OnInit {
     document.getElementById('modal-detail').click();
   }
 
+  clickModalHandler(td) {
+    this.week = td.target.closest('table').getAttribute("week")
+    this.day = td.target.getAttribute("day");
+    var selected = td.target.innerHTML.split("");
+    this.cbMetabolic = selected.indexOf("M") >= 0;
+    this.cbGymnastic = selected.indexOf("G") >= 0;
+    this.cbStrength = selected.indexOf("S") >= 0;
+    this.cbWeightlifting = selected.indexOf("W") >= 0;
+    document.getElementById('modal-button').click();
+  }
+
   updateValue() {
     this[this.week][this.day] = this.getCheckedCheckboxes();
     var td = document.querySelector("#" + this.week + " td[day='" + this.day + "']");
@@ -219,6 +235,16 @@ export class WorkoutPeriodizationComponent implements OnInit {
     var res = this.getWeekPercentage(this[this.week], this.week)
 
     document.getElementById('modal-detail').click();
+  }
+
+  updateType() {
+    this[this.week][this.day] = this.type;
+    var td = document.querySelector("#" + this.week + " td[day='" + this.day + "']");
+    td.innerHTML = this[this.week][this.day];
+    var res = this.getWeekPercentage(this[this.week], this.week)
+
+    document.getElementById('modal-button').click();
+    this.type = "";
   }
 
   getCheckedCheckboxes() {

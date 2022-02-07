@@ -39,16 +39,36 @@
     </div>
 </section>
 
-<section class="wrapper">
-    <div class="modal-content">
-        <header class="modal-header bg-success">
-            <h3 class="mb text-center text-white">Periodización</h3>
-        </header>
-        <div class="modal-body">
-            <div class="container-fluid">
-                <h3>Semana 1</h3>
-                <section id="no-more-tables" class="tab-pane fade show active">
-                    <table class="table table-bordered table-condensed cf scrollme" id="week1" week="week1">
+<section class="modal-content wrapper">
+    <header class="modal-header bg-success">
+        <h3 class="mb text-center text-white">Periodización</h3>
+    </header>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <h3>Semana 1</h3>
+            <div class="row">
+                <section id="no-more-tables" class="tab-pane fade show active col-4" (click)="openPredominance()">
+                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
+                        week="week2">
+                        <thead class="cf">
+                            <tr>
+                                <th>M</th>
+                                <th>S</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="M" day="monday">80%</td>
+                                <td data-title="S" day="monday">20%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+                        <!--<canvas id="week2-chart"></canvas>-->
+                    </div>
+                </section>
+                <section id="no-more-tables" class="tab-pane fade show active col-8">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week1" week="week1">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>
@@ -62,7 +82,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week1', $event.target.innerHTML)">{{week1.monday}}</td>
+                                <td data-title="Lunes" day="monday" (click)="initWeek('week1', $event.target.innerHTML)"
+                                    class="first-td">
+                                    {{week1.monday}}</td>
                                 <td data-title="Martes" day="tuesday">{{week1.tuesday}}</td>
                                 <td data-title="Miércoles" day="wednesday">{{week1.wednesday}}</td>
                                 <td data-title="Jueves" day="thursday">{{week1.thursday}}</td>
@@ -73,12 +95,29 @@
                         </tbody>
                     </table>
                 </section>
-                <div class="col-12 chart" [style.display]="chartweek1 ? 'block' : 'none'">
-                    <!--<canvas id="week1-chart"></canvas>-->
-                </div>
-                <h3 class="mt-5">Semana 2</h3>
-                <section id="no-more-tables" class="tab-pane fade show active">
-                    <table class="table table-bordered table-condensed cf scrollme" id="week2" week="week2">
+            </div>
+            <div class="col-12 chart" [style.display]="chartweek1 ? 'block' : 'none'">
+                <!--<canvas id="week1-chart"></canvas>-->
+            </div>
+            <h3 class="mt-5">Semana 2</h3>
+            <div class="row">
+                <section id="no-more-tables" class="tab-pane fade show active col-4">
+                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week1"
+                        week="week1">
+                        <thead class="cf">
+                            <tr>
+                                <th>M</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="M" day="monday">80%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section id="no-more-tables" class="tab-pane fade show active col-8">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week2" week="week2">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>
@@ -92,7 +131,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week2', $event.target.innerHTML)">{{week2.monday}}</td>
+                                <td data-title="Lunes" day="monday" (click)="initWeek('week2', $event.target.innerHTML)"
+                                    class="first-td">
+                                    {{week2.monday}}</td>
                                 <td data-title="Martes" day="tuesday">{{week2.tuesday}}</td>
                                 <td data-title="Miércoles" day="wednesday">{{week2.wednesday}}</td>
                                 <td data-title="Jueves" day="thursday">{{week2.thursday}}</td>
@@ -106,9 +147,33 @@
                         <!--<canvas id="week2-chart"></canvas>-->
                     </div>
                 </section>
-                <h3 class="mt-5">Semana 3</h3>
-                <section id="no-more-tables" class="tab-pane fade show active">
-                    <table class="table table-bordered table-condensed cf scrollme" id="week3" week="week3">
+            </div>
+            <h3 class="mt-5">Semana 3</h3>
+
+            <div class="row">
+                <section id="no-more-tables" class="tab-pane fade show active col-4">
+                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
+                        week="week2">
+                        <thead class="cf">
+                            <tr>
+                                <th>M</th>
+                                <th>S</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="M" day="monday">80%</td>
+                                <td data-title="S" day="monday">20%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+                        <!--<canvas id="week2-chart"></canvas>-->
+                    </div>
+                </section>
+
+                <section id="no-more-tables" class="tab-pane fade show active col-8">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week3" week="week3">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>
@@ -122,7 +187,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week3', $event.target.innerHTML)">{{week3.monday}}</td>
+                                <td data-title="Lunes" day="monday" (click)="initWeek('week3', $event.target.innerHTML)"
+                                    class="first-td">
+                                    {{week3.monday}}</td>
                                 <td data-title="Martes" day="tuesday">{{week3.tuesday}}</td>
                                 <td data-title="Miércoles" day="wednesday">{{week3.wednesday}}</td>
                                 <td data-title="Jueves" day="thursday">{{week3.thursday}}</td>
@@ -132,12 +199,34 @@
                         </tbody>
                     </table>
                 </section>
-                <div class="col-12 chart" [style.display]="chartweek3 ? 'block' : 'none'">
-                    <!--<canvas id="week3-chart"></canvas>-->
-                </div>
-                <h3 class="mt-5">Semana 4</h3>
-                <section id="no-more-tables" class="tab-pane fade show active">
-                    <table class="table table-bordered table-condensed cf scrollme" id="week4" week="week4">
+            </div>
+            <div class="col-12 chart" [style.display]="chartweek3 ? 'block' : 'none'">
+                <!--<canvas id="week3-chart"></canvas>-->
+            </div>
+            <h3 class="mt-5">Semana 4</h3>
+            <div class="row">
+                <section id="no-more-tables" class="tab-pane fade show active col-4">
+                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
+                        week="week2">
+                        <thead class="cf">
+                            <tr>
+                                <th>M</th>
+                                <th>S</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="M" day="monday">80%</td>
+                                <td data-title="S" day="monday">20%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+                        <!--<canvas id="week2-chart"></canvas>-->
+                    </div>
+                </section>
+                <section id="no-more-tables" class="tab-pane fade show active col-8">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week4" week="week4">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>
@@ -151,7 +240,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week4', $event.target.innerHTML)">{{week4.monday}}</td>
+                                <td data-title="Lunes" day="monday" (click)="initWeek('week4', $event.target.innerHTML)"
+                                    class="first-td">
+                                    {{week4.monday}}</td>
                                 <td data-title="Martes" day="tuesday">{{week4.tuesday}}</td>
                                 <td data-title="Miércoles" day="wednesday">{{week4.wednesday}}</td>
                                 <td data-title="Jueves" day="thursday">{{week4.thursday}}</td>
@@ -162,34 +253,72 @@
                         </tbody>
                     </table>
                 </section>
-                <div class="col-12 chart" [style.display]="chartweek4 ? 'block' : 'none'">
-                    <!--<canvas id="week4-chart"></canvas>-->
-                </div>
-            </div>
-            <div class="container-fluid d-none">
-                <div class="row">
-                    <div class="col-6 chart">
-                        <canvas id="expected-chart"></canvas>
-                    </div>
-                    <div class="col-6 chart">
-                        <canvas id="actual-chart"></canvas>
-                    </div>
-                </div>
             </div>
             <div class="col-12 chart" [style.display]="chartweek4 ? 'block' : 'none'">
                 <!--<canvas id="week4-chart"></canvas>-->
             </div>
-            <div class="container-fluid">
-                <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/plan-list']">
+        </div>
+        <div class="container-fluid d-none">
+            <div class="row">
+                <div class="col-6 chart">
+                    <canvas id="expected-chart"></canvas>
+                </div>
+                <div class="col-6 chart">
+                    <canvas id="actual-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 chart" [style.display]="chartweek4 ? 'block' : 'none'">
+            <!--<canvas id="week4-chart"></canvas>-->
+        </div>
+        <div class="container-fluid">
+            <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/plan-list']">
+                Cancelar
+            </button>
+            <button class="btn btn-success pull-right mt-2" type="submit" (click)="calculate()">
+                Guardar
+            </button>
+        </div>
+    </div>
+</section>
+
+
+
+<button id="modal-predominance" data-toggle="modal" href="#predominance" class="d-none">abrir</button>
+
+<div class="modal fade" id="predominance">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- cabecera del diálogo -->
+            <div class="modal-header modal-title">
+                <h4 class="modal-title">Seleccionar</h4>
+                <button type="button" class="close" data-dismiss="modal">X</button>
+            </div>
+            <!-- cuerpo del diálogo -->
+            <div class="modal-body">
+                <div class="form-group mt-3">
+                    <label class="control-label">Detalle:</label>
+                    <div class="formValidators">
+                        <input type="text" class="form-control" [(ngModel)]="type"
+                            (ngModelChange)="type = $event.toUpperCase()">
+                    </div>
+                </div>
+            </div>
+            <!-- pie del diálogo -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
                     Cancelar
                 </button>
-                <button class="btn btn-success pull-right mt-2" type="submit" (click)="calculate()">
-                    Guardar
+                <button type="button" class="btn btn-success" (click)="updateType()">
+                    Aceptar
                 </button>
             </div>
         </div>
     </div>
-</section>
+</div>
+
+
+<button id="modal-button" data-toggle="modal" href="#modal" class="d-none">abrir</button>
 
 <div class="modal fade" id="modal">
     <div class="modal-dialog">
@@ -201,22 +330,12 @@
             </div>
             <!-- cuerpo del diálogo -->
             <div class="modal-body">
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-metabolic" [(ngModel)]="cbMetabolic" />
-                    <label for="cb-metabolic" class="cb-label">metabolic</label>
-                </div>
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-gymnastic" [(ngModel)]="cbGymnastic" />
-                    <label for="cb-gymnastic" class="cb-label">gymnastic</label>
-                </div>
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-strength" [(ngModel)]="cbStrength" />
-                    <label for="cb-strength" class="cb-label">strength</label>
-                </div>
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-weightlifting" [(ngModel)]="cbWeightlifting"
-                        (change)="modalWeightlifting=!modalWeightlifting" />
-                    <label for="cb-weightlifting" class="cb-label">weightlifting</label>
+                <div class="form-group mt-3">
+                    <label class="control-label">Detalle:</label>
+                    <div class="formValidators">
+                        <input type="text" class="form-control" [(ngModel)]="type"
+                            (ngModelChange)="type = $event.toUpperCase()">
+                    </div>
                 </div>
             </div>
             <!-- pie del diálogo -->
@@ -224,7 +343,7 @@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
                     Cancelar
                 </button>
-                <button type="button" class="btn btn-success" (click)="updateValue()">
+                <button type="button" class="btn btn-success" (click)="updateType()">
                     Aceptar
                 </button>
             </div>
@@ -244,11 +363,11 @@
             </div>
             <!-- cuerpo del diálogo -->
             <div class="modal-body">
-               
+
 
                 <fieldset class="radio-group">
                     <label>
-                        <input type="radio" name="numero" value="M" [(ngModel)]="init"  class="cb-label"> M
+                        <input type="radio" name="numero" value="M" [(ngModel)]="init" class="cb-label"> M
                     </label>
                     <label>
                         <input type="radio" name="numero" value="G" [(ngModel)]="init" class="cb-label"> G
@@ -260,7 +379,7 @@
                         <input type="radio" name="numero" value="S" [(ngModel)]="init" class="cb-label"> S
                     </label>
                 </fieldset>
-<!--
+                <!--
                 <div class="form-group mt-3">
                     <label class="control-label">Inicio:</label>
                     <div class="formValidators">

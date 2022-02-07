@@ -116,6 +116,11 @@ import { WodTemplateListComponent } from './components/workout/wod-template/wod-
 import { WodTemplateComponent } from './components/workout/wod-template/wod-template-create/wod-template.component';
 import { WodTemplateFormComponent } from './components/workout/wod-template/wod-template-form/wod-template-form.component';
 import { WorkoutPeriodizationComponent } from './components/workout/workout-periodization/workout-periodization.component';
+import { AssignmentListComponent } from './components/workout/assignment-list/assignment-list.component';
+import { AssignmentWodComponent } from './components/workout/assignment-wod/assignment-wod.component';
+import { AssignmentMemberComponent } from './components/workout/assignment-member/assignment-member.component';
+import { AssignmentTemplateComponent } from './components/workout/assignment-template/assignment-template.component';
+import { AssignmentTemplateFormComponent } from './components/workout/assignment-template-form/assignment-template-form.component';
 
 @NgModule({
   declarations: [
@@ -224,7 +229,12 @@ import { WorkoutPeriodizationComponent } from './components/workout/workout-peri
     WodTemplateListComponent,
     WodTemplateFormComponent,
     WorkoutPeriodizationComponent,
-    IncomeDetailComponent
+    IncomeDetailComponent,
+    AssignmentListComponent,
+    AssignmentWodComponent,
+    AssignmentMemberComponent,
+    AssignmentTemplateComponent,
+    AssignmentTemplateFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -311,7 +321,9 @@ import { WorkoutPeriodizationComponent } from './components/workout/workout-peri
       { path: 'listado-informe-socios', component: MemberReportListComponent },
       { path: 'reservas', component: ReservationsComponent },
       { path: 'caja-diaria', component: DailyCashComponent },
-      { path: 'caja-detalle', component: CashDetailComponent }
+      { path: 'caja-detalle', component: CashDetailComponent },
+      { path: 'asignacion-wod', component: AssignmentListComponent },
+      { path: 'asignacion-plantilla', component: AssignmentTemplateComponent }
     ])
   ],
   entryComponents: [

@@ -37,8 +37,14 @@
           </li>
           <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/wod-template-list']">
-              <i class="fa fa-user"></i>
+              <i class="fas fa-dumbbell"></i>
               Plantillas WOD
+            </a>
+          </li>
+          <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+            <a [routerLink]="['/asignacion-wod']">
+              <i class="fa fa-dumbbell"></i>
+              WOD
             </a>
           </li>
           <li *access="'deudas'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">

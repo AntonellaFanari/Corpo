@@ -13,5 +13,10 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> GetMonthlyCash();
         Task<DomainResponse> UpdateCash(int id, Cash cash);
         Task<DomainResponse> Add();
+        Task<DomainResponse> GetCashCurrentMonth();
+        Task<DomainResponse> GetCash(DateTime from, DateTime to);
+        Task<DomainResponse> GetById(int id);
+        Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing);
     }
+
 }

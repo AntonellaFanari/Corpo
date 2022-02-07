@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,51 @@ namespace Corpo.Data.Repositories
                     await this.AddMonthlyCash();
                 }
          
+        }
+
+        public Task<List<Cash>> GetCashCurrentMonth()
+        {
+            var date = DateTime.Now;
+            return _context.Cash.Where(x => x.Opening.Month == date.Month).ToListAsync();
+        }
+
+        public Task<List<Cash>> GetCash(DateTime from, DateTime to)
+        {
+            return _context.Cash.Where(x => x.Opening >= from && x.Opening <= to).ToListAsync();
+        }
+
+        public async Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime closing)
+        {
+            var list = new List<RecordCashDto>();
+            try
+            {
+                var fees = await _context.Fee.Include(x => x.Member).Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = "Cuota " + x.PlanName,
+                    Amount = x.Pay,
+                    Member = x.Member.LastName + " " + x.Member.Name,
+                    User = "hjfjjj",
+                }).ToListAsync();
+                list = fees;
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+            //list.Add(fees);
+            //var sales = await _context.Sale.Include(x => x.Member).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
+            //list.Add(sales);
+            //var incomes = await _context.Income.Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
+            //list.Add(incomes);
+            //var outflows = await _context.Outflow.Include(x => x.User).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
+            //list.Add(outflows);
+            //var withdrawals = await _context.Withdrawal.Include(x => x.User).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
+            //list.Add(withdrawals);
         }
     }
 }

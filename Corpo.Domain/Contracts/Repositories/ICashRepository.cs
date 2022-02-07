@@ -1,4 +1,5 @@
 ﻿using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,8 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<MonthlyCash> AddMonthlyCash();
         Task UpdateCash(Cash cash);
         Task AddCash(Cash cash);
+        Task<List<Cash>> GetCashCurrentMonth();
+        Task<List<Cash>> GetCash(DateTime from, DateTime to);
+        Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime closing);
     }
 }

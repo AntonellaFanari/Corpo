@@ -71,6 +71,7 @@
     <None Remove="ClientApp\src\app\domain\promotion-another-member.ts" />
     <None Remove="ClientApp\src\app\domain\promotion.ts" />
     <None Remove="ClientApp\src\app\domain\purchase.ts" />
+    <None Remove="ClientApp\src\app\domain\record-cash.ts" />
     <None Remove="ClientApp\src\app\domain\reservation.ts" />
     <None Remove="ClientApp\src\app\domain\role-access.ts" />
     <None Remove="ClientApp\src\app\domain\role.ts" />
@@ -128,6 +129,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\product.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\promotion.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\purchase.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\record-cash.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\reservation.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role-access.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\medical-history.ts" />

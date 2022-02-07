@@ -271,7 +271,7 @@ export class CashFormComponent implements OnInit {
     cash.totalOutflow = this.outflowTotalPay;
     cash.totalWithdrawal = this.withdrawalTotal;
     cash.totalIncome = this.incomeTotal;
-    this.cashService.close(this.cash.id, cash).subscribe(
+    this.cashService.toClose(this.cash.id, cash).subscribe(
       result => {
         console.log(result);
         this.openingView = true;
@@ -290,7 +290,7 @@ export class CashFormComponent implements OnInit {
   }
 
   openingCash() {
-    this.cashService.openingCash().subscribe(
+    this.cashService.toOpen().subscribe(
       result => {
         console.log(result);
         this.id = result.id;

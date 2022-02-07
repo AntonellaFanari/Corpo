@@ -1,0 +1,76 @@
+<section class="wrapper">
+  <div class="task-panel ">
+    <h4 class="table-title">Detalle Caja Diaria</h4>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-12">
+      <section id="no-more-tables" *ngIf="cash">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table table-bordered table-condensed cf user-table">
+            <thead class="cf">
+              <tr>
+                <th colspan="4" class="text-center">Resumen del día 01/02/2022</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme span-margin text-center">
+                <td colspan="1"><strong>Total Entradas</strong></td>
+                <td colspan="1"><span>{{inflowsTotal}}</span></td>
+                <td colspan="1"><strong>Total Salidas</strong></td>
+                <td colspan="1"><span>{{outflowsTotal}}</span></td>
+              </tr>
+              <tr class="scrollme span-margin text-center">
+                <td><strong>Caja Inicial</strong></td>
+                <td><span>{{cash.startingBalance}}</span></td>
+                <td><strong>Caja Final</strong></td>
+                <td><span>{{cash.endingBalance}}</span></td>
+              </tr>
+              <tr class="scrollme span-margin text-center">
+                <td><strong>Total</strong></td>
+                <td><span>{{inflowsTotal + cash.startingBalance}}</span></td>
+                <td><strong>Total</strong></td>
+                <td><span>{{outflowsTotal + cash.endingBalance}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12">
+      <section id="no-more-tables">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table table-bordered table-condensed table-striped cf mb-0 user-table">
+            <thead class="cf">
+              <tr>
+                <th class="numeric">Fecha</th>
+                <th class="numeric">Detalle</th>
+                <th class="numeric">Monto</th>
+                <th class="numeric">Socio</th>
+                <th class="numeric">Cajero</th>
+                <th class="numeric">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme span-margin" *ngFor="let record of recordCashs" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
+                <td class="td-title" data-title="Fecha"><span>{{record.date}}</span></td>
+                <td class="td-title" data-title="Detalle"><span>{{record.detail}}</span></td>
+                <td class="td-title" data-title="Monto"><span>{{record.amount}}</span></td>
+                <td class="td-title" data-title="Socio"><span>{{record.member}}</span></td>
+                <td class="td-title" data-title="Cajero"><span>{{record.user}}</span></td>
+                <td data-title="Acción">                 
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(record.id)"><i class="fa fa-trash-o "></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
+  </div>
+</section>

@@ -110,6 +110,8 @@ import { MemberReportListComponent } from './components/reports/member-report-li
 import { ReservationsComponent } from './components/member/reservations/reservations.component';
 import { IncomeCreateComponent } from './components/income/income-create/income-create.component';
 import { IncomeDetailComponent } from './components/income/income-detail/income-detail.component';
+import { DailyCashComponent } from './components/reports/cash/daily-cash/daily-cash.component';
+import { CashDetailComponent } from './components/reports/cash/cash-detail/cash-detail.component';
 
 @NgModule({
   declarations: [
@@ -212,7 +214,9 @@ import { IncomeDetailComponent } from './components/income/income-detail/income-
     MemberReportListComponent,
     ReservationsComponent,
     IncomeCreateComponent,
-    IncomeDetailComponent
+    IncomeDetailComponent,
+    DailyCashComponent,
+    CashDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -294,7 +298,9 @@ import { IncomeDetailComponent } from './components/income/income-detail/income-
       { path: 'noticia-crear', component: NewsCreateComponent },
       { path: 'noticia-editar', component: NewsEditComponent },
       { path: 'listado-informe-socios', component: MemberReportListComponent },
-      { path: 'reservas', component: ReservationsComponent }
+      { path: 'reservas', component: ReservationsComponent },
+      { path: 'caja-diaria', component: DailyCashComponent },
+      { path: 'caja-detalle', component: CashDetailComponent }
     ])
   ],
   entryComponents: [

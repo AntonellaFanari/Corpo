@@ -1,0 +1,66 @@
+<section class="wrapper">
+  <div class="task-panel ">
+    <h4 class="table-title">Caja Diaria</h4>
+  </div>
+  <hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 card bg-light">
+        <div class="row card-body">
+          <div class="col-lg-12">
+            <div class="card-body row">
+              <div class=" col-12 col-lg-4 pull-left mt-3">
+                <label class="form-label">Desde:</label>
+                <input type="date" class="form-control col-6" [(ngModel)]="from" />
+              </div>
+              <div class="col-12 col-lg-4 pull-right mt-3">
+                <label class="form-label">Hasta:</label>
+                <input type="date" class="form-control col-6" [(ngModel)]="to" />
+              </div>
+              <div class="col-12 col-lg-4 pull-right mt-4">
+                <div class="mt-4">
+                  <button type="button" class="btn btn-primary form-control col-6 pull-right" (click)="getCashFromTo()">Consultar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12">
+      <section id="no-more-tables">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table table-bordered table-condensed table-striped cf mb-0 user-table">
+            <thead class="cf">
+              <tr>
+                <th class="numeric">Dia</th>
+                <th class="numeric">CI</th>
+                <th class="numeric">Cuotas</th>
+                <th class="numeric">Ventas</th>
+                <th class="numeric">Ingresos</th>
+                <th class="numeric">Egresos</th>
+                <th class="numeric">Retiros</th>
+                <th class="numeric">Saldo Caja</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme span-margin" *ngFor="let cash of cashs" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
+                <td class="td-title" data-title="Fecha"><span>{{cash.opening}}</span></td>
+                <td class="td-title" data-title="Cupo"><span>{{cash.startingBalance}}</span></td>
+                <td class="td-title" data-title="Clase"><span>{{cash.totalFee}}</span></td>
+                <td class="td-title" data-title="Fecha"><span>{{cash.totalSale}}</span></td>
+                <td class="td-title" data-title="Cupo"><span>{{cash.totalIncome}}</span></td>
+                <td class="td-title" data-title="Fecha"><span>{{cash.totalOutflow}}</span></td>
+                <td class="td-title" data-title="Clase"><span>{{cash.totalWithdrawal}}</span></td>
+                <td class="td-title" data-title="Clase"><span>{{cash.endingBalance}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+     </div>
+    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
+  </div>
+</section>

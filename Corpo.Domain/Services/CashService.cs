@@ -40,6 +40,46 @@ namespace Corpo.Domain.Services
             }
         }
 
+        public async Task<DomainResponse> GetById(int id)
+        {
+            var response = await _cashRepository.GetById(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetCash(DateTime from, DateTime to)
+        {
+            var response = await _cashRepository.GetCash(from, to);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetCashCurrentMonth()
+        {
+            var response = await _cashRepository.GetCashCurrentMonth();
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing)
+        {
+            var response = await _cashRepository.GetDetailed(opening, closing);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
         public async Task<DomainResponse> GetLastCash()
         {
             var response = await _cashRepository.GetLastCash();

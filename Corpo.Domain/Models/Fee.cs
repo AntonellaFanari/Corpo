@@ -10,6 +10,7 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public virtual User User { get; set; }
         public int UserId { get; set; }
         public virtual Member Member { get; set; }
         public int MemberId { get; set; }

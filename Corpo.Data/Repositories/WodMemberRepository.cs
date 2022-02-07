@@ -20,9 +20,16 @@ namespace Corpo.Data.Repositories
 
         public async Task Add(WodMember wodMember)
         {
+            try
+            {
+                await _context.WodMember.AddAsync(wodMember);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
 
-            await _context.WodMember.AddAsync(wodMember);
-            await _context.SaveChangesAsync();
+            }
+            
         }
 
         public async Task<List<WodMember>> GetAllWodMember(int id, DateTime from, DateTime to)

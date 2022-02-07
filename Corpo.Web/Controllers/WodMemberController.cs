@@ -42,7 +42,7 @@ namespace Corpo.Web.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}/{from}/{to}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<List<WodMember>>> GetAllWodMember(int id, DateTime from, DateTime to)
         {
             var response = await _wodMemberService.GetAllWodMember(id, from, to);

@@ -9,7 +9,7 @@ export class SearchFilterNamePipe implements PipeTransform {
     if (arg == '') return value;
     const resultFilter = [];
     for (const x of value) {
-      if (x.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+      if ((x.name) && (x.name.toLowerCase().indexOf(arg.toLowerCase()) > -1)) {
         resultFilter.push(x);
       }
     };

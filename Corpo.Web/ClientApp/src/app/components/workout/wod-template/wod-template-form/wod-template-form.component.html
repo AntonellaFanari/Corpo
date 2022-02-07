@@ -1,0 +1,112 @@
+<section>
+
+  <div class="form-group mt-3">
+    <label class="control-label">Nombre:</label>
+    <div class="formValidators">
+      <input type="text" class="form-control" [(ngModel)]="name">    
+    </div>
+  </div>
+
+
+  <div class="form-group mt-3">
+    <label class="control-label">Ejercicio:</label>
+    <div class="">
+      <ng-select class="custom" [items]="exercises" [(ngModel)]="selectedExercise" bindLabel="name" bindValue="id">
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <label class="control-label">Modalidad:</label>
+    <div class="">
+      <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"></ng-select>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <label class="control-label">Unidades:</label>
+    <div class="formValidators">
+      <input type="text" class="form-control" [(ngModel)]="units">    
+    </div>
+  </div>
+
+  <div class="button-box">
+    <button class="btn btn-secondary mr-2" (click)="addwodGroup()">Agregar grupo</button>
+    <button class="btn btn-success" (click)="addExercise()">Agregar ejercicio</button>
+  </div>
+
+  <div cdkDropList  (cdkDropListDropped)="drop($event)" *ngIf="wod">
+    <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i" (click)="setActiveWodGroup(i)"
+      [class.active-group]="i == activeWodGroup" cdkDrag>
+      <button class="x bg-danger" (click)="deleteGroup(i)">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+
+      <a [routerLink]="" (click)="editGroupDetail(group.detail)" class="group-detail">
+        <label>{{group.detail}} <i class="fa fa-edit"></i></label>
+      </a>
+
+      <div class="">
+        <table class="table table-bordered">
+          <tbody>
+            <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
+              <td class="col-10">
+                {{exerciseItem.exercise.name}} {{((exerciseItem.modality.name != "Repeticiones") ?
+                exerciseItem.modality.name : "")}} {{exerciseItem.units}} {{exerciseItem.modality.unit}}
+              </td>
+              <td class="col-2 action-column">
+                <a [routerLink]="" (click)="deleteItem(i,ei)" class="delete-button">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="div-btn-create">
+      <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" (click)="goBack()">Cancelar</button>
+      <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="save()">Guardar</button>
+    </div>
+  </div>
+</section>
+
+
+<button type="button" class="btn btn-primary d-none" id="group-name-modal" data-bs-toggle="modal"
+  data-bs-target="#myModal"></button>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Nuevo grupo</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-group mt-3">
+          <label class="control-label">Detalle:</label>
+          <div class="formValidators">
+            <input type="text" class="form-control" [(ngModel)]="detail"
+              (ngModelChange)="detail = $event.toUpperCase()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="addwodGroup()"
+          *ngIf="!editDetail">Crear</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="editwodGroup()"
+          *ngIf="editDetail">Guardar</button>
+      </div>
+
+    </div>
+  </div>
+</div>                                                                      

@@ -103,13 +103,17 @@ import { MyReservationsComponent } from './components/user-menu/my-reservations/
 import { NewsCreateComponent } from './components/news/news-create/news-create.component';
 import { NewsEditComponent } from './components/news/news-edit/news-edit.component';
 import { NewsListComponent } from './components/news/news-list/news-list.component';
-import { WodTemplateComponent } from './components/workout/wod-template/wod-template.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MemberReportComponent } from './components/reports/member-report/member-report.component';
 import { MemberReportListComponent } from './components/reports/member-report-list/member-report-list.component';
 import { ReservationsComponent } from './components/member/reservations/reservations.component';
 import { IncomeCreateComponent } from './components/income/income-create/income-create.component';
 import { IncomeDetailComponent } from './components/income/income-detail/income-detail.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { WodTemplateListComponent } from './components/workout/wod-template/wod-template-list/wod-template-list.component';
+import { WodTemplateComponent } from './components/workout/wod-template/wod-template-create/wod-template.component';
+import { WodTemplateFormComponent } from './components/workout/wod-template/wod-template-form/wod-template-form.component';
+import { WorkoutPeriodizationComponent } from './components/workout/workout-periodization/workout-periodization.component';
 
 @NgModule({
   declarations: [
@@ -212,11 +216,15 @@ import { IncomeDetailComponent } from './components/income/income-detail/income-
     MemberReportListComponent,
     ReservationsComponent,
     IncomeCreateComponent,
+    WodTemplateListComponent,
+    WodTemplateFormComponent,
+    WorkoutPeriodizationComponent,
     IncomeDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    DragDropModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
@@ -228,6 +236,8 @@ import { IncomeDetailComponent } from './components/income/income-detail/income-
       { path: 'counter', component: CounterComponent },
       { path: 'member-report', component: MemberReportComponent },
       { path: 'wod-template', component: WodTemplateComponent },
+      { path: 'wod-template-list', component: WodTemplateListComponent },
+      { path: 'periodizacion', component: WorkoutPeriodizationComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },

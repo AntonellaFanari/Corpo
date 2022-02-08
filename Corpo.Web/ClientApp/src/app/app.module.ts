@@ -121,6 +121,11 @@ import { AssignmentWodComponent } from './components/workout/assignment-wod/assi
 import { AssignmentMemberComponent } from './components/workout/assignment-member/assignment-member.component';
 import { AssignmentTemplateComponent } from './components/workout/assignment-template/assignment-template.component';
 import { AssignmentTemplateFormComponent } from './components/workout/assignment-template-form/assignment-template-form.component';
+import { ModalityCreateComponent } from './components/modality/modality-create/modality-create.component';
+import { ModalityEditComponent } from './components/modality/modality-edit/modality-edit.component';
+import { ModalityListComponent } from './components/modality/modality-list/modality-list.component';
+import { ModalityDetailComponent } from './components/modality/modality-detail/modality-detail.component';
+import { Modality } from './domain/wod/modality';
 
 @NgModule({
   declarations: [
@@ -234,7 +239,11 @@ import { AssignmentTemplateFormComponent } from './components/workout/assignment
     AssignmentWodComponent,
     AssignmentMemberComponent,
     AssignmentTemplateComponent,
-    AssignmentTemplateFormComponent
+    AssignmentTemplateFormComponent,
+    ModalityCreateComponent,
+    ModalityEditComponent,
+    ModalityListComponent,
+    ModalityDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -323,7 +332,10 @@ import { AssignmentTemplateFormComponent } from './components/workout/assignment
       { path: 'caja-diaria', component: DailyCashComponent },
       { path: 'caja-detalle', component: CashDetailComponent },
       { path: 'asignacion-wod', component: AssignmentListComponent },
-      { path: 'asignacion-plantilla', component: AssignmentTemplateComponent }
+      { path: 'asignacion-plantilla', component: AssignmentTemplateComponent },
+      { path: 'modalidades-list', component: ModalityListComponent },
+      { path: 'modalidad-crear', component: ModalityCreateComponent },
+      { path: 'modalidad-editar', component: ModalityEditComponent }
     ])
   ],
   entryComponents: [

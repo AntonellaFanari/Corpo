@@ -102,11 +102,12 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/egresos-list']">Egresos</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/retiros-list']">Retiros</a></li>
               <li class="nav-item dropend sub-menu dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown2" data-bs-toggle="dropdown" role="button">WODS</a>
+                <a class="nav-link dropdown-toggle" id="dropdown2" data-bs-toggle="dropdown" role="button" onclick="event.stopPropagation()">WODS</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown2">
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/categorias-list']">Categorias</a></li>
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/tags-list']">Tags</a></li>
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/modalidades-list']">Modalidades</a></li>
                 </ul>
               </li>
             </ul>

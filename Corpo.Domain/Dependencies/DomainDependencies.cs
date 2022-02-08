@@ -37,6 +37,7 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<ICashService, CashService>();
             services.AddTransient<IWodMemberService, WodMemberService>();
+            services.AddTransient<IModalityService, ModalityService>();
         }
     }
 }

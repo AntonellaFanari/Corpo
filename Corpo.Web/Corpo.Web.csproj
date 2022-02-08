@@ -44,6 +44,7 @@
     <None Remove="ClientApp\src\app\domain\credit.ts" />
     <None Remove="ClientApp\src\app\domain\detail-purchase.ts" />
     <None Remove="ClientApp\src\app\domain\details-sale.ts" />
+    <None Remove="ClientApp\src\app\domain\domain-response.ts" />
     <None Remove="ClientApp\src\app\domain\exercise.ts" />
     <None Remove="ClientApp\src\app\domain\fee-dto.ts" />
     <None Remove="ClientApp\src\app\domain\fee-view.ts" />
@@ -87,6 +88,8 @@
     <None Remove="ClientApp\src\app\domain\user.ts" />
     <None Remove="ClientApp\src\app\domain\withdrawal-name.ts" />
     <None Remove="ClientApp\src\app\domain\withdrawal.ts" />
+    <None Remove="ClientApp\src\app\domain\wod-group-member.ts" />
+    <None Remove="ClientApp\src\app\domain\wod-member.ts" />
     <None Remove="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 
@@ -105,6 +108,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\credit.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\detail-purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\domain-response.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\income.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-promotion.ts" />
@@ -148,6 +152,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal-name.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod-group-member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod-member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 

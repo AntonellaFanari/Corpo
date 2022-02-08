@@ -1,9 +1,9 @@
 import { WodGroupMember } from "./wod-group-member";
 
 export class WodMember {
-  id: number;
+  id?: number;
   name: string;
-  wodGroupsMember: WodGroupMember[];
+  wodGroupsMember: WodGroupMember[]=[];
   memberId: number;
   detail: string
 }

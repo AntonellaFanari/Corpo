@@ -42,6 +42,13 @@
             </a>
           </li>
           <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+            <a [routerLink]="['/asignacion-calendario']">
+              <i class="fas fa-dumbbell"></i>
+              Calendario
+            </a>
+          </li>
+          
+          <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/asignacion-wod']">
               <i class="fa fa-dumbbell"></i>
               WOD

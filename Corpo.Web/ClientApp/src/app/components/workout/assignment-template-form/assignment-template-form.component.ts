@@ -85,6 +85,7 @@ export class AssignmentTemplateFormComponent implements OnInit {
   }
 
   addwodGroupModal() {
+    console.log("addwodGroupModal")
     document.getElementById("group-name-modal").click();
   }
 

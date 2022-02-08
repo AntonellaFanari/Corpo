@@ -121,6 +121,8 @@ import { AssignmentWodComponent } from './components/workout/assignment-wod/assi
 import { AssignmentMemberComponent } from './components/workout/assignment-member/assignment-member.component';
 import { AssignmentTemplateComponent } from './components/workout/assignment-template/assignment-template.component';
 import { AssignmentTemplateFormComponent } from './components/workout/assignment-template-form/assignment-template-form.component';
+import { AssignmentCalendarComponent } from './components/workout/assignment-calendar/assignment-calendar.component';
+import { MatButtonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatRippleModule } from '@angular/material';
 import { ModalityCreateComponent } from './components/modality/modality-create/modality-create.component';
 import { ModalityEditComponent } from './components/modality/modality-edit/modality-edit.component';
 import { ModalityListComponent } from './components/modality/modality-list/modality-list.component';
@@ -240,6 +242,7 @@ import { Modality } from './domain/wod/modality';
     AssignmentMemberComponent,
     AssignmentTemplateComponent,
     AssignmentTemplateFormComponent,
+    AssignmentCalendarComponent,
     ModalityCreateComponent,
     ModalityEditComponent,
     ModalityListComponent,
@@ -255,9 +258,16 @@ import { Modality } from './domain/wod/modality';
     NgbCollapseModule,
     NgMultiSelectDropDownModule.forRoot(),
     NgSelectModule,  
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
+      { path: 'asignacion-calendario', component: AssignmentCalendarComponent },
       { path: 'member-report', component: MemberReportComponent },
       { path: 'wod-template', component: WodTemplateComponent },
       { path: 'wod-template-list', component: WodTemplateListComponent },
@@ -342,6 +352,7 @@ import { Modality } from './domain/wod/modality';
     CustomAlertComponent
   ],
   providers: [
+    MatDatepickerModule,
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,

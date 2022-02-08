@@ -47,7 +47,7 @@
         <div class="container-fluid">
             <h3>Semana 1</h3>
             <div class="row">
-                <section id="no-more-tables" class="tab-pane fade show active col-4" (click)="openPredominance()">
+                <section id="no-more-tables" class="tab-pane fade show active col-4">
                     <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
                         week="week2">
                         <thead class="cf">
@@ -107,11 +107,13 @@
                         <thead class="cf">
                             <tr>
                                 <th>M</th>
+                                <th>S</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td data-title="M" day="monday">80%</td>
+                                <td data-title="S" day="monday">20%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -297,7 +299,17 @@
             <!-- cuerpo del diálogo -->
             <div class="modal-body">
                 <div class="form-group mt-3">
-                    <label class="control-label">Detalle:</label>
+                    <label class="control-label">M:</label>
+                    <div class="formValidators">
+                        <input type="text" class="form-control" [(ngModel)]="type"
+                            (ngModelChange)="type = $event.toUpperCase()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group mt-3">
+                    <label class="control-label">S:</label>
                     <div class="formValidators">
                         <input type="text" class="form-control" [(ngModel)]="type"
                             (ngModelChange)="type = $event.toUpperCase()">

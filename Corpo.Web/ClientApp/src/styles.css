@@ -102,3 +102,17 @@ section.wrapper {
   color: #fff !important;
   margin-left: 10px;
 }
+
+::ng-deep .available .mat-calendar-body-cell-content {
+  background-color: rgba(14, 152, 5, 0.25) !important;
+}
+
+::ng-deep .mat-calendar-body-cell[disabled] {
+  pointer-events: none;
+}
+::ng-deep .mat-calendar-body-cell[disabled] .mat-calendar-body-cell-content {
+  background-color: rgba(128, 128, 128, 0.637) !important;
+}
+
+
+

@@ -134,16 +134,28 @@ export class WorkoutPeriodizationComponent implements OnInit {
     return this.index;
   }
 
-  openPredominance(){
+  openPredominance() {
     document.getElementById('modal-predominance').click();
   }
 
   ngOnInit() {
     //Chart.register(ChartDataLabels);
-    
+
     document.querySelectorAll('.periodization td:not(.first-td)')
       .forEach(e => e.addEventListener("click", this.clickModalHandler.bind(this)));
     this.render();
+    document.querySelectorAll(".predominance th")
+      .forEach(e => e.addEventListener("click", () => document.getElementById('modal-predominance').click()));
+    this.render();
+
+    var tds = document.querySelectorAll(".predominance td");
+    for (var i = 0; i < tds.length; i++) {
+      (tds[i] as HTMLTableDataCellElement).contentEditable = 'true';
+      tds[i].addEventListener("blur", (x) => {
+        var value = (x.target as HTMLTableDataCellElement).innerHTML;
+        (x.target as HTMLTableDataCellElement).innerHTML= (value.includes("%") || value == "") ? value : value + "%"
+      })
+    }
 
     var types = ["M", "G"];
     this.renderExpectedChart(types, [50, 50])
@@ -198,7 +210,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
   }
 
   initWeek(weekName: string, selectedTd) {
-    
+
     console.log("weekName: ", weekName)
     console.log("week: ", this[weekName])
     this.init = selectedTd;

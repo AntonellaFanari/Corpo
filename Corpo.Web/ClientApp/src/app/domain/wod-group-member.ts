@@ -1,5 +1,5 @@
 export class WodGroupMember {
-  id: number;
+  id?: number;
   exerciseId: number;
   modalityId: number;
   detail: string;

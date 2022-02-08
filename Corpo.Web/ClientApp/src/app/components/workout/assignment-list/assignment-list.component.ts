@@ -16,6 +16,7 @@ export class AssignmentListComponent implements OnInit {
   currentDate: string;
   from: string;
   to: string;
+  requestingList: boolean;
 
   constructor(private memberService: MemberService, private dp: DatePipe) {
     this.dueDate = this.dp.transform(new Date(), 'yyyy-MM-dd');
@@ -29,13 +30,18 @@ export class AssignmentListComponent implements OnInit {
   }
 
   getAll() {
+    this.requestingList = true;
     this.memberService.getAll().subscribe(
       (result) => {
+        this.requestingList = false;
         console.log(result);
         this.members = result;
         this.getStatusMember();
       },
-      error => console.error(error)
+      error => {
+        this.requestingList = false;
+        console.error(error)
+      }
     );
   }
 

@@ -6,8 +6,10 @@ import { CategoryExercises } from 'src/app/domain/category-exercises';
 import { Exercise } from 'src/app/domain/exercise';
 import { Tag } from 'src/app/domain/tag';
 import { ExerciseItem, Wod, WodGroup, WodTemplate } from 'src/app/domain/wod';
+import { WodMember } from 'src/app/domain/wod-member';
 import { Modality } from 'src/app/domain/wod/modality';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { WodMemberService } from 'src/app/wod/wod-member.service';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
 
 @Component({
@@ -37,13 +39,14 @@ export class WodTemplateFormComponent implements OnInit {
   selectedModality: number;
   units: string;
   name: string
-	detail: string;
-	editDetail: boolean;
+  detail: string;
+  editDetail: boolean;
 
-  
+
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
+    private wodMemberService: WodMemberService,
     private router: Router) {
   }
 
@@ -86,26 +89,27 @@ export class WodTemplateFormComponent implements OnInit {
     this.units = null;
   }
 
-	addwodGroupModal() {
-		document.getElementById("group-name-modal").click();
-	}
+  addwodGroupModal() {
+    console.log("lksdjflds")
+    document.getElementById("group-name-modal").click();
+  }
 
-	addwodGroup() {
-		this.wod.addGroup(new WodGroup(this.createGuid(), this.detail))
-		this.activeWodGroup = this.wod.wodGroups.length - 1;
-		this.detail = "";
-	}
+  addwodGroup() {
+    this.wod.addGroup(new WodGroup(this.createGuid(), this.detail))
+    this.activeWodGroup = this.wod.wodGroups.length - 1;
+    this.detail = "";
+  }
 
-	editwodGroup(){
-		this.wod.wodGroups[this.activeWodGroup].detail = this.detail;
-		this.editDetail = false;
-	}
+  editwodGroup() {
+    this.wod.wodGroups[this.activeWodGroup].detail = this.detail;
+    this.editDetail = false;
+  }
 
-	editGroupDetail(detail) {
-		this.editDetail = true;
-		this.detail = detail;
-		document.getElementById("group-name-modal").click();
-	}
+  editGroupDetail(detail) {
+    this.editDetail = true;
+    this.detail = detail;
+    document.getElementById("group-name-modal").click();
+  }
 
   deleteItem(groupIndex, exerciseIndex) {
     this.wod.wodGroups[groupIndex].exercises.splice(exerciseIndex, 1);
@@ -123,13 +127,30 @@ export class WodTemplateFormComponent implements OnInit {
   }
 
   save() {
-    console.log("this.wod", this.wod)
-    this.wodTemplateService.update(new WodTemplate(this.wod)).subscribe(() => {
+    console.log("this.wod facha", this.wod)
+    this.wodMemberService.add(this.getWod(this.wod)).subscribe(() => {
       console.log("success")
       this.goBackEvent.emit();
     }, error => {
       console.log(error)
     })
+  }
+
+
+  getWod(wod) {
+    var wodMember = new WodMember();
+    wod.wodGroups.forEach(g => {
+      g.exercises.forEach(e => {
+        wodMember.wodGroupsMember.push({
+          detail: g.detail,
+          groupIndex: g.groupIndex,
+          exerciseId: e.exercise.id,
+          modalityId: e.modality.id,
+          units: e.units
+        })
+      })
+    })
+    return wodMember;
   }
 
   goBack() {

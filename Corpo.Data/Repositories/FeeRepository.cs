@@ -33,17 +33,17 @@ namespace Corpo.Data.Repositories
 
         public List<Fee> GetAllByIdMember(int id)
         {
-            return _context.Fee.Where(x => x.MemberId == id).Include(x => x.Member).Include(x => x.Member.Plan).Include(x=>x.Promotion).ToList();
+            return _context.Fee.Where(x => x.MemberId == id).Include(x => x.Member).Include(x => x.Member.Plan).Include(x => x.Promotion).ToList();
         }
 
         public Fee GetById(int id)
         {
-            return _context.Fee.Include(x => x.Member).Include(x=>x.Member.Plan).FirstOrDefault(x => x.Id == id);
+            return _context.Fee.Include(x => x.Member).Include(x => x.Member.Plan).FirstOrDefault(x => x.Id == id);
         }
 
         public DateTime GetLastPayment(int id)
         {
-           var lastFee = _context.Fee.Where(x => x.MemberId == id).OrderBy(x => x.Date).Last();
+            var lastFee = _context.Fee.Where(x => x.MemberId == id).OrderBy(x => x.Date).Last();
             return lastFee.Date;
         }
     }

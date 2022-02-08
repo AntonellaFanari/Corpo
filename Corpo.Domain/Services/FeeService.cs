@@ -52,7 +52,7 @@ namespace Corpo.Domain.Services
 
         }
 
-        private DomainResponse AddFee(FeeDto feeDto, int id,  decimal totalPromotion, int memberId)
+        private DomainResponse AddFee(FeeDto feeDto, int id, decimal totalPromotion, int memberId)
         {
             var credit = new Credit();
             credit.CreditConsumption = feeDto.CreditConsumption;

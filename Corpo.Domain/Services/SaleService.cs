@@ -67,7 +67,7 @@ namespace Corpo.Domain.Services
                     balance.Transaction = sale.Transaction;
                     balance.transactionId = idSale;
                     balance.Balance = sale.Balance;
-                    if (sale.Balance>0)
+                    if (sale.Balance > 0)
                     {
                         balance.Statement = Statement.Unpaid;
                     }
@@ -94,7 +94,7 @@ namespace Corpo.Domain.Services
 
                 return new DomainResponse(false, ex.Message, "No se pudo agregar la venta");
             }
-           
+
         }
 
         public DomainResponse Cancel(int id, CancelSale cancelSale)

@@ -58,6 +58,8 @@ namespace Corpo.Data
         public DbSet<MonthlyCash> MonthlyCash { get; set; }
         public DbSet<WodMember> WodMember { get; set; }
         public DbSet<WodGroupMember> WodGroupMember { get; set; }
+        public DbSet<Periodization> Periodization { get; set; }
+        public DbSet<PeriodizationWeek> PeriodizationWeek { get; set; }
 
     }
 }

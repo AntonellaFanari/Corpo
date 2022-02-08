@@ -70,15 +70,15 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public async Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing)
-        {
-            var response = await _cashRepository.GetDetailed(opening, closing);
-            return new DomainResponse
-            {
-                Success = true,
-                Result = response
-            };
-        }
+        //public async Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing)
+        //{
+        //    var response = await _cashRepository.GetDetailed(opening, closing);
+        //    return new DomainResponse
+        //    {
+        //        Success = true,
+        //        Result = response
+        //    };
+        //}
 
         public async Task<DomainResponse> GetLastCash()
         {

@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20220208194542_ResetFeeTableAndSaleTable")]
+    partial class ResetFeeTableAndSaleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -707,9 +709,6 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Monday")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PeriodizationId")
-                        .HasColumnType("int");
-
                     b.Property<int>("S")
                         .HasColumnType("int");
 
@@ -732,8 +731,6 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PeriodizationId");
 
                     b.ToTable("PeriodizationWeek");
                 });
@@ -1391,17 +1388,6 @@ namespace Corpo.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.PeriodizationWeek", b =>
-                {
-                    b.HasOne("Corpo.Domain.Models.Periodization", "Periodization")
-                        .WithMany("PeriodizationWeeks")
-                        .HasForeignKey("PeriodizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Periodization");
-                });
-
             modelBuilder.Entity("Corpo.Domain.Models.PromotionAnotherMember", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Promotion", "Promotion")
@@ -1589,11 +1575,6 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Fee");
 
                     b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Periodization", b =>
-                {
-                    b.Navigation("PeriodizationWeeks");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Promotion", b =>

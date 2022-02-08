@@ -40,7 +40,7 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPost("add")]
-        public ActionResult Add([FromBody]FeeDto feeDto)
+        public ActionResult Add([FromBody] FeeDto feeDto)
         {
             var user = this.GetUser();
             var response = _feeService.Add(user.Id, feeDto);

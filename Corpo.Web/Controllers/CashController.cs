@@ -76,12 +76,12 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
-        [HttpGet("detailed")]
-        public async Task<ActionResult> GetDetailed(DateTime opening, DateTime closing)
-        {
+        //[HttpGet("detailed")]
+        //public async Task<ActionResult> GetDetailed(DateTime opening, DateTime closing)
+        //{
 
-            var response = await _cashService.GetDetailed(opening, closing);
-            return this.ToActionResult(response);
-        }
+        //    var response = await _cashService.GetDetailed(opening, closing);
+        //    return this.ToActionResult(response);
+        //}
     }
 }

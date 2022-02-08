@@ -87,29 +87,33 @@ namespace Corpo.Data.Repositories
             return _context.Cash.Where(x => x.Opening >= from && x.Opening <= to).ToListAsync();
         }
 
-        public async Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime closing)
-        {
-            var list = new List<RecordCashDto>();
-            try
-            {
-                var fees = await _context.Fee.Include(x => x.Member).Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
-                {
-                    Id = x.Id,
-                    Date = x.Date,
-                    Detail = "Cuota " + x.PlanName,
-                    Amount = x.Pay,
-                    Member = x.Member.LastName + " " + x.Member.Name,
-                    User = "hjfjjj",
-                }).ToListAsync();
-                list = fees;
-                return list;
-            }
-            catch (Exception ex)
-            {
+        //public async Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime closing)
+        //{
+        //    var list = new List<RecordCashDto>();
+        //    try
+        //    {
+        //        var fees = await _context
+        //            .Fee
+        //            .Include(x => x.Member)
+        //            .ThenInclude(x=>x)
+        //            .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
+        //        {
+        //            Id = x.Id,
+        //            Date = x.Date,
+        //            Detail = "Cuota " + x.PlanName,
+        //            Amount = x.Pay,
+        //            Member = x.Member.LastName + " " + x.Member.Name,
+        //            User = "hjfjjj",
+        //        }).ToListAsync();
+        //        list = fees;
+        //        return list;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw;
-            }
-           
+        //        throw;
+        //    }
+
             //list.Add(fees);
             //var sales = await _context.Sale.Include(x => x.Member).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
             //list.Add(sales);
@@ -119,6 +123,6 @@ namespace Corpo.Data.Repositories
             //list.Add(outflows);
             //var withdrawals = await _context.Withdrawal.Include(x => x.User).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
             //list.Add(withdrawals);
+            //}
         }
-    }
 }

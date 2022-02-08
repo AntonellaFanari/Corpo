@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20220208191524_CreatePeriodizationTableAndPeriodizationWeekTable")]
+    partial class CreatePeriodizationTableAndPeriodizationWeekTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,9 +147,6 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
@@ -155,8 +154,6 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SaleId");
 
                     b.ToTable("CancelSale");
                 });
@@ -301,14 +298,9 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("SaleId");
 
                     b.ToTable("DetailsSale");
                 });
@@ -334,58 +326,6 @@ namespace Corpo.Data.Migrations
                     b.HasIndex("CategoryExerciseId");
 
                     b.ToTable("Exercise");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Fee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Credits")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Pay")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PlanName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PromotionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalPromotion")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.HasIndex("PromotionId");
-
-                    b.ToTable("Fee");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.File", b =>
@@ -707,9 +647,6 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Monday")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PeriodizationId")
-                        .HasColumnType("int");
-
                     b.Property<int>("S")
                         .HasColumnType("int");
 
@@ -732,8 +669,6 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PeriodizationId");
 
                     b.ToTable("PeriodizationWeek");
                 });
@@ -886,41 +821,6 @@ namespace Corpo.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleAccess");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Sale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Pay")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("Sale");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Shift", b =>
@@ -1224,17 +1124,6 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.CancelSale", b =>
-                {
-                    b.HasOne("Corpo.Domain.Models.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sale");
-                });
-
             modelBuilder.Entity("Corpo.Domain.Models.DetailPurchase", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Product", "Product")
@@ -1262,15 +1151,7 @@ namespace Corpo.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Corpo.Domain.Models.Sale", "Sale")
-                        .WithMany("DetailsSale")
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Product");
-
-                    b.Navigation("Sale");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Exercise", b =>
@@ -1282,23 +1163,6 @@ namespace Corpo.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("CategoryExercise");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Fee", b =>
-                {
-                    b.HasOne("Corpo.Domain.Models.Member", "Member")
-                        .WithMany("Fee")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Corpo.Domain.Models.Promotion", "Promotion")
-                        .WithMany()
-                        .HasForeignKey("PromotionId");
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Promotion");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.File", b =>
@@ -1391,17 +1255,6 @@ namespace Corpo.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.PeriodizationWeek", b =>
-                {
-                    b.HasOne("Corpo.Domain.Models.Periodization", "Periodization")
-                        .WithMany("PeriodizationWeeks")
-                        .HasForeignKey("PeriodizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Periodization");
-                });
-
             modelBuilder.Entity("Corpo.Domain.Models.PromotionAnotherMember", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Promotion", "Promotion")
@@ -1433,17 +1286,6 @@ namespace Corpo.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Sale", b =>
-                {
-                    b.HasOne("Corpo.Domain.Models.Member", "Member")
-                        .WithMany("Sale")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Shift", b =>
@@ -1585,15 +1427,6 @@ namespace Corpo.Data.Migrations
             modelBuilder.Entity("Corpo.Domain.Models.Member", b =>
                 {
                     b.Navigation("Attendance");
-
-                    b.Navigation("Fee");
-
-                    b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Periodization", b =>
-                {
-                    b.Navigation("PeriodizationWeeks");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Promotion", b =>
@@ -1604,11 +1437,6 @@ namespace Corpo.Data.Migrations
             modelBuilder.Entity("Corpo.Domain.Models.Purchase", b =>
                 {
                     b.Navigation("DetailPurchase");
-                });
-
-            modelBuilder.Entity("Corpo.Domain.Models.Sale", b =>
-                {
-                    b.Navigation("DetailsSale");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.WodMember", b =>

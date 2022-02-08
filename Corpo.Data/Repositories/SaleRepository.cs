@@ -20,13 +20,13 @@ namespace Corpo.Data.Repositories
 
         public List<Sale> GetAll(DateTime from, DateTime? to)
         {
-            return _context.Sale.Include(x=>x.Member).Where(to != null? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
-          
+            return _context.Sale.Include(x => x.Member).Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
+
         }
 
         public List<DetailsSale> GetDetailsSale(int idSale)
         {
-            return _context.DetailsSale.Where(x=>x.SaleId == idSale).Include(x => x.Product).Include(x=>x.Sale).ToList();
+            return _context.DetailsSale.Where(x => x.SaleId == idSale).Include(x => x.Product).Include(x => x.Sale).ToList();
         }
 
         public int Add(Sale sale)
@@ -43,7 +43,7 @@ namespace Corpo.Data.Repositories
             return sale.Id;
         }
 
-        public void Cancel(int id, CancelSale cancelSale )
+        public void Cancel(int id, CancelSale cancelSale)
         {
             var sale = _context.Sale.Find(id);
             sale.Status = Status.Canceled;
@@ -55,13 +55,13 @@ namespace Corpo.Data.Repositories
 
         public CancelSale GetCancelSale(int idSale)
         {
-            var cancelSale = _context.CancelSale.FirstOrDefault(x=>x.SaleId == idSale);
+            var cancelSale = _context.CancelSale.FirstOrDefault(x => x.SaleId == idSale);
             return cancelSale;
         }
 
         public Sale GetSaleById(int id)
         {
-            return _context.Sale.Include(x=>x.Member).FirstOrDefault(x=>x.Id == id);
+            return _context.Sale.Include(x => x.Member).FirstOrDefault(x => x.Id == id);
         }
     }
 }

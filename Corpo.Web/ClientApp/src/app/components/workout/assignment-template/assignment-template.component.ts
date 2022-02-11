@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+import { Periodization } from 'src/app/domain/wod/periodization';
+import { PeriodizationService } from 'src/app/services/wod/periodization.service';
 import { MemberView } from '../../../domain/member-view';
 import { Wod, WodGroup, WodTemplate, wodTemplateResponse } from '../../../domain/wod';
 import { WodGroupMember } from '../../../domain/wod-group-member';
 import { WodMember } from '../../../domain/wod-member';
 import { MemberService } from '../../../services/member.service';
 import { WodTemplateService } from '../../../wod/wod-template.service';
+import { AssignmentCalendarComponent } from '../assignment-calendar/assignment-calendar.component';
 
 @Component({
   selector: 'app-assignment-template',
@@ -13,20 +17,44 @@ import { WodTemplateService } from '../../../wod/wod-template.service';
   styleUrls: ['./assignment-template.component.css']
 })
 export class AssignmentTemplateComponent implements OnInit {
+
+  @ViewChild(AssignmentCalendarComponent, { static: true }) calendar: AssignmentCalendarComponent;
   wodTemplates: WodTemplate[] = [];
   filterName: string = "";
   selectedWod: wodTemplateResponse;
   wod: Wod;
   requestingWod: boolean;
   requestingList: boolean;
-  id: number;
+  memberId: number;
   member: MemberView;
+  newWods: Array<{ date: string, wod: Wod }> = [];
+  periodization: Periodization;
+  requestingPeriodization: boolean;
 
-  constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute, private memberService: MemberService) {
-    this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) });
+  constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
+    private memberService: MemberService,
+    private periodizationService: PeriodizationService) {
+
   }
 
   ngOnInit() {
+
+    this.route.queryParams.subscribe(params => {
+      this.memberId = parseInt(params['memberId'])
+      console.log(this.memberId)
+
+    });
+
+    this.requestingPeriodization = true;
+
+    this.periodizationService.getById(this.memberId).subscribe(data => {
+      console.log("periodization", data)
+      this.requestingPeriodization = false;
+      this.periodization = data.result;
+    }, error => {
+      this.requestingPeriodization = false;
+    })
+
     this.requestingList = true;
     this.wodTemplateService.getAll().subscribe((data) => {
       this.requestingList = false;
@@ -35,12 +63,13 @@ export class AssignmentTemplateComponent implements OnInit {
     }, e => {
       this.requestingList = false;
     })
+
+    console.log("length: ", this.newWods.length)
   }
 
   getMember() {
-    this.memberService.getById(this.id).subscribe(
+    this.memberService.getById(this.memberId).subscribe(
       result => {
-        console.log(result);
         this.member = result;
       },
       error => console.error(error)
@@ -51,6 +80,9 @@ export class AssignmentTemplateComponent implements OnInit {
     this.requestingWod = true;
     this.wodTemplateService.getById(id).subscribe((data) => {
       this.selectedWod = (data.result as wodTemplateResponse);
+      this.calendar.selectedDates.forEach(d => {
+        this.newWods.push({ date: d, wod: this.getWod(this.selectedWod) })
+      })
       this.wod = this.getWod(this.selectedWod)
       this.requestingWod = false;
     }, e => {
@@ -58,8 +90,16 @@ export class AssignmentTemplateComponent implements OnInit {
     })
   }
 
+  cancel() {
+    this.newWods = [];
+  }
+
   cancelWod() {
     this.wod = null;
+  }
+
+  deleteWod(date) {
+    console.log(date)
   }
 
   getWod(wodTemplate: wodTemplateResponse): Wod {
@@ -72,7 +112,6 @@ export class AssignmentTemplateComponent implements OnInit {
     indexes.forEach(i => {
       var wodGroup = new WodGroup();
       var exercises = wodTemplate.wodGroups.filter(x => x.groupIndex == i).map(e => {
-        console.log("modality", e.modality)
         return {
 
           exercise: e.exercise,

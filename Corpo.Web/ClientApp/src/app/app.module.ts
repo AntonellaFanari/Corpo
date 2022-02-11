@@ -122,12 +122,15 @@ import { AssignmentMemberComponent } from './components/workout/assignment-membe
 import { AssignmentTemplateComponent } from './components/workout/assignment-template/assignment-template.component';
 import { AssignmentTemplateFormComponent } from './components/workout/assignment-template-form/assignment-template-form.component';
 import { AssignmentCalendarComponent } from './components/workout/assignment-calendar/assignment-calendar.component';
-import { MatButtonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatRippleModule } from '@angular/material';
+import { MatButtonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatRippleModule, MatTabsModule } from '@angular/material';
 import { ModalityCreateComponent } from './components/modality/modality-create/modality-create.component';
 import { ModalityEditComponent } from './components/modality/modality-edit/modality-edit.component';
 import { ModalityListComponent } from './components/modality/modality-list/modality-list.component';
 import { ModalityDetailComponent } from './components/modality/modality-detail/modality-detail.component';
 import { Modality } from './domain/wod/modality';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WorkoutPeriodizaionEditComponent } from './components/workout/workout-periodizaion-edit/workout-periodizaion-edit.component';
+import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout-periodizaion-detail/workout-periodizaion-detail.component';
 
 @NgModule({
   declarations: [
@@ -246,7 +249,9 @@ import { Modality } from './domain/wod/modality';
     ModalityCreateComponent,
     ModalityEditComponent,
     ModalityListComponent,
-    ModalityDetailComponent
+    ModalityDetailComponent,
+    WorkoutPeriodizaionEditComponent,
+    WorkoutPeriodizaionDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -264,6 +269,8 @@ import { Modality } from './domain/wod/modality';
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -272,6 +279,7 @@ import { Modality } from './domain/wod/modality';
       { path: 'wod-template', component: WodTemplateComponent },
       { path: 'wod-template-list', component: WodTemplateListComponent },
       { path: 'periodizacion', component: WorkoutPeriodizationComponent },
+      { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },

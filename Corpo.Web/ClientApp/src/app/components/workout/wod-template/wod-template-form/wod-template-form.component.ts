@@ -41,7 +41,7 @@ export class WodTemplateFormComponent implements OnInit {
   name: string
   detail: string;
   editDetail: boolean;
-
+  saved: boolean;
 
 
   constructor(private exerciseService: ExerciseService,
@@ -51,7 +51,11 @@ export class WodTemplateFormComponent implements OnInit {
   }
 
   @Input() wod: Wod;
+  @Input() memberId: number;
+  @Input() date: string;
   @Output() goBackEvent = new EventEmitter();
+  @Output() saveEvent = new EventEmitter();
+
 
   ngOnInit() {
     this.name = this.wod.name;
@@ -127,10 +131,10 @@ export class WodTemplateFormComponent implements OnInit {
   }
 
   save() {
-    console.log("this.wod facha", this.wod)
     this.wodMemberService.add(this.getWod(this.wod)).subscribe(() => {
       console.log("success")
-      this.goBackEvent.emit();
+      this.saveEvent.emit(this.date);
+      this.saved = true;
     }, error => {
       console.log(error)
     })
@@ -150,6 +154,8 @@ export class WodTemplateFormComponent implements OnInit {
         })
       })
     })
+    wodMember.date = this.date
+    wodMember.memberId = this.memberId;
     return wodMember;
   }
 

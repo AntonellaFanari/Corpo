@@ -1,10 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chart } from 'chart.js';
 import { timeStamp } from 'console';
+import { Member } from 'src/app/domain/member';
+import { MemberView } from 'src/app/domain/member-view';
+import { Periodization, PeriodizationWeek } from 'src/app/domain/wod/periodization';
+import { MemberService } from 'src/app/services/member.service';
+import { PeriodizationService } from 'src/app/services/wod/periodization.service';
 import 'zone.js/dist/long-stack-trace-zone';
 //import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 export class Week {
+  weekNumber?: string;
+  m?: string;
+  s?: string;
   monday: string;
   tuesday: string;
   wednesday: string;
@@ -31,10 +40,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre" };
-  week2: Week = { monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre" };
-  week3: Week = { monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
-  week4: Week = { monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
+  week1: Week = { m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre" };
+  week2: Week = { m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre" };
+  week3: Week = { m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
+  week4: Week = { m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -59,11 +68,22 @@ export class WorkoutPeriodizationComponent implements OnInit {
   selectedWeek: string;
   init: string;
   type: string;
+  memberId: number;
+  member: MemberView;
 
-  //public barChartPlugins = [pluginDataLabels];
-  constructor() {
+  constructor(private periodizacionService: PeriodizationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private memberService: MemberService) {
+    this.route.queryParams.subscribe(params => {
+      this.memberId = parseInt(params['memberId'])
+      memberService.getById(this.memberId).subscribe(data => {
+        this.member = data;
+      })
+    });
     this.getPeriodization();
   }
+
 
   getPeriodization() {
     this.index = this.types.indexOf(this.periodizationInit)
@@ -152,13 +172,23 @@ export class WorkoutPeriodizationComponent implements OnInit {
     for (var i = 0; i < tds.length; i++) {
       (tds[i] as HTMLTableDataCellElement).contentEditable = 'true';
       tds[i].addEventListener("blur", (x) => {
+
+        console.log("entra");
         var value = (x.target as HTMLTableDataCellElement).innerHTML;
-        (x.target as HTMLTableDataCellElement).innerHTML= (value.includes("%") || value == "") ? value : value + "%"
+        (x.target as HTMLTableDataCellElement).innerHTML = (value.includes("%") || value == "") ? value : value + "%"
+
+        var weekName = (x.target as HTMLTableDataCellElement).getAttribute("week")
+        console.log(weekName);
+        var typeName = (x.target as HTMLTableDataCellElement).getAttribute("type")
+        console.log(typeName);
+        this[weekName][typeName] = value;
+
+        console.log(this[weekName]);
       })
     }
 
     var types = ["M", "G"];
-    this.renderExpectedChart(types, [50, 50])
+    //this.renderExpectedChart(types, [50, 50])
   }
 
 
@@ -467,5 +497,24 @@ export class WorkoutPeriodizationComponent implements OnInit {
       res.push(this.colors[x])
     });
     return res;
+  }
+
+  save() {
+    var periodization = new Periodization();
+    periodization.memberId = this.memberId;
+    periodization.month = 2;
+    periodization.year = 2022;
+    periodization.periodizationWeeks.push(new PeriodizationWeek(this.week1));
+    periodization.periodizationWeeks.push(new PeriodizationWeek(this.week2));
+    periodization.periodizationWeeks.push(new PeriodizationWeek(this.week3));
+    periodization.periodizationWeeks.push(new PeriodizationWeek(this.week4));
+    this.periodizacionService.add(periodization).subscribe(() => {
+      console.log("success")
+      this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId } });
+    })
+  }
+
+  getWeek() {
+
   }
 }

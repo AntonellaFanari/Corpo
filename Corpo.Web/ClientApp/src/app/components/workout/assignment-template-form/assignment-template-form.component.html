@@ -46,7 +46,7 @@
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
 
-      <a [routerLink]="" (click)="editGroupDetail(group.detail)" class="group-detail">
+      <a (click)="editGroupDetail(group.detail)" class="group-detail">
         <label>{{group.detail}} <i class="fa fa-edit"></i></label>
       </a>
 
@@ -86,7 +86,7 @@
   data-bs-target="#myModal"></button>
 
 <!-- The Modal -->
-<div class="modal" id="myModal">
+<div class="modal modal-new-group" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
 

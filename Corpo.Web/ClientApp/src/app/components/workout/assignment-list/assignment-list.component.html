@@ -27,7 +27,7 @@
               <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
               <td class="td-title td-padding-action" data-title="Acción">
                 <div class="text-center">
-                  <button class="btn btn-primary btn-action-list" [routerLink]="['/asignacion-plantilla']" [queryParams]="{id:member.id}">WOD</button>
+                  <button class="btn btn-primary btn-action-list" [routerLink]="['/asignacion-plantilla']" [queryParams]="{memberId:member.id}">WOD</button>
                 </div>
               </td>
             </tr>

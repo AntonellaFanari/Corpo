@@ -28,7 +28,8 @@
                 </div>
             </div>
             <div class="container-fluid">
-                <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/plan-list']">
+                <button class="btn btn-secondary pull-left mt-2" type="button" 
+                [routerLink]="['/asignacion-plantilla']" [queryParams]="{memberId: memberId}">
                     Cancelar
                 </button>
                 <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">
@@ -41,7 +42,7 @@
 
 <section class="modal-content wrapper">
     <header class="modal-header bg-success">
-        <h3 class="mb text-center text-white">Periodización</h3>
+        <h3 class="mb text-center text-white">Periodización <span *ngIf="member">{{member.name}} {{member.lastName}}</span></h3>
     </header>
     <div class="modal-body">
         <div class="container-fluid">
@@ -58,8 +59,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="M" day="monday">80%</td>
-                                <td data-title="S" day="monday">20%</td>
+                                <td data-title="M" week="week1" type="m"></td>
+                                <td data-title="S" week="week1" type="s"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -112,8 +113,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="M" day="monday">80%</td>
-                                <td data-title="S" day="monday">20%</td>
+                                <td data-title="M" week="week2" type="m"></td>
+                                <td data-title="S" week="week2" type="s"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -164,8 +165,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="M" day="monday">80%</td>
-                                <td data-title="S" day="monday">20%</td>
+                                <td data-title="M" week="week3" type="m"></td>
+                                <td data-title="S" week="week3" type="s"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -218,8 +219,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="M" day="monday">80%</td>
-                                <td data-title="S" day="monday">20%</td>
+                                <td data-title="M" week="week4" type="m"></td>
+                                <td data-title="S" week="week4" type="s"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -277,7 +278,7 @@
             <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/plan-list']">
                 Cancelar
             </button>
-            <button class="btn btn-success pull-right mt-2" type="submit" (click)="calculate()">
+            <button class="btn btn-success pull-right mt-2" type="submit" (click)="save()">
                 Guardar
             </button>
         </div>
@@ -330,9 +331,9 @@
 </div>
 
 
-<button id="modal-button" data-toggle="modal" href="#modal" class="d-none">abrir</button>
+<button id="modal-button" data-toggle="modal" href="#modal-type" class="d-none">abrir</button>
 
-<div class="modal fade" id="modal">
+<div class="modal fade" id="modal-type">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- cabecera del diálogo -->

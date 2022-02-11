@@ -145,3 +145,22 @@ a.delete-button {
 .group-detail label {
   margin-bottom: 10px;
 }
+
+.radio-mode {
+  color: #3aab58;
+}
+.radio-group {
+  margin-top: 5px;
+}
+
+input[type="radio"] {
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 50%;
+  margin-top: -1px;
+  vertical-align: middle;
+
+  margin-left: 40px;
+  margin-right: 10px;
+}

@@ -2,7 +2,6 @@
 
 /* Provide sufficient contrast against white background */
 
-
 a {
   color: #0366d6;
 }
@@ -13,22 +12,22 @@ a {
   left: 100%;
 }*/
 
-  a:link, a:visited, a:active {
-    text-decoration: none;
-    color: black;
-  }
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: black;
+}
 
 .formValidators > p {
   font-size: 13px;
   color: red;
 }
 
-
 .labelFormStyle {
   text-align: left !important;
   color: dimgray !important;
 }
-
 
 .margLeft {
   margin-left: 15px;
@@ -37,7 +36,6 @@ a {
 .margButton {
   margin-right: 15px;
 }
-
 
 label {
   font-weight: 400;
@@ -60,7 +58,6 @@ img.logo {
   float: right;
   margin-right: 10px;
 }
-
 
 /*.btn-login-i {
   height: 40px;
@@ -114,5 +111,15 @@ section.wrapper {
   background-color: rgba(128, 128, 128, 0.637) !important;
 }
 
-
-
+div.modal-new-group .modal-content{
+  z-index: auto !important;
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0 !important;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+}

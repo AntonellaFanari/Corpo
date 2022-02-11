@@ -1,11 +1,10 @@
-<section class="wrapper">
-    <div class="container-fluid modal-content modal-lg p-0">
-      <header class="modal-header d-block bg-success"><h3 class="mb text-center text-white">Asignación WOD</h3></header>
-      <div class="modal-body">
-            <mat-calendar #calendar [minDate]="minDate" [maxDate]="maxDate"
-            (selectedChange)="dateChanged($event)"
-            ></mat-calendar>
+<div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success">
+        <h3 class="mb text-center text-white">Asignación WOD</h3>
+    </header>
+    <div class="modal-body">
+        <mat-calendar #calendar [minDate]="minDate" [maxDate]="maxDate" (selectedChange)="dateChanged($event)">
+        </mat-calendar>
 
-        </div>
     </div>
-</section>
+</div>

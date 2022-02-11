@@ -37,7 +37,7 @@ export class AssignmentTemplateFormComponent implements OnInit {
   name: string
   detail: string;
   editDetail: boolean;
-
+  saved: boolean;
 
 
   constructor(private exerciseService: ExerciseService,
@@ -47,6 +47,8 @@ export class AssignmentTemplateFormComponent implements OnInit {
 
   @Input() wod: Wod;
   @Output() goBackEvent = new EventEmitter();
+
+  @Output() saveEvent = new EventEmitter();
 
   ngOnInit() {
     this.name = this.wod.name;
@@ -125,7 +127,7 @@ export class AssignmentTemplateFormComponent implements OnInit {
     console.log("this.wod", this.wod)
     this.wodTemplateService.update(new WodTemplate(this.wod)).subscribe(() => {
       console.log("success")
-      this.goBackEvent.emit();
+      
     }, error => {
       console.log(error)
     })

@@ -28,6 +28,8 @@ export class ExerciseItem {
     modality: Modality;
     units: string;
     kgs?: string;
+    mode?: string;
+    value?: string;
 }
 
 export class Wod {

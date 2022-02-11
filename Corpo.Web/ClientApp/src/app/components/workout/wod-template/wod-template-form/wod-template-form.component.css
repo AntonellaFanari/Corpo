@@ -148,3 +148,19 @@ a.delete-button {
 .group-detail label:hover {
   cursor: pointer;
 }
+
+section.saved{
+  background-color: #bcd0c1;
+  padding: 20px;
+}
+
+section{  
+  padding: 20px;
+}
+
+h6.status-tittle{
+  background-color: #4b63518f;
+  font-size: 20px;
+  border-radius: 5px;
+  color: white;
+}

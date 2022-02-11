@@ -22,22 +22,14 @@ export class AssignmentCalendarComponent implements OnInit {
   }
 
   dateChanged(event) {
-
     const format = "YYYY-MM-DD";
-    if (this.selectedDates.includes( moment(event).format(format))) {
-
-      this.selectedDates = this.selectedDates.filter(x => x !=  moment(event).format(format))
+    if (this.selectedDates.includes(moment(event).format(format))) {
+      this.selectedDates = this.selectedDates.filter(x => x != moment(event).format(format))
     }
     else {
-      console.log("else")
       this.selectedDates.push(moment(event).format(format));
     }
-    console.log(this.selectedDates)
     this.highlightDays(this.selectedDates)
-  }
-
-  ngAfterViewInit() {
-    this.highlightDays(["02-07-2022"])
   }
 
   private highlightDays(days: string[]) {

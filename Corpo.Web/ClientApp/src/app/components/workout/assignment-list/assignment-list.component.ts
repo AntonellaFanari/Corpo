@@ -31,7 +31,7 @@ export class AssignmentListComponent implements OnInit {
 
   getAll() {
     this.requestingList = true;
-    this.memberService.getAll().subscribe(
+    this.memberService.getAllActivePersonalized().subscribe(
       (result) => {
         this.requestingList = false;
         console.log(result);

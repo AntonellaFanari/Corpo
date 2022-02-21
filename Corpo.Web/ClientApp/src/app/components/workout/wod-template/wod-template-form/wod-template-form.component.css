@@ -149,18 +149,103 @@ a.delete-button {
   cursor: pointer;
 }
 
-section.saved{
+section.saved {
   background-color: #bcd0c1;
   padding: 20px;
 }
 
-section{  
+section {
   padding: 20px;
 }
 
-h6.status-tittle{
+h6.status-tittle {
   background-color: #4b63518f;
   font-size: 20px;
   border-radius: 5px;
   color: white;
 }
+
+td.exercise-units span {
+  display: inline-flex;
+  align-items: center;
+}
+
+table.wod-table td {
+  vertical-align: middle;
+}
+
+.arrow-button {
+  border: 2px solid #3f5740;
+  background: #3a5939;
+  width: 25px;
+  height: 25px;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+  padding: 10px;
+  margin: 10px;
+}
+
+.down {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  z-index: 100;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid white;
+  margin: auto;
+}
+
+.up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  z-index: 100;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid white;
+  margin: auto;
+}
+
+.exercise-units {
+  display: flex;
+}
+
+
+
+.group-detail {
+  display: block;
+  width: fit-content;
+}
+.group-detail label {
+  margin-bottom: 10px;
+}
+
+.radio-mode {
+  color: #3aab58;
+}
+.radio-group {
+  margin-top: 5px;
+}
+
+input[type="radio"] {
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 50%;
+  margin-top: -1px;
+  vertical-align: middle;
+
+  margin-left: 40px;
+  margin-right: 10px;
+}
+

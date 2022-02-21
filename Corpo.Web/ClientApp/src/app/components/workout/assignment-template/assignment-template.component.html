@@ -1,27 +1,31 @@
 <!-- Page Content -->
 <section class="wrapper">
   <div class="row">
-    <div class="col-4" >
-        <button class="btn btn-secondary w-100" type="button" (click)="cancel()"
-        [class.d-none]="newWods.length == 0">Cancelar</button>
+    <div class="col-4">
 
-        <button class="btn btn-secondary w-100 mb-3 mt-3" type="button" data-toggle="modal" href="#modal"
+      <button class="btn btn-primary w-100 mt-3" type="button" data-toggle="modal" href="#modal-wod"
+        *ngIf="newWods.length > 0">
+        Vista previa
+      </button>
+
+      <button class="btn btn-success w-100 mt-3 mb-3" type="button" data-toggle="modal" href="#modal"
         *ngIf="periodization">
-          Periodización
-        </button>
+        Periodización
+      </button>
 
-        <div class="w-100 text-center" *ngIf="!periodization && requestingPeriodization">
-          <div class="spinner-border text-success" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+      <div class="w-100 text-center" *ngIf="!periodization && requestingPeriodization">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
+      </div>
 
-        <button class="btn btn-secondary w-100 mb-3 mt-3" type="button" data-toggle="modal" href="#modal"
-        *ngIf="!periodization && !requestingPeriodization" [routerLink]="['/periodizacion']" [queryParams]="{memberId: memberId}">
-          Crear periodización
-        </button>
+      <button class="btn btn-success w-100 mb-3 mt-3" type="button" *ngIf="!periodization && !requestingPeriodization"
+        [routerLink]="['/periodizacion']" [queryParams]="{memberId: memberId}">
+        Crear periodización
+      </button>
 
-        
+      <button class="btn btn-secondary w-100" type="button" (click)="cancel()"
+        [class.d-none]="newWods.length == 0">Cancelar</button>
 
       <app-assignment-calendar [class.d-none]="newWods.length > 0"></app-assignment-calendar>
     </div>
@@ -86,23 +90,50 @@
 
 
 <div class="modal fade" id="modal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- cabecera del diálogo -->
-            <div class="modal-header modal-title">
-                <h4 class="modal-title">Periodización</h4>
-                <button type="button" class="close" data-dismiss="modal">X</button>
-            </div>
-            <!-- cuerpo del diálogo -->
-            <div class="modal-body">
-                <app-workout-periodizaion-detail [memberId]="memberId"></app-workout-periodizaion-detail>
-            </div>
-            <!-- pie del diálogo -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">
-                    Aceptar
-                </button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Periodización</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+      </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <app-workout-periodizaion-detail [memberId]="memberId"></app-workout-periodizaion-detail>
+      </div>
+      <!-- pie del diálogo -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">
+          Aceptar
+        </button>
+      </div>
     </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modal-wod">
+  <div class="modal-dialog modal-dialog-full modal-fullscreen-xl-down">
+    <div class="modal-content modal-content-full">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Planificación Semanal</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+      </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <div class="row">
+          <div *ngFor="let newWod of newWods" class="col">
+            <app-wod-detail [wod]="newWod.wod" [date]="newWod.date"></app-wod-detail>
+          </div>
+        </div>
+      </div>
+      <!-- pie del diálogo -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

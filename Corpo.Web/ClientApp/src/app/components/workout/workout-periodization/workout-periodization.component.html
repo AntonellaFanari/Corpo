@@ -28,8 +28,8 @@
                 </div>
             </div>
             <div class="container-fluid">
-                <button class="btn btn-secondary pull-left mt-2" type="button" 
-                [routerLink]="['/asignacion-plantilla']" [queryParams]="{memberId: memberId}">
+                <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
+                    [queryParams]="{memberId: memberId}">
                     Cancelar
                 </button>
                 <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">
@@ -42,10 +42,18 @@
 
 <section class="modal-content wrapper">
     <header class="modal-header bg-success">
-        <h3 class="mb text-center text-white">Periodización <span *ngIf="member">{{member.name}} {{member.lastName}}</span></h3>
+        <h3 class="mb text-center text-white">Periodización <span *ngIf="member">{{member.name}}
+                {{member.lastName}}</span></h3>
     </header>
     <div class="modal-body">
         <div class="container-fluid">
+
+            <div class="form-group mt-3 mb-3">
+                <label class="control-label">Objetivo mensual:</label>
+                <div class="formValidators">
+                    <input type="text" class="form-control" [(ngModel)]="goal">
+                </div>
+            </div>
             <h3>Semana 1</h3>
             <div class="row">
                 <section id="no-more-tables" class="tab-pane fade show active col-4">
@@ -69,7 +77,8 @@
                     </div>
                 </section>
                 <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week1" week="week1">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week1"
+                        week="week1">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>
@@ -120,7 +129,8 @@
                     </table>
                 </section>
                 <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week2" week="week2">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week2"
+                        week="week2">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>
@@ -176,7 +186,8 @@
                 </section>
 
                 <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week3" week="week3">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week3"
+                        week="week3">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>
@@ -229,7 +240,8 @@
                     </div>
                 </section>
                 <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week4" week="week4">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week4"
+                        week="week4">
                         <thead class="cf">
                             <tr>
                                 <th>Lunes</th>

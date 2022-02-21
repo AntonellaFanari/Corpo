@@ -1,0 +1,27 @@
+<section [class.saved]="saved">
+    <h6 class="status-tittle w-100 text-center p-3" [class.d-none]="!saved">Registrado</h6>
+
+    <h6 class="status-tittle w-100 text-center p-3">{{date | date: 'dd-MM-yyyy'}}</h6>
+    <div *ngIf="wod">
+        <div class="wod-group" *ngFor="let group of wod.wodGroups; let i = index">
+
+            <label>{{group.detail}}</label>
+
+            <div class="">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
+                            <td class="col-10">
+                                {{exerciseItem.exercise.name}} {{ ((exerciseItem.modality.name != "Repeticiones") ?
+                                exerciseItem.modality.name : "")
+                                }} {{exerciseItem.units}} {{exerciseItem.modality.unit}}
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>

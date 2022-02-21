@@ -1,7 +1,6 @@
 <section [class.saved]="saved">
-    <h6 class="status-tittle w-100 text-center p-3" [class.d-none]="!saved">Registrado</h6>
-  
- 
+  <h6 class="status-tittle w-100 text-center p-3" [class.d-none]="!saved">Registrado</h6>
+
   <div class="form-group mt-3">
     <label class="control-label">Nombre:</label>
     <div class="formValidators">
@@ -10,7 +9,14 @@
   </div>
 
 
-  <div class="form-group mt-3">
+  <div class="form-group mt-2">
+    <label class="control-label">Objetivo:</label>
+    <div class="formValidators">
+      <input type="text" class="form-control" [(ngModel)]="goal">
+    </div>
+  </div>
+
+  <div class="form-group mt-2">
     <label class="control-label">Ejercicio:</label>
     <div class="">
       <ng-select class="custom" [items]="exercises" [(ngModel)]="selectedExercise" bindLabel="name" bindValue="id">
@@ -18,17 +24,50 @@
     </div>
   </div>
 
-  <div class="form-group mt-3">
-    <label class="control-label">Modalidad:</label>
-    <div class="">
-      <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"></ng-select>
+  <div class="form-group mt-2 col-12">
+    <label class="control-label"></label>
+    <div class="formValidators">
+      <div class="row">
+
+        <div class="col-8">
+          <fieldset class="radio-group">
+            <label>
+              <input type="radio" class="radio-mode" name="numero" value="Kgs" [(ngModel)]="mode" class="cb-label"> Kgs
+            </label>
+            <label>
+              <input type="radio" class="radio-mode" name="numero" value="%" [(ngModel)]="mode" class="cb-label"> %
+            </label>
+            <label>
+              <input type="radio" class="radio-mode" name="numero" value="RPE" [(ngModel)]="mode" class="cb-label"> RPE
+            </label>
+            <label>
+              <input type="radio" class="radio-mode" name="numero" value="RPEs" [(ngModel)]="mode" class="cb-label">
+              RPEs
+            </label>
+          </fieldset>
+        </div>
+        <div class="col-4">
+          <input type="text" class="form-control" [(ngModel)]="kgs">
+        </div>
+      </div>
+
     </div>
   </div>
+  <div class="row">
 
-  <div class="form-group mt-3">
-    <label class="control-label">Unidades:</label>
-    <div class="formValidators">
-      <input type="text" class="form-control" [(ngModel)]="units">
+    <div class="form-group mt-2 col-6">
+      <label class="control-label">Modalidad:</label>
+      <div class="">
+        <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id">
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="form-group mt-2 col-6">
+      <label class="control-label">Unidades:</label>
+      <div class="formValidators">
+        <input type="text" class="form-control" [(ngModel)]="units">
+      </div>
     </div>
   </div>
 
@@ -38,8 +77,8 @@
   </div>
 
   <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="wod">
-    <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i" (click)="setActiveWodGroup(i)"
-         [class.active-group]="i == activeWodGroup" cdkDrag>
+    <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i"
+      (click)="setActiveWodGroup(i)" [class.active-group]="i == activeWodGroup" cdkDrag>
       <button class="x bg-danger" (click)="deleteGroup(i)">
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
@@ -49,14 +88,34 @@
       </a>
 
       <div class="">
-        <table class="table table-bordered">
+        <table class="table table-bordered wod-table">
           <tbody>
             <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
-              <td class="col-10">
-                {{exerciseItem.exercise.name}} {{
-((exerciseItem.modality.name != "Repeticiones") ?
-                exerciseItem.modality.name : "")
-                }} {{exerciseItem.units}} {{exerciseItem.modality.unit}}
+              <td class="exercise-units">
+                <div class="arrow-button" (click)="increaseUnit(i, ei)">
+                  <div class="down"> </div>
+                </div>
+
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'city', $event)"
+                  (blur)="updateUnits(i, ei, $event)" class="exercise-units" contenteditable
+                  (mousedown)="$event.stopPropagation()">
+                  {{exerciseItem.units}}
+                </span>
+
+              </td>
+              <td class="exercise-units">
+
+                <div class="arrow-button" (click)="dencreaseUnit(i, ei)">
+                  <div class="up"> </div>
+                </div>
+              </td>
+              <td class="col-10" [attr.colspan]="exerciseItem.value ? '1' : '2'">
+                {{exerciseItem.exercise.name}}
+              </td>
+              <td class="col-10" *ngIf="exerciseItem.value">
+                {{exerciseItem.value}} {{exerciseItem.mode}}
               </td>
               <td class="col-2 action-column">
                 <a [routerLink]="" (click)="deleteItem(i,ei)" class="delete-button">
@@ -71,10 +130,14 @@
     </div>
 
     <div class="div-btn-create">
-      <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" (click)="goBack()">Cancelar</button>
-      <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="save()">Guardar</button>
+      <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button"
+        (click)="goBack()">Cancelar</button>
+      <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit"
+        (click)="save()">Guardar</button>
     </div>
   </div>
+
+
 </section>
 
 
@@ -113,4 +176,4 @@
 
     </div>
   </div>
-</div>                                                                      
+</div>

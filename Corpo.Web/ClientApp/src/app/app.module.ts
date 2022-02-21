@@ -7,6 +7,7 @@ import { NgbModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
+import { WodDetailComponent } from './components/workout/wod-template/wod-detail/wod-detail.component';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -132,8 +133,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkoutPeriodizaionEditComponent } from './components/workout/workout-periodizaion-edit/workout-periodizaion-edit.component';
 import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout-periodizaion-detail/workout-periodizaion-detail.component';
 
+
 @NgModule({
   declarations: [
+    WodDetailComponent,
     AppComponent,
     NavMenuComponent,
     HomeComponent,

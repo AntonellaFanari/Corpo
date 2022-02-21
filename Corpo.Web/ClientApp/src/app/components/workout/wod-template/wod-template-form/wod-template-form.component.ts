@@ -42,6 +42,8 @@ export class WodTemplateFormComponent implements OnInit {
   detail: string;
   editDetail: boolean;
   saved: boolean;
+  kgs: string
+	mode: string = "Kgs";
 
 
   constructor(private exerciseService: ExerciseService,
@@ -82,15 +84,20 @@ export class WodTemplateFormComponent implements OnInit {
     var exercise = this.exercises.find(x => x.id == this.selectedExercise);
     var exerciseItem = new ExerciseItem();
     exerciseItem.exercise = exercise;
-    console.log("selectedModality", this.selectedModality)
     exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
     exerciseItem.units = this.units;
+    exerciseItem.mode = this.mode;
+    exerciseItem.value = this.kgs;
 
     this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
 
     this.selectedModality = null;
     this.selectedExercise = "";
     this.units = null;
+    this.kgs = "";
+  }
+
+  changeValue() {
   }
 
   addwodGroupModal() {
@@ -122,6 +129,7 @@ export class WodTemplateFormComponent implements OnInit {
   setActiveWodGroup(index: number) {
     this.activeWodGroup = index;
     console.log(index)
+    return;
   }
 
   deleteGroup(index) {
@@ -207,6 +215,8 @@ export class WodTemplateFormComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log("dfdsf")
+    console.log("sdfd", event)
     var previousIndex = this.wod.wodGroups[this.activeWodGroup].groupIndex;
     moveItemInArray(this.wod.wodGroups, event.previousIndex, event.currentIndex);
     if (event.previousIndex == this.activeWodGroup)
@@ -215,6 +225,20 @@ export class WodTemplateFormComponent implements OnInit {
     else {
       this.activeWodGroup = this.wod.wodGroups.findIndex(x => x.groupIndex == previousIndex)
     }
+    return;
+  }
+  increaseUnit(groupIndex, exerciseIndex) {
+    var units = (parseInt(this.wod.wodGroups[groupIndex].exercises[exerciseIndex].units) - 1);
+    this.wod.wodGroups[groupIndex].exercises[exerciseIndex].units = (units > 0) ? units.toString() : "0"
   }
 
+  dencreaseUnit(groupIndex, exerciseIndex) {
+    this.wod.wodGroups[groupIndex].exercises[exerciseIndex].units = (parseInt(this.wod.wodGroups[groupIndex].exercises[exerciseIndex].units) + 1).toString()
+  }
+
+
+  updateUnits(groupIndex, exerciseIndex, event) {
+    this.wod.wodGroups[groupIndex].exercises[exerciseIndex].units = event.target.innerHTML;
+  }
 }
+

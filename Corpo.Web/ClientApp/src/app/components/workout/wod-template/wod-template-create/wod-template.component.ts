@@ -42,6 +42,7 @@ export class WodTemplateComponent implements OnInit {
 	editDetail: boolean;
 	kgs: string
 	validationError: boolean;
+	mode: string = "Kgs";
 
 	constructor(private exerciseService: ExerciseService,
 		private wodTemplateService: WodTemplateService) { }
@@ -70,7 +71,8 @@ export class WodTemplateComponent implements OnInit {
 			exerciseItem.exercise = exercise;
 			exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
 			exerciseItem.units = this.units;
-			exerciseItem.kgs = this.kgs;
+			exerciseItem.mode = this.mode;
+			exerciseItem.value = this.kgs;
 
 			this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
 
@@ -203,3 +205,4 @@ export class WodTemplateComponent implements OnInit {
 	}
 
 }
+

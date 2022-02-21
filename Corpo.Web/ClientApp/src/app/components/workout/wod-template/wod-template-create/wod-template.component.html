@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="form-group mt-3 col-9">
+    <div class="form-group mt-3 col-12">
       <label class="control-label">Ejercicio:</label>
       <div class="formValidators">
         <ng-select class="custom" #select [items]="exercises" [(ngModel)]="selectedExercise" bindLabel="name"
@@ -38,10 +38,32 @@
       </div>
     </div>
 
-    <div class="form-group mt-3 col-3">
-      <label class="control-label">Kgs:</label>
+    <div class="form-group mt-3 col-12">
+      <label class="control-label"></label>
       <div class="formValidators">
-        <input type="text" class="form-control" [(ngModel)]="kgs">
+        <div class="row">
+         
+          <div class="col-8">
+            <fieldset class="radio-group">
+              <label>
+                <input type="radio" class="radio-mode" name="numero" value="Kgs" [(ngModel)]="mode" class="cb-label"> Kgs
+              </label>
+              <label>
+                <input type="radio" class="radio-mode" name="numero" value="%" [(ngModel)]="mode" class="cb-label"> %
+              </label>
+              <label>
+                <input type="radio" class="radio-mode" name="numero" value="RPE" [(ngModel)]="mode" class="cb-label"> RPE
+              </label>
+              <label>
+                <input type="radio" class="radio-mode" name="numero" value="RPEs" [(ngModel)]="mode" class="cb-label"> RPEs
+              </label>
+            </fieldset>
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" [(ngModel)]="kgs">
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -85,13 +107,13 @@
         <table class="table table-bordered">
           <tbody>
             <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
-             
-              <td class="col-10" [attr.colspan]="exerciseItem.kgs ? '1' : '2'">
+
+              <td class="col-10" [attr.colspan]="exerciseItem.value ? '1' : '2'">
                 {{exerciseItem.exercise.name}} {{((exerciseItem.modality.name != "Repeticiones") ?
                 exerciseItem.modality.name : "")}} {{exerciseItem.units}} {{exerciseItem.modality.unit}}
               </td>
-              <td class="col-10" *ngIf="exerciseItem.kgs">
-                {{exerciseItem.kgs}} kgs
+              <td class="col-10" *ngIf="exerciseItem.value">
+                {{exerciseItem.value}} {{exerciseItem.mode}}
               </td>
               <td class="col-2 action-column">
 
@@ -126,7 +148,7 @@
   data-bs-target="#myModal"></button>
 
 <!-- The Modal -->
-<div class="modal" id="myModal">
+<div class="modal modal-new-group" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
 

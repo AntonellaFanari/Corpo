@@ -1,0 +1,17 @@
+.wod-group {
+  margin-top: 10px;
+}
+
+.wod-group {
+  border: 2px solid rgb(95, 95, 95);
+  padding: 15px 15px 15px 15px;
+  overflow: visible;
+  box-shadow: 5px 5px 2px #888888;
+  position: relative;
+}
+
+table {
+  border-color: #538560;
+  margin-bottom: 0px;
+  background-color: #e0ede4;
+}

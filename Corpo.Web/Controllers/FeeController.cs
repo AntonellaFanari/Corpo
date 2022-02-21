@@ -43,7 +43,7 @@ namespace Corpo.Web.Controllers
         public ActionResult Add([FromBody] FeeDto feeDto)
         {
             var user = this.GetUser();
-            var response = _feeService.Add(user.Id, feeDto);
+            var response = _feeService.Add(user, feeDto);
             return this.ToActionResult(response);
         }
 
@@ -54,5 +54,13 @@ namespace Corpo.Web.Controllers
             var listFees = ((IEnumerable)response.Result).Cast<Fee>().ToList();
             return Ok(listFees);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var response = await _feeService.Delete(id);
+            return this.ToActionResult(response);
+        }
+
     }
 }

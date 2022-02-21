@@ -14,5 +14,6 @@ namespace Corpo.Domain.Models.Dtos
         public decimal Amount { get; set; }
         public string Member { get; set; }
         public string User { get; set; }
+        public string Transaction { get; set; }
     }
 }

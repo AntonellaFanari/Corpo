@@ -29,7 +29,6 @@ export class ClassEditComponent implements OnInit {
   ngOnInit() {
     this.classService.getById(this.id).subscribe(
       result => {
-        console.log(result.resul);
         this.class = result.result;
         this.toCompleteForm();
       },
@@ -46,7 +45,6 @@ export class ClassEditComponent implements OnInit {
   }
 
   toCompleteForm() {
-    console.log(this.class.name);
     this.formEdit.patchValue({
       name: this.class.name,
       personalized: this.class.personalized
@@ -66,7 +64,6 @@ export class ClassEditComponent implements OnInit {
       var classEdit = this.createClassEdit();
       this.classService.update(this.id, classEdit).subscribe(
         result => {
-          console.log(result);
           this.router.navigate(['/clases-list']);
         },
         error => {

@@ -17,5 +17,6 @@ namespace Corpo.Domain.Contracts.Repositories
         void Update(BalanceToPay balance);
         BalanceToPay GetPositiveBalanceByIdMember(int id);
         List<BalanceToPay> GetAllNegativeBalanceByIdMember(int id);
+        Task<BalanceToPay> GetByIdTransaction(int id, TransactionType transactionType);
     }
 }

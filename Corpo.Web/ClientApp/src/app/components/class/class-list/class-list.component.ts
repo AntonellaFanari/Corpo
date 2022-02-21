@@ -22,7 +22,6 @@ export class ClassListComponent implements OnInit {
   getAll() {
     this.classService.getAll().subscribe(
       result => {
-        console.log(result);
         for (var i = 0; i < result.length; i++) {
           if (result[i].personalized == "yes") {
             result[i].personalized = "Si"
@@ -40,7 +39,6 @@ export class ClassListComponent implements OnInit {
     this.customAlertService.displayAlert("Gestión de Clases", ["¿Está seguro que desea eliminar esta clase?"], () => {
       this.classService.delete(id).subscribe(
         result => {
-          console.log(result);
           this.getAll();
         },
         error => {

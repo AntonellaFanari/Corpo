@@ -33,8 +33,6 @@ import { SettingsAccessComponent } from './components/settings/settings-access/s
 import { AuthInterceptor } from './services/authentication-interceptor';
 import { AccessDirectiveDirective } from './directives/access-directive.directive';
 import { AuthGuard } from './guards/auth.guard.service';
-import { ChargeFeeComponent } from './components/cash/charge-fee/charge-fee.component'
-import { WithdrawalComponent } from './components/cash/withdrawal/withdrawal.component';
 import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { ProductEditComponent } from './components/product/product-edit/product-edit.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
@@ -47,7 +45,6 @@ import { PlanListComponent } from './components/plan/plan-list/plan-list.compone
 import { PlanEditComponent } from './components/plan/plan-edit/plan-edit.component';
 import { PlanFormComponent } from './components/plan/plan-form/plan-form.component';
 import { ClassCreateComponent } from './components/class/class-create/class-create.component';
-import { ClassDetailComponent } from './components/class/class-detail/class-detail.component';
 import { ClassEditComponent } from './components/class/class-edit/class-edit.component';
 import { ClassListComponent } from './components/class/class-list/class-list.component';
 import { ShiftCreateComponent } from './components/shift/shift-create/shift-create.component';
@@ -72,7 +69,6 @@ import { SearchFilterOutflowPipe } from './pipes/search-filter-outflow.pipe';
 import { OutflowCreateComponent } from './components/outflow/outflow-create/outflow-create.component';
 import { OutflowDetailComponent } from './components/outflow/outflow-detail/outflow-detail.component';
 import { FeeCreateComponent } from './components/fee/fee-create/fee-create.component';
-import { FeeEditComponent } from './components/fee/fee-edit/fee-edit.component';
 import { ExercisesCreateComponent } from './components/exercises/exercises-create/exercises-create.component';
 import { ExercisesEditComponent } from './components/exercises/exercises-edit/exercises-edit.component';
 import { ExercisesListComponent } from './components/exercises/exercises-list/exercises-list.component';
@@ -114,7 +110,7 @@ import { DailyCashComponent } from './components/reports/cash/daily-cash/daily-c
 import { CashDetailComponent } from './components/reports/cash/cash-detail/cash-detail.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { WodTemplateListComponent } from './components/workout/wod-template/wod-template-list/wod-template-list.component';
-import { WodTemplateComponent } from './components/workout/wod-template/wod-template-create/wod-template.component';
+//import { WodTemplateComponent } from './components/workout/wod-template/wod-template-create/wod-template.component';
 import { WodTemplateFormComponent } from './components/workout/wod-template/wod-template-form/wod-template-form.component';
 import { WorkoutPeriodizationComponent } from './components/workout/workout-periodization/workout-periodization.component';
 import { AssignmentListComponent } from './components/workout/assignment-list/assignment-list.component';
@@ -129,6 +125,10 @@ import { ModalityEditComponent } from './components/modality/modality-edit/modal
 import { ModalityListComponent } from './components/modality/modality-list/modality-list.component';
 import { ModalityDetailComponent } from './components/modality/modality-detail/modality-detail.component';
 import { Modality } from './domain/wod/modality';
+import { MonthlyEarningComponent } from './components/reports/cash/monthly-earning/monthly-earning.component';
+import { MemberBehaviourComponent } from './components/reports/marketing/member-behaviour/member-behaviour.component';
+import { SegmentedStatisticsComponent } from './components/reports/marketing/segmented-statistics/segmented-statistics.component';
+import { GeneralSettingsComponent } from './components/settings/general-settings/general-settings.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkoutPeriodizaionEditComponent } from './components/workout/workout-periodizaion-edit/workout-periodizaion-edit.component';
 import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout-periodizaion-detail/workout-periodizaion-detail.component';
@@ -160,8 +160,6 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
     MemberViewComponent,
     LoginComponent,
     AccessDirectiveDirective,
-    ChargeFeeComponent,
-    WithdrawalComponent,
     ProductCreateComponent,
     ProductEditComponent,
     ProductListComponent,
@@ -174,7 +172,6 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
     PlanEditComponent,
     PlanFormComponent,
     ClassCreateComponent,
-    ClassDetailComponent,
     ClassEditComponent,
     ClassListComponent,
     ShiftCreateComponent,
@@ -199,7 +196,6 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
     OutflowCreateComponent,
     OutflowDetailComponent,
     FeeCreateComponent,
-    FeeEditComponent,
     ExercisesCreateComponent,
     ExercisesEditComponent,
     ExercisesListComponent,
@@ -231,7 +227,7 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
     NewsCreateComponent,
     NewsEditComponent,
     NewsListComponent,
-    WodTemplateComponent,
+    //WodTemplateComponent,
     MemberReportComponent,
     MemberReportListComponent,
     ReservationsComponent,
@@ -253,6 +249,10 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
     ModalityEditComponent,
     ModalityListComponent,
     ModalityDetailComponent,
+    MonthlyEarningComponent,
+    MemberBehaviourComponent,
+    SegmentedStatisticsComponent,
+    GeneralSettingsComponent,
     WorkoutPeriodizaionEditComponent,
     WorkoutPeriodizaionDetailComponent
   ],
@@ -275,12 +275,12 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
     MatTabsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'asignacion-calendario', component: AssignmentCalendarComponent },
       { path: 'member-report', component: MemberReportComponent },
-      { path: 'wod-template', component: WodTemplateComponent },
-      { path: 'wod-template-list', component: WodTemplateListComponent },
+     // { path: 'wod-template', component: WodTemplateComponent },
+      { path: 'plantillas-wod', component: WodTemplateListComponent },
       { path: 'periodizacion', component: WorkoutPeriodizationComponent },
       { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent },
       { path: 'fetch-data', component: FetchDataComponent },
@@ -343,20 +343,23 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
       { path: 'retiro-crear', component: WithdrawalNameCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'retiro-editar', component: WithdrawalNameEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'retiros-list', component: WithdrawalNameListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
-      { path: 'asistencias-turnos', component: AttendanceShiftsListComponent },
-      { path: 'asistencias', component: AttendanceComponent },
-      { path: 'noticias-list', component: NewsListComponent },
-      { path: 'noticia-crear', component: NewsCreateComponent },
-      { path: 'noticia-editar', component: NewsEditComponent },
-      { path: 'listado-informe-socios', component: MemberReportListComponent },
-      { path: 'reservas', component: ReservationsComponent },
-      { path: 'caja-diaria', component: DailyCashComponent },
-      { path: 'caja-detalle', component: CashDetailComponent },
+      { path: 'asistencias-turnos', component: AttendanceShiftsListComponent, canActivate: [AuthGuard], data: { name: 'asistencias' }   },
+      { path: 'asistencias', component: AttendanceComponent, canActivate: [AuthGuard], data: { name: 'asistencias' } },
+      { path: 'noticias-list', component: NewsListComponent, canActivate: [AuthGuard], data: { name: 'comunicacion' } },
+      { path: 'noticia-crear', component: NewsCreateComponent, canActivate: [AuthGuard], data: { name: 'comunicacion' }  },
+      { path: 'noticia-editar', component: NewsEditComponent, canActivate: [AuthGuard], data: { name: 'comunicacion' }  },
+      { path: 'listado-informe-socios', component: MemberReportListComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
+      { path: 'reservas', component: ReservationsComponent, canActivate: [AuthGuard], data: { name: 'socios' }  },
+      { path: 'caja-diaria', component: DailyCashComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
+      { path: 'caja-detalle', component: CashDetailComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
       { path: 'asignacion-wod', component: AssignmentListComponent },
       { path: 'asignacion-plantilla', component: AssignmentTemplateComponent },
-      { path: 'modalidades-list', component: ModalityListComponent },
-      { path: 'modalidad-crear', component: ModalityCreateComponent },
-      { path: 'modalidad-editar', component: ModalityEditComponent }
+      { path: 'modalidades-list', component: ModalityListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'modalidad-crear', component: ModalityCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'modalidad-editar', component: ModalityEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
+      { path: 'ganancias-mensuales', component: MonthlyEarningComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
+      { path: 'estadisticas-segmentadas', component: SegmentedStatisticsComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
+      { path: 'configuraciones', component: GeneralSettingsComponent, canActivate: [AuthGuard], data: { name: 'ajustes' }  }
     ])
   ],
   entryComponents: [

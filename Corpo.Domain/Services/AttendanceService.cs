@@ -16,15 +16,17 @@ namespace Corpo.Domain.Services
         private IShiftService _shiftService;
         private readonly IShiftRepository _shiftRepository;
         private IMemberRepository _memberRepository;
+        private ISettingsRepository _settingsRepository;
 
         public AttendanceService(IAttendanceRepository attendanceRepository, ICreditService creditService, IShiftService shiftService,
-            IShiftRepository shiftRepository, IMemberRepository memberRepository)
+            IShiftRepository shiftRepository, IMemberRepository memberRepository, ISettingsRepository settingsRepository)
         {
             _attendanceRepository = attendanceRepository;
             _creditService = creditService;
             _shiftService = shiftService;
             _shiftRepository = shiftRepository;
             _memberRepository = memberRepository;
+            _settingsRepository = settingsRepository;
         }
 
         public async Task<DomainResponse> Add(Attendance attendance)
@@ -68,7 +70,7 @@ namespace Corpo.Domain.Services
 
         async public Task<DomainResponse> CancelReservation(int id, Credit credit)
         {
-            var timeCancellation = 40;
+            var timeCancellation = await _settingsRepository.GetByName("timeLimitCancell");
             var attendance = await _attendanceRepository.GetById(id);
             attendance.DateCancellation = DateTime.Now;
             attendance.Status = StatusAttendance.Cancelled;
@@ -79,7 +81,7 @@ namespace Corpo.Domain.Services
             {
                 _attendanceRepository.CancelReservation(attendance);
                 await _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
-                if (differenceTime > timeCancellation)
+                if (differenceTime > int.Parse(timeCancellation.Value))
                 {
                     if (credit.Expiration < attendance.DateReservation)
                     {

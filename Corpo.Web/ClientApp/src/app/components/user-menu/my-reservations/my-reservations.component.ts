@@ -9,6 +9,7 @@ import { AccountService } from '../../../services/account.service';
 import { AttendanceService } from '../../../services/attendance.service';
 import { CreditService } from '../../../services/credit.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
+import { SettingsService } from '../../../services/settings.service';
 import { ShiftService } from '../../../services/shift.service';
 
 @Component({
@@ -30,10 +31,11 @@ export class MyReservationsComponent implements OnInit {
   currentCredit: number;
   availableNegative = 5;
   selectedShiftId: number;
+  maxNegatives: number;
 
   constructor(private attendanceService: AttendanceService, private accountService: AccountService,
     private shiftService: ShiftService, private dp: DatePipe, private creditService: CreditService,
-    private customAlertService: CustomAlertService) {
+    private customAlertService: CustomAlertService, private settingsService: SettingsService) {
     this.idMember = this.accountService.getLoggedUser().id;
     this.creditId = this.accountService.getLoggedUser().creditId;
     this.currentCredit = this.accountService.getLoggedUser().credit;
@@ -47,7 +49,10 @@ export class MyReservationsComponent implements OnInit {
   ngOnInit() {
     this.getAll();
     this.getCreditMember();
+
   }
+
+
 
   getAll() {
     this.attendanceService.getAllReservations(this.idMember).subscribe(

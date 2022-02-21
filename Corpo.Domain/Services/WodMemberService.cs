@@ -22,10 +22,11 @@ namespace Corpo.Domain.Services
         {
             try
             {
-                await _wodMemberRepository.Add(wodMember);
+                var id = await _wodMemberRepository.Add(wodMember);
                 return new DomainResponse
                 {
-                    Success = true
+                    Success = true,
+                    Result = new {id}
                 };
             }
             catch (Exception ex)

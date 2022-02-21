@@ -195,6 +195,12 @@ namespace Corpo.Data.Migrations
                     b.Property<decimal>("TotalWithdrawal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cash");
@@ -409,6 +415,24 @@ namespace Corpo.Data.Migrations
                     b.HasIndex("InjuryId");
 
                     b.ToTable("File");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.GeneralSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralSetting");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Income", b =>
@@ -674,6 +698,9 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -699,6 +726,9 @@ namespace Corpo.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Friday")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Goal")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("M")
@@ -1146,6 +1176,9 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Detail")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -1163,6 +1196,9 @@ namespace Corpo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

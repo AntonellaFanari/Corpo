@@ -22,7 +22,14 @@ namespace Corpo.Domain.Services
         {
             try
             {
+                var validPeriodization = await _periodizationRepository.GetValidByMemberId(periodization.MemberId);               
+                periodization.Valid = true;
                 await _periodizationRepository.Add(periodization);
+                if (validPeriodization != null)
+                {
+                    validPeriodization.Valid = false;
+                    await _periodizationRepository.Update(validPeriodization);
+                };
                 return new DomainResponse
                 {
                     Success = true

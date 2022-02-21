@@ -2,6 +2,7 @@
 using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
 using Corpo.Domain.Models.Dtos;
+using Corpo.Domain.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,16 @@ namespace Corpo.Domain.Services
         private IProductRepository _productRepository;
         private IBalanceService _balanceService;
         private ICashRepository _cashRepository;
+        private IBalanceRepository _balanceRepository;
 
         public SaleService(ISaleRepository saleRepository, IProductRepository productRepository,
-        IBalanceService balanceService, ICashRepository cashRepository)
+        IBalanceService balanceService, ICashRepository cashRepository, IBalanceRepository balanceRepository)
         {
             _saleRepository = saleRepository;
             _productRepository = productRepository;
             _balanceService = balanceService;
             _cashRepository = cashRepository;
+            _balanceRepository = balanceRepository;
         }
 
         public DomainResponse GetAll(int id)
@@ -46,11 +49,12 @@ namespace Corpo.Domain.Services
                 Result = response
             };
         }
-        public DomainResponse Add(int id, SaleDto sale)
+        public DomainResponse Add(LoggedUser user, SaleDto sale)
         {
             var newSale = new Sale();
             newSale.Date = DateTime.Now;
-            newSale.UserId = id;
+            newSale.UserName = user.LastName + " " + user.Name;
+            newSale.UserId = user.Id;
             newSale.MemberId = sale.MemberId;
             newSale.Total = sale.Total;
             newSale.Status = sale.Status;
@@ -97,15 +101,53 @@ namespace Corpo.Domain.Services
 
         }
 
-        public DomainResponse Cancel(int id, CancelSale cancelSale)
+        public async Task<DomainResponse> Cancel(int userId, int id, CancelSale cancelSale)
         {
+            var cash = await _cashRepository.GetLastCash();
+            var sale = _saleRepository.GetSaleById(id);
             cancelSale.Date = DateTime.Now;
+            cancelSale.UserId = userId;
             _saleRepository.Cancel(id, cancelSale);
+            var balance = await _balanceRepository.GetByIdTransaction(id, TransactionType.Sale);
+            if (balance != null && balance.Statement == Statement.Paid)
+            {
+                if (cash.Closing != null)
+                {
+                    await _cashRepository.UpdateMonthlyCash(DateTime.Now, cancelSale.Total, "outflow");
+                }
+                else
+                {
+                    if (sale.Date < cash.Opening)
+                    {
+                        await _cashRepository.UpdateMonthlyCash(DateTime.Now, cancelSale.Total, "outflow");
+                    }
+                }
+            }
+            if (balance != null && balance.Statement == Statement.Unpaid)
+            {
+                var outflow = cancelSale.Total - balance.Balance + balance.Pay;
+                if (cash.Closing != null)
+                {
+                    await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
+                }
+                else
+                {
+                    if (sale.Date < cash.Opening)
+                    {
+                        await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
+                    }
+                }
+            }
+            else
+            {
+
+            }
             return new DomainResponse
             {
                 Success = true
             };
         }
+
 
         public DomainResponse GetCancelSale(int idSale)
         {

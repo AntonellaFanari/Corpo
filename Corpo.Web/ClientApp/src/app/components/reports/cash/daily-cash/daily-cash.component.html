@@ -32,7 +32,7 @@
     <div class="col-12">
       <section id="no-more-tables">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
-          <table class="table table-bordered table-condensed table-striped cf mb-0 user-table">
+          <table *ngIf="cashs.length>0; else: elseBlock" class="table table-bordered table-condensed table-striped cf mb-0 user-table">
             <thead class="cf">
               <tr>
                 <th class="numeric">Dia</th>
@@ -47,20 +47,30 @@
             </thead>
             <tbody>
               <tr class="scrollme span-margin" *ngFor="let cash of cashs" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
-                <td class="td-title" data-title="Fecha"><span>{{cash.opening}}</span></td>
-                <td class="td-title" data-title="Cupo"><span>{{cash.startingBalance}}</span></td>
-                <td class="td-title" data-title="Clase"><span>{{cash.totalFee}}</span></td>
-                <td class="td-title" data-title="Fecha"><span>{{cash.totalSale}}</span></td>
-                <td class="td-title" data-title="Cupo"><span>{{cash.totalIncome}}</span></td>
-                <td class="td-title" data-title="Fecha"><span>{{cash.totalOutflow}}</span></td>
-                <td class="td-title" data-title="Clase"><span>{{cash.totalWithdrawal}}</span></td>
-                <td class="td-title" data-title="Clase"><span>{{cash.endingBalance}}</span></td>
+                <td class="td-title" data-title="Dia"><span>{{cash.opening}}</span></td>
+                <td class="td-title" data-title="CI"><span>{{cash.startingBalance | currency}}</span></td>
+                <td class="td-title" data-title="Cuotas"><span>{{cash.totalFee | currency}}</span></td>
+                <td class="td-title" data-title="Ventas"><span>{{cash.totalSale | currency}}</span></td>
+                <td class="td-title" data-title="Ingresos"><span>{{cash.totalIncome | currency}}</span></td>
+                <td class="td-title" data-title="Egresos"><span>{{cash.totalOutflow | currency}}</span></td>
+                <td class="td-title" data-title="Retiros"><span>{{cash.totalWithdrawal | currency}}</span></td>
+                <td class="td-title" data-title="Saldo Caja"><span>{{cash.endingBalance | currency}}</span></td>
+              </tr>
+              <tr>
+                <td><strong>Totales</strong></td>
+                <td class="td-title" data-title="CI"><strong>{{totalStartingBalance | currency}}</strong></td>
+                <td class="td-title" data-title="Cuotas"><strong>{{totalFees | currency}}</strong></td>
+                <td class="td-title" data-title="Ventas"><strong>{{totalSales | currency}}</strong></td>
+                <td class="td-title" data-title="Ingresos"><strong>{{totalIncomes | currency}}</strong></td>
+                <td class="td-title" data-title="Egresos"><strong>{{totalOutflows | currency}}</strong></td>
+                <td class="td-title" data-title="Retiros"><strong>{{totalWithdrawals | currency}}</strong></td>
+                <td class="td-title" data-title="Saldo Caja"><strong>{{totalEndingBalance | currency}}</strong></td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
      </div>
-    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
+    <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
   </div>
 </section>

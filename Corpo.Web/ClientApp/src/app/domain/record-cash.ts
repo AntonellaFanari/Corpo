@@ -4,5 +4,6 @@ export class RecordCash {
   detail: string;
   amount: number;
   member: string;
-  user: string
+  user: string;
+  transaction: string
 }

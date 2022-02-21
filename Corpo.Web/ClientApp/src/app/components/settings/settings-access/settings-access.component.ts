@@ -109,7 +109,7 @@ export class SettingsAccessComponent implements OnInit {
     this.createRoleAccess(this.checkboxToAccessMarketing, 6);
     this.settingService.saveAccess(this.roleAccess)
       .then(() => {
-        this.router.navigate(["/"])
+        this.router.navigate(["/configuraciones"])
       })
       .catch((response) => {
         if (response.status === 400) {

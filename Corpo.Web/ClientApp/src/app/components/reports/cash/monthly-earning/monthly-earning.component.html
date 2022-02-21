@@ -1,0 +1,51 @@
+<section class="wrapper">
+  <div class="container" *ngIf="viewChart">
+    <div class="card">
+      <canvas id="monthly-earning"></canvas>
+    </div>
+    <div class="row mt-2">
+      <div class="col-6 col-lg-3" *ngFor="let month of months; index as i">
+        <button type="button" class="btn btn-outline-primary btn-block mb-2 btn-wi" (click)="selectMonth(i)">{{month}}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12" *ngIf="!viewChart">
+    <div class="task-panel ">
+      <h4 class="table-title">Ganancias de {{month}}</h4>
+      <button type="button" class="btn btn-secondary pull-right" (click)="return()">Volver</button>
+    </div>
+    <hr>
+    <section id="no-more-tables">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-bordered table-striped table-condensed cf mb-0 user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Fecha</th>
+              <th class="numeric">Retiros</th>
+              <th class="numeric">Gastos de fondo</th>
+              <th class="numeric">Egresos</th>
+              <th class="numeric">Detalle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="scrollme span-margin" *ngFor="let record of recordsCash">
+              <td class="td-title" data-title="Fecha"><span>{{record.date | date: 'dd/MM/yyyy'}}</span></td>
+              <td class="td-title" data-title="Retiros"><span *ngIf="record.transaction=='Retiro'">{{record.amount | currency}}</span><span *ngIf="record.transaction!='Retiro'">-</span></td>
+              <td class="td-title" data-title="Gastos de fondos"><span *ngIf="record.transaction=='Ingreso'">{{record.amount | currency}}</span><span *ngIf="record.transaction!='Ingreso'">-</span></td>
+              <td class="td-title" data-title="Egresos"><span *ngIf="record.transaction=='Egreso'">{{record.amount | currency}}</span><span *ngIf="record.transaction!='Egreso'">-</span></td>
+              <td class="td-title" data-title="Detalle"><span>{{record.detail}}</span></td>
+            </tr>
+            <tr>
+              <td class="td-title"><strong>Total</strong></td>
+              <td class="td-title" data-title="Retiros"><strong>{{totalWithdrawals | currency}}</strong></td>
+              <td class="td-title" data-title="Gastos de fondos"><strong>{{totalIncomes | currency}}</strong></td>
+              <td class="td-title" data-title="Egresos"><strong>{{totalOutflows | currency}}</strong></td>
+              <td class="td-title" data-title="Ganancia"><strong><span class="view-span">Ganancia:</span>{{(totalWithdrawals - totalIncomes) | currency}}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</section>

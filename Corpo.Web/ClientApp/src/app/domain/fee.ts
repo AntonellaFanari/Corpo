@@ -1,6 +1,7 @@
 export class Fee {
   id: number;
   date: string;
+  userName: string;
   userId: number;
   memberId: number;
   credits: number;

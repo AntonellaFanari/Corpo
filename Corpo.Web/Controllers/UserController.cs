@@ -45,8 +45,7 @@ namespace Corpo.Web.Controllers
         public ActionResult GetAllByNameRole(string role)
         {
             var response = _userService.GetAllByNameRole(role);
-            var list = ((IEnumerable)response.Result).Cast<User>().ToList();
-            return Ok(list);
+            return this.ToActionResult(response);
         }
 
         [HttpPost("[action]")]

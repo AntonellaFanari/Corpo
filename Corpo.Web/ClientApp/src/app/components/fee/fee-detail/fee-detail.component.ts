@@ -14,7 +14,7 @@ import { UserService } from '../../../services/user.service';
 })
 export class FeeDetailComponent implements OnInit {
   fee: Fee;
-  userRegister: UserView;
+  userRegister: string;
   @Output() updateFee = new EventEmitter<string>();
   member: MemberView;
 
@@ -29,30 +29,18 @@ export class FeeDetailComponent implements OnInit {
   getFee(id) {
     this.feeService.getById(id).subscribe(
       result => {
-        console.log(result);
         this.fee = result;
-        console.log("fee", this.fee);
-        this.getUserRegister(this.fee.userId);
+        this.userRegister = result.userName;
       },
       error => console.error(error)
     )
   }
 
-  getUserRegister(id) {
-    this.userService.getById(id).subscribe(
-      result => {
-        console.log(result);
-        this.userRegister = result;
-      },
-      error => console.error(error)
-    );
-  }
 
   delete() {
     this.customAlertService.displayAlert("Gestión de Cuotas", ["¿Está seguro que desea eliminar esta cuota?"], () => {
       this.feeService.delete(this.fee.id).subscribe(
         result => {
-          console.log(result);
           this.updateFeeCash();
         },
         error => {

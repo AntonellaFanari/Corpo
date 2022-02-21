@@ -35,10 +35,10 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Periodization>> GetValidByMemberId(int id)
+        [HttpGet]
+        public async Task<ActionResult<Periodization>> GetValidByMemberId(int memberId)
         {
-            var response = await _periodizationService.GetValidByMemberId(id);
+            var response = await _periodizationService.GetValidByMemberId(memberId);
             return this.ToActionResult(response);
         }
     }

@@ -18,6 +18,7 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse Delete(int id);
         Task<DomainResponse> ByDateExpiration(DateTime from, DateTime to);
         DomainResponse UpdateDueDate(CreditExpirationDto expiration);
+        Task<DomainResponse> GetPersonalized();
         DomainResponse AddMedicalHistory(int memberId, MedicalHistory medicalHistory);
         DomainResponse UpdateMedicalHistory(int id, MedicalHistory medicalHistory);
         DomainResponse GetMedicalHistoryById(int id);

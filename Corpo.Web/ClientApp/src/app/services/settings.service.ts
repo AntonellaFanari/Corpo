@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { DomainResponse } from '../domain/domain-response';
+import { GeneralSetting } from '../domain/general-setting';
 import { RoleAccess } from '../domain/role-access';
 
 const httpOptions = {
@@ -26,5 +28,13 @@ export class SettingsService {
   public saveAccess(access: RoleAccess[]): Promise<void> {
     console.log(access);
     return this.http.post<void>(this.url + 'api/settings/saveAccess', access, httpOptions).toPromise();
+  }
+
+  public getAll() {
+    return this.http.get<DomainResponse<Array<GeneralSetting>>>(this.url + 'api/settings');
+  }
+
+  public update(settings: GeneralSetting[]) {
+    return this.http.put<DomainResponse<void>>(this.url + 'api/settings', settings, httpOptions);
   }
 }

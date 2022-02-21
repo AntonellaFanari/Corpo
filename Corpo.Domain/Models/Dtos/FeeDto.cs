@@ -8,6 +8,7 @@ namespace Corpo.Domain.Models.Dtos
 {
     public class FeeDto
     {
+        public string UserName { get; set; }
         public int UserId { get; set; }
         public int MemberId { get; set; }
         public int Credits { get; set; }

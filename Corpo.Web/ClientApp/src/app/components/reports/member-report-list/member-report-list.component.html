@@ -26,11 +26,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let member of members | searchFilterName: filterName">
-              <td data-title="Nombre"><span>{{member.lastName}}</span></td>
+              <td data-title="Apellido"><span>{{member.lastName}}</span></td>
               <td data-title="Nombre"><span>{{member.name}}</span></td>
-              <td data-title="Nombre"><span>{{member.credit}}</span></td>
-              <td data-title="Nombre"><span>{{member.namePlan}}</span></td>
-              <td data-title="Nombre"><span>{{member.expiration | date: 'dd/MM/yyyy'}}</span></td>
+              <td data-title="Créditos"><span>{{member.credit}}</span></td>
+              <td data-title="Plan"><span>{{member.namePlan}}</span></td>
+              <td data-title="Vencimiento"><span>{{member.expiration | date: 'dd/MM/yyyy'}}</span></td>
             </tr>
           </tbody>
         </table>

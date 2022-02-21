@@ -37,5 +37,15 @@ namespace Corpo.Domain.Services
                 Result = response
             };
         }
+
+        public async Task<DomainResponse> GetMembersActivesByPlan(string planName)
+        {
+            var response = await _reportRepository.GetMembersActivesByPlan(planName);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
     }
 }

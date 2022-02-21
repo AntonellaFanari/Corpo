@@ -79,6 +79,15 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpGet("personalized")]
+        public async Task<ActionResult<List<MemberViewModel>>> GetPersonalized()
+        {
+            var response = await _memberService.GetPersonalized();
+            var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
+            var listMembers = ViewModels.ViewModels.FromDomainMember(result);
+            return Ok(listMembers);
+        }
+
         [HttpPost("addMedicalHistory")]
         public ActionResult AddMedicalHistory(int memberId, [FromBody] MedicalHistory medicalHistory)
         {

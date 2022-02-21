@@ -20,6 +20,18 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
+        public async Task<List<MembersActivesPlanDto>> GetMembersActivesByPlan(string planName)
+        {
+                  
+                return await _context.Fee
+                    .Include(x => x.Member)
+                    .ThenInclude(x => x.Plan)
+                    //.Where(x => x.Member.Plan.Id == plan.Id)
+                    .GroupBy(x => new { x.From.Month, x.PlanName })
+                    .Select(x => new MembersActivesPlanDto { PlanName = x.Key.PlanName, Actives = x.Count(), Month = x.Key.Month.ToString() })
+                    .Where(x => x.PlanName == planName).ToListAsync();
+        }
+
         public async Task<MembersStatisticsDto> MembersStatisticsAsync()
         {
             var date = DateTime.Now;

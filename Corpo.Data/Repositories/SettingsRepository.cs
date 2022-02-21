@@ -18,6 +18,16 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
+        public Task<List<GeneralSetting>> GetAll()
+        {
+            return _context.GeneralSetting.ToListAsync();
+        }
+
+        public Task<GeneralSetting> GetByName(string name)
+        {
+            return _context.GeneralSetting.FirstOrDefaultAsync(x => x.Name == name);
+        }
+
         public List<RoleAccess> GetRoleAccess()
         {
             return _context.RoleAccess.Include(x=>x.Role).ToList();
@@ -34,6 +44,12 @@ namespace Corpo.Data.Repositories
             }
             
            
+        }
+
+        public async Task Update(GeneralSetting setting)
+        {
+            _context.GeneralSetting.Update(setting);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -81,8 +81,9 @@ export class CashFormComponent implements OnInit {
     this.monthlyCash = 0;
     this.cashService.getMonthlyCash().subscribe(
       result => {
-        console.log(result);
-        this.monthlyCash = result.result.total;
+        if (result.result !== null) {
+          this.monthlyCash = result.result.total;
+        }
       },
       error => console.error(error)
     )
@@ -91,26 +92,29 @@ export class CashFormComponent implements OnInit {
   getLastCash() {
     this.cashService.getLastCash().subscribe(
       result => {
-        console.log(result);
-        this.cash = result.result;
-        this.id = this.cash.id;
-        if (this.cash.closing == null) {
-          this.openingView = false;
-          if (this.openingView == false) {
-            this.startingBalance = this.cash.startingBalance;
-            this.getTotals();
-            this.calculateCurrentCash();
+        if (result.result !== null) {
+          this.cash = result.result;
+          this.id = this.cash.id;
+          if (this.cash.closing == null) {
+            this.openingView = false;
+            if (this.openingView == false) {
+              this.startingBalance = this.cash.startingBalance;
+              this.getTotals();
+              this.calculateCurrentCash();
+            }
           }
         }
       },
-      error => console.error(error)
+      error => {
+        console.error(error);
+        this.openingView == true;
+      }
     )
   }
 
   getCash() {
     this.cashService.getCashById(this.id).subscribe(
       result => {
-        console.log(result);
         this.startingBalance = result.startingBalance;
       },
       error => console.error(error)
@@ -120,7 +124,6 @@ export class CashFormComponent implements OnInit {
   getAllSale() {
     this.saleService.getAll(this.id).subscribe(
       result => {
-        console.log(result);
         for (var i = 0; i < result.length; i++) {
           var sale = result[i];
           if (sale.status == 2) {
@@ -138,7 +141,6 @@ export class CashFormComponent implements OnInit {
   getAllOutflow() {
     this.outflowService.getAllOutflow(this.id).subscribe(
       result => {
-        console.log(result);
         this.outflows = result;
         this.calculateTotalOutflow();
         this.calculateCurrentCash();
@@ -150,7 +152,6 @@ export class CashFormComponent implements OnInit {
   getAllFee() {
     this.feeService.getAll(this.id).subscribe(
       result => {
-        console.log(result);
         this.fees = result;
         this.calculateTotalFee();
         this.calculateCurrentCash();
@@ -162,7 +163,6 @@ export class CashFormComponent implements OnInit {
   getAllWithdrawal() {
     this.withdrawalService.getAllWithdrawal(this.id).subscribe(
       result => {
-        console.log(result);
         this.withdrawals = result;
         this.calculateTotalWithdrawal();
         this.calculateCurrentCash();
@@ -174,7 +174,6 @@ export class CashFormComponent implements OnInit {
   getAllIncome() {
     this.incomeService.getAll(this.id).subscribe(
       result => {
-        console.log(result);
         this.incomes = result;
         this.calculateTotalIncome();
         this.calculateCurrentCash();
@@ -184,7 +183,6 @@ export class CashFormComponent implements OnInit {
   }
 
   calculateCurrentCash() {
-    console.log("pase");
     this.currentCash = (this.cash.startingBalance + this.feeTotalPay + this.saleTotalPay + this.incomeTotal)
       - (this.outflowTotalPay + this.withdrawalTotal);
   }
@@ -273,7 +271,6 @@ export class CashFormComponent implements OnInit {
     cash.totalIncome = this.incomeTotal;
     this.cashService.toClose(this.cash.id, cash).subscribe(
       result => {
-        console.log(result);
         this.openingView = true;
         this.getLastCash();
         this.getMonthlyCash();
@@ -292,7 +289,6 @@ export class CashFormComponent implements OnInit {
   openingCash() {
     this.cashService.toOpen().subscribe(
       result => {
-        console.log(result);
         this.id = result.id;
         this.getCash();
         this.openingView = false;

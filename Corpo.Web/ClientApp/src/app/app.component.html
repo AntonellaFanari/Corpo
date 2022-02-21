@@ -13,13 +13,13 @@
         <ul *ngIf="logueado" class="navbar-nav">
           <li *access="'caja'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/caja']">
-              <i class="fa fa-suitcase"></i>
+              <i class="fas fa-cash-register"></i>
               Caja
             </a>
           </li>
           <li *access="'usuarios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/asistencias-turnos']">
-              <i class="fa fa-user"></i>
+              <i class="fa-solid fa-calendar-days"></i>
               Asistencias
             </a>
           </li>
@@ -35,19 +35,6 @@
               Socios
             </a>
           </li>
-          <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a [routerLink]="['/wod-template-list']">
-              <i class="fas fa-dumbbell"></i>
-              Plantillas WOD
-            </a>
-          </li>
-          <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a [routerLink]="['/asignacion-calendario']">
-              <i class="fas fa-dumbbell"></i>
-              Calendario
-            </a>
-          </li>
-          
           <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/asignacion-wod']">
               <i class="fa fa-dumbbell"></i>
@@ -70,10 +57,10 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/tablero']">Tablero</a></li>
             </ul>
           </li>
-     
+
           <li *access="'informes'" class="nav-item">
             <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
-              <i class="fa fa-usd"></i>
+              <i class="fa fa-line-chart"></i>
               Informes
             </a>
             <ul class="dropdown-menu">
@@ -81,16 +68,15 @@
                 <a class="nav-link dropdown-toggle" id="dropdown2" data-bs-toggle="dropdown" role="button" onclick="event.stopPropagation()">Caja</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown2">
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/caja-diaria']">Caja Diaria</a></li>
-                  <!--<li class="nav-item"><a class="nav-link" [routerLink]="['/tags-list']">Tags</a></li>
-          <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>-->
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/caja-detalle']">Caja Detallado</a></li>
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/ganancias-mensuales']">Ganancias Mensuales</a></li>
                 </ul>
               </li>
               <li class="nav-item dropend sub-menu dropdown">
                 <a class="nav-link dropdown-toggle" id="dropdown2" data-bs-toggle="dropdown" role="button" onclick="event.stopPropagation()">Marketing</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown2">
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/member-report']">Estadisticas Totales</a></li>
-                  <!--<li class="nav-item"><a class="nav-link" [routerLink]="['/tags-list']">Tags</a></li>
-                  <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>-->
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/estadisticas-segmentadas']">Estadisticas Segmentadas</a></li>
                 </ul>
               </li>
             </ul>
@@ -109,18 +95,19 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/egresos-list']">Egresos</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/retiros-list']">Retiros</a></li>
               <li class="nav-item dropend sub-menu dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown2" data-bs-toggle="dropdown" role="button" onclick="event.stopPropagation()">WODS</a>
+                <a class="nav-link dropdown-toggle" id="dropdown2" data-bs-toggle="dropdown" role="button" onclick="event.stopPropagation()">Rutinas</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown2">
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/categorias-list']">Categorias</a></li>
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/tags-list']">Tags</a></li>
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/modalidades-list']">Modalidades</a></li>
+                  <li class="nav-item"><a class="nav-link" [routerLink]="['/plantillas-wod']">Plantillas WOD</a></li>
                 </ul>
               </li>
             </ul>
           </li>
           <li *access="'ajustes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a [routerLink]="['/accesos']">
+            <a [routerLink]="['/configuraciones']">
               <i class="fa fa-gear"></i>
               Ajustes
             </a>
@@ -132,7 +119,7 @@
         <div class="btn-group">
           <p class="text-white">Bienvenido {{user.name }}</p>&nbsp;
           <a class="text-white dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
-          <ul class="dropdown-menu" role="menu">
+          <ul class="dropdown-menu ps-2" role="menu">
             <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user-o"></i>&nbsp;Mis datos</a></li>
             <li><a [routerLink]="['/modificar-contraseña']"><i class="fa fa-key"></i>&nbsp;Modificar contraseña</a></li>
             <li><a [routerLink]="['/mis-deudas']"><i class="fa fa-usd"></i>&nbsp;Mis deudas</a></li>

@@ -1,0 +1,10 @@
+<section class="wrapper">
+  <div class="row">
+    <div class="">
+      <button *ngFor="let plan of plans" type="button" class="btn btn-outline-primary btn-block ms-2 mt-2" (click)="selectPlan(plan.name)">{{plan.name}}</button>
+    </div>
+  </div>
+</section>
+<div class="card">
+  <canvas id="segmented-statistics"></canvas>
+</div>

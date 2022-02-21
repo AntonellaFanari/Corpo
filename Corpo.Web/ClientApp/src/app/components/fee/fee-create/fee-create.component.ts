@@ -59,10 +59,8 @@ export class FeeCreateComponent implements OnInit {
     private balanceService: BalanceService, private feeService: FeeService, private promotionService: PromotionService,
     private creditService: CreditService) {
     let from = this.dp.transform(new Date(), 'yyyy-MM-dd');
-    console.log(from);
     let date = new Date();
     let to = this.dp.transform(date.setDate(date.getDate() + 31), 'yyyy-MM-dd');
-    console.log(to);
     this.formCreate = this.formBuilder.group({
       memberId: ['', Validators.required],
       planId: ['', Validators.required],
@@ -81,7 +79,6 @@ export class FeeCreateComponent implements OnInit {
       error => console.error(error));
     this.planService.getAll().subscribe(
       result => {
-        console.log(result);
         this.plans = result;
       },
       error => console.error(error)
@@ -94,7 +91,6 @@ export class FeeCreateComponent implements OnInit {
 
   selectPlan(event) {
     this.plan = this.plans.find(x => x.id == event);
-    console.log(this.plan);
     this.formCreate.patchValue({
       planId: this.plan.id,
       price: this.plan.price,
@@ -111,7 +107,6 @@ export class FeeCreateComponent implements OnInit {
 
   selectMember(event) {
     this.member = event;
-    console.log(this.member);
     this.filterMember = this.member.lastName + " " + this.member.name;
     this.formCreate.patchValue({ memberId: this.member.id });
     this.selectPlan(this.member.planId);
@@ -122,7 +117,6 @@ export class FeeCreateComponent implements OnInit {
   getBalances(id) {
     this.balanceService.getAllByIdMember(id).subscribe(
       result => {
-        console.log(result);
         this.balances = result;
       },
       error => console.error(error)
@@ -133,7 +127,6 @@ export class FeeCreateComponent implements OnInit {
   getFees(id) {
     this.feeService.getAllByIdMember(id).subscribe(
       result => {
-        console.log(result);
         this.fees = result;
       },
       error => console.error(error)
@@ -183,7 +176,6 @@ export class FeeCreateComponent implements OnInit {
     this.feeDto.memberId = this.formCreate.value.memberId;
     this.feeDto.transaction = TransactionType.fee;
     this.feeDto.balance = this.calculateBalance();
-    console.log(this.feeDto);
   }
 
 
@@ -193,7 +185,6 @@ export class FeeCreateComponent implements OnInit {
 
   clearInput() {
     this.filterMember = "";
-    console.log(this.filterMember);
 
   }
 
@@ -208,7 +199,6 @@ export class FeeCreateComponent implements OnInit {
       this.createFeeDto();
       this.feeService.add(this.feeDto).subscribe(
         result => {
-          console.log(result);
           this.router.navigate(['/caja'])
         },
         error => {
@@ -231,7 +221,6 @@ export class FeeCreateComponent implements OnInit {
   }
 
   addMembersPromotionFee(event) {
-    console.log(event);
     this.feeDto = new FeeDto();
     this.feeDto.membersPromotion = event;
     this.selectedPromotion = this.promotionModal.selectedPromotion;

@@ -57,7 +57,7 @@
                         <tr class="scrollme" *ngFor="let balance of balances">
                           <td class="td-title" data-title="Fecha">{{balance.date | date: 'dd/MM/yyyy'}}</td>
                           <td data-title="Concepto"><span *ngIf="balance.transaction == 1">Venta</span><span *ngIf="balance.transaction == 2">Cuota</span></td>
-                          <td data-title="Detalle" class="text-center">
+                          <td data-title="Detalle">
                             <span>
                               <a class="a-link-detail" (click)="getTransaction(balance)">ver</a>
                             </span>
@@ -129,18 +129,18 @@
           <div class="col-12 card">
             <div class="row card-body p-0">
               <div class="col-6 p-0">
-                <div class="card-body col-6 pull-left ">
+                <div class="card-body col-12 col-lg-6 pull-left ">
                   <label class="form-label">Total a cobrar $</label>
                 </div>
-                <div class="card-body col-6  pull-left padding-input-total">
+                <div class="card-body col-12 col-lg-6 pull-left padding-input-total">
                   <input type="number" class="form-control col-6" [(ngModel)]="total" />
                 </div>
               </div>
               <div class="col-6 p-0">
-                <div class="card-body col-6 pull-left ">
+                <div class="card-body col-12 col-lg-6 pull-left ">
                   <label class="form-label">Pago $</label>
                 </div>
-                <div class="card-body col-6  pull-left padding-input-total">
+                <div class="card-body col-12 col-lg-6 pull-left padding-input-total">
                   <input type="number" class="form-control col-6" [(ngModel)]="pay" />
                 </div>
               </div>
@@ -151,8 +151,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
-    <button class="btn btn-success col-4 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Cargar Créditos</button>
+    <button class="btn btn-success col-12 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Cargar Créditos</button>
+    <button class="btn btn-secondary col-12 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
   </div>
 </section>
 <div [ngClass]="{'view-debt-detail': viewDebts}">

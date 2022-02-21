@@ -38,7 +38,6 @@ export class DebtEditComponent implements OnInit {
   ngOnInit() {
     this.balanceService.getById(this.id).subscribe(
       result => {
-        console.log(result.result);
         this.balance = result.result;
         this.getMember(this.balance.memberId);
         if (this.balance.balance < 0) {
@@ -59,7 +58,6 @@ export class DebtEditComponent implements OnInit {
   getMember(id) {
     this.memberService.getById(id).subscribe(
       result => {
-        console.log(result);
         this.member = result;
       },
       error => console.error(error)
@@ -69,7 +67,6 @@ export class DebtEditComponent implements OnInit {
   getSale(id) {
     this.saleService.getSaleById(id).subscribe(
       result => {
-        console.log(result.result);
         this.sale = result.result;
         this.total = this.sale.total;
         this.getUserRegister(this.sale.userId);
@@ -81,7 +78,6 @@ export class DebtEditComponent implements OnInit {
   getFee(id) {
     this.feeService.getById(id).subscribe(
       result => {
-        console.log(result);
         this.fee = result;
         this.total = this.fee.total;
         this.getUserRegister(this.fee.userId);
@@ -93,7 +89,6 @@ export class DebtEditComponent implements OnInit {
   getUserRegister(userId) {
     this.userService.getById(userId).subscribe(
       result => {
-        console.log(result);
         this.userRegister = result;
       },
       error => console.error(error)
@@ -112,7 +107,6 @@ export class DebtEditComponent implements OnInit {
     this.getAmountBalance();
     this.balanceService.update(this.id, this.balance).subscribe(
       result => {
-        console.log(result);
         this.router.navigate(['/deudas-detalle'], { queryParams: { id: this.balance.memberId } });
       },
       error => {

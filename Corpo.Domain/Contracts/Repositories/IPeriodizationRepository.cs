@@ -12,6 +12,6 @@ namespace Corpo.Domain.Contracts.Repositories
         Task Add(Periodization periodization);
         Task<Periodization> GetById(int id);
         Task Update(Periodization periodization);
-        Task<List<Periodization>> GetValidByMemberId(int id);
+        Task<Periodization> GetValidByMemberId(int id);
     }
 }

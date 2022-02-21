@@ -35,7 +35,7 @@ export class FeeService {
   }
 
   public delete(id: number) {
-    return this.http.delete(this.url + 'api/fee/delete?id=' + id);
+    return this.http.delete(this.url + 'api/fee/' + id);
   }
 
   getAllByIdMember(id: number) {

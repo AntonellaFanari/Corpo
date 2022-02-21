@@ -6,15 +6,15 @@
         <table class="table table-bordered">
           <tbody>
             <tr [ngClass]="{'header-cash-positve': currentCash>=0, 'header-cash-negative': currentCash<0 }">
-              <th colspan="5">FECHA DE CAJA: {{cash.opening | date: 'dd/MM/yyyy'}} <br /> CAJA ACTUAL: ${{currentCash}}</th>
+              <th colspan="5">FECHA DE CAJA: {{cash.opening | date: 'dd/MM/yyyy'}} <br /> CAJA ACTUAL: {{currentCash | currency}}</th>
             </tr>
             <tr>
-              <th data-title="CI" class="text-center col-lg-6"><strong>CI: ${{startingBalance}}</strong></th>
-              <th data-title="SF del mes" class="text-center col-lg-6"><strong>Saldo final del mes: ${{monthlyCash}}</strong></th>
+              <th data-title="CI" class="text-center col-lg-6"><strong>CI: {{startingBalance | currency}}</strong></th>
+              <th data-title="SF del mes" class="text-center col-lg-6"><strong>Saldo final del mes: {{monthlyCash | currency}}</strong></th>
             </tr>
             <tr>
-              <th data-title="Ingresos" class="text-center"><strong>ENTRADAS: ${{feeTotalPay + saleTotalPay + incomeTotal}}</strong> </th>
-              <th data-title="Egresos" class="text-center"><strong>SALIDAS: ${{outflowTotalPay + withdrawalTotal}}</strong></th>
+              <th data-title="Ingresos" class="text-center"><strong>ENTRADAS: {{(feeTotalPay  + saleTotalPay + incomeTotal) | currency}}</strong> </th>
+              <th data-title="Egresos" class="text-center"><strong>SALIDAS: {{(outflowTotalPay + withdrawalTotal) | currency}}</strong></th>
             </tr>
           </tbody>
         </table>
@@ -52,10 +52,10 @@
                       </td>
                     </tr>
                     <tr *ngFor="let fee of fees; index as i">
-                      <td class="cursor" (click)="getDetailFee(fee)">{{fee.pay}}</td>
+                      <td class="cursor" (click)="getDetailFee(fee)">{{fee.pay | currency}}</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-info cursor">Total: {{feeTotalPay}}</td>
+                      <td class="bg-info cursor">Total: {{feeTotalPay | currency}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -71,10 +71,10 @@
                       </td>
                     </tr>
                     <tr *ngFor="let sale of sales; index as i">
-                      <td [ngStyle]="{'color':sale.status==2?'red':'#09b4f5'}" class="cursor" (click)="getDetailsSale(sale)">{{sale.pay}}</td>
+                      <td [ngStyle]="{'color':sale.status==2?'red':'#09b4f5'}" class="cursor" (click)="getDetailsSale(sale)">{{sale.pay | currency}}</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-success cursor">Total: {{saleTotalPay}}</td>
+                      <td class="bg-success cursor">Total: {{saleTotalPay | currency}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -90,10 +90,10 @@
                       </td>
                     </tr>
                     <tr *ngFor="let income of incomes; index as i">
-                      <td class="cursor" (click)="getDetailIncome(income)">{{income.amount}}</td>
+                      <td class="cursor" (click)="getDetailIncome(income)">{{income.amount | currency}}</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-warning cursor">Total: {{incomeTotal}}</td>
+                      <td class="bg-warning cursor">Total: {{incomeTotal | currency}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -109,10 +109,10 @@
                       </td>
                     </tr>
                     <tr *ngFor="let outflow of outflows; index as i">
-                      <td class="cursor" (click)="getDetailOutflow(outflow)">{{outflow.pay}}</td>
+                      <td class="cursor" (click)="getDetailOutflow(outflow)">{{outflow.pay | currency}}</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-danger cursor">Total: {{outflowTotalPay}}</td>
+                      <td class="bg-danger cursor">Total: {{outflowTotalPay | currency}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -128,10 +128,10 @@
                       </td>
                     </tr>
                     <tr *ngFor="let withdrawal of withdrawals; index as i">
-                      <td class="cursor" (click)="getDetailWithdrawal(withdrawal)">{{withdrawal.amount}}</td>
+                      <td class="cursor" (click)="getDetailWithdrawal(withdrawal)">{{withdrawal.amount | currency}}</td>
                     </tr>
                     <tr class="total-responsive table-td-total">
-                      <td class="bg-secondary cursor">Total: {{withdrawalTotal}}</td>
+                      <td class="bg-secondary cursor">Total: {{withdrawalTotal | currency}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -140,11 +140,11 @@
           </tbody>
           <tfoot class="total-non-responsive table-td-total">
             <tr class="scrollme">
-              <td class="cursor">{{feeTotalPay}}</td>
-              <td class="cursor">{{saleTotalPay}}</td>
-              <td class="cursor">{{outflowTotalPay}}</td>
-              <td class="cursor">{{withdrawalTotal}}</td>
-              <td class="cursor">{{incomeTotal}}</td>
+              <td class="cursor">{{feeTotalPay | currency}}</td>
+              <td class="cursor">{{saleTotalPay | currency}}</td>
+              <td class="cursor">{{incomeTotal | currency}}</td>
+              <td class="cursor">{{outflowTotalPay | currency}}</td>
+              <td class="cursor">{{withdrawalTotal | currency}}</td>
             </tr>
           </tfoot>
         </table>
@@ -157,20 +157,23 @@
 </section>
 <section class="wrapper">
   <section id="no-more-tables" *ngIf="openingView">
-    <table class="table table-bordered" *ngIf="cash">
+    <table class="table table-bordered">
       <tbody>
         <tr>
-          <td colspan="6" [ngClass]="{'header-cash-positve': currentCash>=0, 'header-cash-negative': currentCash<0 }">FECHA DE CIRRE DE CAJA: {{cash.closing | date: 'dd/MM/yyyy'}}- CAJA ACTUAL: ${{currentCash}}</td>
+          <th colspan="6" [ngClass]="{'header-cash-positve': currentCash>=0, 'header-cash-negative': currentCash<0 }">
+            <span *ngIf="cash">FECHA DE CIRRE DE CAJA: {{cash.closing | date: 'dd/MM/yyyy'}}<br /> CAJA ACTUAL: {{currentCash | currency}}</span>
+            <span *ngIf="!cash">No hay registro de cajas anteriores.</span>
+          </th>
+        </tr>
+        <tr class="td-height row m-0">
+          <th colspan="3" data-title="CI" class="text-center col-12 col-lg-6"><strong>CI: <span *ngIf="cash">{{cash.startingBalance | currency}}</span></strong></th>
+          <th colspan="3" data-title="CF" class="text-center col-12 col-lg-6"><strong>CF: <span *ngIf="cash">{{cash.endingBalance | currency}}</span></strong></th>
         </tr>
         <tr class="td-height">
-          <td colspan="3" class="text-center col-6"><strong>CI: ${{cash.startingBalance}}</strong></td>
-          <td colspan="3" class="text-center col-6"><strong>CF: ${{cash.endingBalance}}</strong></td>
-        </tr>
-        <tr class="td-height">
-          <td colspan="6" class="text-center"><strong>CAJA MENSUAL <br /> Saldo Final: ${{monthlyCash}}</strong></td>
+          <th colspan="6" data-title="CAJA MENSUAL" class="text-center"><strong>CAJA MENSUAL <br /> Saldo Final: <span *ngIf="cash">{{monthlyCash | currency}}</span></strong></th>
         </tr>
         <tr class="td-button-opening">
-          <td colspan="6" class="text-center td-button text-white"><button class="btn btn-success col-3 col-lg-2 btn-opening" type="submit" (click)="openingCash()">Abrir Caja</button></td>
+          <th colspan="6" class="text-center td-button text-white"><button class="btn btn-success col-4 col-lg-2 btn-opening" type="submit" (click)="openingCash()">Abrir Caja</button></th>
         </tr>
       </tbody>
     </table>

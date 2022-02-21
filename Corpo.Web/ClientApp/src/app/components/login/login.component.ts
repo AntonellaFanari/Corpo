@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
           this.accountService.setToken(result.token);
           this.accountService.setAuthenticated(true);
           this.accountService.setLoggedUser(result.user);
-          this.router.navigate(['/']);
-        },
+          window.location.href = '/home';
+       },
         error => {
           console.error(error);
           if (error.status === 400) {

@@ -1,48 +1,66 @@
 <section class="wrapper">
   <div class="task-panel ">
-    <h4 class="table-title">Detalle Caja Diaria</h4>
+    <h4 class="table-title">Caja Diaria Detalle</h4>
+    <button *ngIf="viewBtnReturn" type="button" class="btn btn-secondary pull-right" routerLink="/caja-diaria">Volver</button>
   </div>
   <hr>
 
   <div class="row">
     <div class="col-12">
-      <section id="no-more-tables" *ngIf="cash">
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
-          <table class="table table-bordered table-condensed cf user-table">
-            <thead class="cf">
+      <section *ngIf="cash">
+        <div>
+          <table class="table table-bordered">
+            <thead>
               <tr>
-                <th colspan="4" class="text-center">Resumen del día 01/02/2022</th>
+                <th colspan="4" class="text-center">Resumen del día {{cash.opening | date: 'dd/MM/yyyy'}}</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="scrollme span-margin text-center">
+              <tr>
                 <td colspan="1"><strong>Total Entradas</strong></td>
-                <td colspan="1"><span>{{inflowsTotal}}</span></td>
+                <td colspan="1"><span>{{inflowsTotal | currency}}</span></td>
                 <td colspan="1"><strong>Total Salidas</strong></td>
-                <td colspan="1"><span>{{outflowsTotal}}</span></td>
+                <td colspan="1"><span>{{outflowsTotal | currency}}</span></td>
               </tr>
-              <tr class="scrollme span-margin text-center">
+              <tr>
                 <td><strong>Caja Inicial</strong></td>
-                <td><span>{{cash.startingBalance}}</span></td>
+                <td><span>{{cash.startingBalance | currency}}</span></td>
                 <td><strong>Caja Final</strong></td>
-                <td><span>{{cash.endingBalance}}</span></td>
+                <td><span>{{cash.endingBalance | currency}}</span></td>
               </tr>
-              <tr class="scrollme span-margin text-center">
+              <tr>
                 <td><strong>Total</strong></td>
-                <td><span>{{inflowsTotal + cash.startingBalance}}</span></td>
+                <td><span>{{inflowsTotal + cash.startingBalance | currency}}</span></td>
                 <td><strong>Total</strong></td>
-                <td><span>{{outflowsTotal + cash.endingBalance}}</span></td>
+                <td><span>{{outflowsTotal + cash.endingBalance | currency}}</span></td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
     </div>
-    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
   </div>
   <div class="row mt-2">
     <div class="col-12">
-      <section id="no-more-tables">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th colspan="4" class="text-center">Detalle de la caja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row m-0">
+            <td class="col-12 col-lg-6">Seleccionar fecha</td>
+            <td class="col-12 col-lg-3">
+              <input type="date" class="form-control col-6" [(ngModel)]="date" />
+            </td>
+            <td class="col-12 col-lg-3">
+              <button type="button" class="btn btn-primary form-control col-6 pull-right" (click)="getCashDate()">Consultar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <section id="no-more-tables" *ngIf="recordsCash.length>0 ; else: elseBlock">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
           <table class="table table-bordered table-condensed table-striped cf mb-0 user-table">
             <thead class="cf">
@@ -56,14 +74,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="scrollme span-margin" *ngFor="let record of recordCashs" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
-                <td class="td-title" data-title="Fecha"><span>{{record.date}}</span></td>
-                <td class="td-title" data-title="Detalle"><span>{{record.detail}}</span></td>
-                <td class="td-title" data-title="Monto"><span>{{record.amount}}</span></td>
-                <td class="td-title" data-title="Socio"><span>{{record.member}}</span></td>
+              <tr class="scrollme span-margin" *ngFor="let record of recordsCash" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
+                <td class="td-title" data-title="Fecha"><span>{{record.date | date: 'dd/MM/yyyy - hh:mm a'}}</span></td>
+                <td class="td-title" data-title="Detalle"><span>{{record.transaction}} - {{record.detail}}<button *ngIf="record.transaction=='Venta'" class="btn btn-outline-success btn-xs btn-action-list" data-toggle="modal" href="#myModalSale" (click)="getDetailSale(record.id)">Detalle</button></span></td>
+                <td class="td-title" data-title="Monto"><span>{{record.amount | currency}}</span></td>
+                <td class="td-title" data-title="Socio"><span *ngIf="record.member">{{record.member}}</span><span *ngIf="!record.member">-</span></td>
                 <td class="td-title" data-title="Cajero"><span>{{record.user}}</span></td>
-                <td data-title="Acción">                 
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(record.id)"><i class="fa fa-trash-o "></i></button>
+                <td data-title="Acción">
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(record)"><i class="fa fa-trash-o "></i></button>
                 </td>
               </tr>
             </tbody>
@@ -71,6 +89,83 @@
         </div>
       </section>
     </div>
-    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
+    <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
   </div>
 </section>
+
+
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
+<section class="modal mt-4" id="myModalSale">
+  <div class="container-fluid modal-content modal-lg p-0">
+
+    <!-- cabecera del diálogo -->
+    <div class="modal-header modal-title bg-success d-block">
+      <h4 class="modal-title text-white text-center">Detalle de la Venta</h4>
+      <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+    </div>
+
+
+    <!-- cuerpo del diálogo -->
+    <div class="modal-body">
+      <table *ngIf="sale" class="table table-bordered table-condensed cf scrollme user-table">
+        <thead class="cf">
+          <tr>
+            <th colspan="2">Socio: {{sale.member.lastName}} {{sale.member.name}}</th>
+            <th colspan="2">Fecha: {{sale.date | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
+          </tr>
+          <tr>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of detailsSale" class="scrollme">
+            <td class="td-title">{{detail.product.description}}</td>
+            <td class="td-title">{{detail.quantity}}</td>
+            <td class="td-title">{{detail.price | currency}}</td>
+            <td class="td-title">{{detail.quantity*detail.price | currency}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- pie del diálogo -->
+      <div class="modal-footer p-0">
+        <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <button type="button" id="btn-modal-cancel" class="d-none" data-toggle="modal" data-target="#myModalCancelSale">Abrir ventana de diálogo</button>
+
+  <div class="modal fade" id="myModalCancelSale">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title bg-success d-block">
+          <h4 class="modal-title text-white text-center">Anulación de de la Venta</h4>
+          <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+        </div>
+
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <input type="text" class="form-control" placeholder="Ingrese el motivo de la anulación" [(ngModel)]="reasonCancel" />
+
+          <!-- pie del diálogo -->
+          <div class="modal-footer p-0">
+            <button type="button" class="btn btn-danger col-3" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success col-3" (click)="cancelSale()">Anular</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

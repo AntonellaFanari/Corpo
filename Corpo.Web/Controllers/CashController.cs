@@ -12,7 +12,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CashController : ControllerBase
+    public class CashController : CorpoBaseController
     {
         private ICashService _cashService;
 
@@ -40,7 +40,8 @@ namespace Corpo.Web.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCash(int id, Cash cash)
         {
-            var response = await _cashService.UpdateCash(id, cash);
+            var user = GetUser();
+            var response = await _cashService.UpdateCash(user, id, cash);
             return this.ToActionResult(response);
         }
 
@@ -52,22 +53,7 @@ namespace Corpo.Web.Controllers
         }
 
 
-        [HttpGet("current-month")]
-        public async Task<ActionResult> GetCashCurrentMonth()
-        {
-
-            var response = await _cashService.GetCashCurrentMonth();
-            return this.ToActionResult(response);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetCash(DateTime from, DateTime to)
-        {
-
-            var response = await _cashService.GetCash(from, to);
-            return this.ToActionResult(response);
-        }
-
+        
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
@@ -76,12 +62,7 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
-        //[HttpGet("detailed")]
-        //public async Task<ActionResult> GetDetailed(DateTime opening, DateTime closing)
-        //{
+       
 
-        //    var response = await _cashService.GetDetailed(opening, closing);
-        //    return this.ToActionResult(response);
-        //}
     }
 }

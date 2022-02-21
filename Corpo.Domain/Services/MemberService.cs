@@ -60,7 +60,8 @@ namespace Corpo.Domain.Services
                 EmergencyPhone = member.EmergencyPhone,
                 Instagram = member.Instagram,
                 Facebook = member.Facebook,
-                PlanId = member.PlanId
+                PlanId = member.PlanId,
+                EntryDate = DateTime.Now
             };
             try
             {
@@ -166,6 +167,16 @@ namespace Corpo.Domain.Services
             {
                 return new DomainResponse(false, ex.Message, "No se pudo modificar la fecha de vencimiento.");
             }
+        }
+
+        public async Task<DomainResponse> GetPersonalized()
+        {
+            var response = await _memberRepository.GetPersonalized();
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
         }
 
         public DomainResponse AddMedicalHistory(int memberId, MedicalHistory medicalHistory)

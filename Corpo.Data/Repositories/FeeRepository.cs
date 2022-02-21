@@ -26,6 +26,15 @@ namespace Corpo.Data.Repositories
             return fee.Id;
         }
 
+        public async Task<int> Delete(int id)
+        {
+            var fee = await _context.Fee.Include(x => x.Member).ThenInclude(x => x.Credit).FirstOrDefaultAsync(x => x.Id == id);
+            var creditId = fee.Member.CreditId;
+            _context.Fee.Remove(fee);
+            await _context.SaveChangesAsync();
+            return creditId;
+        }
+
         public List<Fee> GetAll(DateTime from, DateTime? to)
         {
             return _context.Fee.Include(x => x.Member).Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
@@ -41,10 +50,9 @@ namespace Corpo.Data.Repositories
             return _context.Fee.Include(x => x.Member).Include(x => x.Member.Plan).FirstOrDefault(x => x.Id == id);
         }
 
-        public DateTime GetLastPayment(int id)
+        public Fee GetLastPayment(int id)
         {
-            var lastFee = _context.Fee.Where(x => x.MemberId == id).OrderBy(x => x.Date).Last();
-            return lastFee.Date;
+            return _context.Fee.Where(x => x.MemberId == id).OrderBy(x => x.Date).LastOrDefault();
         }
     }
 }

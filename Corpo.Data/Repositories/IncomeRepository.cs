@@ -20,8 +20,9 @@ namespace Corpo.Data.Repositories
 
         public async Task Add(Income income)
         {
-           await _context.Income.AddAsync(income);
-           await _context.SaveChangesAsync();
+                _context.Income.Add(income);
+                await _context.SaveChangesAsync();
+
         }
 
         public async Task Delete(int id)

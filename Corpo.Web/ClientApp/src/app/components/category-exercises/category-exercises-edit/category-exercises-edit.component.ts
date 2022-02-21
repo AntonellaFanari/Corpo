@@ -27,7 +27,6 @@ export class CategoryExercisesEditComponent implements OnInit {
   ngOnInit() {
     this.exerciseService.getCategoryById(this.id).subscribe(
       result => {
-        console.log(result.resul);
         this.category = result.result;
         this.toCompleteForm();
       },
@@ -58,7 +57,6 @@ export class CategoryExercisesEditComponent implements OnInit {
       var categoryEdit = this.createCategoryEdit();
       this.exerciseService.updateCategory(this.id, categoryEdit).subscribe(
         result => {
-          console.log(result);
           this.router.navigate(['/categorias-list']);
         },
         error => {

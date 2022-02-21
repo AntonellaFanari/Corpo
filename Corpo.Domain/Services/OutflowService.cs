@@ -57,16 +57,29 @@ namespace Corpo.Domain.Services
 
         public DomainResponse DeleteOutflowType(int id)
         {
-            _outflowRepository.DeleteOutflowType(id);
+            _outflowRepository.DeleteOutflowType(id); 
             return new DomainResponse
             {
                 Success = true
             };
         }
 
-        public DomainResponse DeleteOutflow(int id)
+        public async Task<DomainResponse> DeleteOutflow(int id)
         {
+            var outflow = _outflowRepository.GetOutflowById(id);
             _outflowRepository.DeleteOutflow(id);
+            var cash = await _cashRepository.GetLastCash();
+            if (cash.Closing != null)
+            {
+                await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow.Pay, "inflow");
+            }
+            else
+            {
+                if (outflow.Date < cash.Opening)
+                {
+                    await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow.Pay, "inflow");
+                }
+            }
             return new DomainResponse
             {
                 Success = true

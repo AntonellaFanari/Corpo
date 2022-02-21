@@ -11,5 +11,7 @@ namespace Corpo.Domain.Contracts.Services
     {
         DomainResponse SaveAccess(List<RoleAccess> access);
         DomainResponse GetRoleAccess();
+        Task<DomainResponse> GetAll();
+        Task<DomainResponse> Update(List<GeneralSetting> settings);
     }
 }

@@ -1,0 +1,59 @@
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 500px;
+  overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+#monthly-earning {
+  height: 450px;
+}
+
+.diplay-table {
+  display: none;
+}
+
+.diplay-foot{
+    display: block;
+}
+
+th {
+  background: white;
+  position: sticky;
+  top: 0; /* Don't forget this, required for the stickiness */
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+}
+
+.view-span{
+    display: block;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 40%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
+  .diplay-table{
+      display: block;
+  }
+
+  .diplay-foot {
+      display: none;
+  }
+
+  .view-span {
+    display: none;
+  }
+}

@@ -36,7 +36,6 @@ export class CategoryExercisesCreateComponent implements OnInit {
       newCategory.name = this.formCreate.value.name;
       this.exerciseService.addCategory(newCategory).subscribe(
         result => {
-          console.log(result);
           this.return();
         },
         error => {

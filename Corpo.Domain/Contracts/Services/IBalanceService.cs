@@ -17,5 +17,6 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse Update(int id, BalanceToPay balance);
         DomainResponse GetPositiveBalanceByIdMember(int id);
         DomainResponse CancelBalance(PayCancelBalanceDto payCancelBalance);
+        Task<DomainResponse> GetByIdTransaction(int id, TransactionType transactionType);
     }
 }

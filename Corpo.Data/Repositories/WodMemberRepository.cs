@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Data.Repositories
 {
-    public class WodMemberRepository: IWodMemberRepository
+    public class WodMemberRepository : IWodMemberRepository
     {
         private CorpoContext _context;
 
@@ -18,17 +18,12 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
-        public async Task Add(WodMember wodMember)
+        public async Task<int> Add(WodMember wodMember)
         {
-            try
-            {
+            
                 await _context.WodMember.AddAsync(wodMember);
                 await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-            }
+                return wodMember.Id;
             
         }
 

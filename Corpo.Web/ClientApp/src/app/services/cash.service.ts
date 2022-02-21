@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Cash } from '../domain/cash';
+import { DomainResponse } from '../domain/domain-response';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -40,16 +41,4 @@ export class CashService {
     return this.http.put<any>(this.url + 'api/cash/'+ id , cash, httpOptions);
   }
 
-  public getCashCurrentMonth() {
-    return this.http.get<any>(this.url + 'api/cash/current-month');
-  }
-
-  public getCash(from: string, to: string) {
-    console.log(from, to);
-    return this.http.get<any>(this.url + 'api/cash?from='+ from + '&to=' + to);
-  }
-
-  public getCashDetailed(opening: string, closing: string) {
-    return this.http.get<any>(this.url + 'api/cash/detailed?opening=' + opening + '&closing=' + closing);
-  }
 }

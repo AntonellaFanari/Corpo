@@ -21,7 +21,6 @@ export class CategoryExercisesListComponent implements OnInit {
   getAll() {
     this.exerciseService.getAllCategories().subscribe(
       result => {
-        console.log(result);
         this.categories = result;
       },
       error => console.error(error)

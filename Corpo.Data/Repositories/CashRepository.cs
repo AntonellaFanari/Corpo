@@ -26,7 +26,7 @@ namespace Corpo.Data.Repositories
 
         public Task<Cash> GetLastCash()
         {
-            return _context.Cash.OrderBy(x => x.Opening).LastAsync();
+            return _context.Cash.OrderBy(x => x.Opening).LastOrDefaultAsync();
         }
 
         public Task<MonthlyCash> GetMonthlyCash(DateTime date)
@@ -42,7 +42,7 @@ namespace Corpo.Data.Repositories
             {
                 monthlyCash = await AddMonthlyCash();
             }
-            if (type == "income") { monthlyCash.Total -= amount; } else { monthlyCash.Total += amount; }
+            if (type == "outflow") { monthlyCash.Total -= amount; } else { monthlyCash.Total += amount; }
             _context.MonthlyCash.Update(monthlyCash);
             _context.SaveChanges();
 
@@ -65,15 +65,15 @@ namespace Corpo.Data.Repositories
 
         public async Task AddCash(Cash cash)
         {
-            
-                _context.Cash.Add(cash);
-                await _context.SaveChangesAsync();
-                var mothlyCash = await this.GetMonthlyCash(cash.Opening);
-                if (mothlyCash == null)
-                {
-                    await this.AddMonthlyCash();
-                }
-         
+
+            _context.Cash.Add(cash);
+            await _context.SaveChangesAsync();
+            var mothlyCash = await this.GetMonthlyCash(cash.Opening);
+            if (mothlyCash == null)
+            {
+                await this.AddMonthlyCash();
+            }
+
         }
 
         public Task<List<Cash>> GetCashCurrentMonth()
@@ -87,42 +87,163 @@ namespace Corpo.Data.Repositories
             return _context.Cash.Where(x => x.Opening >= from && x.Opening <= to).ToListAsync();
         }
 
-        //public async Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime closing)
-        //{
-        //    var list = new List<RecordCashDto>();
-        //    try
-        //    {
-        //        var fees = await _context
-        //            .Fee
-        //            .Include(x => x.Member)
-        //            .ThenInclude(x=>x)
-        //            .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
-        //        {
-        //            Id = x.Id,
-        //            Date = x.Date,
-        //            Detail = "Cuota " + x.PlanName,
-        //            Amount = x.Pay,
-        //            Member = x.Member.LastName + " " + x.Member.Name,
-        //            User = "hjfjjj",
-        //        }).ToListAsync();
-        //        list = fees;
-        //        return list;
-        //    }
-        //    catch (Exception ex)
-        //    {
+        public async Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime? closing)
+        {
+           
+            var list = new List<RecordCashDto>();
+            var fees = await _context
+                .Fee
+                .Include(x => x.Member)
+                .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = x.PlanName,
+                    Amount = x.Pay,
+                    Member = x.Member.LastName + " " + x.Member.Name,
+                    User = x.UserName,
+                    Transaction = "Cuota"
+                }).ToListAsync();
+            foreach (var fee in fees)
+            {
+                list.Add(fee);
+            };
+            var sales = await _context
+                .Sale
+                .Include(x => x.Member)
+                .Where(x => x.Date >= opening && x.Date <= closing && x.Status == Status.Valid).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = "",
+                    Amount = x.Pay,
+                    Member = x.Member.LastName + " " + x.Member.Name,
+                    User = x.UserName,
+                    Transaction = "Venta"
+                }).ToListAsync();
+            foreach (var sale in sales)
+            {
+                list.Add(sale);
+            };
+            var incomes = await _context
+                .Income
+                .Include(x => x.User)
+                .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = x.Detail,
+                    Amount = x.Amount,
+                    User = x.User.LastName + " " + x.User.Name,
+                    Transaction = "Ingreso"
+                }).ToListAsync();
+            foreach (var income in incomes)
+            {
+                list.Add(income);
+            };
+            var outflows = await _context
+                .Outflow
+                .Include(x => x.User)
+                .Include(x => x.OutflowType)
+                .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = x.OutflowType.Name,
+                    Amount = x.Pay,
+                    User = x.User.LastName + " " + x.User.Name,
+                    Transaction = "Egreso"
+                }).ToListAsync();
+            foreach (var outflow in outflows)
+            {
+                list.Add(outflow);
+            };
+            var withdrawals = await _context
+                .Withdrawal
+                .Include(x => x.User)
+                .Include(x => x.WithdrawalName)
+                .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = x.WithdrawalName.Name,
+                    Amount = x.Amount,
+                    User = x.User.LastName + " " + x.User.Name,
+                    Transaction = "Retiro"
+                }).ToListAsync();
+            foreach (var withdrawal in withdrawals)
+            {
+                list.Add(withdrawal);
+            };
+            return list.OrderBy(x => x.Date).ToList();
+            }
 
-        //        throw;
-        //    }
-
-            //list.Add(fees);
-            //var sales = await _context.Sale.Include(x => x.Member).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
-            //list.Add(sales);
-            //var incomes = await _context.Income.Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
-            //list.Add(incomes);
-            //var outflows = await _context.Outflow.Include(x => x.User).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
-            //list.Add(outflows);
-            //var withdrawals = await _context.Withdrawal.Include(x => x.User).Where(x => x.Date >= opening && x.Date <= closing).ToListAsync();
-            //list.Add(withdrawals);
-            //}
+        public Task<Cash> GetByDate(DateTime date)
+        {
+            return _context.Cash.FirstOrDefaultAsync(x => x.Opening.Day == date.Day && x.Opening.Month == date.Month && x.Opening.Year == date.Year);
         }
+
+        public async Task<List<MonthlyCash>> GetAllMonthlyCash()
+        {
+            var date = DateTime.Now;
+            return await _context.MonthlyCash.Where(x => x.Date.Year == date.Year).OrderBy(x => x.Date.Month).ToListAsync();
+        }
+
+        public async Task<List<RecordCashDto>> GetRecordCashByMonth(int month)
+        {
+            var date = DateTime.Now;
+            var list = new List<RecordCashDto>();
+            var incomes = await _context
+               .Income
+               .Include(x => x.User)
+               .Where(x => x.Date.Month == month && x.Date.Year == date.Year).Select(x => new RecordCashDto
+               {
+                   Id = x.Id,
+                   Date = x.Date,
+                   Detail = x.Detail,
+                   Amount = x.Amount,
+                   User = x.User.LastName + " " + x.User.Name,
+                   Transaction = "Ingreso"
+               }).ToListAsync();
+            foreach (var income in incomes)
+            {
+                list.Add(income);
+            };
+            var outflows = await _context
+                .Outflow
+                .Include(x => x.User)
+                .Include(x => x.OutflowType)
+                .Where(x => x.Date.Month == month && x.Date.Year == date.Year).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = x.OutflowType.Name,
+                    Amount = x.Pay,
+                    User = x.User.LastName + " " + x.User.Name,
+                    Transaction = "Egreso"
+                }).ToListAsync();
+            foreach (var outflow in outflows)
+            {
+                list.Add(outflow);
+            };
+            var withdrawals = await _context
+                .Withdrawal
+                .Include(x => x.User)
+                .Include(x => x.WithdrawalName)
+                .Where(x => x.Date.Month == month && x.Date.Year == date.Year).Select(x => new RecordCashDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Detail = x.WithdrawalName.Name,
+                    Amount = x.Amount,
+                    User = x.User.LastName + " " + x.User.Name,
+                    Transaction = "Retiro"
+                }).ToListAsync();
+            foreach (var withdrawal in withdrawals)
+            {
+                list.Add(withdrawal);
+            };
+            return list.OrderBy(x => x.Date).ToList();
+        }
+    }
 }

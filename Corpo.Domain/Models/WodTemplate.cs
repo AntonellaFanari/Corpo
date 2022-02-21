@@ -10,6 +10,7 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Goal { get; set; }
         public virtual List<WodGroup> WodGroups { get; set; }
     }
 }

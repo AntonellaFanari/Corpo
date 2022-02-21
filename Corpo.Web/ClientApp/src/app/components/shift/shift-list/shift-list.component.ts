@@ -49,10 +49,15 @@ export class ShiftListComponent implements OnInit {
       },
       error => console.error(error)
     );
+    this.getAll();
+ 
+  }
+
+  getUsers() {
     this.userService.getAllByNameRole("Profesor").subscribe(
       result => {
         console.log(result);
-        this.users = result;
+        this.users = result.result;
       },
       error => console.error(error)
     );
@@ -64,6 +69,7 @@ export class ShiftListComponent implements OnInit {
       result => {
         console.log(result);
         this.getShiftsList(result);
+        this.getUsers();
       },
       error => console.error(error)
     )

@@ -29,9 +29,9 @@ namespace Corpo.Data.Repositories
             return await _context.Periodization.Include(x => x.PeriodizationWeeks).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<Periodization>> GetValidByMemberId(int id)
+        public async Task<Periodization> GetValidByMemberId(int id)
         {
-            return await _context.Periodization.Include(x => x.PeriodizationWeeks).Where(x => x.MemberId == id && x.Valid).ToListAsync();
+            return await _context.Periodization.Include(x => x.PeriodizationWeeks).FirstOrDefaultAsync(x => x.MemberId == id && x.Valid);
         }
 
         public async Task Update(Periodization periodization)

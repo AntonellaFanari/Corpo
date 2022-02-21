@@ -85,6 +85,16 @@ namespace Corpo.Data.Repositories
             return _context.Member.Find(email);
         }
 
+        public Task<List<Member>> GetPersonalized()
+        {
+
+            return _context.Member
+                .Include(x => x.Account)
+                .Include(x => x.Plan)
+                .Include(x => x.Credit)
+                .Where(x => x.Plan.Type == PlanType.Personalized && x.Credit.Expiration >= DateTime.Now)
+                .ToListAsync();
+        }
         public int AddMedicalHistory(MedicalHistory medicalHistory)
         {
             _context.MedicalHistory.Add(medicalHistory);

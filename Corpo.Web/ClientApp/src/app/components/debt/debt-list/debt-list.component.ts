@@ -25,7 +25,6 @@ export class DebtListComponent implements OnInit {
   ngOnInit() {
     this.balanceService.getAll().subscribe(
       result => {
-        console.log(result);
         this.balancesToPay = result;
       },
       error => console.error(error)
@@ -35,7 +34,6 @@ export class DebtListComponent implements OnInit {
   getAllBalancesByIdMember(id) {
     this.balanceService.getAllByIdMember(id).subscribe(
       result => {
-        console.log(result);
         this.balancesMember = result;
         for (var i = 0; i < this.balancesMember.length; i++) {
           if (this.balancesMember[i].balance < 0) {
@@ -55,7 +53,6 @@ export class DebtListComponent implements OnInit {
 
   checked() {
     this.totalPayment = !this.totalPayment;
-    console.log(this.totalPayment)
   }
 
   submit() {
@@ -70,7 +67,6 @@ export class DebtListComponent implements OnInit {
     };
     this.balanceService.cancelBalance(payCancelBalance).subscribe(
       result => {
-        console.log(result)
       },
       error => {
         console.error(error);

@@ -11,5 +11,8 @@ namespace Corpo.Domain.Contracts.Repositories
     {
         void SaveAccess(List<RoleAccess> access);
         List<RoleAccess> GetRoleAccess();
+        Task<List<GeneralSetting>> GetAll();
+        Task Update(GeneralSetting setting);
+        Task<GeneralSetting> GetByName(string name);
     }
 }

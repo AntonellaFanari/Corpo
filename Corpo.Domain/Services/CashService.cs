@@ -1,6 +1,7 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
+using Corpo.Domain.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,27 @@ namespace Corpo.Domain.Services
     public class CashService : ICashService
     {
         private ICashRepository _cashRepository;
+        private IWithdrawalRepository _withdrawalRepository;
 
-        public CashService(ICashRepository cashRepository)
+        public CashService(ICashRepository cashRepository, IWithdrawalRepository withdrawalRepository)
         {
             _cashRepository = cashRepository;
+            _withdrawalRepository = withdrawalRepository;
         }
 
         public async Task<DomainResponse> Add()
         {
-            var cashQuery = await _cashRepository.GetLastCash();
-            var cash = new Cash
-            {
-                Opening = DateTime.Now,
-                StartingBalance = cashQuery.EndingBalance
-            };
+
             try
             {
+                var cash = new Cash();
+                cash.Opening = DateTime.Now;
+                var cashQuery = await _cashRepository.GetLastCash();
+                if (cashQuery != null)
+                {
+                    cash.StartingBalance = cashQuery.StartingBalance;
+                }
+                else { cash.StartingBalance = 0; }
                 await _cashRepository.AddCash(cash);
                 return new DomainResponse
                 {
@@ -38,6 +44,36 @@ namespace Corpo.Domain.Services
             {
                 return new DomainResponse(false, ex.Message, "No se pudo realizar la apertura de la caja.");
             }
+        }
+
+        public async Task<DomainResponse> GetAllMonthlyCash()
+        {
+            var response = await _cashRepository.GetAllMonthlyCash();
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetByDate(DateTime date)
+        {
+            var cash = await _cashRepository.GetByDate(date);
+            if (cash != null)
+            {
+
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = cash
+                };
+            }
+            else
+            {
+                return new DomainResponse(false, "no existe caja registrada para esta fecha.", "no existen movimientos registrados para esta fecha.");
+            }
+
+
         }
 
         public async Task<DomainResponse> GetById(int id)
@@ -70,15 +106,15 @@ namespace Corpo.Domain.Services
             };
         }
 
-        //public async Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing)
-        //{
-        //    var response = await _cashRepository.GetDetailed(opening, closing);
-        //    return new DomainResponse
-        //    {
-        //        Success = true,
-        //        Result = response
-        //    };
-        //}
+        public async Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing)
+        {
+            var response = await _cashRepository.GetDetailed(opening, closing);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
 
         public async Task<DomainResponse> GetLastCash()
         {
@@ -103,10 +139,22 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public async Task<DomainResponse> UpdateCash(int id, Cash cash)
+        public async Task<DomainResponse> GetRecordCashByMonth(int month)
+        {
+            var response = await _cashRepository.GetRecordCashByMonth(month);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> UpdateCash(LoggedUser user, int id, Cash cash)
         {
             var cashQuery = await _cashRepository.GetById(id);
             cashQuery.Closing = DateTime.Now;
+            cashQuery.UserName = user.LastName + " " + user.Name;
+            cashQuery.UserId = user.Id;
             cashQuery.TotalFee = cash.TotalFee;
             cashQuery.TotalSale = cash.TotalSale;
             cashQuery.TotalOutflow = cash.TotalOutflow;
@@ -126,8 +174,8 @@ namespace Corpo.Domain.Services
             {
                 return new DomainResponse(false, ex.Message, "Error al intentar cerrar la caja.");
             }
-            
-            
+
+
         }
     }
 }

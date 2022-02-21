@@ -50,6 +50,7 @@
     <None Remove="ClientApp\src\app\domain\fee-view.ts" />
     <None Remove="ClientApp\src\app\domain\fee.ts" />
     <None Remove="ClientApp\src\app\domain\file.ts" />
+    <None Remove="ClientApp\src\app\domain\general-setting.ts" />
     <None Remove="ClientApp\src\app\domain\income.ts" />
     <None Remove="ClientApp\src\app\domain\injury.ts" />
     <None Remove="ClientApp\src\app\domain\iuser.ts" />
@@ -59,6 +60,7 @@
     <None Remove="ClientApp\src\app\domain\member-promotion.ts" />
     <None Remove="ClientApp\src\app\domain\member-view.ts" />
     <None Remove="ClientApp\src\app\domain\member.ts" />
+    <None Remove="ClientApp\src\app\domain\members-actives-plan.ts" />
     <None Remove="ClientApp\src\app\domain\monthly-cash.ts" />
     <None Remove="ClientApp\src\app\domain\new-password.ts" />
     <None Remove="ClientApp\src\app\domain\news-view.ts" />
@@ -109,7 +111,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\detail-purchase.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\details-sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\domain-response.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\general-setting.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\income.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\members-actives-plan.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member-promotion.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\monthly-cash.ts" />

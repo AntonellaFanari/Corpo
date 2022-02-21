@@ -41,7 +41,6 @@ export class ClassCreateComponent implements OnInit {
       newClass.personalized = this.formCreate.value.personalized;
       this.classService.add(newClass).subscribe(
         result => {
-          console.log(result);
           this.return();
         },
         error => {

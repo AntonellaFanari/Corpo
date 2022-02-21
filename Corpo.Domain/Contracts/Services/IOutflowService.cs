@@ -17,6 +17,6 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse AddOutflow(int id, Outflow outflow);
         DomainResponse GetAllOutflow(int id);
         Outflow GetOutflowById(int id);
-        DomainResponse DeleteOutflow(int id);
+        Task<DomainResponse> DeleteOutflow(int id);
     }
 }

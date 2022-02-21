@@ -45,7 +45,7 @@ export class ShiftCreateComponent implements OnInit {
   ngOnInit() {
     this.userService.getAllByNameRole("Profesor").subscribe(
       result => {
-        this.users = result;
+        this.users = result.result;
         console.log(this.users);
       },
       error => console.error(error)

@@ -61,7 +61,7 @@ namespace Corpo.Data.Repositories
 
         public Sale GetSaleById(int id)
         {
-            return _context.Sale.Include(x => x.Member).FirstOrDefault(x => x.Id == id);
+            return _context.Sale.Include(x => x.Member).Include(x => x.DetailsSale).ThenInclude(x => x.Product).FirstOrDefault(x => x.Id == id);
         }
     }
 }

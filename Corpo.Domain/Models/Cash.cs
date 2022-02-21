@@ -9,6 +9,8 @@ namespace Corpo.Domain.Models
     public class Cash
     {
         public int Id { get; set; }
+        public string UserName { get; set; }
+        public int UserId { get; set; }
         public DateTime Opening { get; set; }
         public DateTime? Closing { get; set; }
         public decimal StartingBalance { get; set; }

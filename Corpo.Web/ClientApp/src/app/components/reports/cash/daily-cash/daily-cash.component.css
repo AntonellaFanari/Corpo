@@ -1,0 +1,25 @@
+.diplay-table {
+  display: none;
+}
+
+.diplay-foot {
+  display: block;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 40%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
+  .diplay-table {
+    display: block;
+  }
+
+  .diplay-foot {
+    display: none;
+  }
+}

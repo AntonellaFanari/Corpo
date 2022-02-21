@@ -13,6 +13,7 @@ import { AttendanceService } from '../../../services/attendance.service';
 import { CreditService } from '../../../services/credit.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
+import { SettingsService } from '../../../services/settings.service';
 import { ShiftService } from '../../../services/shift.service';
 
 @Component({
@@ -36,30 +37,33 @@ export class AttendanceComponent implements OnInit {
   viewList: boolean = false;
   checkedAllAttendances = true;
   attendancesRegister: AttendanceRegister[] = [];
+  maxNegatives: number;
 
   constructor(private attendanceService: AttendanceService, private memberService: MemberService,
     private customAlertService: CustomAlertService, private creditService: CreditService, private shiftService: ShiftService,
-    private dp: DatePipe, private route: ActivatedRoute) {
+    private dp: DatePipe, private route: ActivatedRoute, private settingsService: SettingsService) {
 
   }
 
   ngOnInit() {
     this.getAllMembers();
-    console.log(this.currentDate);
+    this.settingsService.getAll().subscribe(
+      response => {
+        this.maxNegatives = parseInt(response.result.find(x => x.name == "maxNegative").value);
+      },
+      error => console.error(error))
 
   }
 
   modalClick() {
     document.getElementById("modal-attendance").click();
     this.viewBtnAddMember = true;
-    console.log(this.currentDate);
   }
 
   getShift(id) {
     this.shiftId = id;
     this.shiftService.getById(id).subscribe(
       result => {
-        console.log(result);
         this.shift = result.result;
         this.shift.day = this.getDayShift(this.shift.day) + " " + this.shift.day.substr(8, 2) + "/" + this.shift.day.substr(5, 2);
         this.shift.hour = this.shift.hour.substr(0, 5);
@@ -96,7 +100,6 @@ export class AttendanceComponent implements OnInit {
     this.shiftId = id;
     this.attendanceService.getAllByIdShift(id).subscribe(
       result => {
-        console.log(result);
         this.attendances = result.result;
         for (var i = 0; i < this.attendances.length; i++) {
           let attendance = this.attendances[i];
@@ -119,7 +122,6 @@ export class AttendanceComponent implements OnInit {
   getAllMembers() {
     this.memberService.getAll().subscribe(
       result => {
-        console.log(result);
         this.members = result;
       },
       error => console.error(error)
@@ -145,7 +147,6 @@ export class AttendanceComponent implements OnInit {
 
 
   selectMember(event) {
-    console.log(event);
     this.member = event;
     console.log(this.member);
     this.filterMember = this.member.lastName + " " + this.member.name;
@@ -155,7 +156,6 @@ export class AttendanceComponent implements OnInit {
   getCreditMember(id) {
     this.creditService.getById(id).subscribe(
       result => {
-        console.log(result);
         this.credit = result.result;
       },
       error => console.error(error)
@@ -180,13 +180,12 @@ export class AttendanceComponent implements OnInit {
 
 
   addMember() {
-    if (this.credit.negative > 5) {
+    if (this.credit.negative > this.maxNegatives) {
       this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio superó la cantidad de negativos permitidos."]);
     } else {
       let attendance = this.createAttendance();
       this.attendanceService.add(attendance).subscribe(
         result => {
-          console.log(result);
           this.getAll(this.shiftId);
           this.viewSelectAddMember = false;
           this.viewBtnAddMember = true;

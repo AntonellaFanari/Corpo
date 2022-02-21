@@ -34,5 +34,19 @@ namespace Corpo.Web.Controllers
             var response = _settingsService.SaveAccess(access);
             return Ok(response);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<GeneralSetting>>> GetAll()
+        {
+            var response = await _settingsService.GetAll();
+            return this.ToActionResult(response);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update(List<GeneralSetting> settings)
+        {
+            var response = await _settingsService.Update(settings);
+            return this.ToActionResult(response);
+        }
     }
 }

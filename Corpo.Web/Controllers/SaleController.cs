@@ -43,14 +43,15 @@ namespace Corpo.Web.Controllers
         public ActionResult Add(SaleDto newSale)
         {
             var user = GetUser();
-            var response = _saleService.Add(user.Id, newSale);
+            var response = _saleService.Add(user, newSale);
             return this.ToActionResult(response);
         }
 
         [HttpPost("cancel")]
-        public ActionResult Cancel(int id, CancelSale cancelSale)
+        public async Task<ActionResult> Cancel(int id, CancelSale cancelSale)
         {
-            var response = _saleService.Cancel(id, cancelSale);
+            var user = GetUser();
+            var response = await _saleService.Cancel(user.Id, id, cancelSale);
             return this.ToActionResult(response);
         }
 

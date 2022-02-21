@@ -19,6 +19,9 @@ namespace Corpo.Domain.Contracts.Repositories
         Task AddCash(Cash cash);
         Task<List<Cash>> GetCashCurrentMonth();
         Task<List<Cash>> GetCash(DateTime from, DateTime to);
-        //Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime closing);
+        Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime? closing);
+        Task<Cash> GetByDate(DateTime date);
+        Task<List<MonthlyCash>> GetAllMonthlyCash();
+        Task<List<RecordCashDto>> GetRecordCashByMonth(int month);
     }
 }

@@ -23,7 +23,7 @@
             <tr class="scrollme">
               <td class="td-title" data-title="Fecha" *ngIf="balance"> {{balance.date | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
               <td class="td-title" data-title="Socio" *ngIf="member"> {{member.lastName}} {{member.name}}</td>
-              <td class="td-title" data-title="Total" *ngIf="total"> {{total}}</td>
+              <td class="td-title" data-title="Total" *ngIf="total"> {{total | currency}}</td>
               <td class="td-title" data-title="Cajero" *ngIf="userRegister">{{userRegister.lastName}} {{userRegister.name}}</td>
             </tr>
             <tr class="scrollme">

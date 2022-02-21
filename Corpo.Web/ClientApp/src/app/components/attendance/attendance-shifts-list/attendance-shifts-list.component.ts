@@ -20,10 +20,8 @@ export class AttendanceShiftsListComponent implements OnInit {
 
   constructor(private shiftService: ShiftService, private dp: DatePipe, private customAlertService: CustomAlertService) {
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
-    console.log(this.from);
     let to = new Date();
     this.to = this.dp.transform(to.setDate(to.getDate() + 30), 'yyyy-MM-dd');
-    console.log(this.to);
   }
 
   ngOnInit() {
@@ -35,7 +33,6 @@ export class AttendanceShiftsListComponent implements OnInit {
     this.shifts = [];
     this.shiftService.getAll(this.from, this.to, 0).subscribe(
       result => {
-        console.log(result);
         this.getShiftsList(result);
       },
       error => {
@@ -91,5 +88,6 @@ export class AttendanceShiftsListComponent implements OnInit {
   goToAttendances(id) {
     this.attendancesComponent.modalClick();
     this.attendancesComponent.getShift(id);
+    this.attendancesComponent.viewSelectAddMember = false;
   }
 }

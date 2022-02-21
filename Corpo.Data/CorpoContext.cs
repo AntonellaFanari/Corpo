@@ -60,6 +60,7 @@ namespace Corpo.Data
         public DbSet<WodGroupMember> WodGroupMember { get; set; }
         public DbSet<Periodization> Periodization { get; set; }
         public DbSet<PeriodizationWeek> PeriodizationWeek { get; set; }
+        public DbSet<GeneralSetting> GeneralSetting { get; set; }
 
     }
 }

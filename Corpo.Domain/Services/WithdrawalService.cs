@@ -111,7 +111,7 @@ namespace Corpo.Domain.Services
                 _withdrawalRepository.AddWithdrawal(withdrawal);
                 if (withdrawal.WithdrawalNameId == 1)
                 {
-                 await _cashRepository.UpdateMonthlyCash(withdrawal.Date, withdrawal.Amount, "withdrawal");
+                 await _cashRepository.UpdateMonthlyCash(withdrawal.Date, withdrawal.Amount, "inflow");
                 }
                 return new DomainResponse
                 {
@@ -141,7 +141,7 @@ namespace Corpo.Domain.Services
             await _withdrawalRepository.DeleteWithdrawal(id);
             if (withdrawal.WithdrawalNameId == 1)
             {
-                await _cashRepository.UpdateMonthlyCash(withdrawal.Date, -withdrawal.Amount, "withdrawal");
+                await _cashRepository.UpdateMonthlyCash(withdrawal.Date, -withdrawal.Amount, "outflow");
             }
             return new DomainResponse
             {

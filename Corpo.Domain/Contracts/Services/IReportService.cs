@@ -11,5 +11,6 @@ namespace Corpo.Domain.Contracts.Services
     {
         Task<DomainResponse> MemberStatisticsAsync();
         Task<DomainResponse> MembersStatisticsDetailAsync(string reportType);
+        Task<DomainResponse> GetMembersActivesByPlan(string planName);
     }
 }

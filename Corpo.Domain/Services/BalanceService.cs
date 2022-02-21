@@ -149,6 +149,14 @@ namespace Corpo.Domain.Services
             
         }
 
-
+        public async Task<DomainResponse> GetByIdTransaction(int id, TransactionType transactionType)
+        {
+            var response = await _balanceRepository.GetByIdTransaction(id, transactionType);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
     }
 }

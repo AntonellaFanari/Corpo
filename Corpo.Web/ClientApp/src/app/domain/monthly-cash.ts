@@ -1,5 +1,5 @@
 export class MonthlyCash {
-  id: number;
+  id?: number;
   month: number;
   total: number
 }

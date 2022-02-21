@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoryExercises } from '../../../domain/category-exercises';
 import { Exercise } from '../../../domain/exercise';
+import { MemberView } from '../../../domain/member-view';
 import { Tag } from '../../../domain/tag';
 import { ExerciseItem, Wod, WodGroup, WodTemplate } from '../../../domain/wod';
 import { Modality } from '../../../domain/wod/modality';
@@ -16,6 +17,7 @@ import { WodTemplateService } from '../../../wod/wod-template.service';
 })
 export class AssignmentTemplateFormComponent implements OnInit {
 
+  member: MemberView;
   filterExercise = "";
   exercises: Exercise[] = [];
   exercisesSelect: Array<any> = [];
@@ -190,6 +192,5 @@ export class AssignmentTemplateFormComponent implements OnInit {
       this.activeWodGroup = this.wod.wodGroups.findIndex(x => x.groupIndex == previousIndex)
     }
   }
-
 
 }

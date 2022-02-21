@@ -19,7 +19,6 @@ export class ExercisesListComponent implements OnInit {
   getAll() {
     this.exerciseService.getAll().subscribe(
       result => {
-        console.log(result);
         this.exercises = result;
       },
       error => console.error(error)

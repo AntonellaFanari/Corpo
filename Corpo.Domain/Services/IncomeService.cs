@@ -27,7 +27,7 @@ namespace Corpo.Domain.Services
                 income.Date = DateTime.Now;
                 income.UserId = id;
                 await _incomeRepository.Add(income);
-                await _cashRepository.UpdateMonthlyCash(income.Date, income.Amount, "income");
+                await _cashRepository.UpdateMonthlyCash(income.Date, income.Amount, "outflow");
                 return new DomainResponse
                 {
                     Success = true
@@ -44,7 +44,7 @@ namespace Corpo.Domain.Services
         {
             var income = await _incomeRepository.GetById(id);
             await _incomeRepository.Delete(id);
-            await _cashRepository.UpdateMonthlyCash(income.Date, -income.Amount, "income");
+            await _cashRepository.UpdateMonthlyCash(income.Date, -income.Amount, "inflow");
             return new DomainResponse
             {
                 Success = true

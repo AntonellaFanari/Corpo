@@ -18,6 +18,16 @@ namespace Corpo.Domain.Services
             _settingsRepository = settingsRepository;
         }
 
+        public async Task<DomainResponse> GetAll()
+        {
+            var response = await _settingsRepository.GetAll();
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
         public DomainResponse GetRoleAccess()
         {
             var list = _settingsRepository.GetRoleAccess();
@@ -32,6 +42,25 @@ namespace Corpo.Domain.Services
         {
             _settingsRepository.SaveAccess(access);
             return new DomainResponse { Success = true };
+        }
+
+        public async Task<DomainResponse> Update(List<GeneralSetting> settings)
+        {
+            try
+            {
+                foreach (var setting in settings)
+                {
+                    await _settingsRepository.Update(setting);
+                };
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo modificar las configuraciones.");
+            }
         }
     }
 }

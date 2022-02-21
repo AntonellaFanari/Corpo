@@ -37,8 +37,8 @@
             <tr *ngFor="let detail of detailsSale" class="scrollme">
               <td class="td-title">{{detail.product.description}}</td>
               <td class="td-title">{{detail.quantity}}</td>
-              <td class="td-title">{{detail.price}}</td>
-              <td class="td-title">{{detail.quantity*detail.price}}</td>
+              <td class="td-title">{{detail.price | currency}}</td>
+              <td class="td-title">{{detail.quantity*detail.price | currency}}</td>
             </tr>
           </tbody>
         </table>

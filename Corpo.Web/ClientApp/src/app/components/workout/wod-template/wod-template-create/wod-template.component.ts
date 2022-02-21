@@ -1,4 +1,6 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+/*
+ *
+ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { CategoryExercises } from 'src/app/domain/category-exercises';

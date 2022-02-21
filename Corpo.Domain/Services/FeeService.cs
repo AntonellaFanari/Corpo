@@ -2,6 +2,7 @@
 using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
 using Corpo.Domain.Models.Dtos;
+using Corpo.Domain.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,27 +18,34 @@ namespace Corpo.Domain.Services
         private IBalanceService _balanceService;
         private IMemberService _memberService;
         private ICashRepository _cashRepository;
+        private IBalanceRepository _balanceRepository;
+        private ICreditRepository _creditRepository;
 
         public FeeService(IFeeRepository feeRepository, ICreditService creditService, 
-            IBalanceService balanceService, IMemberService memberService, ICashRepository cashRepository)
+            IBalanceService balanceService, IMemberService memberService, ICashRepository cashRepository,
+            IBalanceRepository balanceRepository, ICreditRepository creditRepository)
         {
             _feeRepository = feeRepository;
             _creditService = creditService;
             _balanceService = balanceService;
             _memberService = memberService;
             _cashRepository = cashRepository;
+            _balanceRepository = balanceRepository;
+            _creditRepository = creditRepository;
+
         }
 
-        public DomainResponse Add(int id, FeeDto feeDto)
+        public DomainResponse Add(LoggedUser user, FeeDto feeDto)
         {
             try
             {
+                feeDto.UserName = user.LastName + " " + user.Name;  
                 var totalPromotion = feeDto.TotalPromotion;
-                AddFee(feeDto, id, totalPromotion, feeDto.MemberId);
+                AddFee(feeDto, user.Id, totalPromotion, feeDto.MemberId);
                 foreach (var member in feeDto.MembersPromotion)
                 {
                     totalPromotion = feeDto.Total * member.Discount / 100;
-                    AddFee(feeDto, id, totalPromotion, member.MemberId);
+                    AddFee(feeDto, user.Id, totalPromotion, member.MemberId);
                 };
                 return new DomainResponse
                 {
@@ -66,6 +74,7 @@ namespace Corpo.Domain.Services
                 var lastPayment = _feeRepository.GetLastPayment(feeDto.MemberId);
                 var fee = new Fee();
                 fee.Date = date;
+                fee.UserName = feeDto.UserName;
                 fee.UserId = id;
                 fee.MemberId = memberId;
                 fee.Credits = feeDto.Credits;
@@ -77,7 +86,7 @@ namespace Corpo.Domain.Services
                 fee.Total = feeDto.Total;
                 fee.Pay = feeDto.Pay;
                 var idFee = _feeRepository.Add(fee);
-                if (lastPayment < date.AddDays(-31))
+                if (lastPayment != null && lastPayment.Date < date.AddDays(-31))
                 {
                     var member = _memberService.GetById(feeDto.MemberId);
                     member.ReEntryDate = date;
@@ -145,6 +154,85 @@ namespace Corpo.Domain.Services
         public Fee GetById(int id)
         {
             return _feeRepository.GetById(id);
+        }
+
+        public async Task<DomainResponse> Delete(int id)
+        {
+            var fee = _feeRepository.GetById(id);
+            var memberId = fee.MemberId;
+            var cash = await _cashRepository.GetLastCash();
+            var creditId = await _feeRepository.Delete(id);
+            var lastFee = _feeRepository.GetLastPayment(memberId);
+            var credit = await _creditRepository.GetById(creditId);
+            credit.InitialCredit = 0;
+            credit.CreditConsumption = 0;
+            credit.Negative = 0;
+            if (lastFee != null)
+            {
+                credit.Expiration = lastFee.To;
+            }
+            else
+            {
+                credit.Expiration = fee.Member.EntryDate;
+            };
+            _creditRepository.Update(credit);
+            var balance = await _balanceRepository.GetByIdTransaction(id, TransactionType.Fee);
+            if (balance == null)
+            {
+                if (cash.Closing != null)
+                {
+                    await _cashRepository.UpdateMonthlyCash(DateTime.Now, fee.Total, "outflow");
+                }
+                else
+                {
+                    if (fee.Date < cash.Opening)
+                    {
+                        await _cashRepository.UpdateMonthlyCash(DateTime.Now, fee.Total, "outflow");
+                    }
+                }
+            }
+            if (balance != null)
+            {
+                
+                if (balance.Statement == Statement.Paid)
+                {
+                    if (cash.Closing != null)
+                    {
+                        await _cashRepository.UpdateMonthlyCash(DateTime.Now, fee.Total, "outflow");
+                    }
+                    else
+                    {
+                        if (fee.Date < cash.Opening)
+                        {
+                            await _cashRepository.UpdateMonthlyCash(DateTime.Now, fee.Total, "outflow");
+                        }
+                    }
+                }
+                if (balance.Statement == Statement.Unpaid)
+                {
+                    var outflow = fee.Total - balance.Balance + balance.Pay;
+                    if (cash.Closing != null)
+                    {
+                        await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
+                    }
+                    else
+                    {
+                        if (fee.Date < cash.Opening)
+                        {
+                            await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
+                        }
+                    }
+                }
+                
+            }
+            else
+            {
+
+            }
+            return new DomainResponse
+            {
+                Success = true
+            };
         }
     }
 }

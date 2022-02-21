@@ -25,10 +25,10 @@
           <tbody>
             <tr *ngFor="let balance of balancesToPay | searchFilterName: filterName">
               <td data-title="Socio"><span>{{balance.lastName}} {{balance.name}}</span></td>
-              <td data-title="Saldo"><span>{{(balance.balance-balance.pay)}}</span></td>
+              <td data-title="Saldo"><span>{{(balance.balance-balance.pay) | currency}}</span></td>
               <td data-title="Observación"><span *ngIf="balance.balance<0">(A Favor)</span><span *ngIf="balance.balance>0">-</span></td>
               <td data-title="Acción">
-                <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/deudas-detalle']" [queryParams]="{id:balance.idMember}">ver</button>
+                <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/deudas-detalle']" [queryParams]="{id:balance.idMember}">Ver</button>
                 <button class="btn btn-warning btn-xs btn-action-list text-white" data-toggle="modal" href="#myModalPay" (click)="selectBalance(balance)">Pagar</button>
               </td>
             </tr>

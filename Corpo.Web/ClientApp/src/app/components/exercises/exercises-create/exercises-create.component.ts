@@ -31,21 +31,18 @@ export class ExercisesCreateComponent implements OnInit {
   ngOnInit() {
     this.exerciseService.getAllTags().subscribe(
       result => {
-        console.log(result);
         this.tags = result;
         for (let i = 0; i < this.tags.length; i++) {
           let tagCheck: { tag: string, checked: boolean } = {tag:'', checked:false};
           tagCheck.tag = this.tags[i].name;
           tagCheck.checked = false;
           this.checkboxToTags.push(tagCheck);
-          console.log(this.checkboxToTags);
         }
       },
       error => console.error(error)
     );
     this.exerciseService.getAllCategories().subscribe(
       result => {
-        console.log(result);
         this.categories = result;
       },
       error => console.error(error)
@@ -69,15 +66,12 @@ export class ExercisesCreateComponent implements OnInit {
     newExercise.categoryExerciseId = this.formCreate.value.categoryExerciseId;
     newExercise.video = this.formCreate.value.video;
     newExercise.tags = this.createListTags();
-    console.log(newExercise);
     return newExercise;
   }
 
   createListTags() {
     let tags: Tag[] = [];
-    console.log(this.checkboxToTags);
     for (var i = 0; i < this.checkboxToTags.length; i++) {
-      console.log(this.checkboxToTags[i]);
       if (this.checkboxToTags[i].checked) {
         let tag = this.tags.find(x => x.name == this.checkboxToTags[i].tag);
         tags.push(tag);

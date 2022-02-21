@@ -15,7 +15,7 @@
           <div class="col-12 card bg-light">
             <form [formGroup]="formCreate">
               <div class="row card-body">
-                <div class="col-9 formValidators">
+                <div class="col-8 col-lg-9  formValidators">
                   <label class="form-label">Nombre:</label>
                   <select class="form-control col-12" (change)="selectWithdrawalName($event.target.value)">
                     <option class="form-control col-12" value="" disabled>Seleccionar...</option>
@@ -23,7 +23,7 @@
                   </select>
                   <p *ngIf="send && f.withdrawalNameId.errors?.required">*Debe seleccionar una opción.</p>
                 </div>
-                <div class="col-3 formValidators">
+                <div class="col-4 col-lg-3 formValidators">
                   <label class="form-label">Retiro:</label>
                   <input type="number" class="form-control" formControlName="amount" />
                   <p *ngIf="send && f.amount.errors?.min">*Debe ingresar un importe mayor a 0.</p>

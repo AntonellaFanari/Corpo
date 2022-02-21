@@ -61,6 +61,7 @@ a {
 
 .a-link-detail {
   color: white !important;
+  text-align:left;
 }
 
 .a-link-detail:hover{
@@ -97,5 +98,7 @@ a {
     padding-right: 0px;
     padding-bottom: 1rem;
   }
+
+
 
 }

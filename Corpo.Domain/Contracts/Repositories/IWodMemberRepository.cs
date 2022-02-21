@@ -9,7 +9,7 @@ namespace Corpo.Domain.Contracts.Repositories
 {
     public interface IWodMemberRepository
     {
-        Task Add(WodMember wodMember);
+        Task<int> Add(WodMember wodMember);
         Task<WodMember> GetById(int id);
         Task Update(WodMember wodMember);
         Task Delete(int id);

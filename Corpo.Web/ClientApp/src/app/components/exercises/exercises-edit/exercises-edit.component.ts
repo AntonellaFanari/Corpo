@@ -34,7 +34,6 @@ export class ExercisesEditComponent implements OnInit {
   ngOnInit() {
     this.exerciseService.getExerciseById(this.id).subscribe(
       result => {
-        console.log(result);
         this.exercise = result.result;
         this.getTags();
         this.toCompleteForm();
@@ -44,7 +43,6 @@ export class ExercisesEditComponent implements OnInit {
     
     this.exerciseService.getAllCategories().subscribe(
       result => {
-        console.log(result);
         this.categories = result;
       },
       error => console.error(error)
@@ -55,14 +53,12 @@ export class ExercisesEditComponent implements OnInit {
   getTags() {
     this.exerciseService.getAllTags().subscribe(
       result => {
-        console.log(result);
         this.tags = result;
         for (let i = 0; i < this.tags.length; i++) {
           let tagCheck: { tag: string, checked: boolean } = { tag: '', checked: false };
           tagCheck.tag = this.tags[i].name;
           tagCheck.checked = false;
           this.checkboxToTags.push(tagCheck);
-          console.log(this.checkboxToTags);
         };
         this.toCheckedCheckbox();
 
@@ -102,15 +98,12 @@ export class ExercisesEditComponent implements OnInit {
     editExercise.categoryExerciseId = this.formEdit.value.categoryExerciseId;
     editExercise.video = this.formEdit.value.video;
     editExercise.tags = this.createListTags();
-    console.log(editExercise);
     return editExercise;
   }
 
   createListTags() {
     let tags: Tag[] = [];
-    console.log(this.checkboxToTags);
     for (var i = 0; i < this.checkboxToTags.length; i++) {
-      console.log(this.checkboxToTags[i]);
       if (this.checkboxToTags[i].checked) {
         let tag = this.tags.find(x => x.name == this.checkboxToTags[i].tag);
         tags.push(tag);

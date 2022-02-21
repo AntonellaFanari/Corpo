@@ -83,9 +83,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpDelete("deleteOutflow")]
-        public ActionResult DeleteOutflow(int id)
+        public async Task<ActionResult> DeleteOutflow(int id)
         {
-            var response = _outflowService.DeleteOutflow(id);
+            var response = await _outflowService.DeleteOutflow(id);
             return this.ToActionResult(response);
         }
     }

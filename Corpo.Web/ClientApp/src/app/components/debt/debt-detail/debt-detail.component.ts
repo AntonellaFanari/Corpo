@@ -37,7 +37,6 @@ export class DebtDetailComponent implements OnInit {
     if (!isNaN(this.idMember)) {
       this.balanceService.getAllByIdMember(this.idMember).subscribe(
         result => {
-          console.log(result);
           this.balances = result;
           this.member = result[0].member;
         },
@@ -69,7 +68,6 @@ export class DebtDetailComponent implements OnInit {
   getSale(id) {
     this.saleService.getSaleById(id).subscribe(
       result => {
-        console.log(result);
         this.sale = result.result;
         this.getDetailsSale(id);
         this.status = this.sale.status;
@@ -82,7 +80,6 @@ export class DebtDetailComponent implements OnInit {
   getDetailsSale(id) {
     this.saleService.getDetailsSale(id).subscribe(
       result => {
-        console.log(result);
         this.detailsSale = result;
       },
       error => console.error(error)
@@ -92,7 +89,6 @@ export class DebtDetailComponent implements OnInit {
   getUserRegister(userId) {
     this.userService.getById(userId).subscribe(
       result => {
-        console.log(result);
         this.userRegister = result;
       },
       error => console.error(error)
@@ -103,7 +99,6 @@ export class DebtDetailComponent implements OnInit {
   getFee(id) {
     this.feeService.getById(id).subscribe(
       result => {
-        console.log(result);
         this.fee = result;
         console.log("fee", this.fee);
         this.getUserRegister(this.fee.userId);

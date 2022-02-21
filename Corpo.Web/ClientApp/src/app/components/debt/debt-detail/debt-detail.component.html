@@ -24,7 +24,7 @@
                   <button class="btn btn-primary btn-xs btn-action-list" (click)="getTransaction(balance)">ver detalle</button>
                 </span>
               </td>
-              <td data-title="Saldo"><span *ngIf="balance.balance>0">{{(balance.balance-balance.pay)}}</span><span *ngIf="balance.balance<0">{{balance.balance * -1}} (a favor)</span></td>
+              <td data-title="Saldo"><span *ngIf="balance.balance>0">{{(balance.balance-balance.pay) | currency}}</span><span *ngIf="balance.balance<0">{{balance.balance * -1}} (a favor)</span></td>
           </tbody>
         </table>
         <div>
@@ -69,8 +69,8 @@
           <tr *ngFor="let detail of detailsSale" class="scrollme">
             <td class="td-title" data-title="Descripcion">{{detail.product.description}}</td>
             <td class="td-title" data-title="Cantidad">{{detail.quantity}}</td>
-            <td class="td-title" data-title="Precio">{{detail.price}}</td>
-            <td class="td-title" data-title="Total">{{detail.quantity*detail.price}}</td>
+            <td class="td-title" data-title="Precio">{{detail.price | currency}}</td>
+            <td class="td-title" data-title="Total">{{detail.quantity*detail.price | currency}}</td>
           </tr>
         </tbody>
       </table>
@@ -123,11 +123,11 @@
           </tr>
           <tr>
             <th *ngIf="fee.promotion">Promoción</th>
-            <td *ngIf="fee.promotion" class="td-title" data-title="Promoción">{{fee.promotion}}</td>
+            <td *ngIf="fee.promotion" class="td-title" data-title="Promoción">{{fee.promotion | currency}}</td>
           </tr>
           <tr>
             <th>Total</th>
-            <td class="td-title" data-title="Total">{{fee.total}}</td>
+            <td class="td-title" data-title="Total">{{fee.total | currency}}</td>
           </tr>
         </thead>
       </table>

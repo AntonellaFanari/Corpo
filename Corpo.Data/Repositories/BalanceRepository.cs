@@ -76,5 +76,9 @@ namespace Corpo.Data.Repositories
             return _context.BalanceToPay.Where(x => x.MemberId == id && x.Balance>0 && x.Statement == Statement.Unpaid).OrderBy(x=>x.Date).ToList();
         }
 
+        public Task<BalanceToPay> GetByIdTransaction(int id, TransactionType transactionType)
+        {
+            return _context.BalanceToPay.FirstOrDefaultAsync(x => x.transactionId == id && x.Transaction == transactionType);
+        }
     }
 }

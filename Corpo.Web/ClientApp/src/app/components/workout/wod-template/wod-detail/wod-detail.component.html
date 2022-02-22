@@ -2,19 +2,24 @@
     <h6 class="status-tittle w-100 text-center p-3" [class.d-none]="!saved">Registrado</h6>
 
     <h6 class="status-tittle w-100 text-center p-3">{{date | date: 'dd-MM-yyyy'}}</h6>
+    <label class="label-goal">Objetivo: </label><label class="goal" *ngIf="wod">{{wod.goal}}</label>
     <div *ngIf="wod">
         <div class="wod-group" *ngFor="let group of wod.wodGroups; let i = index">
 
-            <label>{{group.detail}}</label>
+            <label>{{group.detail}}</label>            
 
             <div class="">
                 <table class="table table-bordered">
                     <tbody>
                         <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
-                            <td class="col-10">
-                                {{exerciseItem.exercise.name}} {{ ((exerciseItem.modality.name != "Repeticiones") ?
-                                exerciseItem.modality.name : "")
-                                }} {{exerciseItem.units}} {{exerciseItem.modality.unit}}
+                            <td class="col-1">
+                                {{exerciseItem.units}}
+                            </td>
+                            <td class="col-10" [attr.colspan]="exerciseItem.value ? '1' : '2'">
+                                {{exerciseItem.exercise.name}}
+                            </td>
+                            <td class="col-1" *ngIf="exerciseItem.value">
+                                {{exerciseItem.value}} {{exerciseItem.mode}}
                             </td>
                         </tr>
 

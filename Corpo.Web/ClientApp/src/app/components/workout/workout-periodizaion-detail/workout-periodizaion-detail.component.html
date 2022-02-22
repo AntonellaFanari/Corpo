@@ -1,7 +1,14 @@
+<div class="modal-body" *ngIf="periodization">
+    <div class="card mb-3" *ngIf="periodization && periodization.goal">
+        <div class="card-body">
+            <label class="label-goal">Objetivo mensual: </label><label class="goal">{{periodization.goal}}</label>
+        </div>
+    </div>
 
-    <div class="modal-body" *ngIf="periodization">
-        <div class="container-fluid" *ngFor="let week of periodization.periodizationWeeks">
-            <h3>Semana {{week.weekNumber}}</h3>
+    <div class="card mb-2" *ngFor="let week of periodization.periodizationWeeks">
+        <h6 class="goal">Semana {{week.weekNumber}}</h6>
+        <div class="card-body">
+            <label class="label-goal">Objetivo: </label><label class="goal">{{week.goal}}</label>
             <div class="row">
                 <section id="no-more-tables" class="tab-pane fade show active col-4">
                     <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
@@ -14,8 +21,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td data-title="M" day="monday">{{week.m}}%</td>
-                                <td data-title="S" day="monday">{{week.s}}%</td>
+                                <td data-title="M" day="monday">{{(week.m != '0') ? week.m + '%' : ''}}</td>
+                                <td data-title="S" day="monday">{{(week.s != '0') ? week.s + '%' : ''}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -24,7 +31,8 @@
                     </div>
                 </section>
                 <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week1" week="week1">
+                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week1"
+                        week="week1">
                         <thead class="cf">
                             <tr>
                                 <th>Lun</th>
@@ -53,6 +61,6 @@
                 </section>
             </div>
         </div>
-       
-    </div>
 
+    </div>
+</div>

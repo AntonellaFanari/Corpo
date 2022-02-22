@@ -5,6 +5,7 @@ export class Periodization {
     month: number;
     year: number;
     periodizationWeeks: PeriodizationWeek[] = [];
+    goal?: string;
 }
 
 export class PeriodizationWeek {
@@ -18,12 +19,14 @@ export class PeriodizationWeek {
     friday: string;
     saturday: string;
     sunday: string;
+    goal: string;
 
 
     constructor(week: Week) {
+        this.goal = week.goal;
         this.weekNumber = week.weekNumber;
-        this.m = week.m;
-        this.s = week.s;
+        this.m = (week.m) ? week.m.replace("%", "") : "0";
+        this.s = (week.s) ? week.s.replace("%", "") : "0";
         this.monday = week.monday;
         this.tuesday = week.tuesday;
         this.wednesday = week.wednesday;

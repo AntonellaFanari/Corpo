@@ -15,3 +15,12 @@ table {
   margin-bottom: 0px;
   background-color: #e0ede4;
 }
+
+.label-goal{
+  color: #888888;
+}
+
+.goal{
+  color: #000000;
+  margin-left: 10px;
+}

@@ -21,6 +21,7 @@ export class Week {
   friday: string;
   saturday: string;
   sunday: string;
+  goal?: string;
 }
 
 export class Total {
@@ -40,10 +41,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre" };
-  week2: Week = { m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre" };
-  week3: Week = { m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
-  week4: Week = { m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
+  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "" };
+  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre" };
+  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
+  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -70,6 +71,8 @@ export class WorkoutPeriodizationComponent implements OnInit {
   type: string;
   memberId: number;
   member: MemberView;
+  goal: string;
+  goalWeek1: string;
 
   constructor(private periodizacionService: PeriodizationService,
     private route: ActivatedRoute,
@@ -93,18 +96,21 @@ export class WorkoutPeriodizationComponent implements OnInit {
     console.log("index: ", this.index)
 
     this.week1 = this.getPeriodization1(this.index);
+    this.week1.weekNumber = "1";
     this.incrementIndex();
 
 
     this.week2 = this.getPeriodization1(this.index);
-
+    this.week2.weekNumber = "2";
     this.incrementIndex();
 
 
     this.week3 = this.getPeriodization1(this.index);
+    this.week3.weekNumber = "3";
     this.incrementIndex();
 
     this.week4 = this.getPeriodization1(this.index);
+    this.week4.weekNumber = "4";
   }
 
   getPeriodization1(index: number) {
@@ -122,6 +128,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
     this.index = previousIndex;
 
     return {
+      goal: "",
       monday: monday,
       tuesday: tuesday,
       wednesday: wednesday,
@@ -504,10 +511,13 @@ export class WorkoutPeriodizationComponent implements OnInit {
     periodization.memberId = this.memberId;
     periodization.month = 2;
     periodization.year = 2022;
+    console.log("week1: ", this.week1);
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week1));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week2));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week3));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week4));
+    periodization.goal = this.goal;
+    console.log(periodization)
     this.periodizacionService.add(periodization).subscribe(() => {
       console.log("success")
       this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId } });

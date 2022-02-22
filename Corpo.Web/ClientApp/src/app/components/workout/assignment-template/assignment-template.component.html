@@ -4,12 +4,12 @@
     <div class=" col-4">
 
       <button class="btn btn-primary w-100 mt-3" type="button" data-toggle="modal" href="#modal-wod"
-        *ngIf="newWods.length > 0">
+              *ngIf="newWods.length > 0">
         Vista previa
       </button>
 
       <button class="btn btn-success w-100 mt-3 mb-3" type="button" data-toggle="modal" href="#modal"
-        *ngIf="periodization">
+              *ngIf="periodization">
         Periodización
       </button>
 
@@ -20,12 +20,18 @@
       </div>
 
       <button class="btn btn-success w-100 mb-3 mt-3" type="button" *ngIf="!periodization && !requestingPeriodization"
-        [routerLink]="['/periodizacion']" [queryParams]="{memberId: memberId}">
+              [routerLink]="['/periodizacion']" [queryParams]="{memberId: memberId}">
         Crear periodización
       </button>
 
+      <button class="btn btn-success w-100 mb-3" type="button" data-toggle="modal" href="#modalMedicalHistory">
+        Historia Médica
+      </button>
+
       <button class="btn btn-secondary w-100" type="button" (click)="cancel()"
-        [class.d-none]="newWods.length == 0">Cancelar</button>
+              [class.d-none]="newWods.length == 0">
+        Cancelar
+      </button>
 
       <app-assignment-calendar [class.d-none]="newWods.length > 0"></app-assignment-calendar>
     </div>
@@ -137,3 +143,26 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modalMedicalHistory">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Historia Médica</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+      </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <app-member-view [id]="memberId" [hideGoBack]="true"></app-member-view>
+      </div>
+      <!-- pie del diálogo -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

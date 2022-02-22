@@ -6,13 +6,13 @@
         <form [formGroup]="formCreate">
           <div class="col-12">
             <div class="row">
-              <div class="col-12 col-lg-4 col-md-4 pull-left mt-2">
+              <div class="col-12 col-lg-4 col-md-4 btn-float-left mt-2">
                 <label class="col-sm-12 control-label labelFormStyle">Edad:</label>
                 <div class="col-sm-12">
                   <input type="text" class="form-control" formControlName="age">
                 </div>
               </div>
-              <div class="col-12 col-lg-4 col-md-4 pull-left mt-2">
+              <div class="col-12 col-lg-4 col-md-4 btn-float-left mt-2">
                 <label class="col-sm-12 control-label labelFormStyle">Sexo:</label>
                 <select class="form-control" formControlName="gender" (change)="selectGender($event.target.value)">
                   <option value="" disabled>Seleccionar...</option>
@@ -38,7 +38,7 @@
               </div>
               <div class="col-12 col-lg-4 col-md-4 mt-2">
                 <div class="col-12">
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-left">
                     <label class="col-6 col-lg-6 col-sm-4 col-xs-12 control-label labelFormStyle">Alergias:</label>
                   </div>
                   <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right">
@@ -54,7 +54,7 @@
               </div>
               <div class="col-12 col-lg-4 col-md-4 mt-2">
                 <div class="col-12">
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-left">
                     <label class="col-6 col-lg-6 col-sm-4 col-xs-12 control-label labelFormStyle">Cirugias:</label>
                   </div>
                   <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right">
@@ -74,7 +74,7 @@
             <div class="row">
               <div class="col-12 col-lg-4 col-md-4 mt-2">
                 <div class="col-12">
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-left">
                     <label class="col-6 col-lg-4 col-sm-4 col-xs-12 control-label labelFormStyle">Enfermedad cardiaca:</label>
                   </div>
                   <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label mt-3 btn-float-right">
@@ -90,7 +90,7 @@
               </div>
               <div class="col-12 col-lg-4 col-md-4 mt-2">
                 <div class="col-12">
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-left">
                     <label class="col-6 col-lg-4 col-sm-4 col-xs-12 control-label labelFormStyle">Enfermedad respiratoria:</label>
                   </div>
                   <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right mt-3">
@@ -106,7 +106,7 @@
               </div>
               <div class="col-12 col-lg-4 col-md-4 mt-2">
                 <div class="col-12">
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-left">
                     <label class="col-6 col-lg-4 col-sm-4 col-xs-12 control-label labelFormStyle">Medicación habitual:</label>
                   </div>
                   <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right mt-3">
@@ -124,7 +124,7 @@
           </div>
           <div class="col-12">
             <div class="row">
-              <div class="col-12 pull-left mt-2">
+              <div class="col-12 btn-float-left mt-2">
                 <div class="col-12 form-group formMargin">
                   <label class="col-12 control-label labelFormStyle">Observaciones:</label>
                   <div class="formValidators">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FileInjury } from '../../../domain/file';
 import { Injury } from '../../../domain/injury';
@@ -11,7 +11,6 @@ import { MemberService } from '../../../services/member.service';
   styleUrls: ['./member-view.component.css']
 })
 export class MemberViewComponent implements OnInit {
-  id: number;
   role: string;
   member: MemberView;
   medicalHistory: MedicalHistory;
@@ -19,6 +18,9 @@ export class MemberViewComponent implements OnInit {
   injuries = [];
   injuryFiles: FileInjury[] = [];
   medicalHistoryId: number;
+  @Input() id: number;
+  @Input() hideGoBack: boolean;
+
   constructor(private memberService: MemberService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.id = parseInt(params['id'])
@@ -26,6 +28,7 @@ export class MemberViewComponent implements OnInit {
   }
 
   ngOnInit() {
+   
     this.memberService.getById(this.id).subscribe(
       result => {
         this.member = result;

@@ -9,6 +9,7 @@ import { WodGroupMember } from '../../../domain/wod-group-member';
 import { WodMember } from '../../../domain/wod-member';
 import { MemberService } from '../../../services/member.service';
 import { WodTemplateService } from '../../../wod/wod-template.service';
+import { MemberViewComponent } from '../../member/member-view/member-view.component';
 import { AssignmentCalendarComponent } from '../assignment-calendar/assignment-calendar.component';
 
 @Component({
@@ -19,6 +20,7 @@ import { AssignmentCalendarComponent } from '../assignment-calendar/assignment-c
 export class AssignmentTemplateComponent implements OnInit {
 
   @ViewChild(AssignmentCalendarComponent, { static: true }) calendar: AssignmentCalendarComponent;
+  @ViewChild(MemberViewComponent, { static: true }) informationMember: MemberViewComponent;
   wodTemplates: WodTemplate[] = [];
   filterName: string = "";
   selectedWod: wodTemplateResponse;
@@ -30,6 +32,7 @@ export class AssignmentTemplateComponent implements OnInit {
   newWods: Array<{ date: string, wod: Wod }> = [];
   periodization: Periodization;
   requestingPeriodization: boolean;
+  diplayMedicalHistory: boolean = false;
 
   constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
     private memberService: MemberService,
@@ -126,4 +129,5 @@ export class AssignmentTemplateComponent implements OnInit {
     })
     return wod;
   }
+
 }

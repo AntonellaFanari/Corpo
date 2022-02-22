@@ -89,7 +89,7 @@
                       <input type="date" class="form-control col-6" formControlName="from" />
                       <p *ngIf="send && f.from.errors?.required">*Debe seleccionar una fecha.</p>
                     </div>
-                    <div class="col-12 col-lg-6 pull-right mt-3">
+                    <div class="col-12 col-lg-6 btn-float-right mt-3">
                       <label class="form-label">Hasta:</label>
                       <input type="date" class="form-control col-6" formControlName="to" />
                       <p *ngIf="send && f.to.errors?.required">*Debe seleccionar una fecha.</p>
@@ -103,7 +103,7 @@
                       <input type="number" class="form-control col-6" formControlName="price" />
                       <p *ngIf="send && f.price.errors?.required">*Campo requerido.</p>
                     </div>
-                    <div class="col-6 pull-right mt-3 padding-left">
+                    <div class="col-6 btn-float-right mt-3 padding-left">
                       <label class="form-label">Promoción:</label>
                       <input type="number" class="form-control col-6" formControlName="promotion" />
                     </div>
@@ -116,7 +116,7 @@
                       <div class="card p-2 ">
                         <div class="row">
                           <span class="col-6 pull-left span-font">{{selectedPromotion.name}}</span>
-                          <span class="col-6 pull-right span-font">Descuento:{{selectedPromotion.discountMainMember}}%</span>
+                          <span class="col-6 btn-float-right span-font">Descuento:{{selectedPromotion.discountMainMember}}%</span>
                         </div>
                         <button class="mt-2 col-12 btn btn-outline-danger btn-block" (click)="deletePromotion()">Quitar promoción</button>
                       </div>
@@ -129,18 +129,18 @@
           <div class="col-12 card">
             <div class="row card-body p-0">
               <div class="col-6 p-0">
-                <div class="card-body col-12 col-lg-6 pull-left ">
+                <div class="card-body col-12 col-lg-6 btn-float-left ">
                   <label class="form-label">Total a cobrar $</label>
                 </div>
-                <div class="card-body col-12 col-lg-6 pull-left padding-input-total">
+                <div class="card-body col-12 col-lg-6 btn-float-left padding-input-total">
                   <input type="number" class="form-control col-6" [(ngModel)]="total" />
                 </div>
               </div>
               <div class="col-6 p-0">
-                <div class="card-body col-12 col-lg-6 pull-left ">
+                <div class="card-body col-12 col-lg-6 btn-float-left ">
                   <label class="form-label">Pago $</label>
                 </div>
-                <div class="card-body col-12 col-lg-6 pull-left padding-input-total">
+                <div class="card-body col-12 col-lg-6 btn-float-right padding-input-total">
                   <input type="number" class="form-control col-6" [(ngModel)]="pay" />
                 </div>
               </div>
@@ -151,8 +151,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button class="btn btn-success col-12 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Cargar Créditos</button>
-    <button class="btn btn-secondary col-12 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
+    <button class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Cargar Créditos</button>
+    <button class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
   </div>
 </section>
 <div [ngClass]="{'view-debt-detail': viewDebts}">

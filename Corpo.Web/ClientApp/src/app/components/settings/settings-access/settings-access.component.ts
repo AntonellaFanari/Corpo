@@ -45,10 +45,10 @@ export class SettingsAccessComponent implements OnInit {
         this.checkboxToAccessAdmin = this.getCheckboxToAccess(this.checkboxToAccessAdmin, nameAccess);
        }
       if (role.roleId == this.roles[1].id) {
-        let nameAccess = role.acces;
+        let nameAccess = role.access;
         this.checkboxToAccessCoach = this.getCheckboxToAccess(this.checkboxToAccessCoach, nameAccess);
       } if (role.roleId == this.roles[2].id) {
-        let nameAccess = role.acces;
+        let nameAccess = role.access;
         this.checkboxToAccessMarketing = this.getCheckboxToAccess(this.checkboxToAccessMarketing, nameAccess);
       }
     } 
@@ -104,9 +104,9 @@ export class SettingsAccessComponent implements OnInit {
 
   public async submit() {
     this.roleAccess = [];
-    this.createRoleAccess(this.checkboxToAccessAdmin, 4);
-    this.createRoleAccess(this.checkboxToAccessCoach, 5);
-    this.createRoleAccess(this.checkboxToAccessMarketing, 6);
+    this.createRoleAccess(this.checkboxToAccessAdmin, this.roles[0].id);
+    this.createRoleAccess(this.checkboxToAccessCoach, this.roles[1].id);
+    this.createRoleAccess(this.checkboxToAccessMarketing, this.roles[2].id);
     this.settingService.saveAccess(this.roleAccess)
       .then(() => {
         this.router.navigate(["/configuraciones"])

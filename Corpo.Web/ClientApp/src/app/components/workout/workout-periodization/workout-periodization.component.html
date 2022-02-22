@@ -28,11 +28,11 @@
                 </div>
             </div>
             <div class="container-fluid">
-                <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
+                <button class="btn btn-secondary btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
                     [queryParams]="{memberId: memberId}">
                     Cancelar
                 </button>
-                <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">
+                <button class="btn btn-success btn-float-right mt-2" type="submit">
                     Guardar
                 </button>
             </div>
@@ -310,10 +310,11 @@
             <!--<canvas id="week4-chart"></canvas>-->
         </div>
         <div class="container-fluid">
-            <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/plan-list']">
+            <button class="btn btn-secondary btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
+                    [queryParams]="{memberId: memberId}">
                 Cancelar
             </button>
-            <button class="btn btn-success pull-right mt-2" type="submit" (click)="save()">
+            <button class="btn btn-success btn-float-right mt-2" type="submit" (click)="save()">
                 Guardar
             </button>
         </div>

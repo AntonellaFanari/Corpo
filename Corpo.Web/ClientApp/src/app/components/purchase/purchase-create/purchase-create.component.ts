@@ -35,7 +35,11 @@ export class PurchaseCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("hola");
+    this.getAll();
+    
+  }
+
+  getAll() {
     this.productService.getAll().subscribe(
       result => {
         console.log(result);
@@ -163,5 +167,6 @@ export class PurchaseCreateComponent implements OnInit {
 
   viewProductCreate(event) {
     this.productCreate = event;
+    this.getAll();
   }
 }

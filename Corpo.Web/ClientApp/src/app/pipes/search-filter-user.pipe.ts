@@ -9,12 +9,21 @@ export class SearchFilterUserPipe implements PipeTransform {
     if (arg == '') return value;
     const resultFilter = [];
     for (const user of value) {
-      if (user.lastName.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(user);
-      } if (user.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(user);
+      let lastNameName = user.lastName + " " + user.name;
+      let nameLastName = user.name + " " + user.lastName;
+      if (lastNameName.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+        if (!resultFilter.some(x => x.id == user.id)) {
+          resultFilter.push(user);
+        }
+      }
+      if (nameLastName.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+        if (!resultFilter.some(x => x.id == user.id)) {
+          resultFilter.push(user);
+        }
       } if (user.roleName.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(user);
+        if (!resultFilter.some(x =>x.id == user.id)) {
+          resultFilter.push(user);
+        }
       }
     };
     return resultFilter;

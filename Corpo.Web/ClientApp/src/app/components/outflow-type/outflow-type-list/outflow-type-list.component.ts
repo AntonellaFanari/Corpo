@@ -39,7 +39,7 @@ export class OutflowTypeListComponent implements OnInit {
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Egresos", ["Error al intentar eliminar el egreso."])
         })
-    })
+    }, true)
   }
 
 }

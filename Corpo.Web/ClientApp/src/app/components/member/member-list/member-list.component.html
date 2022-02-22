@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <div class="task-panel ">
         <h4 class="table-title">Socios</h4>
-        <button type="button" class="btn btn-success pull-right" routerLink="/member-create">Agregar</button>
+        <button type="button" class="btn btn-success btn-float-right" routerLink="/member-create">Agregar</button>
       </div>
       <hr>
       <div class="col-12 card">
@@ -47,8 +47,8 @@
                 </div>
                 <div class="text-center">
                   <button class="btn btn-primary btn-action-list" [routerLink]="['/member-view']" [queryParams]="{id:member.id}"><i class="fa fa-info-circle"></i></button>
-                  <button class="btn btn-warning btn-action-list" [routerLink]="['/member-edit']" [queryParams]="{id:member.id}"><i class="fa fa-pencil-square-o "></i></button>
-                  <button class="btn btn-danger btn-action-list" (click)="delete(member.id)"><i class="fa fa-trash-o "></i></button>
+                  <button class="btn btn-warning btn-action-list" [routerLink]="['/member-edit']" [queryParams]="{id:member.id}"><i class="fa fa-pencil-square"></i></button>
+                  <button class="btn btn-danger btn-action-list" (click)="delete(member.id)"><i class="fa fa-trash"></i></button>
                 </div>
               </td>
             </tr>

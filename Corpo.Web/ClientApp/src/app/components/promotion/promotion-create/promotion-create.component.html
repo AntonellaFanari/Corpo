@@ -23,7 +23,7 @@
               <input type="date" class="form-control col-6" formControlName="from" />
               <p *ngIf="send && f.from.errors?.required">*Debe seleccionar una fecha de inicio.</p>
             </div>
-            <div class="col-12 col-lg-6 pull-right mt-3 formValidators">
+            <div class="col-12 col-lg-6 btn-float-right mt-3 formValidators">
               <label class="form-label">Hasta:</label>
               <input type="date" class="form-control col-6" formControlName="to" />
               <p *ngIf="send && f.to.errors?.required">*Debe seleccionar una fecha de fin.</p>
@@ -59,7 +59,7 @@
                       </div>
                     </td>
                     <td class="td-title" data-title="Acción">
-                      <button class="btn btn-danger btn-xs btn-action-list" (click)="removeRow(i)"><i class="fa fa-trash-o "></i></button>
+                      <button class="btn btn-danger btn-xs btn-action-list" (click)="removeRow(i)"><i class="fa fa-trash "></i></button>
                     </td>
                   </tr>
                 </tbody>
@@ -76,8 +76,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button class="btn btn-secondary col-3 col-lg-2  pull-left btn-create" type="button" [routerLink]="['/promociones-list']">Cancelar</button>
-    <button class="btn btn-success col-3 col-lg-2  pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/promociones-list']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 

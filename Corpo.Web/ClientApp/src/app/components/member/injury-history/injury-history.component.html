@@ -27,18 +27,20 @@
                 </div>
               </div>
               <div class="col-lg-3 form-group">
-                <label class="labelFormStyle mt-2">Estudios:</label>
-                <a id="select" onclick="document.getElementById('file-button').click();" class="btn btn-secondary form-control btn-action">
-                  <!--<i class="fas fa-upload"></i>-->
-                  Seleccionar
-                </a>
-                <input type="file" id="file-button" (change)="onFileSelection($event)" style="display: none;"
-                       multiple />
+                <label class="labelFormStyle mt-1">Estudios:</label>
+                <div class="mt-1">
+                  <a id="select" onclick="document.getElementById('file-button').click();" class="btn btn-secondary form-control btn-action">
+                    <!--<i class="fas fa-upload"></i>-->
+                    Seleccionar
+                  </a>
+                  <input type="file" id="file-button" (change)="onFileSelection($event)" style="display: none;"
+                         multiple />
+                  </div>
+                </div>
+                <div class="col-lg-3 form-group">
+                  <button type="button" class="btn btn-success form-control text-center btn-action-add" (click)="addInjury()">Agregar Lesión</button>
+                </div>
               </div>
-              <div class="col-lg-3 form-group">
-                <button type="button" class="btn btn-success form-control text-center btn-action-add" (click)="addInjury()">Agregar Lesión</button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -73,7 +75,7 @@
           <td class="td-title">
             <div class="row justify-content-center aling-items-center">
               <div class=" col-12 col-lg-4 col-md-6 col-xs-8 text-center">
-                <button class="btn btn-danger btn-xs btn-action-list" (click)="deleteFile(file.id)"><i class="fa fa-trash-o"></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="deleteFile(file.id)"><i class="fa fa-trash"></i></button>
               </div>
             </div>
           </td>
@@ -83,7 +85,7 @@
   </div>
   <div class="mt-3 col-lg-12">
     <button class="btn btn-secondary col-4 col-lg-2 pull-left " type="submit" (click)="return()">Volver</button>
-    <button class="btn btn-success col-4 col-lg-2 pull-right " type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-success col-4 col-lg-2 btn-float-right" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 

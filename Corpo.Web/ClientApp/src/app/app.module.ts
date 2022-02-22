@@ -110,7 +110,7 @@ import { DailyCashComponent } from './components/reports/cash/daily-cash/daily-c
 import { CashDetailComponent } from './components/reports/cash/cash-detail/cash-detail.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { WodTemplateListComponent } from './components/workout/wod-template/wod-template-list/wod-template-list.component';
-//import { WodTemplateComponent } from './components/workout/wod-template/wod-template-create/wod-template.component';
+import { WodTemplateComponent } from './components/workout/wod-template/wod-template-create/wod-template.component';
 import { WodTemplateFormComponent } from './components/workout/wod-template/wod-template-form/wod-template-form.component';
 import { WorkoutPeriodizationComponent } from './components/workout/workout-periodization/workout-periodization.component';
 import { AssignmentListComponent } from './components/workout/assignment-list/assignment-list.component';
@@ -125,13 +125,13 @@ import { ModalityEditComponent } from './components/modality/modality-edit/modal
 import { ModalityListComponent } from './components/modality/modality-list/modality-list.component';
 import { ModalityDetailComponent } from './components/modality/modality-detail/modality-detail.component';
 import { Modality } from './domain/wod/modality';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WorkoutPeriodizaionEditComponent } from './components/workout/workout-periodizaion-edit/workout-periodizaion-edit.component';
+import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout-periodizaion-detail/workout-periodizaion-detail.component';
 import { MonthlyEarningComponent } from './components/reports/cash/monthly-earning/monthly-earning.component';
 import { MemberBehaviourComponent } from './components/reports/marketing/member-behaviour/member-behaviour.component';
 import { SegmentedStatisticsComponent } from './components/reports/marketing/segmented-statistics/segmented-statistics.component';
 import { GeneralSettingsComponent } from './components/settings/general-settings/general-settings.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { WorkoutPeriodizaionEditComponent } from './components/workout/workout-periodizaion-edit/workout-periodizaion-edit.component';
-import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout-periodizaion-detail/workout-periodizaion-detail.component';
 
 
 @NgModule({
@@ -227,7 +227,7 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
     NewsCreateComponent,
     NewsEditComponent,
     NewsListComponent,
-    //WodTemplateComponent,
+    WodTemplateComponent,
     MemberReportComponent,
     MemberReportListComponent,
     ReservationsComponent,
@@ -279,7 +279,7 @@ import { WorkoutPeriodizaionDetailComponent } from './components/workout/workout
       { path: 'counter', component: CounterComponent },
       { path: 'asignacion-calendario', component: AssignmentCalendarComponent },
       { path: 'member-report', component: MemberReportComponent },
-     // { path: 'wod-template', component: WodTemplateComponent },
+      { path: 'wod-template', component: WodTemplateComponent },
       { path: 'plantillas-wod', component: WodTemplateListComponent },
       { path: 'periodizacion', component: WorkoutPeriodizationComponent },
       { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent },

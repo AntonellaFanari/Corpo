@@ -31,7 +31,7 @@
           </li>
           <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/member-list']">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-users"></i>
               Socios
             </a>
           </li>
@@ -54,7 +54,6 @@
             </a>
             <ul class="dropdown-menu">
               <li class="nav-item"><a class="nav-link" [routerLink]="['/noticias-list']">Noticias</a></li>
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/tablero']">Tablero</a></li>
             </ul>
           </li>
 
@@ -83,7 +82,7 @@
           </li>
           <li *access="'abm'" class="nav-item sub-menu dropdown">
             <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
-              <i class="fa fa-search"></i>
+              <i class="fa fa-gear"></i>
               ABM
             </a>
             <ul class="dropdown-menu">
@@ -104,23 +103,18 @@
                   <li class="nav-item"><a class="nav-link" [routerLink]="['/plantillas-wod']">Plantillas WOD</a></li>
                 </ul>
               </li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/configuraciones']">Ajustes</a></li>
             </ul>
-          </li>
-          <li *access="'ajustes'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a [routerLink]="['/configuraciones']">
-              <i class="fa fa-gear"></i>
-              Ajustes
-            </a>
           </li>
         </ul>
       </div>
       <a *ngIf="!logueado" class="btn-login" [routerLink]="['/login']"><i class="fa fa-user-circle"></i></a>
-      <div *ngIf="logueado" class="showback">
+      <div *ngIf="logueado">
         <div class="btn-group">
-          <p class="text-white">Bienvenido {{user.name }}</p>&nbsp;
+          <span class="text-white">Bienvenido {{user.name }}</span>&nbsp;
           <a class="text-white dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
           <ul class="dropdown-menu ps-2" role="menu">
-            <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user-o"></i>&nbsp;Mis datos</a></li>
+            <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user"></i>&nbsp;Mis datos</a></li>
             <li><a [routerLink]="['/modificar-contraseña']"><i class="fa fa-key"></i>&nbsp;Modificar contraseña</a></li>
             <li><a [routerLink]="['/mis-deudas']"><i class="fa fa-usd"></i>&nbsp;Mis deudas</a></li>
             <li><a [routerLink]="['/mis-reservas']"><i class="fa fa-clipboard"></i>&nbsp;Mis reservas</a></li>

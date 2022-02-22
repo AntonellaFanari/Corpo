@@ -18,7 +18,7 @@
                 <input type="datetime-local" class="form-control col-6" formControlName="from" />
                 <p *ngIf="send && f.from.errors?.required">*Debe seleccionar una fecha de inicio.</p>
               </div>
-              <div class="col-12 col-lg-6 pull-right mt-3 formValidators">
+              <div class="col-12 col-lg-6 btn-float-right mt-3 formValidators">
                 <label class="form-label">Hasta:</label>
                 <input type="datetime-local" class="form-control col-6" formControlName="to" />
                 <p *ngIf="send && f.to.errors?.required">*Debe seleccionar una fecha de fin.</p>
@@ -36,7 +36,7 @@
                 <input type="file" id="file-button" (change)="onFileSelection($event)" style="display: none;" />
               </div>
               <div class="row col-12 justify-content-center align-items-center text-center mt-3" *ngFor='let url of urls'>
-                <img [src]="url" height="200" class="preview-picture text-center"> <br />
+                <img [src]="url" class="preview-picture text-center"> <br />
               </div>
             </div>
           </form>
@@ -45,8 +45,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button class="btn btn-secondary col-3 col-lg-2  pull-left btn-create" type="button" [routerLink]="['/noticias-list']">Cancelar</button>
-    <button class="btn btn-success col-3 col-lg-2  pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/noticias-list']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2  btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 

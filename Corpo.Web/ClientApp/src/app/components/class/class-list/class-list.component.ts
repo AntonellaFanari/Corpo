@@ -45,6 +45,6 @@ export class ClassListComponent implements OnInit {
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Clases", ["Error al intentar eliminar la clase."])
         })
-    })
+    }, true)
   }
 }

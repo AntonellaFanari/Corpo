@@ -166,6 +166,7 @@ export class CashFormComponent implements OnInit {
         this.withdrawals = result;
         this.calculateTotalWithdrawal();
         this.calculateCurrentCash();
+        this.getMonthlyCash();
       },
       error => console.error(error)
     )
@@ -177,6 +178,7 @@ export class CashFormComponent implements OnInit {
         this.incomes = result;
         this.calculateTotalIncome();
         this.calculateCurrentCash();
+        this.getMonthlyCash();
       },
       error => console.error(error)
     )

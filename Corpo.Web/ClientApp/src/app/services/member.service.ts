@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { CreditExpiration } from '../domain/credit-expiration';
+import { DomainResponse } from '../domain/domain-response';
 import { Injury } from '../domain/injury';
 import { MedicalHistory } from '../domain/medical-history';
 import { Member } from '../domain/member';
@@ -70,7 +71,7 @@ export class MemberService {
   }
 
   public getMedicalHistoryByIdMember(id: number) {
-    return this.http.get<any>(this.url + 'api/member/getMedicalHistoryByIdMember?id=' + id);
+    return this.http.get<DomainResponse<any>>(this.url + 'api/member/getMedicalHistoryByIdMember?id=' + id);
   }
   
   public getMedicalHistoryById(id: number) {

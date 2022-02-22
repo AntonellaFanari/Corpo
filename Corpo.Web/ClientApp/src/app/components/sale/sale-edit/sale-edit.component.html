@@ -53,9 +53,10 @@
       </div>
     </div>
 </section>
-  <div class="container">
-    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
 
+  <div class="container">
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalCancelSale">Abrir ventana de diálogo</button>-->
+    <button id="modal-cancel" data-toggle="modal" href="#myModalCancelSale" class="d-none"></button>
     <div class="modal fade" id="myModalCancelSale">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -82,6 +83,7 @@
     </div>
   </div>
 
+ 
     <div *ngIf="cancelSale" class="container">
       <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
 

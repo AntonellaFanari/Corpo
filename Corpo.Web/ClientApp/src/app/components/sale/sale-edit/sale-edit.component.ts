@@ -120,11 +120,17 @@ export class SaleEditComponent implements OnInit {
     return cancelSale;
   }
 
+  modalCancel() {
+    document.getElementById('modal-cancel').click();
+  }
+
   cancel() {
     this.customAlertService.displayAlert("Gestión de Ventas", ["¿Está seguro que desea anular esta venta?"], () => {
+      this.modalCancel();
       var cancelSale = this.createCancelSale();
       this.saleService.cancel(this.selectedSale.id, cancelSale).subscribe(
-        result => {
+        result => {         
+          this.modalClick();
           this.updateSalesCash();
         },
         error => {

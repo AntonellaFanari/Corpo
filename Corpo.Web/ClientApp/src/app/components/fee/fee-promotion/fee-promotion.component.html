@@ -27,12 +27,12 @@
           </div>
           <div class="dropdown card card-body row formValidators m-0">
             <div class="col-12">
-              <a class="dropdown-toggle col-9 pull-left" id="dropdown1" data-toggle="dropdown">
+              <a class="dropdown-toggle col-9 btn-float-left" id="dropdown1" data-toggle="dropdown">
                 <label class="form-label text-black">Socio:</label>
                 <input type="text" class="form-control" placeholder="Buscar Socio" [(ngModel)]="filterMember" />
                 <p *ngIf="send && f.memberName.errors?.required">*Debe seleccionar un socio.</p>
               </a>
-              <div class="col-2 pull-right div-btn-add-member">
+              <div class="col-2 btn-float-right div-btn-add-member">
                 <button type="button" class="btn btn-success" (click)="addMemberPromotion(memberNum)">Ok</button>
               </div>
               <div class="dropdown-menu form-control col-9">

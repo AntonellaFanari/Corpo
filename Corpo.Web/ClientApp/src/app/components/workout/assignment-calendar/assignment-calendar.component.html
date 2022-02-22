@@ -3,7 +3,7 @@
         <h3 class="mb text-center text-white">Asignación WOD</h3>
     </header>
     <div class="modal-body">
-        <mat-calendar #calendar [minDate]="minDate" [maxDate]="maxDate" (selectedChange)="dateChanged($event)">
+        <mat-calendar #calendar (selectedChange)="dateChanged($event)">
         </mat-calendar>
 
     </div>

@@ -14,11 +14,11 @@
             </div>
             <div class="row card card-body">
               <div class="col-12">
-                <div class="col-12 col-lg-6 pull-left padding-div-controls">
+                <div class="col-12 col-lg-6 btn-float-left padding-div-controls">
                   <label class="form-label mt-1">Stock:</label>
                   <input type="number" id="input-stock" class="form-control" formControlName="stock" />
                 </div>
-                <div class="col-12 col-lg-6 pull-left padding-div-controls">
+                <div class="col-12 col-lg-6 btn-float-right padding-div-controls">
                   <label class="form-label mt-1">Precio:</label>
                   <input type="number" class="form-control" formControlName="price" />
                   <p class="formValidators" *ngIf="sent && f.price.errors?.required">*Ingrese el precio.</p>

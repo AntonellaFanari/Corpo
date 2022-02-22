@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="task-panel ">
         <h4 class="table-title">Categorias</h4>
-        <button type="button" class="btn btn-success pull-right" routerLink="/categoria-crear">Agregar</button>
+        <button type="button" class="btn btn-success btn-float-right" routerLink="/categoria-crear">Agregar</button>
       </div>
       <hr>
       <div class="col-12 card">
@@ -26,8 +26,8 @@
               <td data-title="Nombre"><span>{{category.name}}</span></td>
               <td data-title="Acción">
                 <span class="btn-action-container">
-                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/categoria-editar']" [queryParams]="{id:category.id}"><i class="fa fa-pencil-square-o "></i></button>
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(category.id)"><i class="fa fa-trash-o "></i></button>
+                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/categoria-editar']" [queryParams]="{id:category.id}"><i class="fa fa-pencil-square"></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(category.id)"><i class="fa fa-trash "></i></button>
                 </span>
               </td>
             </tr>

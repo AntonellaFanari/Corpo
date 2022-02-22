@@ -1,11 +1,9 @@
 <section class="wrapper">
   <div class="row mt">
     <div class="col-12">
-      <div class="task-panel row">
-        <h4 class="table-title col-12 col-lg-6">Compras</h4>
-        <div class="col-12 col-lg-6">
-          <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add pull-right" routerLink="/compra-crear">Agregar</button>
-        </div>
+      <div class="task-panel ">
+        <h4 class="table-title">Compras</h4>
+        <button type="button" class="btn btn-success btn-float-right" routerLink="/compra-crear">Agregar</button>
       </div>
       <hr>
       <section *ngIf="purchases.length>0 ; else elseBlock" id="no-more-tables" class="tab-pane fade show active">
@@ -28,7 +26,7 @@
               <td class="td-title" data-title="Acción">
                 <span class="btn-action-container">
                   <button class="btn btn-info btn-xs btn-action-list" [routerLink]="['/purchase-detail']" [queryParams]="{id:purchase.id}"><i class="fa fa-info-circle"></i></button>
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(purchase.id)"><i class="fa fa-trash-o "></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(purchase.id)"><i class="fa fa-trash"></i></button>
                 </span>
               </td>
             </tr>

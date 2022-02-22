@@ -13,17 +13,17 @@
                 <label class="form-label">Desde:</label>
                 <input type="date" class="form-control col-6" [(ngModel)]="from" />
               </div>
-              <div class="col-lg-6 col-md-6 col-xs-12 pull-right mt-3">
+              <div class="col-lg-6 col-md-6 col-xs-12 btn-float-right mt-3">
                 <label class="form-label">Hasta:</label>
                 <input type="date" class="form-control col-6" [(ngModel)]="to" />
               </div>
             </div>
             <div class="card-body row">
-              <div class="col-lg-6 col-md-6 col-xs-12 pull-right mt-3">
+              <div class="col-lg-6 col-md-6 col-xs-12 btn-float-right mt-3">
                 <label class="form-label">Cupo:</label>
                 <input type="number" class="form-control col-6" [(ngModel)]="quota" />
               </div>
-              <div class="col-lg-6 col-md-6 col-xs-12 pull-right mt-3">
+              <div class="col-lg-6 col-md-6 col-xs-12 btn-float-right mt-3">
                 <label class="form-label">Clase:</label>
                 <select class="form-control col-12" (change)="selectClass($event.target.value)">
                   <option class="form-control col-12" value="" disabled>Seleccionar</option>
@@ -86,7 +86,7 @@
   </div>
   <div class="col-12">
     <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/turnos-list']">Cancelar</button>
-    <button class="btn btn-success pull-right mt-2" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-success btn-float-right mt-2" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 

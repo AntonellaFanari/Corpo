@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <div class="task-panel ">
         <h4 class="table-title">Retiros</h4>
-        <button type="button" class="btn btn-success pull-right" routerLink="/retiro-crear">Agregar</button>
+        <button type="button" class="btn btn-success btn-float-right" routerLink="/retiro-crear">Agregar</button>
       </div>
       <hr>
       <div class="col-12 card">
@@ -25,8 +25,8 @@
             <tr *ngFor="let withdrawal of withdrawalsName  | searchFilterName: filterName">
               <td data-title="Nombre"><span>{{withdrawal.name}}</span></td>
               <td data-title="Acción">
-                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/retiro-editar']" [queryParams]="{id:withdrawal.id}"><i class="fa fa-pencil-square-o "></i></button>
-                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(withdrawal.id)"><i class="fa fa-trash-o "></i></button>
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/retiro-editar']" [queryParams]="{id:withdrawal.id}"><i class="fa fa-pencil-square"></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(withdrawal.id)"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>

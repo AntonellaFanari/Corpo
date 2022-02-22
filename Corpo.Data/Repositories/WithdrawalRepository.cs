@@ -48,6 +48,11 @@ namespace Corpo.Data.Repositories
             _context.SaveChanges();
         }
 
+        public async Task<WithdrawalName> GetWithdrawalNameFirst()
+        {
+            return await _context.WithdrawalName.FirstAsync();
+        }
+
         // withdrawal
         public Task<List<Withdrawal>> GetAllWithdrawal(DateTime from, DateTime? to)
         {
@@ -71,5 +76,7 @@ namespace Corpo.Data.Repositories
             _context.Remove(withdrawal);
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

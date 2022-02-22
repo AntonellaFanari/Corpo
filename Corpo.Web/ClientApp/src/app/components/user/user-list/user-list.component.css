@@ -4,6 +4,10 @@
   margin: 2px;
 }
 
+.btn-add{
+    float: right;
+}
+
 tr.span-margin > td > span {
   margin-left: 15px;
 }

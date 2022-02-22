@@ -33,20 +33,20 @@
             </div>
             <div class="row card-body p-0">
               <form [formGroup]="formDetailsSale">
-                <div class="card-body col-6 col-lg-3 pull-left formValidators">
+                <div class="card-body col-6 col-lg-3 btn-float-left formValidators">
                   <label class="form-label">Cantidad:</label>
                   <input type="number" class="form-control" formControlName="quantity" (blur)="calculateTotal()" />
                   <p *ngIf="sendDetailSale && f.quantity.errors?.min">*La cantidad debe ser mayor a "0".</p>
                 </div>
-                <div class="card-body col-6 col-lg-3 pull-left">
+                <div class="card-body col-6 col-lg-3 btn-float-left">
                   <label class="form-label">Precio:</label>
                   <input type="number" class="form-control" formControlName="price" />
                 </div>
-                <div class="card-body col-6 col-lg-3 pull-left">
+                <div class="card-body col-6 col-lg-3 btn-float-left">
                   <label class="form-label">Total:</label>
                   <input type="number" class="form-control" formControlName="total" (blur)="calculateTotal()" />
                 </div>
-                <div class="card-body col-6 col-lg-3 pull-right div-btn-prod">
+                <div class="card-body col-6 col-lg-3 btn-float-right div-btn-prod">
                   <div class="justify-content-center align-content-center">
                     <button class="btn btn-success text-center btn-prod" (click)="addDetailSale()">OK</button>
                     <button class="btn btn-success text-center btn-prod" (click)="cleanForm()"><i class="fa fa-plus"></i></button>
@@ -73,7 +73,7 @@
                 <td class="td-title">{{detail.quantity}}</td>
                 <td class="td-title">{{detail.price | currency}}</td>
                 <td class="td-title">{{detail.quantity*detail.price | currency}}</td>
-                <td class="td-title"><button class="btn btn-danger btn-xs" (click)="removeList(i)"><i class="fa fa-trash-o "></i></button></td>
+                <td class="td-title"><button class="btn btn-danger btn-xs" (click)="removeList(i)"><i class="fa fa-trash"></i></button></td>
               </tr>
             </tbody>
           </table>
@@ -82,18 +82,18 @@
           <div class="col-12 card">
             <div class="row card-body p-0">
               <div class="col-6 p-0">
-                <div class="card-body col-12 col-lg-6 pull-left ">
+                <div class="card-body col-12 col-lg-6 btn-float-left">
                   <label class="form-label">Total a cobrar $</label>
                 </div>
-                <div class="card-body col-12 col-lg-6 pull-left padding-input-total">
+                <div class="card-body col-12 col-lg-6 btn-float-left padding-input-total">
                   <input type="number" class="form-control col-6" [(ngModel)]="total" />
                 </div>
               </div>
               <div class="col-6 p-0">
-                <div class="card-body col-12 col-lg-6 pull-left ">
+                <div class="card-body col-12 col-lg-6 btn-float-left">
                   <label class="form-label">Pago $</label>
                 </div>
-                <div class="card-body col-12 col-lg-6 pull-left padding-input-total">
+                <div class="card-body col-12 col-lg-6 btn-float-left padding-input-total">
                   <input type="number" class="form-control col-6" [(ngModel)]="pay" (keyup)="calculateTotal()"  />
                 </div>
               </div>
@@ -104,8 +104,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button type="button" class="col-3 col-lg-2 btn btn-secondary pull-left btn-create" [routerLink]="['/caja']">Volver</button>
-    <button type="button" class="col-3 col-lg-2 btn btn-success pull-right btn-create" (click)="submit()">Aceptar</button>
+    <button type="button" class="col-3 col-lg-2 btn btn-secondary btn-float-left btn-create" [routerLink]="['/caja']">Volver</button>
+    <button type="button" class="col-3 col-lg-2 btn btn-success btn-float-right btn-create" (click)="submit()">Aceptar</button>
   </div>
 </section>
 

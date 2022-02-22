@@ -9,12 +9,21 @@ export class SearchFilterMemberPipe implements PipeTransform {
     if (arg == '') return value;
     const resultFilter = [];
     for (const member of value) {
-      if (member.lastName.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(member);
-      } if (member.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(member);
+      let lastNameName = member.lastName + " " + member.name;
+      let nameLastName = member.name + " " + member.lastName;
+      if (lastNameName.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+        if (!resultFilter.some(x => x.id == member.id)) {
+          resultFilter.push(member);
+        }
+      }
+      if (nameLastName.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+        if (!resultFilter.some(x => x.id == member.id)) {
+          resultFilter.push(member);
+        }
       } if (member.namePlan.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(member);
+        if (!resultFilter.some(x => x.id == member.id)) {
+          resultFilter.push(member);
+        }
       }
     };
     return resultFilter;

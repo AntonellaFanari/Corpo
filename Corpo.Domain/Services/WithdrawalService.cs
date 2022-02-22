@@ -106,10 +106,11 @@ namespace Corpo.Domain.Services
         {
             try
             {
+                var withdrawalName = await _withdrawalRepository.GetWithdrawalNameFirst();
                 withdrawal.Date = DateTime.Now;
                 withdrawal.UserId = id;
                 _withdrawalRepository.AddWithdrawal(withdrawal);
-                if (withdrawal.WithdrawalNameId == 1)
+                if (withdrawal.WithdrawalNameId == withdrawalName.Id)
                 {
                  await _cashRepository.UpdateMonthlyCash(withdrawal.Date, withdrawal.Amount, "inflow");
                 }
@@ -137,11 +138,12 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> DeleteWithdrawal(int id)
         {
+            var withdrawalName = await _withdrawalRepository.GetWithdrawalNameFirst();
             var withdrawal = await _withdrawalRepository.GetWithdrawalById(id);
             await _withdrawalRepository.DeleteWithdrawal(id);
-            if (withdrawal.WithdrawalNameId == 1)
+            if (withdrawal.WithdrawalNameId == withdrawalName.Id)
             {
-                await _cashRepository.UpdateMonthlyCash(withdrawal.Date, -withdrawal.Amount, "outflow");
+                await _cashRepository.UpdateMonthlyCash(withdrawal.Date, withdrawal.Amount, "outflow");
             }
             return new DomainResponse
             {

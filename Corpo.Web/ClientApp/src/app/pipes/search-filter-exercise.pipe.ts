@@ -11,13 +11,19 @@ export class SearchFilterExercisePipe implements PipeTransform {
     const resultFilter = [];
     for (const exercise of value) {
       if (exercise.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(exercise);
+        if (!resultFilter.some(x => x.id == exercise.id)) {
+          resultFilter.push(exercise);
+        }
       } if (exercise.categoryExercise.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        resultFilter.push(exercise);
+        if (!resultFilter.some(x => x.id == exercise.id)) {
+          resultFilter.push(exercise);
+        }
       } else {
         for (const tag of exercise.tags) {
           if (tag.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-            resultFilter.push(exercise);
+            if (!resultFilter.some(x => x.id == exercise.id)) {
+              resultFilter.push(exercise);
+            }
           }
         };
       }

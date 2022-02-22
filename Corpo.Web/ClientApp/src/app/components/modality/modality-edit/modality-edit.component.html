@@ -8,7 +8,7 @@
             <div class="col-12 card">
               <div class="row card-body justify-content-center align-items-center">
                 <div class="row">
-                  <div class="col-12 pull-left">
+                  <div class="col-12 btn-float-left">
                     <label class="col-12 control-label">Nombre:</label>
                     <div class="col-12 formValidators">
                       <input type="text" class="form-control" formControlName="name">
@@ -35,8 +35,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/modalidades-list']">Cancelar</button>
-    <button class="btn btn-success col-3 col-lg-2 pull-right btn-create" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-secondary col-3 col-lg-2 btn-float-left btn-create" type="button" [routerLink]="['/modalidades-list']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 

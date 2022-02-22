@@ -28,31 +28,24 @@ export class MedicalHistoryCreateComponent implements OnInit {
   ngOnInit() {
     this.memberService.getById(this.id).subscribe(
       result => {
-        console.log(result);
         this.member = result;
         this.planType = this.member.planType
-        console.log(this.planType);
-      },
-      error => console.error(error)
+      }
     );
     this.memberService.getAge(this.id).subscribe(
       result => {
         this.age = result.result.age;
-        console.log(this.age)
-      },
-      error => console.error(error)
+      }
     );
     this.memberService.getMedicalHistoryByIdMember(this.id).subscribe(
       result => {
-        console.log(result);
         this.medicalHistoryId = result.result.id;
         this.router.navigate(["/historia-médica-editar"], { queryParams: { id: this.id, medicalHistoryId: this.medicalHistoryId } });
       },
-      error => {console.error(error);
-        if (error.status == 400) {
-          console.log("no existe");
-        }
-    })
+      error => {
+        if (error.status == 400)
+          console.log("no existe")
+      })
   }
 
   create() {

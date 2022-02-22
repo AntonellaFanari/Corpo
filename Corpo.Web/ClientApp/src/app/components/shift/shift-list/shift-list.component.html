@@ -1,7 +1,7 @@
 <section class="wrapper">
   <div class="task-panel ">
     <h4 class="table-title">Turnos</h4>
-    <button type="button" class="btn btn-success pull-right" routerLink="/turno-crear">Agregar</button>
+    <button type="button" class="btn btn-success btn-float-right" routerLink="/turno-crear">Agregar</button>
   </div>
   <hr>
   <div class="container-fluid">
@@ -14,20 +14,20 @@
                 <label class="form-label">Desde:</label>
                 <input type="date" class="form-control col-6" [(ngModel)]="from" />
               </div>
-              <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-3">
+              <div class="col-lg-3 col-md-6 col-xs-12 btn-float-right mt-3">
                 <label class="form-label">Hasta:</label>
                 <input type="date" class="form-control col-6" [(ngModel)]="to" />
               </div>
-              <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-3">
+              <div class="col-lg-3 col-md-6 col-xs-12 btn-float-right mt-3">
                 <label class="form-label">Clase:</label>
                 <select class="form-control col-12" (change)="selectClass($event.target.value)">
                   <option class="form-control col-12" value="0">Todos</option>
                   <option *ngFor="let class of classes" class="form-control col-12" value={{class.id}}>{{class.name}}</option>
                 </select>
               </div>
-              <div class="col-lg-3 col-md-6 col-xs-12 pull-right mt-4">
+              <div class="col-lg-3 col-md-6 col-xs-12 btn-float-right mt-4">
                 <div class="mt-4">
-                  <button type="button" class="btn btn-primary form-control col-6 pull-right" routerLink="/turnos-list" (click)="toListShift()">Listar</button>
+                  <button type="button" class="btn btn-primary form-control col-6 btn-float-right" routerLink="/turnos-list" (click)="toListShift()">Listar</button>
                 </div>
               </div>
             </div>
@@ -77,14 +77,14 @@
       </section>
       <div class="col-lg-12 card">
         <div class="row card-body">
-          <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
-            <button type="button" class="btn btn-success form-control col-6 pull-right" data-toggle="modal" href="#myModalAssignTeacher" [disabled]="disabled" (click)="createShiftToModify()">Asignar Profesor</button>
+          <div class="col-lg-4 col-md-4 col-xs-12 btn-float-right">
+            <button type="button" class="btn btn-success form-control col-6 btn-float-right" data-toggle="modal" href="#myModalAssignTeacher" [disabled]="disabled" (click)="createShiftToModify()">Asignar Profesor</button>
           </div>
-          <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
-            <button type="button" class="btn btn-warning form-control col-6 pull-right" data-toggle="modal" href="#myModalAssignQuota" [disabled]="disabled" (click)="createShiftToModify()">Asignar Cupo</button>
+          <div class="col-lg-4 col-md-4 col-xs-12 btn-float-right">
+            <button type="button" class="btn btn-warning form-control col-6 btn-float-right" data-toggle="modal" href="#myModalAssignQuota" [disabled]="disabled" (click)="createShiftToModify()">Asignar Cupo</button>
           </div>
-          <div class="col-lg-4 col-md-4 col-xs-12 pull-right">
-            <button type="button" class="btn btn-danger form-control col-6 pull-right" [disabled]="disabled" (click)="delete()">Eliminar</button>
+          <div class="col-lg-4 col-md-4 col-xs-12 btn-float-right">
+            <button type="button" class="btn btn-danger form-control col-6 btn-float-right" [disabled]="disabled" (click)="delete()">Eliminar</button>
           </div>
         </div>
       </div>

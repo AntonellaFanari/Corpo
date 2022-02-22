@@ -44,6 +44,10 @@ namespace Corpo.Data.Repositories
 
         public void Update(Plan planEdit)
         {
+            foreach (var clase in planEdit.Classes)
+            {
+                _context.Class.Attach(clase);
+            };
             _context.Plan.Update(planEdit);
             _context.SaveChanges();
         }

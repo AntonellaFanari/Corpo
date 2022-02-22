@@ -43,7 +43,8 @@ export class WodTemplateFormComponent implements OnInit {
   editDetail: boolean;
   saved: boolean;
   kgs: string
-	mode: string = "Kgs";
+  mode: string = "Kgs";
+  goal: string;
 
 
   constructor(private exerciseService: ExerciseService,

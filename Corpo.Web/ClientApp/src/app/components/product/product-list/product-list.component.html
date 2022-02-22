@@ -34,8 +34,8 @@
               <td class="td-title" data-title="Precio"><span>{{prod.price}}</span></td>
               <td class="td-title" data-title="Acción">
                 <span class="btn-action-container">
-                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/product-detail']" [queryParams]="{id:prod.id}"><i class="fa fa-pencil-square-o "></i></button>
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(prod.id)"><i class="fa fa-trash-o "></i></button>
+                  <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/product-detail']" [queryParams]="{id:prod.id}"><i class="fa fa-pencil-square"></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(prod.id)"><i class="fa fa-trash"></i></button>
                 </span>
               </td>
             </tr>

@@ -8,3 +8,8 @@
   padding-right: 0px;
   text-align: center;
 }
+
+.preview-picture {
+    height: 200px;
+    width: 200px;
+}

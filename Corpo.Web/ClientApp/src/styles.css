@@ -52,12 +52,20 @@ img.logo {
   width: 75px;
 }
 
-.btn-login {
-  text-align: center;
-  color: white;
-  float: right;
-  margin-right: 10px;
+.btn-float-left{
+    float: left;
 }
+
+  .btn-float-right{
+      float: right;
+  }
+
+  .btn-login {
+    text-align: center;
+    color: white;
+    float: right;
+    margin-right: 10px;
+  }
 
 /*.btn-login-i {
   height: 40px;

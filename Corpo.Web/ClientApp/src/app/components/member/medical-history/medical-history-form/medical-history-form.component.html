@@ -21,7 +21,7 @@
                 </select>
                 <p *ngIf="sendForm && f.gender.errors?.required">*el campo es requerido</p>
               </div>
-              <div class="col-12 col-lg-4 col-md-4 pull-right mt-2">
+              <div class="col-12 col-lg-4 col-md-4 btn-float-right mt-2">
                 <label class="col-sm-12 control-label labelFormStyle">Periodo:</label>
                 <input type="text" class="form-control" formControlName="period">
               </div>
@@ -41,7 +41,7 @@
                   <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
                     <label class="col-6 col-lg-6 col-sm-4 col-xs-12 control-label labelFormStyle">Alergias:</label>
                   </div>
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle pull-right">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right">
                     <input type="radio" class="radio-button" value="yes" formControlName="allergiesChecked" (change)="enableInput($event.target.value, 'allergies')">
                     <span>Si</span>
                     <input type="radio" class="radio-button" value="no" formControlName="allergiesChecked" (change)="enableInput($event.target.value, 'allergies')">
@@ -57,7 +57,7 @@
                   <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
                     <label class="col-6 col-lg-6 col-sm-4 col-xs-12 control-label labelFormStyle">Cirugias:</label>
                   </div>
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle pull-right">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right">
                     <input type="radio" class="radio-button" value="yes" formControlName="surgicalInterventionChecked" (change)="enableInput($event.target.value, 'surgicalIntervention')">
                     <span>Si</span>
                     <input type="radio" class="radio-button" value="no" formControlName="surgicalInterventionChecked" (change)="enableInput($event.target.value, 'surgicalIntervention')">
@@ -77,7 +77,7 @@
                   <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
                     <label class="col-6 col-lg-4 col-sm-4 col-xs-12 control-label labelFormStyle">Enfermedad cardiaca:</label>
                   </div>
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label mt-3 pull-right">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label mt-3 btn-float-right">
                     <input type="radio" class="radio-button" value="yes" formControlName="heartDiseaseChecked" (change)="enableInput($event.target.value, 'heartDisease')">
                     <span>Si</span>
                     <input type="radio" class="radio-button" value="no" formControlName="heartDiseaseChecked" (change)="enableInput($event.target.value, 'heartDisease')">
@@ -93,7 +93,7 @@
                   <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
                     <label class="col-6 col-lg-4 col-sm-4 col-xs-12 control-label labelFormStyle">Enfermedad respiratoria:</label>
                   </div>
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle pull-right mt-3">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right mt-3">
                     <input type="radio" class="radio-button" value="yes" formControlName="respiratoryDiseaseChecked" (change)="enableInput($event.target.value, 'respiratoryDisease')">
                     <span>Si</span>
                     <input type="radio" class="radio-button" value="no" formControlName="respiratoryDiseaseChecked" (change)="enableInput($event.target.value, 'respiratoryDisease')">
@@ -109,7 +109,7 @@
                   <div class="col-6 col-xl-4 col-lg-6 col-md-5 col-sm-4 col-xs-12 control-label labelFormStyle pull-left">
                     <label class="col-6 col-lg-4 col-sm-4 col-xs-12 control-label labelFormStyle">Medicación habitual:</label>
                   </div>
-                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle pull-right mt-3">
+                  <div class="col-6 col-xl-4 col-lg-6 col-md-7 col-sm-4 col-xs-12 control-label labelFormStyle btn-float-right mt-3">
                     <input type="radio" class="radio-button" value="yes" formControlName="habitualMedicationChecked" (change)="enableInput($event.target.value, 'habitualMedication')">
                     <span>Si</span>
                     <input type="radio" class="radio-button" value="no" formControlName="habitualMedicationChecked" (change)="enableInput($event.target.value, 'habitualMedication')">

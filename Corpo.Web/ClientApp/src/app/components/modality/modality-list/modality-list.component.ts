@@ -39,6 +39,6 @@ export class ModalityListComponent implements OnInit {
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Modalidades", ["Error al intentar eliminar la modalidad."])
         })
-    })
+    }, true)
   }
 }

@@ -72,8 +72,6 @@ export class WorkoutPeriodizationComponent implements OnInit {
   memberId: number;
   member: MemberView;
   goal: string;
-  goalWeek1: string;
-
   constructor(private periodizacionService: PeriodizationService,
     private route: ActivatedRoute,
     private router: Router,

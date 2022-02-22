@@ -1,5 +1,3 @@
-/*
- *
  import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgSelectConfig } from '@ng-select/ng-select';
@@ -11,6 +9,7 @@ import { Modality } from 'src/app/domain/wod/modality';
 import { CustomAlertService } from 'src/app/services/custom-alert.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
+import { ModalityService } from '../../../../services/modality.service';
 
 
 
@@ -28,12 +27,7 @@ export class WodTemplateComponent implements OnInit {
 	checkboxToTags = [];
 	categories: CategoryExercises[] = [];
 	sendForm: boolean = false;
-	modalities: Modality[] = [
-		{ name: "AMRAP", id: 5, unit: "minutos" },
-		{ name: "Tabata", id: 2, unit: "minutos" },
-		{ name: "EMOM", id: 3, unit: "minutos" },
-		{ name: "Tiempo", id: 4, unit: "minutos" },
-		{ name: "Repeticiones", id: 1, unit: "repeticiones" }]
+	modalities: Modality[] = []
 	wod: Wod = new Wod();
 	activeWodGroup: number = 0;
 	selectedExercise: any;
@@ -46,13 +40,21 @@ export class WodTemplateComponent implements OnInit {
 	validationError: boolean;
 	mode: string = "Kgs";
 
-	constructor(private exerciseService: ExerciseService,
-		private wodTemplateService: WodTemplateService) { }
+  constructor(private exerciseService: ExerciseService,
+    private wodTemplateService: WodTemplateService, private modalityService: ModalityService) { }
 
 	ngOnInit() {
-		this.getAll();
+    this.getAll();
+    this.getModalities();
 		//this.wod.addGroup(new WodGroup(this.createGuid()));
-	}
+  }
+
+  getModalities() {
+    this.modalityService.getAll().subscribe(
+      response => this.modalities = response.result)
+  }
+
+  selectCategory(category) { }
 
 	createGuid() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

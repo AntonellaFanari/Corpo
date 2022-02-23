@@ -91,6 +91,11 @@ export class MemberViewComponent implements OnInit {
 
   }
 
+  getPath(path) {
+    console.log("http://antofanari-001-site1.gtempurl.com/" + path);
+    return "http://antofanari-001-site1.gtempurl.com/" + path;
+  }
+
   download(i) {
     console.log(i);
     console.log(this.injuryFiles[i]);

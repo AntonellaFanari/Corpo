@@ -12,21 +12,23 @@ import { UserService } from '../../../services/user.service';
 export class UserListComponent implements OnInit {
   users: UserView[] = [];
   filterUser = "";
+  requestingList: boolean;
 
   constructor(private userService: UserService, private customAlertService: CustomAlertService, private router: Router) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.userService.getAll().subscribe(
       result => {
-        console.log(result);
+        this.requestingList = false;
         this.users = result;
         console.log(this.users);
       },
-      error => console.error(error)
+      error => this.requestingList = false
     );
   }
 

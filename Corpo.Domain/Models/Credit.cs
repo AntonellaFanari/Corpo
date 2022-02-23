@@ -13,5 +13,6 @@ namespace Corpo.Domain.Models
         public int CreditConsumption { get; set; }
         public int Negative { get; set; }
         public DateTime Expiration { get; set; }
+        public string FirstDay { get; set; }
     }
 }

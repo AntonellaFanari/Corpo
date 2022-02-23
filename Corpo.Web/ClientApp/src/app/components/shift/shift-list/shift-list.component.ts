@@ -31,6 +31,7 @@ export class ShiftListComponent implements OnInit {
   disabled: boolean = true;
   checkedAllShifts: boolean = false;
   @ViewChild(AttendanceComponent, { static: true }) attendancesComponent: AttendanceComponent;
+  requestingList: boolean;
 
   constructor(private shiftService: ShiftService, private dp: DatePipe, private classService: ClassService,
     private userService: UserService, private customAlertService: CustomAlertService) {
@@ -42,6 +43,7 @@ export class ShiftListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requestingList = true;
     this.classService.getAll().subscribe(
       result => {
         console.log(result);
@@ -49,7 +51,6 @@ export class ShiftListComponent implements OnInit {
       },
       error => console.error(error)
     );
-    this.getAll();
  
   }
 
@@ -67,11 +68,11 @@ export class ShiftListComponent implements OnInit {
     this.shifts = [];
     this.shiftService.getAll(this.from, this.to, this.selectedClass).subscribe(
       result => {
-        console.log(result);
+        this.requestingList = false;
         this.getShiftsList(result);
         this.getUsers();
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

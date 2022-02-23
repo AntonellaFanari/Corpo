@@ -51,6 +51,8 @@ export class CashFormComponent implements OnInit {
   cash: Cash;
   openingView = true;
   monthlyCash = 0;
+  requestingCash: boolean;
+  requestingOpeningCash: boolean;
 
   @ViewChild(SaleEditComponent, { static: true }) saleDetailComponent: SaleEditComponent;
   @ViewChild(OutflowDetailComponent, { static: true }) outflowDetailComponent: OutflowDetailComponent;
@@ -63,7 +65,8 @@ export class CashFormComponent implements OnInit {
     private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
-    this.getLastCash();
+    this.requestingCash = true;
+    this.requestingOpeningCash = true;
     this.getMonthlyCash();
 
   }
@@ -81,17 +84,20 @@ export class CashFormComponent implements OnInit {
     this.monthlyCash = 0;
     this.cashService.getMonthlyCash().subscribe(
       result => {
+        this.requestingOpeningCash = false;
         if (result.result !== null) {
           this.monthlyCash = result.result.total;
+          this.getLastCash();
         }
       },
-      error => console.error(error)
+      error => this.requestingOpeningCash = false
     )
   }
 
   getLastCash() {
     this.cashService.getLastCash().subscribe(
       result => {
+        this.requestingCash = false;
         if (result.result !== null) {
           this.cash = result.result;
           this.id = this.cash.id;
@@ -106,7 +112,6 @@ export class CashFormComponent implements OnInit {
         }
       },
       error => {
-        console.error(error);
         this.openingView == true;
       }
     )

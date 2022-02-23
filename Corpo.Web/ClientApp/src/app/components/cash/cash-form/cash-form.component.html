@@ -1,4 +1,4 @@
-<section class="wrapper" *ngIf="!openingView">
+<section class="wrapper" *ngIf="!openingView && cash">
   <div class="row mt">
     <div class="col-md-12">
       <section id="no-more-tables">
@@ -154,9 +154,15 @@
     <!-- /content-panel -->
   </div>
   <!-- /col-md-12 -->
+  <div class="w-100 text-center" *ngIf="requestingCash && openingView">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </section>
-<section class="wrapper">
-  <section id="no-more-tables" *ngIf="openingView">
+
+<section class="wrapper"  *ngIf="openingView">
+  <section id="no-more-tables" ngIf="!requestingOpeningCash">
     <table class="table table-bordered">
       <tbody>
         <tr>
@@ -178,6 +184,11 @@
       </tbody>
     </table>
   </section>
+  <div class="w-100 text-center" *ngIf="requestingOpeningCash">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </section>
 <app-sale-edit (updateSales)="getAllSale()"></app-sale-edit>
 <app-outflow-detail (updateOutflows)="getAllOutflow()"></app-outflow-detail>

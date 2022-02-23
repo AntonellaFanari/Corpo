@@ -34,7 +34,8 @@ export class ExerciseItem {
 
 export class Wod {
     id: number;
-    name: string;
+  name: string;
+  goal: string;
     wodGroups: WodGroup[] = [];
 
     addGroup(wodGroup: WodGroup) {

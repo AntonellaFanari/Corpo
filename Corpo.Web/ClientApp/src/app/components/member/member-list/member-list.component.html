@@ -16,7 +16,15 @@
           </div>
         </div>
       </div>
-      <section *ngIf="members.length>0 ; else: elseBlock" id="no-more-tables">
+      <div class="w-100 text-center" *ngIf="requestingList">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!requestingList && members.length == 0">
+        <h5>No hay socios registrados</h5>
+      </div>
+      <section *ngIf="!requestingList && members.length > 0"  id="no-more-tables">
         <table class="table table-hover table-bordered table-condensed  cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -55,7 +63,6 @@
           </tbody>
         </table>
       </section>
-      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
     </div>
     <!-- /content-panel -->
   </div>
@@ -94,8 +101,8 @@
           </div>
         </div>
       </div>
-      <div *ngIf="fees.length>0" class="mt-2">
-        <section id="no-more-tables">
+      <div class="mt-2">
+        <section *ngIf="!requestingFees && fees.length > 0" id="no-more-tables">
           <table class="table table-bordered table-condensed cf scrollme user-table bg-danger text-white table-fee-font">
             <thead>
               <tr>
@@ -115,11 +122,19 @@
             </tbody>
           </table>
         </section>
+        <div class="w-100 text-center" *ngIf="requestingFees">
+          <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div *ngIf="!requestingFees && fees.length == 0">
+          <h5>No hay cuotas registradas</h5>
+        </div>
       </div>
 
       <!-- pie del diálogo -->
       <div class="modal-footer p-0">
-        <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal" (click)="viewChangeDueDate()">Aceptar</button>
+        <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal" (click)="closeChangeDueDate()">Aceptar</button>
       </div>
 
     </div>

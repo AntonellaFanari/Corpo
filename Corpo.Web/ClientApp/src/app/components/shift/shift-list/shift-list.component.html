@@ -44,13 +44,13 @@
     </div>
   </div>
   <div class="row mt-2">
-    <div *ngIf="toList && shifts.length>0; else elseBlock" class="col-md-12">
-      <section id="no-more-tables">
+    <div class="col-md-12">
+      <section *ngIf="!requestingList && shifts.length > 0" id="no-more-tables">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
           <table class="table table-bordered table-condensed cf mb-0 user-table">
             <thead class="cf">
               <tr>
-                <th class="numeric"><span><input type="checkbox" [checked]="checkedAllShifts" (change)="checkedAll()"/></span></th>
+                <th class="numeric"><span><input type="checkbox" [checked]="checkedAllShifts" (change)="checkedAll()" /></span></th>
                 <th class="numeric">Fecha</th>
                 <th class="numeric">Cupo</th>
                 <th class="numeric">Clase</th>
@@ -67,7 +67,7 @@
                 <td class="td-title text-ajust" data-title="Profesor"><span>{{shift.userName}}</span></td>
                 <td class="td-title" data-title="Acción">
                   <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list"  (click)="goToAttendances(shift.id)">ver asistencias</button>
+                    <button class="btn btn-success btn-xs btn-action-list" (click)="goToAttendances(shift.id)">ver asistencias</button>
                   </span>
                 </td>
               </tr>
@@ -75,7 +75,7 @@
           </table>
         </div>
       </section>
-      <div class="col-lg-12 card">
+      <div *ngIf="!requestingList && shifts.length > 0" class="col-lg-12 card">
         <div class="row card-body">
           <div class="col-lg-4 col-md-4 col-xs-12 btn-float-right">
             <button type="button" class="btn btn-success form-control col-6 btn-float-right" data-toggle="modal" href="#myModalAssignTeacher" [disabled]="disabled" (click)="createShiftToModify()">Asignar Profesor</button>
@@ -88,8 +88,15 @@
           </div>
         </div>
       </div>
+      <div class="w-100 text-center" *ngIf="requestingList && toList">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!requestingList && shifts.length == 0">
+        <h5>No hay turnos registrados</h5>
+      </div>
     </div>
-    <ng-template #elseBlock><h5 *ngIf="toList">No hay registros para mostrar</h5></ng-template>
   </div>
 </section>
 <div class="container">

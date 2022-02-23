@@ -252,6 +252,9 @@ namespace Corpo.Data.Migrations
                     b.Property<DateTime>("Expiration")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FirstDay")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("InitialCredit")
                         .HasColumnType("int");
 

@@ -48,13 +48,13 @@
             </a>
           </li>
           <li *access="'comunicación'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
-            <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
+            <a [routerLink]="['/noticias-list']">
               <i class="fa fa-exclamation-circle"></i>
               Comunicación
             </a>
-            <ul class="dropdown-menu">
+            <!--<ul class="dropdown-menu">
               <li class="nav-item"><a class="nav-link" [routerLink]="['/noticias-list']">Noticias</a></li>
-            </ul>
+            </ul>-->
           </li>
 
           <li *access="'informes'" class="nav-item">

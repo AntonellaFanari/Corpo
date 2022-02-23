@@ -23,6 +23,10 @@ export class DebtListComponent implements OnInit {
   constructor(private balanceService: BalanceService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.getAll();
+  }
+
+  getAll() {
     this.balanceService.getAll().subscribe(
       result => {
         this.balancesToPay = result;
@@ -67,6 +71,7 @@ export class DebtListComponent implements OnInit {
     };
     this.balanceService.cancelBalance(payCancelBalance).subscribe(
       result => {
+        this.getAll();
       },
       error => {
         console.error(error);

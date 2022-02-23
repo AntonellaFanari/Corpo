@@ -20,13 +20,16 @@ namespace Corpo.Domain.Services
         private IAccountService _accountService;
         private IPlanRepository _planRepository;
         private ICreditService _creditService;
+        private ISettingsRepository _settingsRepository;
 
-        public MemberService(IMemberRepository memberRepository, IAccountService accountService, IPlanRepository planRepository, ICreditService creditService)
+        public MemberService(IMemberRepository memberRepository, IAccountService accountService,
+        IPlanRepository planRepository, ICreditService creditService, ISettingsRepository settingsRepository)
         {
             _memberRepository = memberRepository;
             _accountService = accountService;
             _planRepository = planRepository;
             _creditService = creditService;
+            _settingsRepository = settingsRepository;
         }
 
         public DomainResponse Add(MemberDto member)
@@ -41,13 +44,21 @@ namespace Corpo.Domain.Services
                 Password = GetHashString(member.Password),
                 UserType = UserType.Member
             };
-
+            var setting = _settingsRepository.GetByName("firstDayPlan").Result;
+            var planType = _planRepository.GetById(member.PlanId);
             var newCredit = new Credit();
             newCredit.InitialCredit = 0;
             newCredit.CreditConsumption = 0;
             newCredit.Negative = 0;
-            newCredit.Expiration = DateTime.Now;
-
+            if (planType.Type == PlanType.Group && setting.Value == "true")
+            {
+                newCredit.Expiration = DateTime.Now.AddHours(24);
+                newCredit.FirstDay = "true";
+            }else 
+            {
+                newCredit.Expiration = DateTime.Now;
+                newCredit.FirstDay = "false";
+            }
             var newMember = new Member()
             {
                 LastName = member.LastName,

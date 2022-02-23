@@ -22,6 +22,9 @@ export class MemberListComponent implements OnInit {
   currentDate: string;
   from: string;
   to: string;
+  filterUser = "";
+  requestingList: boolean;
+  requestingFees: boolean;
 
   constructor(private memberService: MemberService, private customAlertService: CustomAlertService,
     private feeService: FeeService, private dp: DatePipe) {
@@ -33,17 +36,19 @@ export class MemberListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requestingList = true;
+    this.requestingFees = true;
     this.getAll();
   }
 
   getAll() {
     this.memberService.getAll().subscribe(
       (result) => {
-        console.log(result);
+        this.requestingList = false;
         this.members = result;
         this.getStatusMember();
       },
-      error => console.error(error)
+      error => this.requestingList = false
     );
   }
 
@@ -59,22 +64,23 @@ export class MemberListComponent implements OnInit {
     }
   }
 
-  //getAllFee() {
-  //  this.feeService.getAllByIdMember()
-  //}
 
   viewChangeDueDate() {
     this.viewDueDate = !this.viewDueDate;
+  }
+
+  closeChangeDueDate() {
+    this.viewDueDate = false;
   }
 
   getDetailsFee(id) {
     this.id = id;
     this.feeService.getAllByIdMember(this.id).subscribe(
       result => {
-        console.log(result);
+        this.requestingFees = false;
         this.fees = result;
       },
-      error => console.error(error)
+      error => this.requestingFees = false
     )
   }
 

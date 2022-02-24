@@ -11,19 +11,22 @@ import { ExerciseService } from '../../../services/exercise.service';
 export class CategoryExercisesListComponent implements OnInit {
   filterName = "";
   categories: CategoryExercises[] = [];
+  requestingList: boolean;
 
   constructor(private exerciseService: ExerciseService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.exerciseService.getAllCategories().subscribe(
       result => {
+        this.requestingList = false;
         this.categories = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

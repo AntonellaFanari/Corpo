@@ -11,19 +11,22 @@ import { PromotionService } from '../../../services/promotion.service';
 export class PromotionListComponent implements OnInit {
   promotions: Promotion[] = [];
   filterName = "";
+  requestingList: boolean;
+
   constructor(private promotionService: PromotionService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.promotionService.getAll().subscribe(
       result => {
-        console.log(result);
+        this.requestingList = false;
         this.promotions = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

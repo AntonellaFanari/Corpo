@@ -1,6 +1,6 @@
 <section class="wrapper">
-  <div *ngIf="shifts.length>0; else elseBlock" class="col-md-12">
-    <section id="no-more-tables">
+  <div class="col-md-12">
+    <section *ngIf="!requestingList && shifts.length > 0" id="no-more-tables">
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-bordered table-condensed cf mb-0 user-table">
           <thead class="cf">
@@ -26,8 +26,15 @@
         </table>
       </div>
     </section>
+    <div class="w-100 text-center" *ngIf="requestingList">
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div *ngIf="!requestingList && shifts.length == 0">
+      <h5>No hay turnos registrados</h5>
+    </div>
   </div>
-  <ng-template #elseBlock><h5>No hay turnos disponibles</h5></ng-template>
 </section>
 
 <app-attendance (getAllShifts)="getAll()"></app-attendance>

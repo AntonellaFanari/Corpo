@@ -11,55 +11,51 @@
       <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
 
         <ul *ngIf="logueado" class="navbar-nav">
-          <li *access="'caja'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'caja'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/caja']">
-              <i class="fas fa-cash-register"></i>
+              <i class="fas fa-cash-register me-1"></i>
               Caja
             </a>
           </li>
-          <li *access="'usuarios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'usuarios'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/asistencias-turnos']">
-              <i class="fa-solid fa-calendar-days"></i>
+              <i class="fa-solid fa-calendar-days me-1"></i>
               Asistencias
             </a>
           </li>
-          <li *access="'usuarios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'usuarios'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/user-list']">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-user me-1"></i>
               Usuarios
             </a>
           </li>
-          <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'socios'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/member-list']">
-              <i class="fa fa-users"></i>
+              <i class="fa fa-users me-1"></i>
               Socios
             </a>
           </li>
-          <li *access="'socios'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'socios'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/asignacion-wod']">
-              <i class="fa fa-dumbbell"></i>
+              <i class="fa fa-dumbbell me-1"></i>
               WOD
             </a>
           </li>
-          <li *access="'deudas'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'deudas'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/deudas-list']">
-              <i class="fa fa-usd"></i>
+              <i class="fa fa-usd me-1"></i>
               Deudas
             </a>
           </li>
-          <li *access="'comunicación'" class="nav-item" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'comunicación'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/noticias-list']">
-              <i class="fa fa-exclamation-circle"></i>
+              <i class="fa fa-exclamation-circle me-1"></i>
               Comunicación
             </a>
-            <!--<ul class="dropdown-menu">
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/noticias-list']">Noticias</a></li>
-            </ul>-->
           </li>
-
-          <li *access="'informes'" class="nav-item">
+          <li *access="'informes'" class="nav-item me-2">
             <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
-              <i class="fa fa-line-chart"></i>
+              <i class="fa fa-line-chart me-1"></i>
               Informes
             </a>
             <ul class="dropdown-menu">
@@ -80,9 +76,9 @@
               </li>
             </ul>
           </li>
-          <li *access="'abm'" class="nav-item sub-menu dropdown">
+          <li *access="'abm'" class="nav-item sub-menu dropdown me-2">
             <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
-              <i class="fa fa-gear"></i>
+              <i class="fa fa-gear me-1"></i>
               ABM
             </a>
             <ul class="dropdown-menu">
@@ -110,17 +106,14 @@
       </div>
       <a *ngIf="!logueado" class="btn-login" [routerLink]="['/login']"><i class="fa fa-user-circle"></i></a>
       <div *ngIf="logueado">
-        <div class="btn-group">
-          <span class="text-white">Bienvenido {{user.name }}</span>&nbsp;
+        <div class="btn-group me-3">
+          <span class="text-white me-2">Bienvenido {{user.name }}</span>;
           <a class="text-white dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user"></i></a>
-          <ul class="dropdown-menu ps-2" role="menu">
-            <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user"></i>&nbsp;Mis datos</a></li>
-            <li><a [routerLink]="['/modificar-contraseña']"><i class="fa fa-key"></i>&nbsp;Modificar contraseña</a></li>
-            <li><a [routerLink]="['/mis-deudas']"><i class="fa fa-usd"></i>&nbsp;Mis deudas</a></li>
-            <li><a [routerLink]="['/mis-reservas']"><i class="fa fa-clipboard"></i>&nbsp;Mis reservas</a></li>
-            <li><a><i class="fa fa-bell"></i>&nbsp;Notificaciones</a></li>
+          <ul class="dropdown-menu width-dropdown-account" role="menu">
+            <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user ms-2 me-3"></i>Mis datos</a></li>
+            <li><a [routerLink]="['/modificar-contraseña']"><i class="fa fa-key ms-2 me-2"></i>Contraseña</a></li>
             <hr />
-            <li><a (click)="signOff()">Cerrar Sesión&nbsp;<i class="fa fa-sign-out"></i></a></li>
+            <li><a (click)="signOff()"><span class="ms-2">Cerrar Sesión</span><i class="fa fa-sign-out ms-2 me-3"></i></a></li>
           </ul>
         </div>
       </div>

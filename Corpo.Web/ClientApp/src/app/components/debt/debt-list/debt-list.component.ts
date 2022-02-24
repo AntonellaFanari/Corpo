@@ -19,19 +19,22 @@ export class DebtListComponent implements OnInit {
   memberId: number;
   positiveBalance = 0;
   balancesMember: BalanceToPay[] = [];
+  requestingList: boolean;
 
   constructor(private balanceService: BalanceService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.balanceService.getAll().subscribe(
       result => {
+        this.requestingList = false;
         this.balancesToPay = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     );
   }
 

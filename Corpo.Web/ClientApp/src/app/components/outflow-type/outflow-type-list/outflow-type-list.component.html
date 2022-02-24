@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-      <section *ngIf="outflowType.length>0 ; else: elseBlock" id="no-more-tables">
+      <section *ngIf="!requestingList && outflowsType.length > 0" id="no-more-tables">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let outflow of outflowType  | searchFilterName: filterName">
+            <tr *ngFor="let outflow of outflowsType  | searchFilterName: filterName">
               <td data-title="Nombre"><span>{{outflow.name}}</span></td>
               <td data-title="Acción">
                 <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/egreso-editar']" [queryParams]="{id:outflow.id}"><i class="fa fa-pencil-square"></i></button>
@@ -32,7 +32,14 @@
           </tbody>
         </table>
       </section>
-      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+      <div class="w-100 text-center" *ngIf="requestingList">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!requestingList && outflowsType.length == 0">
+        <h5>No hay egresos registrados</h5>
+      </div>
     </div>
     <!-- /content-panel -->
   </div>

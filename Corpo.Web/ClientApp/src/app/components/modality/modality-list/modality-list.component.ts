@@ -11,20 +11,22 @@ import { ModalityService } from '../../../services/modality.service';
 export class ModalityListComponent implements OnInit {
   modalities: Modality[] = [];
   filterName = "";
+  requestingList: boolean;
 
   constructor(private modalityService: ModalityService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.modalityService.getAll().subscribe(
       response => {
-        console.log(response);
+        this.requestingList = false;
         this.modalities = response.result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     );
   }
 

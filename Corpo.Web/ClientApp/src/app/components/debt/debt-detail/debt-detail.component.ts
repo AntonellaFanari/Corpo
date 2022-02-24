@@ -22,7 +22,6 @@ export class DebtDetailComponent implements OnInit {
   balances: BalanceToPay[] = [];
   sale: Sale;
   detailsSale: DetailsSale[] = [];
-  userRegister: UserView;
   member: MemberView;
   status: number;
   fee: Fee;
@@ -71,7 +70,6 @@ export class DebtDetailComponent implements OnInit {
         this.sale = result.result;
         this.getDetailsSale(id);
         this.status = this.sale.status;
-        this.getUserRegister(this.sale.userId);
       },
       error => console.error(error)
     );
@@ -86,22 +84,12 @@ export class DebtDetailComponent implements OnInit {
     );
   }
 
-  getUserRegister(userId) {
-    this.userService.getById(userId).subscribe(
-      result => {
-        this.userRegister = result;
-      },
-      error => console.error(error)
-    );
-  }
-
 
   getFee(id) {
     this.feeService.getById(id).subscribe(
       result => {
         this.fee = result;
         console.log("fee", this.fee);
-        this.getUserRegister(this.fee.userId);
       },
       error => console.error(error)
     )

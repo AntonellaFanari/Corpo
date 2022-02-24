@@ -16,7 +16,7 @@ export class AttendanceShiftsListComponent implements OnInit {
   from: string;
   to: string;
   @ViewChild(AttendanceComponent, { static: true }) attendancesComponent: AttendanceComponent;
-
+  requestingList: boolean;
 
   constructor(private shiftService: ShiftService, private dp: DatePipe, private customAlertService: CustomAlertService) {
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
@@ -25,6 +25,7 @@ export class AttendanceShiftsListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll()
   }
 
@@ -33,10 +34,11 @@ export class AttendanceShiftsListComponent implements OnInit {
     this.shifts = [];
     this.shiftService.getAll(this.from, this.to, 0).subscribe(
       result => {
+        this.requestingList = false;
         this.getShiftsList(result);
       },
       error => {
-        console.error(error);
+        this.requestingList = false;
       }
     )
   }

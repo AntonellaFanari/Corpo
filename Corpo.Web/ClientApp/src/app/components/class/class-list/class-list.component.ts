@@ -12,16 +12,19 @@ import { CustomAlertService } from '../../../services/custom-alert.service';
 export class ClassListComponent implements OnInit {
   classes: Class[] = [];
   filterName = "";
+  requestingList: boolean;
 
   constructor(private classService: ClassService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.classService.getAll().subscribe(
       result => {
+        this.requestingList = false;
         for (var i = 0; i < result.length; i++) {
           if (result[i].personalized == "yes") {
             result[i].personalized = "Si"
@@ -31,7 +34,7 @@ export class ClassListComponent implements OnInit {
         }
         this.classes = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     );
   }
 

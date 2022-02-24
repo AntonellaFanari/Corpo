@@ -13,7 +13,7 @@
 
     <!-- cuerpo del diálogo -->
     <div class="modal-body">
-      <table *ngIf="attendances.length>0; else: elseBlock" class="table table-bordered table-condensed cf scrollme user-table">
+      <table *ngIf="!requestingList && attendances.length > 0"  class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
             <th class="numeric"><span><input type="checkbox" [checked]="checkedAllAttendances" (change)="checkedAll()" /></span></th>
@@ -36,7 +36,14 @@
           </tr>
         </tbody>
       </table>
-      <ng-template #elseBlock><h5>No hay socios agregados</h5></ng-template>
+      <div class="w-100 text-center" *ngIf="requestingList">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!requestingList && attendances.length == 0">
+        <h5>No hay usuarios registrados</h5>
+      </div>
       <div *ngIf="viewBtnAddMember" class="row justify-content-center align-items-center">
         <div class="text-center mb-2">
           <button type="button" class="btn btn-info col-3 text-white" (click)="viewSelectListMember()">Agregar socio</button>
@@ -61,7 +68,7 @@
         </div>
       </div>
 
-      <!-- pie del diálogo -->    
+      <!-- pie del diálogo -->
 
     </div>
     <div class="modal-footer">

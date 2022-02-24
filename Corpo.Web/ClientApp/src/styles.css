@@ -12,12 +12,16 @@ a {
   left: 100%;
 }*/
 
-a:link,
-a:visited,
-a:active {
-  text-decoration: none;
-  color: black;
-}
+  .width-dropdown-account{
+      width: 50px;
+  }
+
+  a:link,
+  a:visited,
+  a:active {
+    text-decoration: none;
+    color: black;
+  }
 
 .formValidators > p {
   font-size: 13px;

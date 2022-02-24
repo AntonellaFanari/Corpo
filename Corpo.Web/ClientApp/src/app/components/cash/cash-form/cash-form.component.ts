@@ -66,7 +66,7 @@ export class CashFormComponent implements OnInit {
 
   ngOnInit() {
     this.requestingCash = true;
-    this.requestingOpeningCash = true;
+    this.getLastCash();
     this.getMonthlyCash();
 
   }
@@ -82,16 +82,16 @@ export class CashFormComponent implements OnInit {
 
   getMonthlyCash() {
     this.monthlyCash = 0;
+    this.openingView = false;
     this.cashService.getMonthlyCash().subscribe(
       result => {
-        this.requestingOpeningCash = false;
+        this.requestingCash = false;
         if (result.result !== null) {
           this.monthlyCash = result.result.total;
-          this.getLastCash();
-        }
+        };
       },
-      error => this.requestingOpeningCash = false
-    )
+      error => this.requestingCash = false
+    );
   }
 
   getLastCash() {
@@ -103,15 +103,16 @@ export class CashFormComponent implements OnInit {
           this.id = this.cash.id;
           if (this.cash.closing == null) {
             this.openingView = false;
-            if (this.openingView == false) {
-              this.startingBalance = this.cash.startingBalance;
-              this.getTotals();
-              this.calculateCurrentCash();
-            }
+            this.startingBalance = this.cash.startingBalance;
+            this.getTotals();
+            this.calculateCurrentCash();
+          } else {
+            this.openingView = true;
           }
         }
       },
       error => {
+        this.requestingCash = false;
         this.openingView == true;
       }
     )
@@ -290,7 +291,7 @@ export class CashFormComponent implements OnInit {
         if (error.status === 500) {
           this.customAlertService.displayAlert("Gestión de Caja", ["Hubo un problema al intentar cerrar la caja."]);
         }
-      }   )
+      })
   }
 
   openingCash() {

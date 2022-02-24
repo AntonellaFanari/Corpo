@@ -12,24 +12,26 @@ import { NewsService } from '../../../services/news.service';
 export class NewsListComponent implements OnInit {
   newsList: NewsView[] = [];
   filterName = "";
+  requestingList: boolean;
 
   constructor(private newsService: NewsService, private customAlertService: CustomAlertService) {
   }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.newsService.getAll().subscribe(
       result => {
-        console.log(result.result);
+        this.requestingList = false;
         this.newsList = result.result;
         for (var i = 0; i < this.newsList.length; i++) {
           this.newsList[i].name = this.newsList[i].path.substr(0, 20);
         }
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

@@ -162,7 +162,7 @@
 </section>
 
 <section class="wrapper"  *ngIf="openingView">
-  <section id="no-more-tables" ngIf="!requestingOpeningCash">
+  <section id="no-more-tables" *ngIf="!requestingCash">
     <table class="table table-bordered">
       <tbody>
         <tr>

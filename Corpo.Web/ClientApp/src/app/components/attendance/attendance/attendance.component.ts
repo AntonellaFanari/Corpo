@@ -38,6 +38,7 @@ export class AttendanceComponent implements OnInit {
   checkedAllAttendances = true;
   attendancesRegister: AttendanceRegister[] = [];
   maxNegatives: number;
+  requestingList: boolean;
 
   constructor(private attendanceService: AttendanceService, private memberService: MemberService,
     private customAlertService: CustomAlertService, private creditService: CreditService, private shiftService: ShiftService,
@@ -46,6 +47,7 @@ export class AttendanceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAllMembers();
     this.settingsService.getAll().subscribe(
       response => {
@@ -100,6 +102,7 @@ export class AttendanceComponent implements OnInit {
     this.shiftId = id;
     this.attendanceService.getAllByIdShift(id).subscribe(
       result => {
+        this.requestingList = false;
         this.attendances = result.result;
         for (var i = 0; i < this.attendances.length; i++) {
           let attendance = this.attendances[i];
@@ -115,7 +118,7 @@ export class AttendanceComponent implements OnInit {
         }
         this.quotaAvailable = this.shift.quota - this.attendances.length;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

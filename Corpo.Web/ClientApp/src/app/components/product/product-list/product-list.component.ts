@@ -11,20 +11,22 @@ import { ProductService } from '../../../services/product.service';
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
   filterProduct = "";
+  requestingList: boolean;
 
   constructor(private productService: ProductService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.productService.getAll().subscribe(
       result => {
-        console.log(result);
+        this.requestingList = false;
         this.products = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

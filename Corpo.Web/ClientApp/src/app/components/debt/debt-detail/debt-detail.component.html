@@ -52,7 +52,7 @@
       <table class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
-            <th *ngIf="userRegister" colspan="4">Registro: {{userRegister.lastName}} {{userRegister.name}}</th>
+            <th colspan="4">Registro: {{sale.userName}}</th>
           </tr>
           <tr>
             <th colspan="2">Socio: {{member.lastName}} {{member.name}}</th>
@@ -99,7 +99,7 @@
       <table *ngIf="fee" class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
-            <th *ngIf="userRegister" colspan="2">Registro:: {{userRegister.lastName}} {{userRegister.name}}</th>
+            <th colspan="2">Registro: {{fee.userName}}</th>
           </tr>
           <tr *ngIf="fee.member">
             <th>Socio: {{fee.member.lastName}} {{fee.member.name}}</th>

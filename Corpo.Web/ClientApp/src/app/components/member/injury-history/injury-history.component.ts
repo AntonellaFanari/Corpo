@@ -112,13 +112,16 @@ export class InjuryHistoryComponent implements OnInit {
   }
 
   deleteFile(id) {
-    this.memberService.deleteFile(id).subscribe(
-      result => {
-        console.log(result);
-        this.getAllInjuries(this.medicalHistoryId);
-      },
-      error => console.error(error)
-    )
+    this.customAlertService.displayAlert("Gestión de Lesiones", ["¿Está seguro que desea eliminar esta lesión?"], () => {
+      this.memberService.deleteFile(id).subscribe(
+        result => {
+          this.getAllInjuries(this.medicalHistoryId);
+        },
+        error => {
+          console.error(error);
+          this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar la lesión."]);
+        })
+    }, true);
   }
 
   addInjury() {

@@ -12,20 +12,22 @@ export class WithdrawalNameListComponent implements OnInit {
 
   filterName = "";
   withdrawalsName: WithdrawalName[] = [];
+  requestingList: boolean;
 
   constructor(private withdrawalService: WithdrawalService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.withdrawalService.getAllWithdrawalName().subscribe(
       result => {
-        console.log(result);
+        this.requestingList = false;
         this.withdrawalsName = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

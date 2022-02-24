@@ -11,20 +11,22 @@ import { ExerciseService } from '../../../services/exercise.service';
 export class TagListComponent implements OnInit {
   filterName = "";
   tags: Tag[] = [];
+  requestingList: boolean;
 
   constructor(private exerciseService: ExerciseService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.exerciseService.getAllTags().subscribe(
       result => {
-        console.log();
+        this.requestingList = false;
         this.tags = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

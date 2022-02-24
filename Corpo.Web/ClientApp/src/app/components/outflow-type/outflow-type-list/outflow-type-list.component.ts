@@ -10,21 +10,23 @@ import { OutflowService } from '../../../services/outflow.service';
 })
 export class OutflowTypeListComponent implements OnInit {
   filterName = "";
-  outflowType: OutflowType[] = [];
+  outflowsType: OutflowType[] = [];
+  requestingList: boolean;
 
   constructor(private outflowService: OutflowService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.outflowService.getAllOutflowType().subscribe(
       result => {
-        console.log(result);
-        this.outflowType = result;
+        this.requestingList = false;
+        this.outflowsType = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

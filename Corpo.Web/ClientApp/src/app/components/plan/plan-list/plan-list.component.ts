@@ -11,20 +11,22 @@ import { PlanService } from '../../../services/plan.service';
 export class PlanListComponent implements OnInit {
   plans: Plan[] = [];
   filterPlan = "";
-
+  requestingList: boolean;
   constructor(private planService: PlanService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
     this.planService.getAll().subscribe(
       result => {
+        this.requestingList = false;
         console.log(result);
         this.plans = result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

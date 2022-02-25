@@ -183,7 +183,7 @@ export class AttendanceComponent implements OnInit {
 
 
   addMember() {
-    if (this.credit.negative > this.maxNegatives && this.credit.firstDay =="false") {
+    if (this.credit.negative == this.maxNegatives && this.credit.firstDay =="false") {
       this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio superó la cantidad de negativos permitidos."]);
     } if (this.credit.firstDay == "true" || this.credit.negative < this.maxNegatives) {
       let attendance = this.createAttendance();

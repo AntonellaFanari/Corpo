@@ -20,6 +20,7 @@ export class MemberViewComponent implements OnInit {
   medicalHistoryId: number;
   @Input() id: number;
   @Input() hideGoBack: boolean;
+  requestingList: boolean;
 
   constructor(private memberService: MemberService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -28,18 +29,27 @@ export class MemberViewComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+    this.requestingList = true;
+    this.getMember();
+  }
+
+  getMember() {
     this.memberService.getById(this.id).subscribe(
       result => {
+        this.requestingList = false;
         this.member = result;
-        console.log(this.member);
+        this.getMedicalHistory();
+        this.getAge();
       },
-      error => console.error(error)
+      error => this.requestingList = false
     );
+  }
+
+  getMedicalHistory() {
     this.memberService.getMedicalHistoryByIdMember(this.id).subscribe(
       result => {
-        console.log(result.result);
         this.medicalHistory = result.result;
+        console.log(this.medicalHistory);
         this.medicalHistoryId = this.medicalHistory.id;
         for (const property in this.medicalHistory) {
           if (this.medicalHistory[property] == null) {
@@ -48,12 +58,21 @@ export class MemberViewComponent implements OnInit {
             this.medicalHistory[property] = 'Hombre';
           } if (this.medicalHistory[property] == 'woman') {
             this.medicalHistory[property] = 'Mujer';
-          } 
+          }
         };
         this.getAllInjuries(this.medicalHistoryId);
       },
-      error => console.error(error)
+      error => {
+        if (error.status == 400) {
+          console.log(this.medicalHistory);
+          this.medicalHistory = null;
+          console.log(this.medicalHistory);
+        }
+      }
     );
+  }
+
+  getAge() {
     this.memberService.getAge(this.id).subscribe(
       result => {
         console.log(result.result.age);

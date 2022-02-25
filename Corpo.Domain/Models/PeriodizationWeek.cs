@@ -19,7 +19,8 @@ namespace Corpo.Domain.Models
         public string Friday { get; set; }
         public string Saturday { get; set; }
         public string Sunday { get; set; }
-        public string Goal { get; set; }
+        public WeeklyGoal WeeklyGoal { get; set; }
+        public int WeeklyGoalId { get; set; }
         public Periodization Periodization { get; set; }
         public int PeriodizationId { get; set; }
     }

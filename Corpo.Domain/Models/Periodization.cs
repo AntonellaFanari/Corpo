@@ -13,7 +13,8 @@ namespace Corpo.Domain.Models
         public int Month { get; set; }
         public int Year { get; set; }
         public bool Valid { get; set; }
-        public string Goal { get; set; }
+        public MonthlyGoal MonthlyGoal { get; set; }
+        public int MonthlyGoalId { get; set; }
         public List<PeriodizationWeek> PeriodizationWeeks { get; set; }
     }
     

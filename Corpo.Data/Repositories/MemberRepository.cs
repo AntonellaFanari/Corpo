@@ -50,7 +50,6 @@ namespace Corpo.Data.Repositories
         {
             var list = _context.Member
                     .Include(x => x.Plan)
-                    .Include(x => x.Account)
                     .Include(x => x.Credit)
                     .ToList();
             return list;

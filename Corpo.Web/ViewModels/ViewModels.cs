@@ -55,9 +55,31 @@ namespace Corpo.Web.ViewModels
             };
         }
 
+        public static MemberListViewModel FromDomainMemberList(Member member)
+        {
+            return new MemberListViewModel()
+            {
+                Id = member.Id,
+                LastName = member.LastName,
+                Name = member.Name,
+                Phone = member.Phone,
+                NamePlan = member.Plan.Name,
+                PlanType = member.Plan.Type,
+                CreditId = member.Credit.Id,
+                Credit = member.Credit.InitialCredit,
+                Negative = member.Credit.Negative,
+                Expiration = member.Credit.Expiration
+            };
+        }
+
         public static List<MemberViewModel> FromDomainMember(List<Member> members)
         {
             return members.Select(x => FromDomainMember(x)).ToList();
+        }
+
+        public static List<MemberListViewModel> FromDomainMemberList(List<Member> members)
+        {
+            return members.Select(x => FromDomainMemberList(x)).ToList();
         }
     }
 }

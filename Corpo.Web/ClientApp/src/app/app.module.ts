@@ -132,6 +132,9 @@ import { MonthlyEarningComponent } from './components/reports/cash/monthly-earni
 import { MemberBehaviourComponent } from './components/reports/marketing/member-behaviour/member-behaviour.component';
 import { SegmentedStatisticsComponent } from './components/reports/marketing/segmented-statistics/segmented-statistics.component';
 import { GeneralSettingsComponent } from './components/settings/general-settings/general-settings.component';
+import { MonthlyGoalCreateComponent } from './components/monthly-goal/monthly-goal-create/monthly-goal-create.component';
+import { MonthlyGoalEditComponent } from './components/monthly-goal/monthly-goal-edit/monthly-goal-edit.component';
+import { MonthlyGoalListComponent } from './components/monthly-goal/monthly-goal-list/monthly-goal-list.component';
 
 
 @NgModule({
@@ -254,7 +257,10 @@ import { GeneralSettingsComponent } from './components/settings/general-settings
     SegmentedStatisticsComponent,
     GeneralSettingsComponent,
     WorkoutPeriodizaionEditComponent,
-    WorkoutPeriodizaionDetailComponent
+    WorkoutPeriodizaionDetailComponent,
+    MonthlyGoalCreateComponent,
+    MonthlyGoalEditComponent,
+    MonthlyGoalListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -359,7 +365,10 @@ import { GeneralSettingsComponent } from './components/settings/general-settings
       { path: 'modalidad-editar', component: ModalityEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'ganancias-mensuales', component: MonthlyEarningComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
       { path: 'estadisticas-segmentadas', component: SegmentedStatisticsComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
-      { path: 'configuraciones', component: GeneralSettingsComponent, canActivate: [AuthGuard], data: { name: 'ajustes' }  }
+      { path: 'configuraciones', component: GeneralSettingsComponent, canActivate: [AuthGuard], data: { name: 'ajustes' } },
+      { path: 'objetivos-mensuales-list', component: MonthlyGoalListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'objetivo-mensual-crear', component: MonthlyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'objetivo-mensual-editar', component: MonthlyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } }
     ])
   ],
   entryComponents: [

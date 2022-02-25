@@ -3,6 +3,7 @@ using Corpo.Domain.Models;
 using Corpo.Domain.Models.Dtos;
 using Corpo.Domain.Views;
 using Corpo.Web.Controllers.ExtensionMethods;
+using Corpo.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,16 +28,16 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult<MemberViewModel> GetAll()
+        public ActionResult<MemberListViewModel> GetAll()
         {
             var response = _memberService.GetAll();
             var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
-            var listMembers = ViewModels.ViewModels.FromDomainMember(result);
+            var listMembers = ViewModels.ViewModels.FromDomainMemberList(result);
             return Ok(listMembers);
         }
 
         [HttpGet("getById")]
-        public ActionResult<MemberViewModel> GetById(int id)
+        public ActionResult<ViewModels.MemberViewModel> GetById(int id)
         {
             var member = ViewModels.ViewModels.FromDomainMember(_memberService.GetById(id));
             return Ok(member);
@@ -64,11 +65,11 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("by-date-expiration")]
-        public async Task<ActionResult<MemberViewModel>> ByDateExpiration(DateTime from, DateTime to)
+        public async Task<ActionResult<MemberListViewModel>> ByDateExpiration(DateTime from, DateTime to)
         {
             var response = await _memberService.ByDateExpiration(from, to);
             var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
-            var listMembers = ViewModels.ViewModels.FromDomainMember(result);
+            var listMembers = ViewModels.ViewModels.FromDomainMemberList(result);
             return Ok(listMembers);
         }
 
@@ -80,11 +81,11 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("personalized")]
-        public async Task<ActionResult<List<MemberViewModel>>> GetPersonalized()
+        public async Task<ActionResult<List<MemberListViewModel>>> GetPersonalized()
         {
             var response = await _memberService.GetPersonalized();
             var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
-            var listMembers = ViewModels.ViewModels.FromDomainMember(result);
+            var listMembers = ViewModels.ViewModels.FromDomainMemberList(result);
             return Ok(listMembers);
         }
 

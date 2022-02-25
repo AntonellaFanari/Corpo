@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-success btn-add" routerLink="/user-create">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requestingList && users.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterUser" placeholder="Buscar" class="form-control" [(ngModel)]="filterUser">

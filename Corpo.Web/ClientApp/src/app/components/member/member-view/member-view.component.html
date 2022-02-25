@@ -1,127 +1,167 @@
-<section class="wrapper" *ngIf="!hideGoBack">
-  <div class="row mt">
-    <div class="col-md-12">
-      <div class="task-panel">
-        <h4 class="table-title mt-2">Información personal</h4>
+<section class="wrapper" *ngIf="!requestingList && member">
+  <section class="wrapper" *ngIf="!hideGoBack">
+    <div class="row mt">
+      <div class="col-md-12">
+        <div class="task-panel">
+          <h4 class="table-title mt-2">Información personal</h4>
+        </div>
+        <hr>
+        <section id="no-more-tables">
+          <table class="table table-bordered table-condensed cf user-table">
+            <thead class="cf table-thead bg-success text-white">
+              <tr>
+                <th class="numeric">Apellido y Nombre</th>
+                <th class="numeric">Fecha de Nacimiento</th>
+                <th class="numeric">Domicilio</th>
+                <th class="numeric">Obra Social</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme" *ngIf="member">
+                <td class="numeric" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
+                <td data-title="F. de Nac."><span>{{member.birthDate | date: 'dd/MM/yyyy'}}</span></td>
+                <td data-title="Domicilio"><span>{{member.address}}</span></td>
+                <td data-title="Obra Social"><span>{{member.socialSecurity}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       </div>
-      <hr>
-      <section id="no-more-tables">
-        <table class="table table-bordered table-condensed cf user-table">
-          <thead class="cf table-thead bg-success text-white">
-            <tr>
-              <th class="numeric">Apellido y Nombre</th>
-              <th class="numeric">Fecha de Nacimiento</th>
-              <th class="numeric">Domicilio</th>
-              <th class="numeric">Teléfono</th>
-              <th class="numeric">Obra Social</th>
-              <th class="numeric">Email</th>
-              <th class="numeric">Número de Urgencia</th>
-              <th class="numeric">Contacto de Urgencia</th>
-              <th class="numeric">Instagram</th>
-              <th class="numeric">Facebook</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="scrollme" *ngIf="member">
-              <td class="numeric" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
-              <td data-title="F. de Nac."><span>{{member.birthDate | date: 'dd/MM/yyyy'}}</span></td>
-              <td data-title="Domicilio"><span>{{member.address}}</span></td>
-              <td data-title="Teléfono"><span>{{member.phone}}</span></td>
-              <td data-title="Obra Social"><span>{{member.socialSecurity}}</span></td>
-              <td data-title="Email"><span>{{member.email}}</span></td>
-              <td data-title="Tel. Contacto"><span>{{member.emergencyPhone}}</span></td>
-              <td data-title="Tel. Urgencia"><span>{{member.emergencyContact}}</span></td>
-              <td data-title="Instagram"><span>{{member.instagram}}</span></td>
-              <td data-title="Facebook"><span>{{member.facebook}}</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
     </div>
-  </div>
-</section>
-<section class="wrapper">
-  <div class="row mt">
-    <div class="col-md-12">
-      <div class="task-panel ">
-        <h4 class="table-title mt-2">Información médica</h4>
+  </section>
+  <section class="wrapper" *ngIf="!hideGoBack">
+    <div class="row mt">
+      <div class="col-md-12">
+        <div class="task-panel">
+          <h4 class="table-title mt-2">Información de Contacto</h4>
+        </div>
+        <hr>
+        <section id="no-more-tables">
+          <table class="table table-bordered table-condensed cf user-table">
+            <thead class="cf table-thead bg-success text-white">
+              <tr>
+                <th class="numeric">Teléfono</th>
+                <th class="numeric">Email</th>
+                <th class="numeric">Número de Urgencia</th>
+                <th class="numeric">Contacto de Urgencia</th>
+                <th class="numeric">Instagram</th>
+                <th class="numeric">Facebook</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme" *ngIf="member">
+                <td data-title="Teléfono"><span>{{member.phone}}</span></td>
+                <td data-title="Email"><span>{{member.email}}</span></td>
+                <td data-title="Tel. Contacto"><span>{{member.emergencyPhone}}</span></td>
+                <td data-title="Tel. Urgencia"><span>{{member.emergencyContact}}</span></td>
+                <td data-title="Instagram"><span>{{member.instagram}}</span></td>
+                <td data-title="Facebook"><span>{{member.facebook}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       </div>
-      <hr>
-      <section id="no-more-tables">
-        <table class="table table-bordered table-condensed cf user-table">
-          <thead class="cf table-thead bg-success text-white">
-            <tr>
-              <th class="numeric">Edad</th>
-              <th class="numeric">Sexo</th>
-              <th class="numeric">Periodo</th>
-              <th class="numeric">Peso</th>
-              <th class="numeric">Alergias</th>
-              <th class="numeric">Enfermedad Cardiaca</th>
-              <th class="numeric">Enfermedad Respiratoria</th>
-              <th class="numeric">Medicación Habitual</th>
-              <th class="numeric">Intervención Quirurgica</th>
-              <th class="numeric">Observaciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="scrollme" *ngIf="medicalHistory">
-              <td class="numeric" data-title="Edad"><span>{{age}}</span></td>
-              <td data-title="Sexo"><span>{{medicalHistory.gender}}</span></td>
-              <td data-title="Periodo"><span>{{medicalHistory.period}}</span></td>
-              <td data-title="Peso"><span>{{medicalHistory.weight}}</span></td>
-              <td data-title="Alergias"><span>{{medicalHistory.allergies}}</span></td>
-              <td data-title="E. Cardiaca"><span>{{medicalHistory.heartDisease}}</span></td>
-              <td data-title="E. Respiratoria"><span>{{medicalHistory.respiratoryDisease}}</span></td>
-              <td data-title="Medicación"><span>{{medicalHistory.habitualMedication}}</span></td>
-              <td data-title="Int. Quirurgica"><span>{{medicalHistory.surgicalIntervention}}</span></td>
-              <td data-title="Observaciones"><span>{{medicalHistory.observations}}</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
     </div>
-  </div>
-</section>
-<section class="wrapper">
-  <div class="row mt">
-    <div class="col-lg-12">
-      <div class="task-panel ">
-        <h4 class="table-title mt-2">Información de lesiones</h4>
+  </section>
+  <section class="wrapper">
+    <div class="row mt">
+      <div class="col-md-12">
+        <div class="task-panel ">
+          <h4 class="table-title mt-2">Información médica</h4>
+        </div>
+        <hr>
+        <section *ngIf="medicalHistory != null; else: elseBlock1" id="no-more-tables">
+          <table class="table table-bordered table-condensed cf user-table">
+            <thead class="cf table-thead bg-success text-white">
+              <tr>
+                <th class="numeric">Edad</th>
+                <th class="numeric">Sexo</th>
+                <th class="numeric">Periodo</th>
+                <th class="numeric">Peso</th>
+                <th class="numeric">Alergias</th>
+                <th class="numeric">Enfermedad Cardiaca</th>
+                <th class="numeric">Enfermedad Respiratoria</th>
+                <th class="numeric">Medicación Habitual</th>
+                <th class="numeric">Intervención Quirurgica</th>
+                <th class="numeric">Observaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="scrollme" *ngIf="medicalHistory">
+                <td class="numeric" data-title="Edad"><span>{{age}}</span></td>
+                <td data-title="Sexo"><span>{{medicalHistory.gender}}</span></td>
+                <td data-title="Periodo"><span>{{medicalHistory.period}}</span></td>
+                <td data-title="Peso"><span>{{medicalHistory.weight}}</span></td>
+                <td data-title="Alergias"><span>{{medicalHistory.allergies}}</span></td>
+                <td data-title="E. Cardiaca"><span>{{medicalHistory.heartDisease}}</span></td>
+                <td data-title="E. Respiratoria"><span>{{medicalHistory.respiratoryDisease}}</span></td>
+                <td data-title="Medicación"><span>{{medicalHistory.habitualMedication}}</span></td>
+                <td data-title="Int. Quirurgica"><span>{{medicalHistory.surgicalIntervention}}</span></td>
+                <td data-title="Observaciones"><span>{{medicalHistory.observations}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <div>
+          <ng-template #elseBlock1><h6 class="text-center">No tiene historia clínica registrada</h6></ng-template>
+        </div>
       </div>
-      <hr>
-      <div *ngIf="injuries.length>0; else: elseBlock ">
-        <table class="table table-bordered table-condensed cf scrollme detail-table">
-          <thead class="cf bg-success text-white">
-            <tr>
-              <th>
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-xs-6 col-4"><label class="fw-bold">Miembro Lesionado:</label></div>
-                  <div class="col-lg-6 col-md-6 col-xs-6 col-8">
-                    <div class="form-group col-lg-6 col-md-6 col-xs-6">
-                      <select class="form-control mt-2" data-style="btn-success" (change)="selectInjury($event.target.value)">
-                        <option value="" disabled>Seleccionar</option>
-                        <option value="all">Todos</option>
-                        <option *ngFor="let injury of injuries; index as i" value="{{i}}">{{injury.name}}</option>
-                      </select>
+    </div>
+  </section>
+  <section class="wrapper">
+    <div class="row mt">
+      <div class="col-lg-12">
+        <div class="task-panel ">
+          <h4 class="table-title mt-2">Información de lesiones</h4>
+        </div>
+        <hr>
+        <div *ngIf="medicalHistory != null; else: elseBlock2">
+          <table class="table table-bordered table-condensed cf scrollme detail-table">
+            <thead class="cf bg-success text-white">
+              <tr>
+                <th>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-6 col-4"><label class="fw-bold">Miembro Lesionado:</label></div>
+                    <div class="col-lg-6 col-md-6 col-xs-6 col-8">
+                      <div class="form-group col-lg-6 col-md-6 col-xs-6">
+                        <select class="form-control mt-2" data-style="btn-success" (change)="selectInjury($event.target.value)">
+                          <option value="" disabled>Seleccionar</option>
+                          <option value="all">Todos</option>
+                          <option *ngFor="let injury of injuries; index as i" value="{{i}}">{{injury.name}}</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let file of injuryFiles; index as i">
-              <td class="fw-bold">
-                <a (click)="download(i)" download="{{file.path}}"><p class="overflow-clip">{{file.name}}&nbsp;<i class="fa fa-download download-icon"></i></p></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let file of injuryFiles; index as i">
+                <td class="fw-bold">
+                  <a (click)="download(i)" download="{{file.path}}"><p class="overflow-clip">{{file.name}}&nbsp;<i class="fa fa-download download-icon"></i></p></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <div *ngIf="!hideGoBack">
-      <button type="button" class="btn btn-secondary col-3 col-lg-2 btn-float-left btn-create" routerLink="/member-list">Volver</button>
-    </div>
+  </section>
+  <div>
+    <ng-template #elseBlock2><h6 class="text-center">No tiene lesiones registrada</h6></ng-template>
+  </div>
+  <div *ngIf="!hideGoBack" class="ms-3">
+    <button type="button" class="btn btn-secondary col-3 col-lg-2 btn-float-left btn-create" routerLink="/member-list">Volver</button>
   </div>
 </section>
-<ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+<section class="wrapper">
+  <div class="w-100 text-center" *ngIf="requestingList">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!requestingList && !member">
+    <h5 class=" text-center">Problemas al intentar mostrar la información del socio.</h5>
+  </div>
+</section>
+

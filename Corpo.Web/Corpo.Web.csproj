@@ -92,6 +92,7 @@
     <None Remove="ClientApp\src\app\domain\withdrawal.ts" />
     <None Remove="ClientApp\src\app\domain\wod-group-member.ts" />
     <None Remove="ClientApp\src\app\domain\wod-member.ts" />
+    <None Remove="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <None Remove="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 
@@ -158,6 +159,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod-group-member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod-member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 

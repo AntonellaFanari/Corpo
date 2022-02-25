@@ -40,6 +40,8 @@ namespace Corpo.Data.Dependencies
             services.AddTransient<IWodMemberRepository, WodMemberRepository>();
             services.AddTransient<IModalityRepository, ModalityRepository>();
             services.AddTransient<IPeriodizationRepository, PeriodizationRepository>();
+            services.AddTransient<IPeriodizationRepository, PeriodizationRepository>();
+            services.AddTransient<IMonthlyGoalRepository, MonthlyGoalRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

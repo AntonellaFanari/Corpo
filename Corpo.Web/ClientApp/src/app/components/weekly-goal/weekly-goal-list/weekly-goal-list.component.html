@@ -2,18 +2,18 @@
   <div class="row mt">
     <div class="col-md-12">
       <div class="task-panel ">
-        <h4 class="table-title">Objetivos Mensuales</h4>
-        <button type="button" class="btn btn-success btn-float-right" routerLink="/objetivo-mensual-crear">Agregar</button>
+        <h4 class="table-title">Objetivos Semanales</h4>
+        <button type="button" class="btn btn-success btn-float-right" routerLink="/objetivo-semanal-crear">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card" *ngIf="!requestingList && monthlyGoals.length > 0">
+      <div class="col-12 card" *ngIf="!requestingList && weeklyGoals.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
-      <section *ngIf="!requestingList && monthlyGoals.length > 0" id="no-more-tables">
+      <section *ngIf="!requestingList && weeklyGoals.length > 0" id="no-more-tables">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -22,11 +22,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let monthlyGoal of monthlyGoals | searchFilterName: filterName">
-              <td data-title="Nombre"><span>{{monthlyGoal.goal}}</span></td>
+            <tr *ngFor="let weeklyGoal of weeklyGoals | searchFilterName: filterName">
+              <td data-title="Nombre"><span>{{weeklyGoal.goal}}</span></td>
               <td data-title="Acción">
-                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/objetivo-mensual-editar']" [queryParams]="{id:monthlyGoal.id}"><i class="fa fa-pencil-square"></i></button>
-                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(monthlyGoal.id)"><i class="fa fa-trash "></i></button>
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/objetivo-semanal-editar']" [queryParams]="{id:weeklyGoal.id}"><i class="fa fa-pencil-square"></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(weeklyGoal.id)"><i class="fa fa-trash "></i></button>
               </td>
             </tr>
           </tbody>
@@ -37,8 +37,8 @@
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <div *ngIf="!requestingList && monthlyGoals.length == 0">
-        <h5>No hay objetivos mensuales registrados</h5>
+      <div *ngIf="!requestingList && weeklyGoals.length == 0">
+        <h5>No hay objetivos semanales registrados</h5>
       </div>
     </div>
     <!-- /content-panel -->

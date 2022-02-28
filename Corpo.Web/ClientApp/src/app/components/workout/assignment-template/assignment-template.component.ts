@@ -33,6 +33,7 @@ export class AssignmentTemplateComponent implements OnInit {
   periodization: Periodization;
   requestingPeriodization: boolean;
   diplayMedicalHistory: boolean = false;
+  diplayCalendarAssignmentWod: boolean;
 
   constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
     private memberService: MemberService,
@@ -68,6 +69,10 @@ export class AssignmentTemplateComponent implements OnInit {
     })
 
     console.log("length: ", this.newWods.length)
+  }
+
+  viewBtnAssignmentWod() {
+    this.diplayCalendarAssignmentWod = true;
   }
 
   getMember() {

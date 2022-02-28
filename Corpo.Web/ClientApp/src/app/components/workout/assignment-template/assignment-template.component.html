@@ -1,7 +1,7 @@
 <!-- Page Content -->
 <section class="wrapper">
   <div class="row">
-    <div class=" col-4">
+    <div class=" col-12 col-lg-4">
 
       <button class="btn btn-primary w-100 mt-3" type="button" data-toggle="modal" href="#modal-wod"
               *ngIf="newWods.length > 0">
@@ -33,9 +33,12 @@
         Cancelar
       </button>
 
-      <app-assignment-calendar [class.d-none]="newWods.length > 0"></app-assignment-calendar>
+      <!--<button [ngClass]="{'diplay-btn-assignment-wod: 'diplayCalendarAssignmentWod'}"  class="btn btn-success w-100 mb-3" type="button" (click)="viewBtnAssignmentWod()">
+        Asignación WOD
+      </button>-->
+        <app-assignment-calendar [class.d-none]="newWods.length > 0"></app-assignment-calendar>
     </div>
-    <div class="col-8">
+    <div class="col-12 col-lg-8">
 
       <div class="row mt" [class.d-none]="newWods.length > 0">
         <div class="col-md-12">

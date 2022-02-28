@@ -1,324 +1,412 @@
 <section class="wrapper d-none">
-    <div class="modal-content">
-        <header class="modal-header bg-success">
-            <h3 class="mb text-center text-white">Nuevo Plan</h3>
-        </header>
-        <div class="modal-body">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="metabolic">metabolic</label>
-                        <input id="metabolic" [(ngModel)]="metabolic" class="input-percentage" />
-                    </div>
-                    <div class="col-md-3">
-                        <label for="gymnastic">gymnastic</label>
-                        <input id="gymnastic" [(ngModel)]="gymnastic" class="input-percentage" />
-                    </div>
-                    <div class="col-md-3">
-                        <label for="strength">strength</label>
-                        <input id="strength" [(ngModel)]="strength" class="input-percentage" />
-                    </div>
-                    <div class="col-md-3">
-                        <label for="weightlifting">weightlifting</label>
-                        <input id="weightlifting" [(ngModel)]="weightlifting" class="input-percentage" />
-                    </div>
-                    <div class="col-12 chart">
-                        <canvas id="myChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid">
-                <button class="btn btn-secondary btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
-                    [queryParams]="{memberId: memberId}">
-                    Cancelar
-                </button>
-                <button class="btn btn-success btn-float-right mt-2" type="submit">
-                    Guardar
-                </button>
-            </div>
+  <div class="modal-content">
+    <header class="modal-header bg-success">
+      <h3 class="mb text-center text-white">Nuevo Plan</h3>
+    </header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <label for="metabolic">metabolic</label>
+            <input id="metabolic" [(ngModel)]="metabolic" class="input-percentage" />
+          </div>
+          <div class="col-md-3">
+            <label for="gymnastic">gymnastic</label>
+            <input id="gymnastic" [(ngModel)]="gymnastic" class="input-percentage" />
+          </div>
+          <div class="col-md-3">
+            <label for="strength">strength</label>
+            <input id="strength" [(ngModel)]="strength" class="input-percentage" />
+          </div>
+          <div class="col-md-3">
+            <label for="weightlifting">weightlifting</label>
+            <input id="weightlifting" [(ngModel)]="weightlifting" class="input-percentage" />
+          </div>
+          <div class="col-12 chart">
+            <canvas id="myChart"></canvas>
+          </div>
         </div>
+      </div>
+      <div class="container-fluid">
+        <button class="btn btn-secondary btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
+                [queryParams]="{memberId: memberId}">
+          Cancelar
+        </button>
+        <button class="btn btn-success btn-float-right mt-2" type="submit">
+          Guardar
+        </button>
+      </div>
     </div>
+  </div>
 </section>
 
 <section class="modal-content wrapper">
-    <header class="modal-header bg-success">
-        <h3 class="mb text-center text-white">Periodización <span *ngIf="member">{{member.name}}
-                {{member.lastName}}</span></h3>
-    </header>
-    <div class="modal-body">
-        <div class="container-fluid">
+  <header class="modal-header bg-success">
+    <h3 class="mb text-center text-white">
+      Periodización <span *ngIf="member">
+        {{member.name}}
+        {{member.lastName}}
+      </span>
+    </h3>
+  </header>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="col-12  mt-3 mb-3">
+        <label class="col-12 control-label">Asignar Objetivo:</label>
+        <ng-multiselect-dropdown [settings]="monthlyGoalsDropdownSettings"
+                                 [data]="monthlyGoals"
+                                 [placeholder]="'Seleccionar...'"
+                                 (onSelect)="onItemSelect($event, 0)"
+                                 (onSelectAll)="onSelectAll($event, 0)"
+                                 (onDeSelect)="onItemDeSelect($event, 0)"
+                                 (onDeSelectAll)="onDeSelectAll(0)">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="form-group mt-3 mb-3">
+        <label class="control-label">Objetivos mensuales:</label>
+        <div class="formValidators">
+          <ul>
+            <li *ngFor="let monthlyGoal of monthlyGoalsList">{{monthlyGoal.goal}}</li>
+          </ul>
+        </div>
+        <div class="formValidators" *ngIf="monthlyGoalsList.length == 0">
+          <strong>No se asignaron objetivos</strong>
+        </div>
+      </div>
 
-            <div class="form-group mt-3 mb-3">
-                <label class="control-label">Objetivo mensual:</label>
-                <div class="formValidators">
-                    <input type="text" class="form-control" [(ngModel)]="goal">
-                </div>
-            </div>
-            <h3>Semana 1</h3>
-            <div class="form-group mt-3 mb-3">
-                <label class="control-label">Objetivo:</label>
-                <div class="formValidators">
-                    <input type="text" class="form-control" [(ngModel)]="week1.goal">
-                </div>
-            </div>
-            <div class="row">
-                <section id="no-more-tables" class="tab-pane fade show active col-4">
-                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
-                        week="week2">
-                        <thead class="cf">
-                            <tr>
-                                <th>M</th>
-                                <th>S</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="M" week="week1" type="m"></td>
-                                <td data-title="S" week="week1" type="s"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
-                        <!--<canvas id="week2-chart"></canvas>-->
-                    </div>
-                </section>
-                <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week1"
-                        week="week1">
-                        <thead class="cf">
-                            <tr>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Domingo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week1', $event.target.innerHTML)"
-                                    class="first-td">
-                                    {{week1.monday}}</td>
-                                <td data-title="Martes" day="tuesday">{{week1.tuesday}}</td>
-                                <td data-title="Miércoles" day="wednesday">{{week1.wednesday}}</td>
-                                <td data-title="Jueves" day="thursday">{{week1.thursday}}</td>
-                                <td data-title="Viernes" day="friday">{{week1.friday}}</td>
-                                <td data-title="Sábado" day="saturday">Libre</td>
-                                <td data-title="Domingo" day="sunday">Libre</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </div>
-            <div class="col-12 chart" [style.display]="chartweek1 ? 'block' : 'none'">
-                <!--<canvas id="week1-chart"></canvas>-->
-            </div>
-            <h3 class="mt-5">Semana 2</h3>
-            <div class="form-group mt-3 mb-3">
-                <label class="control-label">Objetivo:</label>
-                <div class="formValidators">
-                    <input type="text" class="form-control" [(ngModel)]="week2.goal">
-                </div>
-            </div>
-            <div class="row">
-                <section id="no-more-tables" class="tab-pane fade show active col-4">
-                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
-                        week="week1">
-                        <thead class="cf">
-                            <tr>
-                                <th>M</th>
-                                <th>S</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="M" week="week2" type="m"></td>
-                                <td data-title="S" week="week2" type="s"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week2"
-                        week="week2">
-                        <thead class="cf">
-                            <tr>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Domingo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week2', $event.target.innerHTML)"
-                                    class="first-td">
-                                    {{week2.monday}}</td>
-                                <td data-title="Martes" day="tuesday">{{week2.tuesday}}</td>
-                                <td data-title="Miércoles" day="wednesday">{{week2.wednesday}}</td>
-                                <td data-title="Jueves" day="thursday">{{week2.thursday}}</td>
-                                <td data-title="Viernes" day="friday">{{week2.friday}}</td>
-                                <td data-title="Sábado" day="saturday">Libre</td>
-                                <td data-title="Domingo" day="sunday">Libre</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
-                        <!--<canvas id="week2-chart"></canvas>-->
-                    </div>
-                </section>
-            </div>
-            <h3 class="mt-5">Semana 3</h3>
-            <div class="form-group mt-3 mb-3">
-                <label class="control-label">Objetivo:</label>
-                <div class="formValidators">
-                    <input type="text" class="form-control" [(ngModel)]="week3.goal">
-                </div>
-            </div>
-            <div class="row">
-                <section id="no-more-tables" class="tab-pane fade show active col-4">
-                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week3"
-                        week="week2">
-                        <thead class="cf">
-                            <tr>
-                                <th>M</th>
-                                <th>S</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="M" week="week3" type="m"></td>
-                                <td data-title="S" week="week3" type="s"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
-                        <!--<canvas id="week2-chart"></canvas>-->
-                    </div>
-                </section>
+      <h3>Semana 1</h3>
+      <div class="form-group mt-3 mb-3">
+        <label class="control-label">Asignar Objetivo:</label>
+        <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
+                                 [data]="weeklyGoals"
+                                 [placeholder]="'Seleccionar...'"
+                                 (onSelect)="onItemSelect($event, 1)"
+                                 (onSelectAll)="onSelectAll($event, 1)"
+                                 (onDeSelect)="onItemDeSelect($event, 1)"
+                                 (onDeSelectAll)="onDeSelectAll(1)">
+        </ng-multiselect-dropdown>
+        <div class="form-group mt-3 mb-3">
+          <label class="control-label">Objetivos semana 1:</label>
+          <div class="formValidators">
+            <ul>
+              <li *ngFor="let weeklyGoal of week1GoalsList">{{weeklyGoal.goal}}</li>
+            </ul>
+          </div>
+          <div class="formValidators" *ngIf="week1GoalsList.length == 0">
+            <strong>No se asignaron objetivos para la semana 1</strong>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <section id="no-more-tables" class="tab-pane fade show active col-4">
+          <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
+                 week="week2">
+            <thead class="cf">
+              <tr>
+                <th>M</th>
+                <th>S</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="M" week="week1" type="m"></td>
+                <td data-title="S" week="week1" type="s"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+            <!--<canvas id="week2-chart"></canvas>-->
+          </div>
+        </section>
+        <section id="no-more-tables" class="tab-pane fade show active col-8">
+          <table class="table table-bordered table-condensed cf scrollme periodization" id="week1"
+                 week="week1">
+            <thead class="cf">
+              <tr>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="Lunes" day="monday" (click)="initWeek('week1', $event.target.innerHTML)"
+                    class="first-td">
+                  {{week1.monday}}
+                </td>
+                <td data-title="Martes" day="tuesday">{{week1.tuesday}}</td>
+                <td data-title="Miércoles" day="wednesday">{{week1.wednesday}}</td>
+                <td data-title="Jueves" day="thursday">{{week1.thursday}}</td>
+                <td data-title="Viernes" day="friday">{{week1.friday}}</td>
+                <td data-title="Sábado" day="saturday">Libre</td>
+                <td data-title="Domingo" day="sunday">Libre</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="col-12 chart" [style.display]="chartweek1 ? 'block' : 'none'">
+        <!--<canvas id="week1-chart"></canvas>-->
+      </div>
+      <h3>Semana 2</h3>
+      <div class="form-group mt-3 mb-3">
+        <label class="control-label">Asignar Objetivo:</label>
+        <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
+                                 [data]="weeklyGoals"
+                                 [placeholder]="'Seleccionar...'"
+                                 (onSelect)="onItemSelect($event, 2)"
+                                 (onSelectAll)="onSelectAll($event, 2)"
+                                 (onDeSelect)="onItemDeSelect($event, 2)"
+                                 (onDeSelectAll)="onDeSelectAll(2)">
+        </ng-multiselect-dropdown>
+        <div class="form-group mt-3 mb-3">
+          <label class="control-label">Objetivos semana 2:</label>
+          <div class="formValidators">
+            <ul>
+              <li *ngFor="let weeklyGoal of week2GoalsList">{{weeklyGoal.goal}}</li>
+            </ul>
+          </div>
+          <div class="formValidators" *ngIf="week2GoalsList.length == 0">
+            <strong>No se asignaron objetivos para la semana 2</strong>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <section id="no-more-tables" class="tab-pane fade show active col-4">
+          <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
+                 week="week1">
+            <thead class="cf">
+              <tr>
+                <th>M</th>
+                <th>S</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="M" week="week2" type="m"></td>
+                <td data-title="S" week="week2" type="s"></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section id="no-more-tables" class="tab-pane fade show active col-8">
+          <table class="table table-bordered table-condensed cf scrollme periodization" id="week2"
+                 week="week2">
+            <thead class="cf">
+              <tr>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="Lunes" day="monday" (click)="initWeek('week2', $event.target.innerHTML)"
+                    class="first-td">
+                  {{week2.monday}}
+                </td>
+                <td data-title="Martes" day="tuesday">{{week2.tuesday}}</td>
+                <td data-title="Miércoles" day="wednesday">{{week2.wednesday}}</td>
+                <td data-title="Jueves" day="thursday">{{week2.thursday}}</td>
+                <td data-title="Viernes" day="friday">{{week2.friday}}</td>
+                <td data-title="Sábado" day="saturday">Libre</td>
+                <td data-title="Domingo" day="sunday">Libre</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+            <!--<canvas id="week2-chart"></canvas>-->
+          </div>
+        </section>
+      </div>
+      <h3>Semana 3</h3>
+      <div class="form-group mt-3 mb-3">
+        <label class="control-label">Asignar Objetivo:</label>
+        <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
+                                 [data]="weeklyGoals"
+                                 [placeholder]="'Seleccionar...'"
+                                 (onSelect)="onItemSelect($event, 3)"
+                                 (onSelectAll)="onSelectAll($event, 3)"
+                                 (onDeSelect)="onItemDeSelect($event, 3)"
+                                 (onDeSelectAll)="onDeSelectAll(3)">
+        </ng-multiselect-dropdown>
+        <div class="form-group mt-3 mb-3">
+          <label class="control-label">Objetivos semana 3:</label>
+          <div class="formValidators">
+            <ul>
+              <li *ngFor="let weeklyGoal of week3GoalsList">{{weeklyGoal.goal}}</li>
+            </ul>
+          </div>
+          <div class="formValidators" *ngIf="week3GoalsList.length == 0">
+            <strong>No se asignaron objetivos para la semana 3</strong>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <section id="no-more-tables" class="tab-pane fade show active col-4">
+          <table class="table table-bordered table-condensed cf scrollme predominance" id="week3"
+                 week="week2">
+            <thead class="cf">
+              <tr>
+                <th>M</th>
+                <th>S</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="M" week="week3" type="m"></td>
+                <td data-title="S" week="week3" type="s"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+            <!--<canvas id="week2-chart"></canvas>-->
+          </div>
+        </section>
 
-                <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week3"
-                        week="week3">
-                        <thead class="cf">
-                            <tr>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Domingo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week3', $event.target.innerHTML)"
-                                    class="first-td">
-                                    {{week3.monday}}</td>
-                                <td data-title="Martes" day="tuesday">{{week3.tuesday}}</td>
-                                <td data-title="Miércoles" day="wednesday">{{week3.wednesday}}</td>
-                                <td data-title="Jueves" day="thursday">{{week3.thursday}}</td>
-                                <td data-title="Viernes" day="friday">{{week3.friday}}</td>
-                                <td data-title="Sábado" day="saturday">Libre</td>
-                                <td data-title="Domingo" day="sunday">Libre</td>
-                        </tbody>
-                    </table>
-                </section>
-            </div>
-            <div class="col-12 chart" [style.display]="chartweek3 ? 'block' : 'none'">
-                <!--<canvas id="week3-chart"></canvas>-->
-            </div>
-            <h3 class="mt-5">Semana 4</h3>
-            <div class="form-group mt-3 mb-3">
-                <label class="control-label">Objetivo:</label>
-                <div class="formValidators">
-                    <input type="text" class="form-control" [(ngModel)]="week4.goal">
-                </div>
-            </div>
-            <div class="row">
-                <section id="no-more-tables" class="tab-pane fade show active col-4">
-                    <table class="table table-bordered table-condensed cf scrollme predominance" id="week4"
-                        week="week2">
-                        <thead class="cf">
-                            <tr>
-                                <th>M</th>
-                                <th>S</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="M" week="week4" type="m"></td>
-                                <td data-title="S" week="week4" type="s"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
-                        <!--<canvas id="week2-chart"></canvas>-->
-                    </div>
-                </section>
-                <section id="no-more-tables" class="tab-pane fade show active col-8">
-                    <table class="table table-bordered table-condensed cf scrollme periodization" id="week4"
-                        week="week4">
-                        <thead class="cf">
-                            <tr>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Domingo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-title="Lunes" day="monday" (click)="initWeek('week4', $event.target.innerHTML)"
-                                    class="first-td">
-                                    {{week4.monday}}</td>
-                                <td data-title="Martes" day="tuesday">{{week4.tuesday}}</td>
-                                <td data-title="Miércoles" day="wednesday">{{week4.wednesday}}</td>
-                                <td data-title="Jueves" day="thursday">{{week4.thursday}}</td>
-                                <td data-title="Viernes" day="friday">{{week4.friday}}</td>
-                                <td data-title="Sábado" day="saturday">Libre</td>
-                                <td data-title="Domingo" day="sunday">Libre</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-            </div>
-            <div class="col-12 chart" [style.display]="chartweek4 ? 'block' : 'none'">
-                <!--<canvas id="week4-chart"></canvas>-->
-            </div>
+        <section id="no-more-tables" class="tab-pane fade show active col-8">
+          <table class="table table-bordered table-condensed cf scrollme periodization" id="week3"
+                 week="week3">
+            <thead class="cf">
+              <tr>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="Lunes" day="monday" (click)="initWeek('week3', $event.target.innerHTML)"
+                    class="first-td">
+                  {{week3.monday}}
+                </td>
+                <td data-title="Martes" day="tuesday">{{week3.tuesday}}</td>
+                <td data-title="Miércoles" day="wednesday">{{week3.wednesday}}</td>
+                <td data-title="Jueves" day="thursday">{{week3.thursday}}</td>
+                <td data-title="Viernes" day="friday">{{week3.friday}}</td>
+                <td data-title="Sábado" day="saturday">Libre</td>
+                <td data-title="Domingo" day="sunday">Libre</td>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="col-12 chart" [style.display]="chartweek3 ? 'block' : 'none'">
+        <!--<canvas id="week3-chart"></canvas>-->
+      </div>
+      <h3>Semana 4</h3>
+      <div class="form-group mt-3 mb-3">
+        <label class="control-label">Asignar Objetivo:</label>
+        <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
+                                 [data]="weeklyGoals"
+                                 [placeholder]="'Seleccionar...'"
+                                 (onSelect)="onItemSelect($event, 4)"
+                                 (onSelectAll)="onSelectAll($event, 4)"
+                                 (onDeSelect)="onItemDeSelect($event, 4)"
+                                 (onDeSelectAll)="onDeSelectAll(4)">
+        </ng-multiselect-dropdown>
+        <div class="form-group mt-3 mb-3">
+          <label class="control-label">Objetivos semana 4:</label>
+          <div class="formValidators">
+            <ul>
+              <li *ngFor="let weeklyGoal of week4GoalsList">{{weeklyGoal.goal}}</li>
+            </ul>
+          </div>
+          <div class="formValidators" *ngIf="week4GoalsList.length == 0">
+            <strong>No se asignaron objetivos para la semana 4</strong>
+          </div>
         </div>
-        <div class="container-fluid d-none">
-            <div class="row">
-                <div class="col-6 chart">
-                    <canvas id="expected-chart"></canvas>
-                </div>
-                <div class="col-6 chart">
-                    <canvas id="actual-chart"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 chart" [style.display]="chartweek4 ? 'block' : 'none'">
-            <!--<canvas id="week4-chart"></canvas>-->
-        </div>
-        <div class="container-fluid">
-            <button class="btn btn-secondary btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
-                    [queryParams]="{memberId: memberId}">
-                Cancelar
-            </button>
-            <button class="btn btn-success btn-float-right mt-2" type="submit" (click)="save()">
-                Guardar
-            </button>
-        </div>
+      </div>
+      <div class="row">
+        <section id="no-more-tables" class="tab-pane fade show active col-4">
+          <table class="table table-bordered table-condensed cf scrollme predominance" id="week4"
+                 week="week2">
+            <thead class="cf">
+              <tr>
+                <th>M</th>
+                <th>S</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="M" week="week4" type="m"></td>
+                <td data-title="S" week="week4" type="s"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+            <!--<canvas id="week2-chart"></canvas>-->
+          </div>
+        </section>
+        <section id="no-more-tables" class="tab-pane fade show active col-8">
+          <table class="table table-bordered table-condensed cf scrollme periodization" id="week4"
+                 week="week4">
+            <thead class="cf">
+              <tr>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="Lunes" day="monday" (click)="initWeek('week4', $event.target.innerHTML)"
+                    class="first-td">
+                  {{week4.monday}}
+                </td>
+                <td data-title="Martes" day="tuesday">{{week4.tuesday}}</td>
+                <td data-title="Miércoles" day="wednesday">{{week4.wednesday}}</td>
+                <td data-title="Jueves" day="thursday">{{week4.thursday}}</td>
+                <td data-title="Viernes" day="friday">{{week4.friday}}</td>
+                <td data-title="Sábado" day="saturday">Libre</td>
+                <td data-title="Domingo" day="sunday">Libre</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="col-12 chart" [style.display]="chartweek4 ? 'block' : 'none'">
+        <!--<canvas id="week4-chart"></canvas>-->
+      </div>
     </div>
+    <div class="container-fluid d-none">
+      <div class="row">
+        <div class="col-6 chart">
+          <canvas id="expected-chart"></canvas>
+        </div>
+        <div class="col-6 chart">
+          <canvas id="actual-chart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 chart" [style.display]="chartweek4 ? 'block' : 'none'">
+      <!--<canvas id="week4-chart"></canvas>-->
+    </div>
+    <div class="container-fluid">
+      <button class="btn btn-secondary btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
+              [queryParams]="{memberId: memberId}">
+        Cancelar
+      </button>
+      <button class="btn btn-success btn-float-right mt-2" type="submit" (click)="save()">
+        Guardar
+      </button>
+    </div>
+  </div>
 </section>
 
 
@@ -326,158 +414,157 @@
 <button id="modal-predominance" data-toggle="modal" href="#predominance" class="d-none">abrir</button>
 
 <div class="modal fade" id="predominance">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- cabecera del diálogo -->
-            <div class="modal-header modal-title">
-                <h4 class="modal-title">Seleccionar</h4>
-                <button type="button" class="close" data-dismiss="modal">X</button>
-            </div>
-            <!-- cuerpo del diálogo -->
-            <div class="modal-body">
-                <div class="form-group mt-3">
-                    <label class="control-label">M:</label>
-                    <div class="formValidators">
-                        <input type="text" class="form-control" [(ngModel)]="type"
-                            (ngModelChange)="type = $event.toUpperCase()">
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-body">
-                <div class="form-group mt-3">
-                    <label class="control-label">S:</label>
-                    <div class="formValidators">
-                        <input type="text" class="form-control" [(ngModel)]="type"
-                            (ngModelChange)="type = $event.toUpperCase()">
-                    </div>
-                </div>
-            </div>
-            <!-- pie del diálogo -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button type="button" class="btn btn-success" (click)="updateType()">
-                    Aceptar
-                </button>
-            </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Seleccionar</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+      </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <div class="form-group mt-3">
+          <label class="control-label">M:</label>
+          <div class="formValidators">
+            <input type="text" class="form-control" [(ngModel)]="type"
+                   (ngModelChange)="type = $event.toUpperCase()">
+          </div>
         </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group mt-3">
+          <label class="control-label">S:</label>
+          <div class="formValidators">
+            <input type="text" class="form-control" [(ngModel)]="type"
+                   (ngModelChange)="type = $event.toUpperCase()">
+          </div>
+        </div>
+      </div>
+      <!-- pie del diálogo -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-success" (click)="updateType()">
+          Aceptar
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 
 <button id="modal-button" data-toggle="modal" href="#modal-type" class="d-none">abrir</button>
 
 <div class="modal fade" id="modal-type">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Seleccionar</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+      </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <div>
+          <input class="checkbox-access" type="checkbox" id="cb-metabolic" [(ngModel)]="cbMetabolic" />
+          <label for="cb-metabolic" class="cb-label">metabolic</label>
+        </div>
+        <div>
+          <input class="checkbox-access" type="checkbox" id="cb-gymnastic" [(ngModel)]="cbGymnastic" />
+          <label for="cb-gymnastic" class="cb-label">gymnastic</label>
+        </div>
+        <div>
+          <input class="checkbox-access" type="checkbox" id="cb-strength" [(ngModel)]="cbStrength" />
+          <label for="cb-strength" class="cb-label">strength</label>
+        </div>
+        <div>
+          <input class="checkbox-access" type="checkbox" id="cb-weightlifting" [(ngModel)]="cbWeightlifting" />
+          <label for="cb-weightlifting" class="cb-label">weightlifting</label>
+          <div class="form-group mt-3">
+            <label class="control-label">Detalle:</label>
+            <div class="formValidators">
+              <input type="text" class="form-control" [(ngModel)]="type"
+                     (ngModelChange)="type = $event.toUpperCase()">
+            </div>
+          </div>
+        </div>
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-success" (click)="updateType()">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="modal-init-button" data-toggle="modal" href="#modal-init" class="d-none">abrir</button>
+
+  <div class="modal fade" id="modal-init">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- cabecera del diálogo -->
-            <div class="modal-header modal-title">
-                <h4 class="modal-title">Seleccionar</h4>
-                <button type="button" class="close" data-dismiss="modal">X</button>
-            </div>
-            <!-- cuerpo del diálogo -->
-            <div class="modal-body">
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-metabolic" [(ngModel)]="cbMetabolic" />
-                    <label for="cb-metabolic" class="cb-label">metabolic</label>
-                </div>
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-gymnastic" [(ngModel)]="cbGymnastic" />
-                    <label for="cb-gymnastic" class="cb-label">gymnastic</label>
-                </div>
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-strength" [(ngModel)]="cbStrength" />
-                    <label for="cb-strength" class="cb-label">strength</label>
-                </div>
-                <div>
-                    <input class="checkbox-access" type="checkbox" id="cb-weightlifting" [(ngModel)]="cbWeightlifting"
-                        />
-                    <label for="cb-weightlifting" class="cb-label">weightlifting</label>
-                <div class="form-group mt-3">
-                    <label class="control-label">Detalle:</label>
-                    <div class="formValidators">
-                        <input type="text" class="form-control" [(ngModel)]="type"
-                            (ngModelChange)="type = $event.toUpperCase()">
-                    </div>
-                </div>
-            </div>
-            <!-- pie del diálogo -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button type="button" class="btn btn-success" (click)="updateType()">
-                    Aceptar
-                </button>
-            </div>
+      <div class="modal-content">
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Seleccionar</h4>
+          <button type="button" class="close" data-dismiss="modal">X</button>
         </div>
-    </div>
-</div>
-
-<button id="modal-init-button" data-toggle="modal" href="#modal-init" class="d-none">abrir</button>
-
-<div class="modal fade" id="modal-init">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- cabecera del diálogo -->
-            <div class="modal-header modal-title">
-                <h4 class="modal-title">Seleccionar</h4>
-                <button type="button" class="close" data-dismiss="modal">X</button>
-            </div>
-            <!-- cuerpo del diálogo -->
-            <div class="modal-body">
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
 
 
-                <fieldset class="radio-group">
-                    <label>
-                        <input type="radio" name="numero" value="M" [(ngModel)]="init" class="cb-label"> M
-                    </label>
-                    <label>
-                        <input type="radio" name="numero" value="G" [(ngModel)]="init" class="cb-label"> G
-                    </label>
-                    <label>
-                        <input type="radio" name="numero" value="W" [(ngModel)]="init" class="cb-label"> W
-                    </label>
-                    <label>
-                        <input type="radio" name="numero" value="S" [(ngModel)]="init" class="cb-label"> S
-                    </label>
-                </fieldset>
-                <!--
-                <div class="form-group mt-3">
-                    <label class="control-label">Inicio:</label>
-                    <div class="formValidators">
-                        <input type="text" class="form-control" [(ngModel)]="init"
-                            (ngModelChange)="init = $event.toUpperCase()">
-                    </div>
-                </div>
--->
-            </div>
-            <!-- pie del diálogo -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Cancelar
-                </button>
-                <button type="button" class="btn btn-success" (click)="updateInit()">
-                    Aceptar
-                </button>
-            </div>
+          <fieldset class="radio-group">
+            <label>
+              <input type="radio" name="numero" value="M" [(ngModel)]="init" class="cb-label"> M
+            </label>
+            <label>
+              <input type="radio" name="numero" value="G" [(ngModel)]="init" class="cb-label"> G
+            </label>
+            <label>
+              <input type="radio" name="numero" value="W" [(ngModel)]="init" class="cb-label"> W
+            </label>
+            <label>
+              <input type="radio" name="numero" value="S" [(ngModel)]="init" class="cb-label"> S
+            </label>
+          </fieldset>
+          <!--
+                          <div class="form-group mt-3">
+                              <label class="control-label">Inicio:</label>
+                              <div class="formValidators">
+                                  <input type="text" class="form-control" [(ngModel)]="init"
+                                      (ngModelChange)="init = $event.toUpperCase()">
+                              </div>
+                          </div>
+          -->
         </div>
-    </div>
-</div>
-<!--
-<div class="modal-body">
-    <div class="form-group mt-3">
-        <label class="control-label">Inicio:</label>
-        <div class="formValidators">
-            <input type="text" class="form-control" [(ngModel)]="periodizationInit"
-                (ngModelChange)="periodizationInit = $event.toUpperCase()">
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-success" (click)="updateInit()">
+            Aceptar
+          </button>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  <!--
+  <div class="modal-body">
+      <div class="form-group mt-3">
+          <label class="control-label">Inicio:</label>
+          <div class="formValidators">
+              <input type="text" class="form-control" [(ngModel)]="periodizationInit"
+                  (ngModelChange)="periodizationInit = $event.toUpperCase()">
+          </div>
+      </div>
+  </div>
 
 
-<button (click)="getPeriodization()">abrir</button>
--->
-<button id="modal-detail" data-toggle="modal" href="#modal" class="d-none">abrir</button>
+  <button (click)="getPeriodization()">abrir</button>
+  -->
+  <button id="modal-detail" data-toggle="modal" href="#modal" class="d-none">abrir</button>

@@ -44,7 +44,7 @@ namespace Corpo.Data.Repositories
 
         public async Task Update(MonthlyGoal monthlyGoal)
         {
-            _context.Update(monthlyGoal);
+            _context.MonthlyGoal.Update(monthlyGoal);
             await _context.SaveChangesAsync();
         }
     }

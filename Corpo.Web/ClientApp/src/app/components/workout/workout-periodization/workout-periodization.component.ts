@@ -2,12 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Chart } from 'chart.js';
 import { timeStamp } from 'console';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Member } from 'src/app/domain/member';
 import { MemberView } from 'src/app/domain/member-view';
 import { Periodization, PeriodizationWeek } from 'src/app/domain/wod/periodization';
 import { MemberService } from 'src/app/services/member.service';
 import { PeriodizationService } from 'src/app/services/wod/periodization.service';
 import 'zone.js/dist/long-stack-trace-zone';
+import { MonthlyGoal } from '../../../domain/wod/monthly-goal';
+import { WeeklyGoal } from '../../../domain/wod/weekly-goal';
+import { MonthlyGoalService } from '../../../services/monthly-goal.service';
+import { WeeklyGoalService } from '../../../services/weekly-goal.service';
 //import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 export class Week {
@@ -71,11 +76,23 @@ export class WorkoutPeriodizationComponent implements OnInit {
   type: string;
   memberId: number;
   member: MemberView;
-  goal: string;
+  monthlyGoal = "";
+  monthlyGoalsList: MonthlyGoal[] = [];
+  monthlyGoals: MonthlyGoal[] = [];
+  monthlyGoalsDropdownSettings: IDropdownSettings = {};
+  week1GoalsList: WeeklyGoal[] = [];
+  week2GoalsList: WeeklyGoal[] = [];
+  week3GoalsList: WeeklyGoal[] = [];
+  week4GoalsList: WeeklyGoal[] = [];
+  weeklyGoals: WeeklyGoal[] = [];
+  weeklyGoalsDropdownSettings: IDropdownSettings = {};
+
   constructor(private periodizacionService: PeriodizationService,
     private route: ActivatedRoute,
     private router: Router,
-    private memberService: MemberService) {
+    private memberService: MemberService,
+    private monthlyGoalService: MonthlyGoalService,
+    private weeklyGoalService: WeeklyGoalService) {
     this.route.queryParams.subscribe(params => {
       this.memberId = parseInt(params['memberId'])
       memberService.getById(this.memberId).subscribe(data => {
@@ -164,6 +181,26 @@ export class WorkoutPeriodizationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getMonthlyGoals();
+    this.monthlyGoalsDropdownSettings = {
+      idField: 'id',
+      textField: 'goal',
+      enableCheckAll: true,
+      selectAllText: "Seleccionar todos",
+      unSelectAllText: "Deseleccionar todos",
+      allowSearchFilter: true,
+      searchPlaceholderText: "Buscar"
+    };
+    this.getWeeklyGoals();
+    this.weeklyGoalsDropdownSettings = {
+      idField: 'id',
+      textField: 'goal',
+      enableCheckAll: true,
+      selectAllText: "Seleccionar todos",
+      unSelectAllText: "Deseleccionar todos",
+      allowSearchFilter: true,
+      searchPlaceholderText: "Buscar"
+    };
     //Chart.register(ChartDataLabels);
 
     document.querySelectorAll('.periodization td:not(.first-td)')
@@ -196,6 +233,203 @@ export class WorkoutPeriodizationComponent implements OnInit {
     //this.renderExpectedChart(types, [50, 50])
   }
 
+  getMonthlyGoals() {
+    this.monthlyGoalService.getAll().subscribe(
+      response => this.monthlyGoals = response.result,
+      error => console.error(error))
+  }
+
+  getWeeklyGoals() {
+    this.weeklyGoalService.getAll().subscribe(
+      response => this.weeklyGoals = response.result,
+      error => console.error(error))
+  }
+
+  onItemSelect(goal, number) {
+    switch (number) {
+      case 0:
+        console.log(goal);
+        if (this.monthlyGoal.length == 0) {
+          this.monthlyGoal = goal.goal;
+        } else {
+          this.monthlyGoal = this.monthlyGoal + "-" + goal.goal;
+        }
+        this.monthlyGoalsList.push(goal);
+        console.log(this.monthlyGoalsList);
+        break;
+      case 1:
+        if (this.week1.goal.length == 0) {
+          this.week1.goal = goal.goal;
+        } else {
+          this.week1.goal = this.week1.goal + "-" + goal.goal;
+          console.log(this.week1.goal);
+        }
+        this.week1GoalsList.push(goal);
+        console.log(this.week1GoalsList);
+        break;
+      case 2:
+        if (this.week2.goal.length == 0) {
+          this.week2.goal = goal.goal;
+        } else {
+          this.week2.goal = this.week2.goal + "-" + goal.goal;
+        }
+        this.week2GoalsList.push(goal);
+        console.log(this.week2GoalsList);
+        break;
+      case 3:
+        if (this.week3.goal.length == 0) {
+          this.week3.goal = goal.goal;
+        } else {
+          this.week3.goal = this.week3.goal + "-" + goal.goal;
+        }
+        this.week3GoalsList.push(goal);
+        console.log(this.week3GoalsList);
+        break;
+      case 4:
+        if (this.week4.goal.length == 0) {
+          this.week4.goal = goal.goal;
+        } else {
+          this.week4.goal = this.week4.goal + "-" + goal.goal;
+        }
+        this.week4GoalsList.push(goal);
+        console.log(this.week4GoalsList);
+        break;
+      default:
+    }
+  }
+
+  onSelectAll(goals, number) {
+    switch (number) {
+      case 0:
+        this.monthlyGoalsList = [];
+        console.log(goals);
+        this.monthlyGoal = "";
+        for (var i = 0; i < goals.length; i++) {
+          this.monthlyGoalsList.push(goals[i])
+          if (this.monthlyGoal.length == 0) {
+            this.monthlyGoal = this.monthlyGoalsList[i].goal;
+          } else {
+            this.monthlyGoal = this.monthlyGoal + "-" + this.monthlyGoalsList[i].goal;
+          }
+        };
+        console.log(this.monthlyGoalsList);
+        break;
+      case 1:
+        this.week1GoalsList = [];
+        console.log(goals);
+        this.week1.goal = "";
+        for (var i = 0; i < goals.length; i++) {
+          this.week1GoalsList.push(goals[i]);
+          if (this.week1.goal.length == 0) {
+            this.week1.goal = this.week1GoalsList[i].goal;
+          } else {
+            this.week1.goal = this.week1.goal + "-" + this.week1GoalsList[i].goal;
+          }
+        };
+        console.log(this.week1GoalsList);
+        break;
+      case 2:
+        this.week2GoalsList = [];
+        console.log(goals);
+        this.week2.goal = "";
+        for (var i = 0; i < goals.length; i++) {
+          this.week2GoalsList.push(goals[i]);
+          if (this.week2.goal.length == 0) {
+            this.week2.goal = this.week2GoalsList[i].goal;
+          } else {
+            this.week2.goal = this.week2.goal + "-" + this.week2GoalsList[i].goal;
+          }
+        };
+        console.log(this.week2GoalsList);
+        break;
+      case 3:
+        this.week3GoalsList = [];
+        console.log(goals);
+        this.week3.goal = "";
+        for (var i = 0; i < goals.length; i++) {
+          this.week3GoalsList.push(goals[i]);
+          if (this.week3.goal.length == 0) {
+            this.week3.goal = this.week3GoalsList[i].goal;
+          } else {
+            this.week3.goal = this.week3.goal + "-" + this.week3GoalsList[i].goal;
+          }
+        };
+        console.log(this.week3GoalsList);
+        break;
+      case 4:
+        this.week4GoalsList = [];
+        console.log(goals);
+        this.week4.goal = "";
+        for (var i = 0; i < goals.length; i++) {
+          this.week4GoalsList.push(goals[i]);
+          if (this.week4.goal.length == 0) {
+            this.week4.goal = this.week4GoalsList[i].goal;
+          } else {
+            this.week4.goal = this.week4.goal + "-" + this.week4GoalsList[i].goal;
+          }
+        };
+        console.log(this.week4GoalsList);
+        break;
+      default:
+    }
+  }
+
+  onItemDeSelect(goal, number) {
+    switch (number) {
+      case 0:
+        console.log(goal);
+        let index = this.monthlyGoalsList.findIndex(x => x.id == goal.id);
+        this.monthlyGoalsList.splice(index, 1);
+        break;
+      case 1:
+        console.log(goal);
+        let index1 = this.week1GoalsList.findIndex(x => x.id == goal.id);
+        this.week1GoalsList.splice(index1, 1);
+        break;
+      case 2:
+        console.log(goal);
+        let index2 = this.week2GoalsList.findIndex(x => x.id == goal.id);
+        this.week2GoalsList.splice(index2, 1);
+        break;
+      case 3:
+        console.log(goal);
+        let index3 = this.week3GoalsList.findIndex(x => x.id == goal.id);
+        this.week3GoalsList.splice(index3, 1);
+        break;
+      case 4:
+        console.log(goal);
+        let index4 = this.week4GoalsList.findIndex(x => x.id == goal.id);
+        this.week4GoalsList.splice(index4, 1);
+        break;
+      default:
+    }
+  }
+
+  onDeSelectAll(number) {
+    switch (number) {
+      case 0:
+        this.monthlyGoalsList = [];
+        this.monthlyGoal = "";
+        break;
+      case 1:
+        this.week1GoalsList = [];
+        this.week1.goal = "";
+        break;
+      case 2:
+        this.week2GoalsList = [];
+        this.week2.goal = "";
+        break;
+      case 3:
+        this.week3GoalsList = [];
+        this.week3.goal = "";
+        break;
+      case 4:
+        this.week4GoalsList = [];
+        this.week4.goal = "";
+        break;
+      default:
+    }
+  }
 
   render() {
     const labels = ["Weightlifting", "Strength", "Metabolic", "Gymnastic"];
@@ -514,7 +748,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week2));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week3));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week4));
-    periodization.goal = this.goal;
+    periodization.goal = this.monthlyGoal;
     console.log(periodization)
     this.periodizacionService.add(periodization).subscribe(() => {
       console.log("success")

@@ -14,45 +14,45 @@ namespace Corpo.Web.Controllers
     [ApiController]
     public class MonthlyGoalController : ControllerBase
     {
-        private IMonthlyGoalService _MonthlyGoalService;
+        private IMonthlyGoalService _monthlyGoalService;
 
         public MonthlyGoalController(IMonthlyGoalService monthlyGoalService)
         {
-            _MonthlyGoalService = monthlyGoalService;
+            _monthlyGoalService = monthlyGoalService;
         }
 
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] MonthlyGoal monthlyGoal)
         {
-            var response = await _MonthlyGoalService.Add(monthlyGoal);
+            var response = await _monthlyGoalService.Add(monthlyGoal);
             return this.ToActionResult(response);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<MonthlyGoal>> GetById(int id)
         {
-            var response = await _MonthlyGoalService.GetById(id);
+            var response = await _monthlyGoalService.GetById(id);
             return this.ToActionResult(response);
         }
 
         [HttpPut]
         public async Task<ActionResult> Update([FromBody] MonthlyGoal monthlyGoal)
         {
-            var response = await _MonthlyGoalService.Update(monthlyGoal);
+            var response = await _monthlyGoalService.Update(monthlyGoal);
             return this.ToActionResult(response);
         }
 
         [HttpGet]
         public async Task<ActionResult<List<MonthlyGoal>>> GetAll()
         {
-            var response = await _MonthlyGoalService.GetAll();
+            var response = await _monthlyGoalService.GetAll();
             return this.ToActionResult(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var response = await _MonthlyGoalService.Delete(id);
+            var response = await _monthlyGoalService.Delete(id);
             return this.ToActionResult(response);
         }
     }

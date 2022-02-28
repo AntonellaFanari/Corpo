@@ -135,6 +135,9 @@ import { GeneralSettingsComponent } from './components/settings/general-settings
 import { MonthlyGoalCreateComponent } from './components/monthly-goal/monthly-goal-create/monthly-goal-create.component';
 import { MonthlyGoalEditComponent } from './components/monthly-goal/monthly-goal-edit/monthly-goal-edit.component';
 import { MonthlyGoalListComponent } from './components/monthly-goal/monthly-goal-list/monthly-goal-list.component';
+import { WeeklyGoalListComponent } from './components/weekly-goal/weekly-goal-list/weekly-goal-list.component';
+import { WeeklyGoalCreateComponent } from './components/weekly-goal/weekly-goal-create/weekly-goal-create.component';
+import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-edit/weekly-goal-edit.component';
 
 
 @NgModule({
@@ -260,7 +263,10 @@ import { MonthlyGoalListComponent } from './components/monthly-goal/monthly-goal
     WorkoutPeriodizaionDetailComponent,
     MonthlyGoalCreateComponent,
     MonthlyGoalEditComponent,
-    MonthlyGoalListComponent
+    MonthlyGoalListComponent,
+    WeeklyGoalListComponent,
+    WeeklyGoalCreateComponent,
+    WeeklyGoalEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -368,7 +374,10 @@ import { MonthlyGoalListComponent } from './components/monthly-goal/monthly-goal
       { path: 'configuraciones', component: GeneralSettingsComponent, canActivate: [AuthGuard], data: { name: 'ajustes' } },
       { path: 'objetivos-mensuales-list', component: MonthlyGoalListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'objetivo-mensual-crear', component: MonthlyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'objetivo-mensual-editar', component: MonthlyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } }
+      { path: 'objetivo-mensual-editar', component: MonthlyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'objetivos-semanales-list', component: WeeklyGoalListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'objetivo-semanal-crear', component: WeeklyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'objetivo-semanal-editar', component: WeeklyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } }
     ])
   ],
   entryComponents: [

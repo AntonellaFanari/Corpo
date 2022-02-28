@@ -64,6 +64,7 @@ namespace Corpo.Web.ViewModels
                 Name = member.Name,
                 Phone = member.Phone,
                 NamePlan = member.Plan.Name,
+                PlanId = member.PlanId,
                 PlanType = member.Plan.Type,
                 CreditId = member.Credit.Id,
                 Credit = member.Credit.InitialCredit,

@@ -36,3 +36,6 @@ export class PeriodizationWeek {
         this.sunday = week.sunday;
     }
 }
+
+
+

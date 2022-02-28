@@ -14,6 +14,7 @@ namespace Corpo.Web.ViewModels
         public string Phone { get; set; }
         public string NamePlan { get; set; }
         public PlanType PlanType { get; set; }
+        public int PlanId { get; set; }
         public int CreditId { get; set; }
         public int Credit { get; set; }
         public DateTime Expiration { get; set; }

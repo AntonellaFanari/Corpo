@@ -74,6 +74,7 @@ export class FeeCreateComponent implements OnInit {
   ngOnInit() {
     this.memberService.getAll().subscribe(
       result => {
+        console.log(result);
         this.members = result;
       },
       error => console.error(error));

@@ -2,6 +2,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CategoryExercises } from 'src/app/domain/category-exercises';
 import { Exercise } from 'src/app/domain/exercise';
 import { Tag } from 'src/app/domain/tag';
@@ -11,6 +12,8 @@ import { Modality } from 'src/app/domain/wod/modality';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { WodMemberService } from 'src/app/wod/wod-member.service';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
+import { WeeklyGoal } from '../../../../domain/wod/weekly-goal';
+import { WeeklyGoalService } from '../../../../services/weekly-goal.service';
 
 @Component({
   selector: 'app-wod-template-form',
@@ -45,12 +48,15 @@ export class WodTemplateFormComponent implements OnInit {
   kgs: string
   mode: string = "Kgs";
   goal: string;
+  dayGoals: WeeklyGoal[] = [];
+  dayGoalsDropdownSettings: IDropdownSettings = {};
 
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
     private wodMemberService: WodMemberService,
-    private router: Router) {
+    private router: Router,
+    private weeklyGoalService: WeeklyGoalService) {
   }
 
   @Input() wod: Wod;
@@ -63,11 +69,27 @@ export class WodTemplateFormComponent implements OnInit {
   ngOnInit() {
     this.name = this.wod.name;
     this.getAll();
+    this.getWeeklyGoals();
+    this.dayGoalsDropdownSettings = {
+      idField: 'id',
+      textField: 'goal',
+      enableCheckAll: true,
+      selectAllText: "Seleccionar todos",
+      unSelectAllText: "Deseleccionar todos",
+      allowSearchFilter: true,
+      searchPlaceholderText: "Buscar"
+    };
   }
 
   ngOnChanges() {
     /**********THIS FUNCTION WILL TRIGGER WHEN PARENT COMPONENT UPDATES 'someInput'**************/
     //Write your code here  
+  }
+
+  getWeeklyGoals() {
+    this.weeklyGoalService.getAll().subscribe(
+      response => this.dayGoals = response.result,
+      error => console.error(error))
   }
 
   createGuid() {

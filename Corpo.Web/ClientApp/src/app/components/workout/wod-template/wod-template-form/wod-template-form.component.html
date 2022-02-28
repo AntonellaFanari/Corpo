@@ -10,10 +10,15 @@
 
 
   <div class="form-group mt-2">
-    <label class="control-label">Objetivo:</label>
-    <div class="formValidators">
-      <input type="text" class="form-control" [(ngModel)]="wod.goal">
-    </div>
+    <label class="control-label">Asignar Objetivo:</label>
+    <ng-multiselect-dropdown [settings]="dayGoalsDropdownSettings"
+                             [data]="dayGoals"
+                             [placeholder]="'Seleccionar...'"
+                             (onSelect)="onItemSelect($event)"
+                             (onSelectAll)="onSelectAll($event)"
+                             (onDeSelect)="onItemDeSelect($event)"
+                             (onDeSelectAll)="onDeSelectAll()">
+    </ng-multiselect-dropdown>
   </div>
 
   <div class="form-group mt-2">
@@ -119,7 +124,7 @@
               </td>
               <td class="col-2 action-column">
                 <a [routerLink]="" (click)="deleteItem(i,ei)" class="delete-button">
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>
               </td>
             </tr>

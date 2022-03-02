@@ -90,5 +90,23 @@ namespace Corpo.Domain.Services
                 return new DomainResponse(false, ex.Message, "No se pudo modificar el Wod");
             }
         }
+
+        public async Task<DomainResponse> AddRate(int id, int rate)
+        {
+            var wodMember = await _wodMemberRepository.GetById(id);
+            wodMember.Rate = rate;
+            try
+            {
+                await _wodMemberRepository.Update(wodMember);
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo agregar la valorización.");
+            }
+        }
     }
 }

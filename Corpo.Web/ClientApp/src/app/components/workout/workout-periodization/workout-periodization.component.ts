@@ -189,7 +189,8 @@ export class WorkoutPeriodizationComponent implements OnInit {
       selectAllText: "Seleccionar todos",
       unSelectAllText: "Deseleccionar todos",
       allowSearchFilter: true,
-      searchPlaceholderText: "Buscar"
+      searchPlaceholderText: "Buscar",
+      noDataAvailablePlaceholderText: "No hay objetivos cargados"
     };
     this.getWeeklyGoals();
     this.weeklyGoalsDropdownSettings = {
@@ -199,7 +200,8 @@ export class WorkoutPeriodizationComponent implements OnInit {
       selectAllText: "Seleccionar todos",
       unSelectAllText: "Deseleccionar todos",
       allowSearchFilter: true,
-      searchPlaceholderText: "Buscar"
+      searchPlaceholderText: "Buscar",
+      noDataAvailablePlaceholderText: "No hay objetivos cargados"
     };
     //Chart.register(ChartDataLabels);
 

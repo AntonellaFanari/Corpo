@@ -27,11 +27,11 @@ export class GeneralSettingsComponent implements OnInit {
         for (var i = 0; i < this.generalSettings.length; i++) {
           let setting = this.generalSettings[i];
           if (setting.name == "timeLimitCancell") {
-            this.timeLimitCancell = parseInt(setting.value);
+            if (setting.value == null) { this.timeLimitCancell = 0; } else { this.timeLimitCancell = parseInt(setting.value); }
           } if (setting.name == "maxNegative") {
-            this.maxNegative = parseInt(setting.value);
+            if (setting.value == null) { this.maxNegative = 0; } else { this.maxNegative = parseInt(setting.value); }
           } if (setting.name == "firstDayPlan") {
-            this.firstDayPlan = (setting.value == "true");
+            if (setting.value == null) { this.firstDayPlan = false; } else { this.firstDayPlan = (setting.value == "true"); }
           }
         }
       },
@@ -58,6 +58,7 @@ export class GeneralSettingsComponent implements OnInit {
     this.settingsService.update(this.generalSettings).subscribe(
       response => {
         console.log(response);
+        this.customAlertService.displayAlert("Gestión de Configuraciones", ["Configuraciones guardadas."]);
         this.getAll();
       }, error => {
         console.error(error);

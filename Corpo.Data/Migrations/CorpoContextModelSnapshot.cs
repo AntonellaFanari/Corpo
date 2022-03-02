@@ -1218,6 +1218,9 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("WodMember");

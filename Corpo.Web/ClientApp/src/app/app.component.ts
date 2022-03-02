@@ -16,8 +16,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.logueado = this.accountService.isAuthenticated();
-    console.log(this.accountService.getToken());
-    console.log(this.logueado);
+    if (!this.logueado) {
+      this.router.navigate(['/login']);
+    }
     this.user = this.accountService.getLoggedUser();
   }
 

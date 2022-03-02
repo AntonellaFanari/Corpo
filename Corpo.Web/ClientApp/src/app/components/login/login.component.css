@@ -12,8 +12,7 @@
 }
 
 .btn-sign-in {
-  margin-left: 60px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .login-passw-modal {
@@ -24,10 +23,10 @@
   margin-top: 5px;
 }
 
-.login-container {
+/*.login-container {
   width: 300px;
 }
-
+*/
 .modal-title {
   background-color: #40bf0b;
 }

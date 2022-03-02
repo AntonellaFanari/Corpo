@@ -30,9 +30,9 @@ namespace Corpo.Data.Repositories
             return list;
         }
 
-        public List<Role> GetRoles()
+        public Task<List<Role>> GetRoles()
         {
-            return _context.Role.ToList();
+            return _context.Role.ToListAsync();
         }
 
         public List<RoleAccess> GetRoleAccess(int roleId)
@@ -42,14 +42,9 @@ namespace Corpo.Data.Repositories
 
         public void Add(User user)
         {
-            try
-            {
                 _context.User.Add(user);
                 _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-            }      
+             
         }
 
         public User GetById(int id)
@@ -92,6 +87,12 @@ namespace Corpo.Data.Repositories
         {
             var roleId = _context.Role.FirstOrDefault(x => x.Name == role).Id;
             return _context.User.Where(x => x.RoleId == roleId).ToList();
+        }
+
+        public async Task AddRole(Role role)
+        {
+            _context.Role.Add(role);
+            await _context.SaveChangesAsync();
         }
     }
 }

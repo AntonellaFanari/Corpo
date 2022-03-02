@@ -18,14 +18,51 @@ namespace Corpo.Domain.Services
             _settingsRepository = settingsRepository;
         }
 
+        public async Task<DomainResponse> Add(List<GeneralSetting> settings)
+        {
+            try
+            {
+                foreach (var setting in settings)
+                {
+                    await _settingsRepository.Add(setting);
+                }
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudieron guardar las configuraciones.");
+            }
+        }
+
         public async Task<DomainResponse> GetAll()
         {
             var response = await _settingsRepository.GetAll();
-            return new DomainResponse
+            if (response.Count == 0)
             {
-                Success = true,
-                Result = response
-            };
+                List<GeneralSetting> settings = new List<GeneralSetting>();
+                settings.Add(new GeneralSetting() { Name = "timeLimitCancell" });
+                settings.Add(new GeneralSetting() { Name = "maxNegative" });
+                settings.Add(new GeneralSetting() { Name = "firstDayPlan" });
+                await Add(settings);
+                var responseSettings = await _settingsRepository.GetAll();
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = responseSettings
+                };
+            }
+            else
+            {
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = response
+                };
+            }
+
         }
 
         public DomainResponse GetRoleAccess()
@@ -51,7 +88,7 @@ namespace Corpo.Domain.Services
                 foreach (var setting in settings)
                 {
                     await _settingsRepository.Update(setting);
-                };
+                }
                 return new DomainResponse
                 {
                     Success = true

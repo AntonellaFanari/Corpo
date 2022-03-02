@@ -10,7 +10,7 @@ namespace Corpo.Domain.Contracts.Repositories
 {
     public interface IUserRepository
     {
-        List<Role> GetRoles();
+        Task<List<Role>> GetRoles();
         List<RoleAccess> GetRoleAccess(int roleId);
         List<User> GetAll();
         void Add(User user);
@@ -20,5 +20,6 @@ namespace Corpo.Domain.Contracts.Repositories
         List<User> GetAllByNameRole(string role);
         void Update(User user);
         void Delete(int id);
+        Task AddRole(Role role);
     }
 }

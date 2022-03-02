@@ -40,7 +40,7 @@ export class UserFormComponent implements OnInit {
     this.userService.getRoles().
       subscribe(
         result => {
-          this.roles = result;
+          this.roles = result.result;
           console.log(this.roles);
         },
         error => console.error(error)

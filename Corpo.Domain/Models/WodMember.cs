@@ -15,5 +15,6 @@ namespace Corpo.Domain.Models
         public int MemberId { get; set; }
         public DateTime Date { get; set; }
         public string Detail { get; set; }
+        public int Rate { get; set; }
     }
 }

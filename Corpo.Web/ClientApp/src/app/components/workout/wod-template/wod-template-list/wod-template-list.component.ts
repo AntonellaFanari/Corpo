@@ -21,6 +21,7 @@ export class WodTemplateListComponent implements OnInit {
   ngOnInit() {
     this.requestingList = true;
     this.wodTemplateService.getAll().subscribe((data) => {
+      console.log(data.result);
       this.requestingList = false;
       this.wodTemplates = data.result;
     }, e => {

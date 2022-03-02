@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-md navbar-light bg-dark">
     <div class="container-fluid">
       <button *ngIf="logueado" class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed" [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <i class="fas fa-bars login-icon"></i>
       </button>
       <!-- logo -->
       <a class="logo" href="#">
@@ -106,7 +106,7 @@
           </li>
         </ul>
       </div>
-      <a *ngIf="!logueado" class="btn-login" [routerLink]="['/login']"><i class="fa fa-user-circle"></i></a>
+      <i *ngIf="!logueado" class="fa fa-user-circle login-icon" [routerLink]="['/login']"></i>
       <div *ngIf="logueado">
         <div class="btn-group me-3">
           <span class="text-white me-2">Bienvenido {{user.name }}</span>;

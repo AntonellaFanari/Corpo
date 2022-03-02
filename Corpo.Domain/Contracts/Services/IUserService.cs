@@ -11,7 +11,7 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IUserService
     {
-        List<Role> GetRoles();
+        Task<DomainResponse> GetRoles();
         List<User> GetAll();
         DomainResponse Add(UserDto user);
         User GetById(int id);

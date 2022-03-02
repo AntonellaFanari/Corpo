@@ -57,5 +57,12 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+
+        [HttpPost("{id}")]
+        public async Task<ActionResult> AddRate(int id, int rate)
+        {
+            var response = await _wodMemberService.AddRate(id, rate);
+            return this.ToActionResult(response);
+        }
     }
 }

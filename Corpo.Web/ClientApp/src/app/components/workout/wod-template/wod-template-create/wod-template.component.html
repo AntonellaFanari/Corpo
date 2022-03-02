@@ -19,7 +19,7 @@
           <div *ngIf="checkboxToTags.length>0" class="row">
             <div *ngFor="let checkToTag of checkboxToTags" class="col-md-4">
               <input class="checkbox-tags" type="checkbox" [id]="checkToTag.id" [checked]="checkToTag.checked"
-                (change)="checkToTag.checked=!checkToTag.checked">
+                     (change)="checkToTag.checked=!checkToTag.checked">
               <label [for]="checkToTag.id">{{checkToTag.tag}}</label>
             </div>
           </div>
@@ -27,12 +27,23 @@
       </div>
     </div>
   </div>
+  <div class="form-group mt-3">
+    <label class="col-12 control-label">Asignar Objetivo:</label>
+    <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
+                             [data]="weeklyGoals"
+                             [placeholder]="'Seleccionar...'"
+                             (onSelect)="onItemSelect($event)"
+                             (onSelectAll)="onSelectAll($event)"
+                             (onDeSelect)="onItemDeSelect($event)"
+                             (onDeSelectAll)="onDeSelectAll()">
+    </ng-multiselect-dropdown>
+  </div>
   <div class="row">
     <div class="form-group mt-3 col-12">
       <label class="control-label">Ejercicio:</label>
       <div class="formValidators">
         <ng-select class="custom" #select [items]="exercises" [(ngModel)]="selectedExercise" bindLabel="name"
-          bindValue="id" selectOnTab="true" id="select-exercise">
+                   bindValue="id" selectOnTab="true" id="select-exercise">
         </ng-select>
         <p *ngIf="validationError && !selectedExercise">* el campo es requerido.</p>
       </div>
@@ -42,7 +53,7 @@
       <label class="control-label"></label>
       <div class="formValidators">
         <div class="row">
-         
+
           <div class="col-8">
             <fieldset class="radio-group">
               <label>
@@ -72,7 +83,7 @@
     <label class="control-label">Modalidad:</label>
     <div class="formValidators">
       <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"
-        selectOnTab="true">
+                 selectOnTab="true">
       </ng-select>
       <p *ngIf="validationError && !selectedModality">* el campo es requerido.</p>
     </div>
@@ -88,13 +99,13 @@
 
 
   <div class="button-box">
-    <button class="btn btn-secondary mr-2" (click)="addwodGroupModal()">Agregar grupo 3</button>
+    <button class="btn btn-secondary mr-2" (click)="addwodGroupModal()">Agregar grupo</button>
     <button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>
   </div>
 
   <div cdkDropList (cdkDropListDropped)="drop($event)">
     <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i"
-      (click)="setActiveWodGroup(i)" [class.active-group]="i == activeWodGroup" cdkDrag>
+         (click)="setActiveWodGroup(i)" [class.active-group]="i == activeWodGroup" cdkDrag>
       <button class="x bg-danger" (click)="deleteGroup(i)">
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
@@ -109,8 +120,10 @@
             <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
 
               <td class="col-10" [attr.colspan]="exerciseItem.value ? '1' : '2'">
-                {{exerciseItem.exercise.name}} {{((exerciseItem.modality.name != "Repeticiones") ?
-                exerciseItem.modality.name : "")}} {{exerciseItem.units}} {{exerciseItem.modality.unit}}
+                {{exerciseItem.exercise.name}} {{
+((exerciseItem.modality.name != "Repeticiones") ?
+                exerciseItem.modality.name : "")
+                }} {{exerciseItem.units}} {{exerciseItem.modality.unit}}
               </td>
               <td class="col-10" *ngIf="exerciseItem.value">
                 {{exerciseItem.value}} {{exerciseItem.mode}}
@@ -118,7 +131,7 @@
               <td class="col-2 action-column">
 
                 <a [routerLink]="" (click)="deleteItem(i,ei)" class="delete-button">
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>
 
               </td>
@@ -137,15 +150,19 @@
 
     <div class="div-btn-create">
       <button class="btn btn-secondary col-3 col-lg-2 btn-float-left btn-create" type="button"
-        routerLink="/plantillas-wod">Cancelar</button>
+              routerLink="/plantillas-wod">
+        Cancelar
+      </button>
       <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit"
-        (click)="save()">Guardar</button>
+              (click)="save()">
+        Guardar
+      </button>
     </div>
   </div>
 </section>
 
 <button type="button" class="btn btn-primary d-none" id="group-name-modal" data-bs-toggle="modal"
-  data-bs-target="#myModal"></button>
+        data-bs-target="#myModal"></button>
 
 <!-- The Modal -->
 <div class="modal modal-new-group" id="myModal">
@@ -164,7 +181,7 @@
           <label class="control-label">Detalle:</label>
           <div class="formValidators">
             <input type="text" class="form-control" [(ngModel)]="detail"
-              (ngModelChange)="detail = $event.toUpperCase()">
+                   (ngModelChange)="detail = $event.toUpperCase()">
           </div>
         </div>
       </div>
@@ -172,9 +189,13 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="addwodGroup()"
-          *ngIf="!editDetail">Crear</button>
+                *ngIf="!editDetail">
+          Crear
+        </button>
         <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="editwodGroup()"
-          *ngIf="editDetail">Guardar</button>
+                *ngIf="editDetail">
+          Guardar
+        </button>
       </div>
 
     </div>

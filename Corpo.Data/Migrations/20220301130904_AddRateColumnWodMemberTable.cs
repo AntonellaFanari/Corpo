@@ -2,23 +2,23 @@
 
 namespace Corpo.Data.Migrations
 {
-    public partial class AddTotalFieldToPurchaseTable : Migration
+    public partial class AddRateColumnWodMemberTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<decimal>(
-                name: "Total",
-                table: "Purchase",
-                type: "decimal(18,2)",
+            migrationBuilder.AddColumn<int>(
+                name: "Rate",
+                table: "WodMember",
+                type: "int",
                 nullable: false,
-                defaultValue: 0m);
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Total",
-                table: "Purchase");
+                name: "Rate",
+                table: "WodMember");
         }
     }
 }

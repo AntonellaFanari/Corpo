@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Corpo.Web.Controllers
 {
@@ -21,10 +22,10 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getRoles")]
-        public ActionResult<List<Role>> GetRoles()
+        public async Task<ActionResult<List<Role>>> GetRoles()
         {
-            var listRoles = _userService.GetRoles();
-            return Ok(listRoles);
+            var response = await _userService.GetRoles();
+            return this.ToActionResult(response);
         }
 
         [HttpGet("getAll")]

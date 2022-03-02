@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Account } from '../domain/account';
+import { DomainResponse } from '../domain/domain-response';
 import { Role } from '../domain/role';
 import { User } from '../domain/user';
 import { UserView } from '../domain/user-view';
@@ -23,7 +24,7 @@ export class UserService {
   }
 
   public getRoles() {
-    return this.http.get<Role[]>(this.url + 'api/user/getRoles');
+    return this.http.get<DomainResponse<Array<Role>>>(this.url + 'api/user/getRoles');
   }
 
   public getAll() {

@@ -14,5 +14,6 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<List<GeneralSetting>> GetAll();
         Task Update(GeneralSetting setting);
         Task<GeneralSetting> GetByName(string name);
+        Task Add(GeneralSetting setting);
     }
 }

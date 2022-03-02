@@ -30,9 +30,43 @@ namespace Corpo.Domain.Services
             return _userRepository.GetAll();
         }
 
-        public List<Role> GetRoles()
+        public async Task<DomainResponse> GetRoles()
         {
-            return _userRepository.GetRoles();
+            var roles = await _userRepository.GetRoles();
+            //if (roles == null)
+            //{
+            //    List<Role>newRoles = new List<Role>();
+            //    newRoles.Add(new Role() { Name = "Administrador"});
+            //    newRoles.Add(new Role() { Name = "Profesor" });
+            //    newRoles.Add(new Role() { Name = "Marketing" });
+               
+            //    try
+            //    {
+            //        foreach (var role in newRoles)
+            //        {
+            //          await _userRepository.AddRole(role);
+            //        }
+            //        var list = _userRepository.GetRoles();
+            //        return new DomainResponse
+            //        {
+            //            Success = true,
+            //            Result = list
+            //        };
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return new DomainResponse(false, ex.Message, "No se pudieron agregar los roles.");
+            //    }
+            //}
+            //else
+            //{
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = roles
+                };
+            //}
+
         }
 
         public DomainResponse Add(UserDto user)

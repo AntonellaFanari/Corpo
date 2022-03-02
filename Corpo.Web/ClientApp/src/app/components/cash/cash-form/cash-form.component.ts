@@ -109,6 +109,8 @@ export class CashFormComponent implements OnInit {
           } else {
             this.openingView = true;
           }
+        } else {
+          this.openingView = true;
         }
       },
       error => {

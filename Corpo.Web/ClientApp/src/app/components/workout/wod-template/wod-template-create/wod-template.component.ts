@@ -1,6 +1,7 @@
  import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgSelectConfig } from '@ng-select/ng-select';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CategoryExercises } from 'src/app/domain/category-exercises';
 import { Exercise } from 'src/app/domain/exercise';
 import { Tag } from 'src/app/domain/tag';
@@ -9,6 +10,7 @@ import { Modality } from 'src/app/domain/wod/modality';
 import { CustomAlertService } from 'src/app/services/custom-alert.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
+import { WeeklyGoal } from '../../../../domain/wod/weekly-goal';
 import { ModalityService } from '../../../../services/modality.service';
 
 
@@ -38,7 +40,9 @@ export class WodTemplateComponent implements OnInit {
 	editDetail: boolean;
 	kgs: string
 	validationError: boolean;
-	mode: string = "Kgs";
+  mode: string = "Kgs";
+  weeklyGoalsDropdownSettings: IDropdownSettings = {};
+  weeklyGoals: WeeklyGoal[] = [];
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService, private modalityService: ModalityService) { }
@@ -47,6 +51,16 @@ export class WodTemplateComponent implements OnInit {
     this.getAll();
     this.getModalities();
 		//this.wod.addGroup(new WodGroup(this.createGuid()));
+    this.weeklyGoalsDropdownSettings = {
+      idField: 'id',
+      textField: 'goal',
+      enableCheckAll: true,
+      selectAllText: "Seleccionar todos",
+      unSelectAllText: "Deseleccionar todos",
+      allowSearchFilter: true,
+      searchPlaceholderText: "Buscar",
+      noDataAvailablePlaceholderText: "No hay objetivos cargados"
+    };
   }
 
   getModalities() {

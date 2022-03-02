@@ -14,5 +14,6 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> Delete(int id);
         Task<DomainResponse> GetAllWodMember(int id, DateTime from, DateTime to);
         Task<DomainResponse> GetAllWodMemberWeek(int id);
+        Task<DomainResponse> AddRate(int id, int rate);
     }
 }

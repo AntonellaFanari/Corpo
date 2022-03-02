@@ -66,17 +66,22 @@ export class SettingsAccessComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getRoles().subscribe(
-      result => {
-        this.roles = result;
+      response => {
+        this.roles = response.result;
+        this.getRolesAccess();
       },
       error => console.log(error)
     );
 
+    
+  }
+
+  getRolesAccess() {
     this.settingService.getRoleAccess().subscribe(
       result => {
         this.roleAccess = result.result;
         console.log(this.roleAccess);
-        if (this.roleAccess.length != 0) {
+        if (this.roleAccess.length > 0) {
           this.getAccess(this.roleAccess);
         }
       },

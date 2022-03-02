@@ -18,6 +18,12 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
+        public async Task Add(GeneralSetting setting)
+        {
+            _context.GeneralSetting.Add(setting);
+            await _context.SaveChangesAsync();
+        }
+
         public Task<List<GeneralSetting>> GetAll()
         {
             return _context.GeneralSetting.ToListAsync();

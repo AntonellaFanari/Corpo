@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    [Migration("20220208194542_ResetFeeTableAndSaleTable")]
-    partial class ResetFeeTableAndSaleTable
+    [Migration("20220228192945_MigrationInicial")]
+    partial class MigrationInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -197,6 +197,12 @@ namespace Corpo.Data.Migrations
                     b.Property<decimal>("TotalWithdrawal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cash");
@@ -247,6 +253,9 @@ namespace Corpo.Data.Migrations
 
                     b.Property<DateTime>("Expiration")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstDay")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InitialCredit")
                         .HasColumnType("int");
@@ -411,6 +420,24 @@ namespace Corpo.Data.Migrations
                     b.HasIndex("InjuryId");
 
                     b.ToTable("File");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.GeneralSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralSetting");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Income", b =>
@@ -602,6 +629,21 @@ namespace Corpo.Data.Migrations
                     b.ToTable("MonthlyCash");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.MonthlyGoal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MonthlyGoal");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.News", b =>
                 {
                     b.Property<int>("Id")
@@ -676,6 +718,9 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -703,11 +748,17 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Friday")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("M")
                         .HasColumnType("int");
 
                     b.Property<string>("Monday")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PeriodizationId")
+                        .HasColumnType("int");
 
                     b.Property<int>("S")
                         .HasColumnType("int");
@@ -731,6 +782,8 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PeriodizationId");
 
                     b.ToTable("PeriodizationWeek");
                 });
@@ -1015,6 +1068,21 @@ namespace Corpo.Data.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.WeeklyGoal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WeeklyGoal");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Withdrawal", b =>
                 {
                     b.Property<int>("Id")
@@ -1143,6 +1211,9 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Detail")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -1160,6 +1231,9 @@ namespace Corpo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -1388,6 +1462,17 @@ namespace Corpo.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.PeriodizationWeek", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.Periodization", "Periodization")
+                        .WithMany("PeriodizationWeeks")
+                        .HasForeignKey("PeriodizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Periodization");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.PromotionAnotherMember", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Promotion", "Promotion")
@@ -1575,6 +1660,11 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Fee");
 
                     b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.Periodization", b =>
+                {
+                    b.Navigation("PeriodizationWeeks");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Promotion", b =>

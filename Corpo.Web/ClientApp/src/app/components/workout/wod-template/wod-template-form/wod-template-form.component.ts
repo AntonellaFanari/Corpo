@@ -224,6 +224,21 @@ export class WodTemplateFormComponent implements OnInit {
 
   }
 
+  onItemSelect(event) {
+
+  }
+
+  onSelectAll(event) {
+
+  }
+
+  onItemDeSelect(event) {
+
+  }
+
+  onDeSelectAll() {
+  }
+
   createListTags() {
     let tags: Tag[] = [];
     console.log(this.checkboxToTags);

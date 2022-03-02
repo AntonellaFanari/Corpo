@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    [Migration("20220221130553_AddGoalColumnWodTablesAndPeriodizationTables")]
-    partial class AddGoalColumnWodTablesAndPeriodizationTables
+    [Migration("20220301130904_AddRateColumnWodMemberTable")]
+    partial class AddRateColumnWodMemberTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -253,6 +253,9 @@ namespace Corpo.Data.Migrations
 
                     b.Property<DateTime>("Expiration")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstDay")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InitialCredit")
                         .HasColumnType("int");
@@ -624,6 +627,21 @@ namespace Corpo.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MonthlyCash");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.MonthlyGoal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MonthlyGoal");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.News", b =>
@@ -1050,6 +1068,21 @@ namespace Corpo.Data.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.WeeklyGoal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WeeklyGoal");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Withdrawal", b =>
                 {
                     b.Property<int>("Id")
@@ -1186,6 +1219,9 @@ namespace Corpo.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

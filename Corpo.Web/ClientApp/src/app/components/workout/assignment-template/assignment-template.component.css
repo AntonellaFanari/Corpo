@@ -27,11 +27,6 @@ div.mat-tab-body-content {
 }
 
 @media only screen and (max-width: 800px) {
-  .diplay-btn-assignment-wod {
-    display: block;
-  }
 
-  .diplay-calendar-assignment-wod {
-    display: none;
-  }
+
 }

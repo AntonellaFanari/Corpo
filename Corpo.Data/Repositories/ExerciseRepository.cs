@@ -22,8 +22,7 @@ namespace Corpo.Data.Repositories
         public List<Exercise> GetAllExercises()
         {
             var list = _context.Exercise
-                        .Include(x=>x.CategoryExercise)
-                        .Include(x=>x.Tags).ToList();
+                        .Include(x=>x.CategoryExercise).ToList();
             return list;
         }
         public void AddExercise(Exercise newExercise)
@@ -96,7 +95,7 @@ namespace Corpo.Data.Repositories
         //tag
         public List<Tag> GetAllTags()
         {
-            var list = _context.Tag.OrderBy(x=>x.Name).ToList();
+            var list = _context.Tag.OrderBy(x=>x.Name).Include(x => x.Exercises).ToList();
             return list;
         }
         public Tag GetTagName(string name)

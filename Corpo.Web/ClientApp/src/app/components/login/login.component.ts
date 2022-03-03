@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   formLogin: FormGroup;
   sent: boolean = false;
   return: string = '';
+  requestingLogin: boolean;
+  logueado: boolean;
 
   constructor(private formBuilder: FormBuilder, private accountService: AccountService, private customAlertService: CustomAlertService, private router: Router, private route: ActivatedRoute) {
     this.formLogin = this.formBuilder.group({
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   logIn() {
     this.sent = true;
+    this.requestingLogin = true;
     if (this.formLogin.valid) {
       let account = new Account()
       {
@@ -43,9 +46,11 @@ export class LoginComponent implements OnInit {
           this.accountService.setToken(result.token);
           this.accountService.setAuthenticated(true);
           this.accountService.setLoggedUser(result.user);
+          this.logueado = this.accountService.isAuthenticated();
           window.location.href = '/home';
        },
         error => {
+          this.requestingLogin = false;
           console.error(error);
           if (error.status === 400) {
             this.customAlertService.displayAlert("Gestión de Autenticación de Usuarios", error.error.errores);

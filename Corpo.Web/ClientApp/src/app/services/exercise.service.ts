@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { CategoryExercises } from '../domain/category-exercises';
+import { DomainResponse } from '../domain/domain-response';
 import { Exercise } from '../domain/exercise';
 import { Tag } from '../domain/tag';
 
@@ -41,6 +42,10 @@ export class ExerciseService {
   public updateExercise(id: number, exercise: Exercise) {
     console.log(exercise);
     return this.http.put(this.url + 'api/exercise/updateExercise?id=' + id, exercise, httpOptions);
+  }
+
+  public getExerciseByCategoryId(id: number) {
+    return this.http.get<DomainResponse<Array<Exercise>>>(this.url + 'api/exercise/get-by-category?id='+ id)
   }
 
   /*  category*/

@@ -51,7 +51,8 @@ export interface IWod {
 
 export class WodTemplate {
     id: number;
-    name: string;
+  name: string;
+  goal: string;
     wodGroups: wodTemplateGroup[] = [];
 
     constructor(wod: Wod) {

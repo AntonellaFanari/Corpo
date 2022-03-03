@@ -22,6 +22,7 @@
                      (change)="checkToTag.checked=!checkToTag.checked">
               <label [for]="checkToTag.id">{{checkToTag.tag}}</label>
             </div>
+            <div ></div>
           </div>
         </div>
       </div>
@@ -43,7 +44,7 @@
       <label class="control-label">Ejercicio:</label>
       <div class="formValidators">
         <ng-select class="custom" #select [items]="exercises" [(ngModel)]="selectedExercise" bindLabel="name"
-                   bindValue="id" selectOnTab="true" id="select-exercise">
+                   bindValue="id" selectOnTab="true" id="select-exercise" notFoundText="No hay ejercicios">
         </ng-select>
         <p *ngIf="validationError && !selectedExercise">* el campo es requerido.</p>
       </div>
@@ -83,7 +84,7 @@
     <label class="control-label">Modalidad:</label>
     <div class="formValidators">
       <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"
-                 selectOnTab="true">
+                 selectOnTab="true" notFoundText="No hay modalidades">>
       </ng-select>
       <p *ngIf="validationError && !selectedModality">* el campo es requerido.</p>
     </div>

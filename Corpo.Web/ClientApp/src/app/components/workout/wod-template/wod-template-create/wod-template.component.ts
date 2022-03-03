@@ -12,6 +12,7 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
 import { WeeklyGoal } from '../../../../domain/wod/weekly-goal';
 import { ModalityService } from '../../../../services/modality.service';
+import { WeeklyGoalService } from '../../../../services/weekly-goal.service';
 
 
 
@@ -45,12 +46,15 @@ export class WodTemplateComponent implements OnInit {
   weeklyGoals: WeeklyGoal[] = [];
 
   constructor(private exerciseService: ExerciseService,
-    private wodTemplateService: WodTemplateService, private modalityService: ModalityService) { }
+    private wodTemplateService: WodTemplateService,
+    private modalityService: ModalityService,
+    private weeklyGoalService: WeeklyGoalService) { }
 
 	ngOnInit() {
     this.getAll();
     this.getModalities();
 		//this.wod.addGroup(new WodGroup(this.createGuid()));
+    this.getWeeklyGoals();
     this.weeklyGoalsDropdownSettings = {
       idField: 'id',
       textField: 'goal',
@@ -59,16 +63,36 @@ export class WodTemplateComponent implements OnInit {
       unSelectAllText: "Deseleccionar todos",
       allowSearchFilter: true,
       searchPlaceholderText: "Buscar",
-      noDataAvailablePlaceholderText: "No hay objetivos cargados"
+      noDataAvailablePlaceholderText: "No hay objetivos"
     };
   }
+
+  getWeeklyGoals() {
+    this.weeklyGoalService.getAll().subscribe(
+      response => this.weeklyGoals = response.result,
+      error => console.error(error))
+  }
+
+
 
   getModalities() {
     this.modalityService.getAll().subscribe(
       response => this.modalities = response.result)
   }
 
-  selectCategory(category) { }
+  selectCategory(id) {
+    this.exerciseService.getExerciseByCategoryId(id).subscribe(
+      response => {
+        console.log(response.result);
+        this.exercises = response.result;
+        this.exercisesSelect = this.exercises.map(x => ({ label: x.name, value: x.id }));
+      })
+  }
+
+  onItemSelect(event) {}
+  onSelectAll(event) { }
+  onItemDeSelect(event) { }
+  onDeSelectAll() { }
 
 	createGuid() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -142,23 +166,27 @@ export class WodTemplateComponent implements OnInit {
 
 	save() {
 		var wodTemplate = new WodTemplate(this.wod);
-		wodTemplate.name = this.name;
+    wodTemplate.name = this.name;
+/*    wodTemplate.goal = */
 		this.wodTemplateService.add(wodTemplate).subscribe(() => {
 			console.log("success")
 		}, error => {
 			console.log(error)
 		})
-	}
+  }
+
 	getAll() {
 		this.exerciseService.getAll().subscribe(
-			result => {
+      result => {
+        console.log(result);
 				this.exercises = result;
 				this.exercisesSelect = this.exercises.map(x => ({ label: x.name, value: x.id }));
 			},
 			error => console.error(error)
 		)
 		this.exerciseService.getAllTags().subscribe(
-			result => {
+      result => {
+        console.log(result);
 				this.tags = result;
 				for (let i = 0; i < this.tags.length; i++) {
 					let tagCheck: { tag: string, checked: boolean, id: number } = { tag: '', checked: false, id: 0 };

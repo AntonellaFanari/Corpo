@@ -1,5 +1,5 @@
 <section class="wrapper row justify-content-center aling-items-center">
-  <div id="login-page" class="col-12 col-xl-6 col-lg-4 col-sm-6 col-md-6 col-xs-12 text-center">
+  <div id="login-page" class="col-12 col-xl-6 col-lg-4 col-sm-6 col-md-6 col-xs-12 text-center"  *ngIf="!requestingLogin">
     <form class="container login-container" [formGroup]="formLogin">
       <div class="form-login">
         <h2 class="form-login-heading">Iniciar Sesión</h2>
@@ -25,17 +25,16 @@
             <button class="btn btn-success btn-sign-in" type="submit" (click)="logIn()">INICIAR SESIÓN</button>
           </div>
         </div>
-        <hr>
-        <div class="registration">
-          ¿Aún no tienes una cuenta?<br />
-          <a class="" [routerLink]="['/member-create']">
-            Registrarse
-          </a>
-        </div>
       </div>
     </form>
   </div>
+  <div class="w-100 text-center" *ngIf="requestingLogin">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </section>
+
 <!-- modal -->
 <div class="container">
   <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->

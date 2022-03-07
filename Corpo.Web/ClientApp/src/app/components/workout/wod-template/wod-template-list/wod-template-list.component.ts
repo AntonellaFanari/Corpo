@@ -47,6 +47,7 @@ export class WodTemplateListComponent implements OnInit {
   getWod(wodTemplate: wodTemplateResponse): Wod {
     var wod = new Wod();
     wod.id = wodTemplate.id;
+    wod.goal = wodTemplate.goal;
     var indexes = wodTemplate.wodGroups.map(x => x.groupIndex);
     indexes = indexes.filter((x, i, a) => a.indexOf(x) == i)
     wod.name = wodTemplate.name;

@@ -8,6 +8,7 @@ import { Tag } from '../../../domain/tag';
 import { ExerciseItem, Wod, WodGroup, WodTemplate } from '../../../domain/wod';
 import { Modality } from '../../../domain/wod/modality';
 import { ExerciseService } from '../../../services/exercise.service';
+import { ModalityService } from '../../../services/modality.service';
 import { WodTemplateService } from '../../../wod/wod-template.service';
 
 @Component({
@@ -25,12 +26,7 @@ export class AssignmentTemplateFormComponent implements OnInit {
   checkboxToTags = [];
   categories: CategoryExercises[] = [];
   sendForm: boolean = false;
-  modalities: Modality[] = [
-    { name: "AMRAP", id: 1, unit: "minutos" },
-    { name: "Tabata", id: 2, unit: "minutos" },
-    { name: "EMOM", id: 3, unit: "minutos" },
-    { name: "Tiempo", id: 4, unit: "minutos" },
-    { name: "Repeticiones", id: 5, unit: "repeticiones" }]
+  modalities: Modality[] = []
 
   activeWodGroup: number = 0;
   selectedExercise: any;
@@ -44,7 +40,8 @@ export class AssignmentTemplateFormComponent implements OnInit {
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
-    private router: Router) {
+    private router: Router,
+    private modalityService: ModalityService) {
   }
 
   @Input() wod: Wod;
@@ -55,12 +52,24 @@ export class AssignmentTemplateFormComponent implements OnInit {
   ngOnInit() {
     this.name = this.wod.name;
     this.getAll();
+    this.getAllModalities();
   }
 
   ngOnChanges() {
     /**********THIS FUNCTION WILL TRIGGER WHEN PARENT COMPONENT UPDATES 'someInput'**************/
     //Write your code here  
   }
+
+  getAllModalities() {
+    this.modalityService.getAll().subscribe(
+      response => {
+        console.log(response);
+        this.modalities = response.result
+      },
+      error => console.error(error)
+    )
+  }
+
 
   createGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

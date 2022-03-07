@@ -19,7 +19,7 @@ import { AssignmentCalendarComponent } from '../assignment-calendar/assignment-c
 })
 export class AssignmentTemplateComponent implements OnInit {
 
-  @ViewChild(AssignmentCalendarComponent, { static: true }) calendar: AssignmentCalendarComponent;
+  @ViewChild(AssignmentCalendarComponent, { static: false }) calendar: AssignmentCalendarComponent;
   @ViewChild(MemberViewComponent, { static: true }) informationMember: MemberViewComponent;
   wodTemplates: WodTemplate[] = [];
   filterName: string = "";
@@ -33,7 +33,6 @@ export class AssignmentTemplateComponent implements OnInit {
   periodization: Periodization;
   requestingPeriodization: boolean;
   diplayMedicalHistory: boolean = false;
-  diplayCalendarAssignmentWod: boolean;
 
   constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
     private memberService: MemberService,
@@ -69,10 +68,6 @@ export class AssignmentTemplateComponent implements OnInit {
     })
 
     console.log("length: ", this.newWods.length)
-  }
-
-  viewBtnAssignmentWod() {
-    this.diplayCalendarAssignmentWod = true;
   }
 
   getMember() {
@@ -116,6 +111,7 @@ export class AssignmentTemplateComponent implements OnInit {
     var indexes = wodTemplate.wodGroups.map(x => x.groupIndex);
     indexes = indexes.filter((x, i, a) => a.indexOf(x) == i)
     wod.name = wodTemplate.name;
+    wod.goal = wodTemplate.goal;
 
     indexes.forEach(i => {
       var wodGroup = new WodGroup();
@@ -124,7 +120,9 @@ export class AssignmentTemplateComponent implements OnInit {
 
           exercise: e.exercise,
           modality: e.modality,
-          units: e.units
+          units: e.units,
+          mode: e.mode,
+          value: e.value
         }
       });
       wodGroup.exercises = exercises;

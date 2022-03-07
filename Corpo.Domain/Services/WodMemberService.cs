@@ -73,7 +73,6 @@ namespace Corpo.Domain.Services
             try
             {
                 var wodMemberQuery = await _wodMemberRepository.GetById(wodMember.Id);
-                wodMemberQuery.Name = wodMember.Name;
                 wodMemberQuery.Detail = wodMember.Detail;
                 wodMemberQuery.Date = wodMember.Date;
                 wodMemberQuery.MemberId = wodMember.MemberId;

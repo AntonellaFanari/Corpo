@@ -11,9 +11,11 @@ export class WodDetailComponent implements OnInit {
 
   @Input() wod: Wod;
   @Input() date: string;
+  goalsList = [];
   constructor() { }
 
   ngOnInit() {
+    this.goalsList = this.wod.goal.split("-");
   }
 
 }

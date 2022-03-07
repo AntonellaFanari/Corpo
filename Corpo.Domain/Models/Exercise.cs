@@ -13,6 +13,6 @@ namespace Corpo.Domain.Models
         public virtual CategoryExercise CategoryExercise { get; set; }
         public int CategoryExerciseId { get; set; }
         public string Video { get; set; }
-        public List<Tag> Tags { get; set; }
+        public virtual List<Tag> Tags { get; set; }
     }
 }

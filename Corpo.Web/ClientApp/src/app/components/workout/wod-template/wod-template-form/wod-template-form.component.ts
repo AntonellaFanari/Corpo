@@ -13,6 +13,7 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 import { WodMemberService } from 'src/app/wod/wod-member.service';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
 import { WeeklyGoal } from '../../../../domain/wod/weekly-goal';
+import { ModalityService } from '../../../../services/modality.service';
 import { WeeklyGoalService } from '../../../../services/weekly-goal.service';
 
 @Component({
@@ -30,12 +31,7 @@ export class WodTemplateFormComponent implements OnInit {
   checkboxToTags = [];
   categories: CategoryExercises[] = [];
   sendForm: boolean = false;
-  modalities: Modality[] = [
-    { name: "AMRAP", id: 1, unit: "minutos" },
-    { name: "Tabata", id: 2, unit: "minutos" },
-    { name: "EMOM", id: 3, unit: "minutos" },
-    { name: "Tiempo", id: 4, unit: "minutos" },
-    { name: "Repeticiones", id: 5, unit: "repeticiones" }]
+  modalities: Modality[] = []
 
   activeWodGroup: number = 0;
   selectedExercise: any;
@@ -45,18 +41,21 @@ export class WodTemplateFormComponent implements OnInit {
   detail: string;
   editDetail: boolean;
   saved: boolean;
-  kgs: string
-  mode: string = "Kgs";
+  value: number
+  mode: string = "None";
   goal: string;
-  dayGoals: WeeklyGoal[] = [];
-  dayGoalsDropdownSettings: IDropdownSettings = {};
+  weeklyGoals: WeeklyGoal[] = [];
+  weeklyGoalsDropdownSettings: IDropdownSettings = {};
+  weeklyGoalsList: WeeklyGoal[] = [];
+  selectedWeeklyGoals = [];
 
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
     private wodMemberService: WodMemberService,
     private router: Router,
-    private weeklyGoalService: WeeklyGoalService) {
+    private weeklyGoalService: WeeklyGoalService,
+    private modalityService: ModalityService) {
   }
 
   @Input() wod: Wod;
@@ -67,18 +66,15 @@ export class WodTemplateFormComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log(this.wod);
     this.name = this.wod.name;
+    this.goal = this.wod.goal;
+     
+    console.log(this.weeklyGoalsList);
     this.getAll();
     this.getWeeklyGoals();
-    this.dayGoalsDropdownSettings = {
-      idField: 'id',
-      textField: 'goal',
-      enableCheckAll: true,
-      selectAllText: "Seleccionar todos",
-      unSelectAllText: "Deseleccionar todos",
-      allowSearchFilter: true,
-      searchPlaceholderText: "Buscar"
-    };
+    this.getAllModalities();
+
   }
 
   ngOnChanges() {
@@ -86,9 +82,41 @@ export class WodTemplateFormComponent implements OnInit {
     //Write your code here  
   }
 
+  getAllModalities() {
+    this.modalityService.getAll().subscribe(
+      response => {
+        console.log(response);
+        this.modalities = response.result
+      },
+      error => console.error(error)
+    )
+  }
+
   getWeeklyGoals() {
     this.weeklyGoalService.getAll().subscribe(
-      response => this.dayGoals = response.result,
+      response => {
+        this.weeklyGoals = response.result;
+        let goalsList = this.wod.goal.split("-");
+        for (var i = 0; i < goalsList.length; i++) {
+          let goal = this.weeklyGoals.find(x => x.goal == goalsList[i]);
+          if (goal) {
+            this.weeklyGoalsList.push(goal);
+            this.selectedWeeklyGoals = this.weeklyGoalsList;
+          }
+          console.log(this.weeklyGoalsList);
+        }
+
+        this.weeklyGoalsDropdownSettings = {
+          idField: 'id',
+          textField: 'goal',
+          enableCheckAll: true,
+          selectAllText: "Seleccionar todos",
+          unSelectAllText: "Deseleccionar todos",
+          allowSearchFilter: true,
+          closeDropDownOnSelection: true,
+          searchPlaceholderText: "Buscar"
+        };
+      },
       error => console.error(error))
   }
 
@@ -110,14 +138,15 @@ export class WodTemplateFormComponent implements OnInit {
     exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
     exerciseItem.units = this.units;
     exerciseItem.mode = this.mode;
-    exerciseItem.value = this.kgs;
+    exerciseItem.value = this.value;
 
     this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
 
     this.selectedModality = null;
     this.selectedExercise = "";
     this.units = null;
-    this.kgs = "";
+    this.mode = "None";
+    this.value = 0;
   }
 
   changeValue() {
@@ -181,10 +210,13 @@ export class WodTemplateFormComponent implements OnInit {
           groupIndex: g.groupIndex,
           exerciseId: e.exercise.id,
           modalityId: e.modality.id,
-          units: e.units
+          units: e.units,
+          mode: e.mode,
+          value: e.value
         })
       })
     })
+    wodMember.goal = this.goal;
     wodMember.date = this.date
     wodMember.memberId = this.memberId;
     return wodMember;
@@ -224,19 +256,43 @@ export class WodTemplateFormComponent implements OnInit {
 
   }
 
-  onItemSelect(event) {
-
+  onItemSelect(goal) {
+    this.weeklyGoalsList.push(goal);
+    this.getGoal();
   }
 
-  onSelectAll(event) {
-
+  onSelectAll(goals) {
+    this.weeklyGoalsList = [];
+    this.goal = "";
+    for (var i = 0; i < goals.length; i++) {
+      this.weeklyGoalsList.push(goals[i].goal);
+    };
+    this.getGoal();
+    console.log(this.weeklyGoalsList);
   }
 
-  onItemDeSelect(event) {
+  onItemDeSelect(goal) {
+    let index1 = this.weeklyGoalsList.findIndex(x => x.id == goal.id);
+    this.weeklyGoalsList.splice(index1, 1);
+    this.getGoal();
 
   }
 
   onDeSelectAll() {
+    this.weeklyGoalsList = [];
+    this.getGoal();
+  }
+
+  getGoal() {
+    this.goal = "";
+    for (var i = 0; i < this.weeklyGoalsList.length; i++) {
+      if (i == 0) {
+        this.goal = this.weeklyGoalsList[i].goal;
+      } else {
+        this.goal = this.goal + "-" + this.weeklyGoalsList[i].goal;
+      }
+      this.wod.goal = this.goal;
+    }
   }
 
   createListTags() {

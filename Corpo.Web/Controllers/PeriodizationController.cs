@@ -12,7 +12,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PeriodizationController : ControllerBase
+    public class PeriodizationController : CorpoBaseController
     {
         private IPeriodizationService _periodizationService;
 
@@ -39,6 +39,14 @@ namespace Corpo.Web.Controllers
         public async Task<ActionResult<Periodization>> GetValidByMemberId(int memberId)
         {
             var response = await _periodizationService.GetValidByMemberId(memberId);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Periodization>> GetValidByMemberId()
+        {
+            var user = GetUser();
+            var response = await _periodizationService.GetValidByMemberId(user.Id);
             return this.ToActionResult(response);
         }
     }

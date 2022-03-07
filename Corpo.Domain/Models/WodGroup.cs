@@ -16,6 +16,8 @@ namespace Corpo.Domain.Models
         public string Detail { get; set; }
         public string Units { get; set; }
         public string GroupIndex { get; set; }
+        public string Mode { get; set; }
+        public decimal? Value { get; set; }
         public virtual WodTemplate WodTemplate { get; set; }
         public int WodTemplateId { get; set; }
 

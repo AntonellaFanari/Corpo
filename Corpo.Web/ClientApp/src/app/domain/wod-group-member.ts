@@ -5,4 +5,6 @@ export class WodGroupMember {
   detail: string;
   units: string;
   groupIndex: number;
+  mode?: string;
+  value?: number
 }

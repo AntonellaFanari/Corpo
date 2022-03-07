@@ -6,5 +6,6 @@ export class WodMember {
   date: string;
   wodGroupsMember: WodGroupMember[]=[];
   memberId: number;
-  detail: string
+  detail: string;
+  goal?: string
 }

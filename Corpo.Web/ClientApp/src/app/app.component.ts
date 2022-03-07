@@ -23,10 +23,9 @@ export class AppComponent {
   }
 
   signOff() {
-    this.accountService.setAuthenticated(false);
     localStorage.clear();
+    this.accountService.setAuthenticated(false);
     this.ngOnInit();
-    this.router.navigate(['/login']);
   }
    
 }

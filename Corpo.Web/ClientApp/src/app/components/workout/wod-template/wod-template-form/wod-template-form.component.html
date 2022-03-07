@@ -11,14 +11,26 @@
 
   <div class="form-group mt-2">
     <label class="control-label">Asignar Objetivo:</label>
-    <ng-multiselect-dropdown [settings]="dayGoalsDropdownSettings"
-                             [data]="dayGoals"
+    <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
+                             [data]="weeklyGoals"
                              [placeholder]="'Seleccionar...'"
+                             [(ngModel)]="selectedWeeklyGoals"
                              (onSelect)="onItemSelect($event)"
                              (onSelectAll)="onSelectAll($event)"
                              (onDeSelect)="onItemDeSelect($event)"
                              (onDeSelectAll)="onDeSelectAll()">
     </ng-multiselect-dropdown>
+  </div>
+  <div class="form-group mt-3 mb-3">
+    <label class="control-label">Objetivos:</label>
+    <div class="formValidators">
+      <ul>
+        <li *ngFor="let weeklyGoal of weeklyGoalsList">{{weeklyGoal.goal}}</li>
+      </ul>
+    </div>
+    <div class="formValidators" *ngIf="weeklyGoalsList.length == 0">
+      <strong>No se asignaron objetivos</strong>
+    </div>
   </div>
 
   <div class="form-group mt-2">
@@ -49,10 +61,14 @@
               <input type="radio" class="radio-mode" name="numero" value="RPEs" [(ngModel)]="mode" class="cb-label">
               RPEs
             </label>
+            <label>
+              <input type="radio" class="radio-mode" name="numero" value="None" [(ngModel)]="mode" class="cb-label">
+              Ninguno
+            </label>
           </fieldset>
         </div>
         <div class="col-4">
-          <input type="text" class="form-control" [(ngModel)]="kgs">
+          <input type="text" class="form-control" [(ngModel)]="value">
         </div>
       </div>
 
@@ -83,7 +99,7 @@
 
   <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="wod">
     <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i"
-      (click)="setActiveWodGroup(i)" [class.active-group]="i == activeWodGroup" cdkDrag>
+         (click)="setActiveWodGroup(i)" [class.active-group]="i == activeWodGroup" cdkDrag>
       <button class="x bg-danger" (click)="deleteGroup(i)">
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
@@ -104,8 +120,8 @@
               </td>
               <td>
                 <span contenteditable="true" (keyup)="changeValue(id, 'city', $event)"
-                  (blur)="updateUnits(i, ei, $event)" class="exercise-units" contenteditable
-                  (mousedown)="$event.stopPropagation()">
+                      (blur)="updateUnits(i, ei, $event)" class="exercise-units" contenteditable
+                      (mousedown)="$event.stopPropagation()">
                   {{exerciseItem.units}}
                 </span>
 
@@ -136,9 +152,13 @@
 
     <div class="div-btn-create">
       <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button"
-        (click)="goBack()">Cancelar</button>
+              (click)="goBack()">
+        Cancelar
+      </button>
       <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit"
-        (click)="save()">Guardar</button>
+              (click)="save()">
+        Guardar
+      </button>
     </div>
   </div>
 

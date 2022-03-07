@@ -89,13 +89,9 @@
           Cancelar
         </button>
 
-        <!--<button class="diplay-btn-assignment-wod btn btn-success w-100 mb-3" type="button" (click)="viewBtnAssignmentWod()">
-          Asignación WOD
-        </button>-->
 
-        <div class="diplay-calendar-assignment-wod">
-          <app-assignment-calendar [class.d-none]="newWods.length > 0"></app-assignment-calendar>
-        </div>
+        <app-assignment-calendar [class.d-none]="newWods.length > 0"></app-assignment-calendar>
+
       </div>
 
     </div>

@@ -5,7 +5,7 @@
   <label class="label-goal">Objetivo: </label>
   <div class="formValidators">
     <ul>
-      <li *ngFor="let goal of goalsList">{{goal}}</li>
+      <li *ngFor="let goal of getGoals(wod.goal)">{{goal}}</li>
     </ul>
   </div>
   <div class="formValidators" *ngIf="goalsList.length == 0">

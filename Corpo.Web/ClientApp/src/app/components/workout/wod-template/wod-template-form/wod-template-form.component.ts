@@ -334,5 +334,20 @@ export class WodTemplateFormComponent implements OnInit {
   updateUnits(groupIndex, exerciseIndex, event) {
     this.wod.wodGroups[groupIndex].exercises[exerciseIndex].units = event.target.innerHTML;
   }
+
+  updateValue(groupIndex, exerciseIndex, event) {
+    this.wod.wodGroups[groupIndex].exercises[exerciseIndex].value = parseInt(event.target.innerHTML);
+  }
+
+
+  increaseValue(groupIndex, exerciseIndex) {
+    var value = (this.wod.wodGroups[groupIndex].exercises[exerciseIndex].value - 1);
+    this.wod.wodGroups[groupIndex].exercises[exerciseIndex].value = (value > 0) ? value : 0
+  }
+
+  dencreaseValue(groupIndex, exerciseIndex) {
+    this.wod.wodGroups[groupIndex].exercises[exerciseIndex].value = (this.wod.wodGroups[groupIndex].exercises[exerciseIndex].value + 1)
+  }
+  
 }
 

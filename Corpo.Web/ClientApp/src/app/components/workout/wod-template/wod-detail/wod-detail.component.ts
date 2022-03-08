@@ -17,5 +17,9 @@ export class WodDetailComponent implements OnInit {
   ngOnInit() {
     this.goalsList = this.wod.goal.split("-");
   }
+  
+  getGoals(goal){
+    return goal.split('-');
+  }
 
 }

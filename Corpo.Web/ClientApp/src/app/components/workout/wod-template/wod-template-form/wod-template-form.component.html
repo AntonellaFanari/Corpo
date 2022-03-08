@@ -118,13 +118,8 @@
                 </div>
 
               </td>
-              <td>
-                <span contenteditable="true" (keyup)="changeValue(id, 'city', $event)"
-                      (blur)="updateUnits(i, ei, $event)" class="exercise-units" contenteditable
-                      (mousedown)="$event.stopPropagation()">
+              <td (blur)="updateUnits(i, ei, $event)" contenteditable="true" (mousedown)="$event.stopPropagation()">
                   {{exerciseItem.units}}
-                </span>
-
               </td>
               <td class="exercise-units">
 
@@ -135,8 +130,24 @@
               <td class="col-10" [attr.colspan]="exerciseItem.value ? '1' : '2'">
                 {{exerciseItem.exercise.name}}
               </td>
+              <td class="exercise-units" *ngIf="exerciseItem.value">
+                <div class="arrow-button" (click)="increaseValue(i, ei)">
+                  <div class="down"> </div>
+                </div>
+
+              </td>
+              <td class="" *ngIf="exerciseItem.value"  (blur)="updateValue(i, ei, $event)" contenteditable="true"
+              (mousedown)="$event.stopPropagation()">
+                {{exerciseItem.value}} 
+              </td>
+              <td class="exercise-units" *ngIf="exerciseItem.value">
+
+                <div class="arrow-button" (click)="dencreaseValue(i, ei)">
+                  <div class="up"> </div>
+                </div>
+              </td>
               <td class="col-10" *ngIf="exerciseItem.value">
-                {{exerciseItem.value}} {{exerciseItem.mode}}
+                {{exerciseItem.mode}} 
               </td>
               <td class="col-2 action-column">
                 <a [routerLink]="" (click)="deleteItem(i,ei)" class="delete-button">

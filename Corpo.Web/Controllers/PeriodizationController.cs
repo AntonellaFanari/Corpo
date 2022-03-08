@@ -36,17 +36,19 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Periodization>> GetValidByMemberId(int memberId)
+        public async Task<ActionResult<Periodization>> GetValidByMemberId(int? memberId)
         {
-            var response = await _periodizationService.GetValidByMemberId(memberId);
-            return this.ToActionResult(response);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<Periodization>> GetValidByMemberId()
-        {
-            var user = GetUser();
-            var response = await _periodizationService.GetValidByMemberId(user.Id);
+            int userId = 0;
+            if (memberId == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = memberId.Value;
+            }
+            var response = await _periodizationService.GetValidByMemberId(userId);
             return this.ToActionResult(response);
         }
     }

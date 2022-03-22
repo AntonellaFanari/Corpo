@@ -61,6 +61,9 @@ export class WodTemplateFormComponent implements OnInit {
   @Input() wod: Wod;
   @Input() memberId: number;
   @Input() date: string;
+  @Input() weekNumber: number;
+  @Input() wodNumber: number;
+  @Input() periodizationId: number;
   @Output() goBackEvent = new EventEmitter();
   @Output() saveEvent = new EventEmitter();
 
@@ -217,8 +220,11 @@ export class WodTemplateFormComponent implements OnInit {
       })
     })
     wodMember.goal = this.goal;
-    wodMember.date = this.date
+    wodMember.periodizationId = this.periodizationId;
+    wodMember.weekNumber = this.weekNumber;
+    wodMember.wodNumber = this.wodNumber;
     wodMember.memberId = this.memberId;
+    wodMember.attended = "false";
     return wodMember;
   }
 
@@ -265,7 +271,7 @@ export class WodTemplateFormComponent implements OnInit {
     this.weeklyGoalsList = [];
     this.goal = "";
     for (var i = 0; i < goals.length; i++) {
-      this.weeklyGoalsList.push(goals[i].goal);
+      this.weeklyGoalsList.push(goals[i]);
     };
     this.getGoal();
     console.log(this.weeklyGoalsList);

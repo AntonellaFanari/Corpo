@@ -20,6 +20,7 @@ export class DailyCashComponent implements OnInit {
   totalOutflows = 0;
   totalWithdrawals = 0;
   totalEndingBalance = 0;
+  requestingList: boolean;
 
   constructor(private cashService: CashService, private dp: DatePipe, private reportService: ReportService) {
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
@@ -31,12 +32,14 @@ export class DailyCashComponent implements OnInit {
 
   ngOnInit() {
     this.getAllCashCurrentMonth();
+    this.requestingList = true;
   }
 
   getAllCashCurrentMonth() {
     this.reportService.getCashCurrentMonth().subscribe(
       result => {
         console.log(result);
+        this.requestingList = false;
         this.cashs = result.result;
         for (var i = 0; i < this.cashs.length; i++) {
           this.cashs[i].opening = this.cashs[i].opening.substr(5, 2) + " de " + this.getMonth(this.cashs[i].opening);
@@ -50,7 +53,7 @@ export class DailyCashComponent implements OnInit {
         
         }
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

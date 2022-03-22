@@ -40,6 +40,7 @@ export class AttendanceComponent implements OnInit {
   maxNegatives: number;
   requestingList: boolean;
 
+
   constructor(private attendanceService: AttendanceService, private memberService: MemberService,
     private customAlertService: CustomAlertService, private creditService: CreditService, private shiftService: ShiftService,
     private dp: DatePipe, private route: ActivatedRoute, private settingsService: SettingsService) {
@@ -187,14 +188,17 @@ export class AttendanceComponent implements OnInit {
       this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio superó la cantidad de negativos permitidos."]);
     } if (this.credit.firstDay == "true" || this.credit.negative < this.maxNegatives) {
       let attendance = this.createAttendance();
+      this.requestingList = true;
       this.attendanceService.add(attendance).subscribe(
         result => {
           this.getAll(this.shiftId);
           this.viewSelectAddMember = false;
           this.viewBtnAddMember = true;
+          this.requestingList = false;
           this.getAllShifts.emit();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           if (error.status === 400) {
             this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
@@ -215,11 +219,14 @@ export class AttendanceComponent implements OnInit {
     let creditId = this.members.find(x => x.id == memberId).creditId;
     this.getCreditMember(creditId);
     this.customAlertService.displayAlert("Gestión de Asistencias", ["¿Está seguro que desea cancelar la reserva del turno?"], () => {
+      this.requestingList = true;
       this.attendanceService.cancelReservation(id, this.credit).subscribe(
         result => {
+          this.requestingList = false;
           this.getAll(this.shiftId);
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar cancelar la reserva del turno."]);
         })

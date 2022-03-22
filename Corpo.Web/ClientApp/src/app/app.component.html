@@ -96,7 +96,7 @@
       </div>
       <i *ngIf="!logueado" class="fa fa-user-circle login-icon" [routerLink]="['/login']"></i>
       <div *ngIf="logueado">
-        <!--<div class="btn-group me-3">
+        <div class="btn-group me-3">
           <span class="text-white me-2">Bienvenido {{user.name }}</span>
           <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button"><i class="fa fa-user"></i></a>
           <ul class="dropdown-menu width-dropdown-account">
@@ -105,8 +105,8 @@
             <hr />
             <li><a (click)="signOff()"><span class="ms-2">Cerrar Sesión</span><i class="fa fa-sign-out ms-2 me-3"></i></a></li>
           </ul>
-        </div>-->
-        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+        </div>
+        <!--<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button">
@@ -120,7 +120,7 @@
               </ul>
             </li>
           </ul>
-        </div>
+        </div>-->
       </div>
     </div>
   </nav>

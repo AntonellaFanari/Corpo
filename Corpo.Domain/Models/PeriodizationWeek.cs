@@ -22,5 +22,6 @@ namespace Corpo.Domain.Models
         public string Goal { get; set; }
         public Periodization Periodization { get; set; }
         public int PeriodizationId { get; set; }
+        public string Planned { get; set; }
     }
 }

@@ -31,6 +31,7 @@ export class AttendanceShiftsListComponent implements OnInit {
 
 
   getAll() {
+    this.requestingList = true;
     this.shifts = [];
     this.shiftService.getAll(this.from, this.to, 0).subscribe(
       result => {

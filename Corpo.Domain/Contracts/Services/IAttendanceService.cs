@@ -16,6 +16,7 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> UpdateAttended(int id, List<Attendance> attendancesRegister);
         DomainResponse GetByIdMemberByMonth(int id, int month);
         Task<DomainResponse> GetAllReservationsDetail(int id);
+        //Task<DomainResponse> GetWeeklyAttendanceByMemberId(int memberId);
 
 
     }

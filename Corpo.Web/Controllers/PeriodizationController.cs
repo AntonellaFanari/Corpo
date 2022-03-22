@@ -51,5 +51,29 @@ namespace Corpo.Web.Controllers
             var response = await _periodizationService.GetValidByMemberId(userId);
             return this.ToActionResult(response);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Periodization>> GetById(int id)
+        {
+            var response = await _periodizationService.GetById(id);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("by-year")]
+        public async Task<ActionResult<Periodization>> GetByYear(int year, int? memberId)
+        {
+            int userId = 0;
+            if (memberId == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = memberId.Value;
+            }
+            var response = await _periodizationService.GetByYear(year, userId);
+            return this.ToActionResult(response);
+        }
     }
 }

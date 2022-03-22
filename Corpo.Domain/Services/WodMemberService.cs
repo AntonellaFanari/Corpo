@@ -12,10 +12,12 @@ namespace Corpo.Domain.Services
     public class WodMemberService: IWodMemberService
     {
         private IWodMemberRepository _wodMemberRepository;
+        private IPeriodizationRepository _periodizationRepository;
 
-        public WodMemberService(IWodMemberRepository wodMemberRepository)
+        public WodMemberService(IWodMemberRepository wodMemberRepository, IPeriodizationRepository periodizationRepository)
         {
             _wodMemberRepository = wodMemberRepository;
+            _periodizationRepository = periodizationRepository;
         }
 
         public async Task<DomainResponse> Add(WodMember wodMember)
@@ -23,6 +25,13 @@ namespace Corpo.Domain.Services
             try
             {
                 var id = await _wodMemberRepository.Add(wodMember);
+                var wodsNumber = await _wodMemberRepository.GetByPeriodizationIdByWeekNumber(wodMember.PeriodizationId, wodMember.WeekNumber);
+                var periodization = await _periodizationRepository.GetById(wodMember.PeriodizationId);
+                if (wodsNumber == periodization.Trainings)
+                {
+                    periodization.PeriodizationWeeks.FirstOrDefault(x => x.WeekNumber == wodMember.WeekNumber).Planned = "true";
+                    await _periodizationRepository.Update(periodization);
+                }
                 return new DomainResponse
                 {
                     Success = true,
@@ -74,7 +83,6 @@ namespace Corpo.Domain.Services
             {
                 var wodMemberQuery = await _wodMemberRepository.GetById(wodMember.Id);
                 wodMemberQuery.Detail = wodMember.Detail;
-                wodMemberQuery.Date = wodMember.Date;
                 wodMemberQuery.MemberId = wodMember.MemberId;
                 wodMemberQuery.WodGroupsMember = wodMember.WodGroupsMember;
                 await _wodMemberRepository.Update(wodMemberQuery);
@@ -94,6 +102,7 @@ namespace Corpo.Domain.Services
         {
             var wodMember = await _wodMemberRepository.GetById(id);
             wodMember.Rate = rate;
+            wodMember.Attended = "true";
             try
             {
                 await _wodMemberRepository.Update(wodMember);
@@ -106,6 +115,27 @@ namespace Corpo.Domain.Services
             {
                 return new DomainResponse(false, ex.Message, "No se pudo agregar la valorización.");
             }
+        }
+
+        public async Task<DomainResponse> GetAttended(int id, int memberId)
+        {
+            var response = await _wodMemberRepository.GetAttended(id, memberId);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetByWeekNumber(int weekNumber, int memberId)
+        {
+            var periodization = await _periodizationRepository.GetValidByMemberId(memberId);
+            var response = await _wodMemberRepository.GetByWeekNumber(weekNumber, periodization.Id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
         }
     }
 }

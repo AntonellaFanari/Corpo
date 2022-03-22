@@ -26,6 +26,9 @@ export class DebtDetailComponent implements OnInit {
   status: number;
   fee: Fee;
   viewDebts: boolean = false;
+  requestingListBalances: boolean;
+  requestingDetailSale: boolean;
+  requestingDetailFee: boolean;
 
   constructor(private balanceService: BalanceService, private route: ActivatedRoute, private saleService: SaleService,
     private userService: UserService, private feeService: FeeService) {
@@ -33,13 +36,15 @@ export class DebtDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requestingListBalances = true;
     if (!isNaN(this.idMember)) {
       this.balanceService.getAllByIdMember(this.idMember).subscribe(
         result => {
+          this.requestingListBalances = false;
           this.balances = result;
           this.member = result[0].member;
         },
-        error => console.error(error)
+        error => this.requestingListBalances = false
       );
     }
     
@@ -65,13 +70,15 @@ export class DebtDetailComponent implements OnInit {
   }
 
   getSale(id) {
+    this.requestingDetailSale = true;
     this.saleService.getSaleById(id).subscribe(
       result => {
+        this.requestingDetailSale = false;
         this.sale = result.result;
         this.getDetailsSale(id);
         this.status = this.sale.status;
       },
-      error => console.error(error)
+      error => this.requestingDetailSale = false
     );
   }
 
@@ -86,12 +93,14 @@ export class DebtDetailComponent implements OnInit {
 
 
   getFee(id) {
+    this.requestingDetailFee = true;
     this.feeService.getById(id).subscribe(
       result => {
+        this.requestingDetailFee = false;
         this.fee = result;
         console.log("fee", this.fee);
       },
-      error => console.error(error)
+      error => this.requestingDetailFee = false
     )
   }
 }

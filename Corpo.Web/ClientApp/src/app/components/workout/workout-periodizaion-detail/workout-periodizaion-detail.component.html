@@ -1,75 +1,81 @@
 <div class="modal-body" *ngIf="periodization">
-    <div class="card mb-3" *ngIf="periodization && periodization.goal">
-        <div class="card-body">
-            <label class="label-goal">Objetivo mensual: </label>
-          <ul>
-            <li *ngFor="let goal of periodization.goal">{{goal}}</li>
-          </ul>
-        </div>
+  <div class="card mb-3" *ngIf="periodization && periodization.goal">
+    <div class="card-body">
+      <label class="label-goal">Objetivo mensual: </label>
+      <ul>
+        <li *ngFor="let goal of periodization.goal">{{goal}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mb-3" *ngIf="periodization">
+    <div class="card-body">
+      <label class="label-goal">Nº de entrenamientos por semana: </label>&nbsp;
+      <strong>{{periodization.trainings}}</strong>
+    </div>
+  </div>
+
+  <div class="card mb-2" *ngFor="let week of periodization.periodizationWeeks">
+    <h6 class="goal">Semana {{week.weekNumber}}</h6>
+    <div class="card-body">
+      <label class="label-goal">Objetivo: </label>
+      <div class="formValidators">
+        <ul>
+          <li *ngFor="let goal of week.goals">{{goal}}</li>
+        </ul>
+      </div>
+      <div class="row">
+        <section id="no-more-tables" class="tab-pane fade show active col-4">
+          <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
+                 week="week2">
+            <thead class="cf">
+              <tr>
+                <th>M</th>
+                <th>S</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="M" day="monday">{{(week.m != '0') ? week.m + '%' : ''}}</td>
+                <td data-title="S" day="monday">{{(week.s != '0') ? week.s + '%' : ''}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+            <!--<canvas id="week2-chart"></canvas>-->
+          </div>
+        </section>
+        <section id="no-more-tables" class="tab-pane fade show active col-8">
+          <table class="table table-bordered table-condensed cf scrollme periodization" id="week1"
+                 week="week1">
+            <thead class="cf">
+              <tr>
+                <th>Lun</th>
+                <th>Mar</th>
+                <th>Mie</th>
+                <th>Jue</th>
+                <th>Vie</th>
+                <th>Sab</th>
+                <th>Dom</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-title="Lun" day="monday" (click)="initWeek('week1', $event.target.innerHTML)"
+                    class="first-td">
+                  {{week.monday}}
+                </td>
+                <td data-title="Mar" day="tuesday">{{week.tuesday}}</td>
+                <td data-title="Mie" day="wednesday">{{week.wednesday}}</td>
+                <td data-title="Jue" day="thursday">{{week.thursday}}</td>
+                <td data-title="Vie" day="friday">{{week.friday}}</td>
+                <td data-title="Sab" day="saturday">{{week.saturday}}</td>
+                <td data-title="Dom" day="sunday">{{week.sunday}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
     </div>
 
-    <div class="card mb-2" *ngFor="let week of periodization.periodizationWeeks">
-        <h6 class="goal">Semana {{week.weekNumber}}</h6>
-        <div class="card-body">
-          <label class="label-goal">Objetivo: </label>
-          <div class="formValidators">
-            <ul>
-              <li *ngFor="let goal of week.goals">{{goal}}</li>
-            </ul>
-          </div>
-          <div class="row">
-            <section id="no-more-tables" class="tab-pane fade show active col-4">
-              <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
-                     week="week2">
-                <thead class="cf">
-                  <tr>
-                    <th>M</th>
-                    <th>S</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td data-title="M" day="monday">{{(week.m != '0') ? week.m + '%' : ''}}</td>
-                    <td data-title="S" day="monday">{{(week.s != '0') ? week.s + '%' : ''}}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
-                <!--<canvas id="week2-chart"></canvas>-->
-              </div>
-            </section>
-            <section id="no-more-tables" class="tab-pane fade show active col-8">
-              <table class="table table-bordered table-condensed cf scrollme periodization" id="week1"
-                     week="week1">
-                <thead class="cf">
-                  <tr>
-                    <th>Lun</th>
-                    <th>Mar</th>
-                    <th>Mie</th>
-                    <th>Jue</th>
-                    <th>Vie</th>
-                    <th>Sab</th>
-                    <th>Dom</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td data-title="Lun" day="monday" (click)="initWeek('week1', $event.target.innerHTML)"
-                        class="first-td">
-                      {{week.monday}}
-                    </td>
-                    <td data-title="Mar" day="tuesday">{{week.tuesday}}</td>
-                    <td data-title="Mie" day="wednesday">{{week.wednesday}}</td>
-                    <td data-title="Jue" day="thursday">{{week.thursday}}</td>
-                    <td data-title="Vie" day="friday">{{week.friday}}</td>
-                    <td data-title="Sab" day="saturday">{{week.saturday}}</td>
-                    <td data-title="Dom" day="sunday">{{week.sunday}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </section>
-          </div>
-        </div>
-
-    </div>
+  </div>
 </div>

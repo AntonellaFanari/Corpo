@@ -52,6 +52,12 @@
   <div class="modal-body">
     <div class="container-fluid">
       <div class="col-12  mt-3 mb-3">
+        <label class="col-12 control-label">Número de entrenamientos por semana:</label>
+        <div class="formValidators">
+          <input type="number" class="form-control" [(ngModel)]="trainings">
+        </div>
+      </div>
+      <div class="col-12  mt-3 mb-3">
         <label class="col-12 control-label">Asignar Objetivo:</label>
         <ng-multiselect-dropdown [settings]="monthlyGoalsDropdownSettings"
                                  [data]="monthlyGoals"

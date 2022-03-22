@@ -15,6 +15,7 @@ namespace Corpo.Domain.Models
         public bool Valid { get; set; }
         public string Goal { get; set; }
         public List<PeriodizationWeek> PeriodizationWeeks { get; set; }
+        public int Trainings { get; set; }
     }
     
 }

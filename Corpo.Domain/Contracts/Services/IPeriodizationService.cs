@@ -12,5 +12,7 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> Add(Periodization periodization);
         Task<DomainResponse> Update(Periodization periodization);
         Task<DomainResponse> GetValidByMemberId(int id);
+        Task<DomainResponse> GetById(int id);
+        Task<DomainResponse> GetByYear(int year, int id);
     }
 }

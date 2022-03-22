@@ -49,8 +49,9 @@
         </div>
 
         <mat-tab-group [class.d-none]="newWods.length == 0">
-          <mat-tab label="{{newWod.date | date: 'dd-MM-yyyy'}}" *ngFor="let newWod of newWods">
-            <app-wod-template-form [wod]="newWod.wod" [date]="newWod.date" [memberId]="memberId"
+          <mat-tab label="Wod Nº {{newWod.wodNumber}}" *ngFor="let newWod of newWods">
+            <app-wod-template-form [wod]="newWod.wod" [date]="newWod.date" [weekNumber]="weekNumber" [periodizationId]="periodization.id"
+                                   [wodNumber]="newWod.wodNumber" [memberId]="memberId"
                                    (goBackEvent)="cancelWod()" (saveEvent)=deleteWod($event)></app-wod-template-form>
           </mat-tab>
         </mat-tab-group>
@@ -89,9 +90,6 @@
           Cancelar
         </button>
 
-
-        <app-assignment-calendar [class.d-none]="newWods.length > 0"></app-assignment-calendar>
-
       </div>
 
     </div>
@@ -99,7 +97,7 @@
 
 
 
-  <div class="modal fade" id="modal">
+  <div class="modal fade" id="modal" *ngIf="periodization">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <!-- cabecera del diálogo -->
@@ -113,7 +111,8 @@
         </div>
         <!-- pie del diálogo -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">
+          <button type="button" class="btn btn-success btn-float-left" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
+          <button type="button" class="btn btn-success btn-float-right" data-dismiss="modal">
             Aceptar
           </button>
         </div>

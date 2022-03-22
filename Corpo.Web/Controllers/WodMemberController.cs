@@ -64,5 +64,39 @@ namespace Corpo.Web.Controllers
             var response = await _wodMemberService.AddRate(id, rate);
             return this.ToActionResult(response);
         }
+
+        [HttpGet("attended/{periodizationId}")]
+        public async Task<ActionResult> GetAttended(int periodizationId, int? memberId)
+        {
+            int userId = 0;
+            if (memberId == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = memberId.Value;
+            }
+            var response = await _wodMemberService.GetAttended(periodizationId, userId);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("by-week-number")]
+        public async Task<ActionResult> GetByWeekNumber(int weekNumber, int? memberId)
+        {
+            int userId = 0;
+            if (memberId == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = memberId.Value;
+            }
+            var response = await _wodMemberService.GetByWeekNumber(weekNumber, userId);
+            return this.ToActionResult(response);
+        }
     }
 }

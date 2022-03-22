@@ -20,7 +20,7 @@ export class WorkoutPeriodizaionDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.periodizationService.getById(this.memberId).subscribe(data => {
+    this.periodizationService.getByMemberId(this.memberId).subscribe(data => {
       console.log(data.result)
       let periodization = data.result as Periodization;
       if (periodization != null) {
@@ -28,6 +28,7 @@ export class WorkoutPeriodizaionDetailComponent implements OnInit {
         this.periodization.memberId = periodization.memberId;
         this.periodization.month = periodization.month;
         this.periodization.year = periodization.year;
+        this.periodization.trainings = periodization.trainings;
         this.periodization.goal = periodization.goal.split("-");
         this.periodization.periodizationWeeks = [];
         for (var i = 0; i < periodization.periodizationWeeks.length; i++) {
@@ -43,6 +44,7 @@ export class WorkoutPeriodizaionDetailComponent implements OnInit {
           this.periodization.periodizationWeeks[i].sunday = periodization.periodizationWeeks[i].sunday;
           this.periodization.periodizationWeeks[i].weekNumber = periodization.periodizationWeeks[i].weekNumber;
           this.periodization.periodizationWeeks[i].goals = periodization.periodizationWeeks.find(x => x.weekNumber == (i + 1).toString()).goal.split("-");
+          this.periodization.periodizationWeeks[i].planned = periodization.periodizationWeeks[i].planned;
       }
       }
     })

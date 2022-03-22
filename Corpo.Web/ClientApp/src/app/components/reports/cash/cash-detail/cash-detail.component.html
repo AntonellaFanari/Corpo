@@ -1,4 +1,4 @@
-<section class="wrapper">
+<section class="wrapper" *ngIf="!requestingCash && cash">
   <div class="task-panel ">
     <h4 class="table-title">Caja Diaria Detalle</h4>
     <button *ngIf="viewBtnReturn" type="button" class="btn btn-secondary btn-float-right" routerLink="/caja-diaria">Volver</button>
@@ -60,7 +60,7 @@
           </tr>
         </tbody>
       </table>
-      <section id="no-more-tables" *ngIf="recordsCash.length>0 ; else: elseBlock">
+      <section id="no-more-tables"  *ngIf="!requestingRecordsCash && recordsCash.length > 0">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
           <table class="table table-bordered table-condensed table-striped cf mb-0 user-table">
             <thead class="cf">
@@ -88,10 +88,25 @@
           </table>
         </div>
       </section>
+      <div class="w-100 text-center mt-3" *ngIf="requestingRecordsCash">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="mt-3" *ngIf="!requestingRecordsCash && recordsCash.length == 0">
+        <h5>No hay registros</h5>
+      </div>
     </div>
-    <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
   </div>
 </section>
+<div class="w-100 text-center mt-3" *ngIf="requestingCash">
+  <div class="spinner-border text-success" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<div class="mt-3" *ngIf="!requestingCash && !cash">
+  <h5>No hay registro de caja</h5>
+</div>
 
 
 <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->

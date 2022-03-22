@@ -165,5 +165,17 @@ namespace Corpo.Domain.Services
                 Result = response
             };
         }
+
+        //public async Task<DomainResponse> GetWeeklyAttendanceByMemberId(int memberId)
+        //{
+        //    DateTime from = DateTime.Today.AddDays(-1 * ((int)(DateTime.Today.DayOfWeek) - 1));
+        //    DateTime to = DateTime.Today.AddDays(-1 * ((int)(DateTime.Today.DayOfWeek) - 7));
+        //    //var response = await _attendanceRepository.GetWeeklyAttendanceByMemberId(memberId, from, to);
+        //    return new DomainResponse
+        //    {
+        //        //Success = true,
+        //        //Result = response
+        //    };
+        //}
     }
 }

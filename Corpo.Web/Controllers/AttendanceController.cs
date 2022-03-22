@@ -74,5 +74,12 @@ namespace Corpo.Web.Controllers
             return Ok(response);
         }
 
+        //[HttpGet("{memberId}/weekly-attendance")]
+        //public Task<ActionResult> GetWeeklyAttendanceByMemberId(int memberId)
+        //{
+        //    var response = _attendanceService.GetWeeklyAttendanceByMemberId(memberId);
+        //    return this.ToActionResult(response);
+        //}
+
     }
 }

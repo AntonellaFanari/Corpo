@@ -29,10 +29,12 @@ export class AssignmentTemplateComponent implements OnInit {
   requestingList: boolean;
   memberId: number;
   member: MemberView;
-  newWods: Array<{ date: string, wod: Wod }> = [];
+  newWods: Array<{ wodNumber: number, wod: Wod }> = [];
   periodization: Periodization;
   requestingPeriodization: boolean;
   diplayMedicalHistory: boolean = false;
+  weekNumber: number;
+  wodNumber: number;
 
   constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
     private memberService: MemberService,
@@ -50,10 +52,12 @@ export class AssignmentTemplateComponent implements OnInit {
 
     this.requestingPeriodization = true;
 
-    this.periodizationService.getById(this.memberId).subscribe(data => {
-      console.log("periodization", data)
+    this.periodizationService.getByMemberId(this.memberId).subscribe(data => {
+      console.log("periodization", data.result);
       this.requestingPeriodization = false;
-      this.periodization = data.result;
+        this.periodization = data.result;
+        this.weekNumber = parseInt(this.periodization.periodizationWeeks.find(x => x.planned == "false").weekNumber);
+        console.log("numero de semana", this.weekNumber);
     }, error => {
       this.requestingPeriodization = false;
     })
@@ -83,9 +87,13 @@ export class AssignmentTemplateComponent implements OnInit {
     this.requestingWod = true;
     this.wodTemplateService.getById(id).subscribe((data) => {
       this.selectedWod = (data.result as wodTemplateResponse);
-      this.calendar.selectedDates.forEach(d => {
-        this.newWods.push({ date: d, wod: this.getWod(this.selectedWod) })
-      })
+      console.log("periodización: ", this.periodization);
+      for (var i = 1; i < this.periodization.trainings + 1; i++) {
+        this.newWods.push({ wodNumber: i, wod: this.getWod(this.selectedWod) })
+      }
+      //this.calendar.selectedDates.forEach(d => {
+      //  this.newWods.push({ date: d, wod: this.getWod(this.selectedWod) })
+      //})
       this.wod = this.getWod(this.selectedWod)
       this.requestingWod = false;
     }, e => {

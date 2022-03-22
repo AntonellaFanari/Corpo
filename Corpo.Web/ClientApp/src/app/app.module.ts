@@ -295,6 +295,7 @@ import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-ed
       { path: 'plantillas-wod', component: WodTemplateListComponent },
       { path: 'periodizacion', component: WorkoutPeriodizationComponent },
       { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent },
+      { path: 'editar-periodizacion', component: WorkoutPeriodizaionEditComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },

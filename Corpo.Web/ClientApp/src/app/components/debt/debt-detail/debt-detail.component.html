@@ -5,7 +5,7 @@
         <h4 class="table-title mt-2">Deudas de {{member.lastName}} {{member.name}}</h4>
       </div>
       <hr>
-      <section id="no-more-tables" *ngIf="balances.length>0">
+      <section id="no-more-tables" *ngIf="!requestingListBalances && balances.length > 0">
         <table class="table table-bordered table-condensed cf user-table">
           <thead class="cf bg-success text-white">
             <tr>
@@ -31,6 +31,14 @@
           <button type="button" class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" routerLink="/deudas-list">Volver</button>
         </div>
       </section>
+      <div class="w-100 text-center mt-3" *ngIf="requestingListBalances">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="mt-3" *ngIf="!requestingListBalances && balances.length == 0">
+        <h5>No hay deudas registradas</h5>
+      </div>
     </div>
   </div>
 </section>
@@ -48,7 +56,7 @@
     </div>
 
     <!-- cuerpo del diálogo -->
-    <div class="modal-body" *ngIf="sale">
+    <div class="modal-body" *ngIf="!requestingDetailSale && sale">
       <table class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
@@ -81,8 +89,18 @@
       </div>
 
     </div>
+    <div class="w-100 text-center mt-3" *ngIf="requestingDetailSale">
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="mt-3" *ngIf="!requestingDetailSale && !sale">
+      <h5>Hubo un problema al intentar mostrar detalle</h5>
+    </div>
   </div>
+
 </section>
+
 
 <button id="modal-fee-detail" data-toggle="modal" href="#myModalFee" class="d-none"></button>
 
@@ -95,8 +113,8 @@
     </div>
 
     <!-- cuerpo del diálogo -->
-    <div class="modal-body">
-      <table *ngIf="fee" class="table table-bordered table-condensed cf scrollme user-table">
+    <div class="modal-body" *ngIf="!requestingDetailFee && fee">
+      <table class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
             <th colspan="2">Registro: {{fee.userName}}</th>
@@ -138,6 +156,14 @@
       </div>
 
     </div>
+    <div class="w-100 text-center mt-3" *ngIf="requestingDetailFee">
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="mt-3" *ngIf="!requestingDetailFee && !fee">
+      <h5>Hubo un problema al intentar mostrar detalle</h5>
+    </div>
   </div>
-  </section>
+</section>
 

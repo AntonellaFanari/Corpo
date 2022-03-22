@@ -129,6 +129,8 @@ export class PurchaseCreateComponent implements OnInit {
 
   removeList(i) {
     console.log(i);
+    let totalProduct = this.detailPurchase[i].cost * this.detailPurchase[i].quantity;
+    this.total = this.total - totalProduct;
     this.detailPurchase.splice(i, 1);
   }
 

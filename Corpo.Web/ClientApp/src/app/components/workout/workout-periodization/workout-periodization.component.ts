@@ -27,6 +27,7 @@ export class Week {
   saturday: string;
   sunday: string;
   goal?: string;
+  planned: string
 }
 
 export class Total {
@@ -46,10 +47,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "" };
-  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre" };
-  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
-  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre" };
+  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false" };
+  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
+  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
+  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -86,6 +87,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
   week4GoalsList: WeeklyGoal[] = [];
   weeklyGoals: WeeklyGoal[] = [];
   weeklyGoalsDropdownSettings: IDropdownSettings = {};
+  trainings: number;
 
   constructor(private periodizacionService: PeriodizationService,
     private route: ActivatedRoute,
@@ -150,7 +152,8 @@ export class WorkoutPeriodizationComponent implements OnInit {
       thursday: thursday,
       friday: friday,
       saturday: "Libre",
-      sunday: "Libre"
+      sunday: "Libre",
+      planned: "false"
     };
 
 
@@ -743,8 +746,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
   save() {
     var periodization = new Periodization();
     periodization.memberId = this.memberId;
-    periodization.month = 2;
-    periodization.year = 2022;
+    periodization.trainings = this.trainings;
     console.log("week1: ", this.week1);
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week1));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week2));

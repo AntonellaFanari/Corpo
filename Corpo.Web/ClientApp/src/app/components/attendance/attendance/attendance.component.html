@@ -30,7 +30,7 @@
             <td data-title="Créditos restantes"><span>{{(attendance.remainingCredit)}}</span></td>
             <td data-title="Vencimiento"><span>{{attendance.expiration | date: 'dd/MM/yyyy'}}</span></td>
             <td data-title="Acción">
-              <button *ngIf="attendance.status == 1" class="btn btn-danger btn-xs btn-action-list" (click)="cancell(attendance.id, attendance.memberId)"><i class="fa fa-trash-o "></i></button>
+              <button *ngIf="attendance.status == 1" class="btn btn-danger btn-xs btn-action-list" (click)="cancell(attendance.id, attendance.memberId)"><i class="fa fa-trash"></i></button>
               <button *ngIf="attendance.status == 2" class="btn btn-warning btn-xs btn-action-list text-white">Cancelado</button>
             </td>
           </tr>

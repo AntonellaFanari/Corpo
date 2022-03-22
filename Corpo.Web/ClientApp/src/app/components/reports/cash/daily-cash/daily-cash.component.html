@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="row mt-2">
-    <div class="col-12">
+    <div class="col-12" *ngIf="!requestingList && cashs.length > 0">
       <section id="no-more-tables">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
           <table *ngIf="cashs.length>0; else: elseBlock" class="table table-bordered table-condensed table-striped cf mb-0 user-table">
@@ -70,7 +70,14 @@
           </table>
         </div>
       </section>
-     </div>
-    <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+    </div>
+    <div class="w-100 text-center mt-3" *ngIf="requestingList">
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="mt-3" *ngIf="!requestingList && cashs.length == 0">
+      <h5>No hay registros de caja</h5>
+    </div>
   </div>
 </section>

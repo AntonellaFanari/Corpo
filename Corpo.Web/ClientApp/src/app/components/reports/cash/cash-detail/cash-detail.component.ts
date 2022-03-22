@@ -33,6 +33,9 @@ export class CashDetailComponent implements OnInit {
   currentDate: string;
   date: string;
   viewBtnReturn: boolean = false;
+  requestingCash: boolean;
+  requestingRecordsCash: boolean;
+
   constructor(private cashService: CashService, private route: ActivatedRoute, private saleService: SaleService,
     private dp: DatePipe, private customAlertService: CustomAlertService, private feeService: FeeService,
     private outflowService: OutflowService, private incomeService: IncomeService, private withdrawalService: WithdrawalService,
@@ -45,6 +48,8 @@ private reportService: ReportService  ) {
   }
 
   ngOnInit() {
+    this.requestingCash = true;
+    this.requestingRecordsCash = true;
     console.log(this.id);
     if (isNaN(this.id)) {
       console.log(this.date);
@@ -59,13 +64,14 @@ private reportService: ReportService  ) {
   getCash() {
     this.cashService.getCashById(this.id).subscribe(
       result => {
+        this.requestingCash = false;
         console.log(result.result);
         this.cash = result.result;
         this.calculateInflowsTotal();
         this.calculateOutflowsTotal();
         this.getCashDetailed(this.cash.opening, this.cash.closing);
       },
-      error => console.error(error)
+      error => this.requestingCash = false
     )
   }
 
@@ -101,10 +107,11 @@ private reportService: ReportService  ) {
   getCashDetailed(opening, closing) {
     this.reportService.getCashDetailed(opening, closing).subscribe(
       result => {
+        this.requestingRecordsCash = false;
         console.log(result);
         this.recordsCash = result.result;
       },
-      error => console.error(error)
+      error => this.requestingRecordsCash = false
     )
   }
 

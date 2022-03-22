@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Corpo.Data.Repositories
                .ThenInclude(x => x.Modality)
                  .Include(x => x.WodGroupsMember)
                .ThenInclude(x => x.Exercise)
-               .Where(x => x.MemberId == id && x.Date >= from && x.Date <= to)
+               .Where(x => x.MemberId == id /*&& x.Date >= from && x.Date <= to*/)
                .ToListAsync();
         }
 
@@ -58,6 +59,25 @@ namespace Corpo.Data.Repositories
         {
             _context.WodMember.Update(wodMember);
             await _context.SaveChangesAsync();
+        }
+
+        public Task<int> GetByPeriodizationIdByWeekNumber(int periodizationId, int weekNumber)
+        {
+            return _context.WodMember.Where(x => x.PeriodizationId == periodizationId && x.WeekNumber == weekNumber).CountAsync();
+        }
+
+        public async Task<List<WodMemberAttendanceDto>> GetAttended(int id, int memberId)
+        {
+            return await _context.WodMember.Where(x => x.PeriodizationId == id && x.MemberId == memberId && x.Attended == "true").GroupBy(x => x.WeekNumber).Select(x => new WodMemberAttendanceDto
+            {
+                WeekNumber = x.Key,
+                Attendance = x.Count()
+            }).ToListAsync();
+        }
+
+        public Task<List<WodMember>> GetByWeekNumber(int weekNumber, int periodizationId)
+        {
+            return _context.WodMember.Where(x => x.PeriodizationId == periodizationId && x.WeekNumber == weekNumber).Include(x => x.WodGroupsMember).ToListAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MemberView } from '../../../domain/member-view';
 import { MemberService } from '../../../services/member.service';
 
@@ -17,8 +18,11 @@ export class AssignmentListComponent implements OnInit {
   from: string;
   to: string;
   requestingList: boolean;
+  week = 0;
 
-  constructor(private memberService: MemberService, private dp: DatePipe) {
+  constructor(private memberService: MemberService,
+    private dp: DatePipe,
+    private router: Router) {
     this.dueDate = this.dp.transform(new Date(), 'yyyy-MM-dd');
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
     let date = new Date();
@@ -55,5 +59,9 @@ export class AssignmentListComponent implements OnInit {
         member.status = "No Activo"
       }
     }
+  }
+
+  getAssignment(id) {
+    this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: id, week: this.week } });
   }
 }

@@ -38,6 +38,7 @@ export class Wod {
   name: string;
   goal: string;
   wodGroups: WodGroup[] = [];
+  mode: string;
 
   addGroup(wodGroup: WodGroup) {
 

@@ -63,6 +63,7 @@ namespace Corpo.Data
         public DbSet<GeneralSetting> GeneralSetting { get; set; }
         public DbSet<MonthlyGoal> MonthlyGoal { get; set; }
         public DbSet<WeeklyGoal> WeeklyGoal { get; set; }
+        public DbSet<Intensity> Intensity { get; set; }
 
     }
 }

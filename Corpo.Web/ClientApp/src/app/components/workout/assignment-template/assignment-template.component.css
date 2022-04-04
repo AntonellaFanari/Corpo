@@ -26,6 +26,27 @@ div.mat-tab-body-content {
   display: block;
 }
 
+.not-active {
+   cursor: not-allowed;
+}
+
+.disable-tr {
+  background-color: #efefef;
+  cursor: not-allowed;
+}
+
+.week-planned {
+    background: #00ff90;
+}
+
+.week-not-planned {
+  background: #fa4263a6;
+}
+
+.week-planned-incomplete {
+  background: #f3990b91;
+}
+
 @media only screen and (max-width: 800px) {
 
 

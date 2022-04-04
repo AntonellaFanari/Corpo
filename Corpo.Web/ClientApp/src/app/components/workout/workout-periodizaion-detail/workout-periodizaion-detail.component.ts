@@ -29,6 +29,8 @@ export class WorkoutPeriodizaionDetailComponent implements OnInit {
         this.periodization.month = periodization.month;
         this.periodization.year = periodization.year;
         this.periodization.trainings = periodization.trainings;
+        this.periodization.volume = periodization.volume;
+        this.periodization.intensity = periodization.intensity;
         this.periodization.goal = periodization.goal.split("-");
         this.periodization.periodizationWeeks = [];
         for (var i = 0; i < periodization.periodizationWeeks.length; i++) {
@@ -45,6 +47,8 @@ export class WorkoutPeriodizaionDetailComponent implements OnInit {
           this.periodization.periodizationWeeks[i].weekNumber = periodization.periodizationWeeks[i].weekNumber;
           this.periodization.periodizationWeeks[i].goals = periodization.periodizationWeeks.find(x => x.weekNumber == (i + 1).toString()).goal.split("-");
           this.periodization.periodizationWeeks[i].planned = periodization.periodizationWeeks[i].planned;
+          this.periodization.periodizationWeeks[i].volume = periodization.periodizationWeeks[i].volume;
+          this.periodization.periodizationWeeks[i].intensity = periodization.periodizationWeeks[i].intensity;
       }
       }
     })

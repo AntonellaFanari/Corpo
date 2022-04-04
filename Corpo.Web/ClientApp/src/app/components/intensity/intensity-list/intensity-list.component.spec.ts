@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssignmentWodComponent } from './assignment-wod.component';
+import { IntensityListComponent } from './intensity-list.component';
 
-describe('AssignmentWodComponent', () => {
-  let component: AssignmentWodComponent;
-  let fixture: ComponentFixture<AssignmentWodComponent>;
+describe('IntensityListComponent', () => {
+  let component: IntensityListComponent;
+  let fixture: ComponentFixture<IntensityListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssignmentWodComponent ]
+      declarations: [ IntensityListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssignmentWodComponent);
+    fixture = TestBed.createComponent(IntensityListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

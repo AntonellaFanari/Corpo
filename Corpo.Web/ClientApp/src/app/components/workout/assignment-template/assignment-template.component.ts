@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { fi } from 'date-fns/locale';
 import * as moment from 'moment';
 import { Periodization } from 'src/app/domain/wod/periodization';
 import { PeriodizationService } from 'src/app/services/wod/periodization.service';
 import { MemberView } from '../../../domain/member-view';
 import { Wod, WodGroup, WodTemplate, wodTemplateResponse } from '../../../domain/wod';
-import { WodGroupMember } from '../../../domain/wod-group-member';
 import { WodMember } from '../../../domain/wod-member';
 import { MemberService } from '../../../services/member.service';
+import { WodMemberService } from '../../../wod/wod-member.service';
 import { WodTemplateService } from '../../../wod/wod-template.service';
 import { MemberViewComponent } from '../../member/member-view/member-view.component';
 import { AssignmentCalendarComponent } from '../assignment-calendar/assignment-calendar.component';
@@ -35,32 +37,32 @@ export class AssignmentTemplateComponent implements OnInit {
   diplayMedicalHistory: boolean = false;
   weekNumber: number;
   wodNumber: number;
+  wods: wodTemplateResponse[] = [];
+  selectedWeekNumber: number;
+  modeCreate: boolean;
+  mode = "None";
+  wodTemplateId: number;
+  requestingAssignment: boolean;
+  @ViewChild('wod-template-table', { static: false }) wodsTable: ElementRef;
 
   constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
     private memberService: MemberService,
-    private periodizationService: PeriodizationService) {
+    private periodizationService: PeriodizationService,
+    private wodMemberService: WodMemberService,
+    private render2: Renderer2,
+    private router: Router) {
 
   }
 
   ngOnInit() {
-
+    this.requestingAssignment = true;
     this.route.queryParams.subscribe(params => {
-      this.memberId = parseInt(params['memberId'])
+      this.memberId = parseInt(params['memberId']);
+      this.weekNumber = parseInt(params['week']);
       console.log(this.memberId)
 
     });
-
-    this.requestingPeriodization = true;
-
-    this.periodizationService.getByMemberId(this.memberId).subscribe(data => {
-      console.log("periodization", data.result);
-      this.requestingPeriodization = false;
-        this.periodization = data.result;
-        this.weekNumber = parseInt(this.periodization.periodizationWeeks.find(x => x.planned == "false").weekNumber);
-        console.log("numero de semana", this.weekNumber);
-    }, error => {
-      this.requestingPeriodization = false;
-    })
+    this.getPeriodization();
 
     this.requestingList = true;
     this.wodTemplateService.getAll().subscribe((data) => {
@@ -74,6 +76,49 @@ export class AssignmentTemplateComponent implements OnInit {
     console.log("length: ", this.newWods.length)
   }
 
+  getPeriodization() {
+    this.requestingPeriodization = true;
+
+    this.periodizationService.getByMemberId(this.memberId).subscribe(data => {
+      console.log("periodization", data.result);
+      this.requestingPeriodization = false;
+      this.periodization = data.result;
+      //this.weekNumber = parseInt(this.periodization.periodizationWeeks.find(x => x.planned == "false").weekNumber);
+      this.requestingAssignment = false;
+      this.getWeekPlanned();
+
+    }, error => {
+      this.requestingPeriodization = false;
+    })
+  }
+
+  getWeekPlanned() {
+      let weeksPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true");
+      if (weeksPlanned.length > 0 ) {
+        this.setClassSelect(weeksPlanned);
+        if (this.weekNumber !=0) {
+          this.selectWeekNumber(this.weekNumber);
+        } else {
+          this.selectWeekNumber(weeksPlanned[weeksPlanned.length - 1].weekNumber);
+        }
+      }
+
+  }
+
+
+  setClassSelect(weeks) {
+    var select = document.getElementsByClassName("week-option");
+    console.log("options: ", select);
+    for (var i = 0; i < select.length; i++) {
+      console.log("option: ", select[i].textContent);
+      let plannedWeek = weeks.find(x => x.weekNumber == select[i].textContent);
+      if (plannedWeek) {
+        select[i].classList.remove("week-not-planned");
+        select[i].classList.add("week-planned");
+      }
+    }
+  }
+
   getMember() {
     this.memberService.getById(this.memberId).subscribe(
       result => {
@@ -83,22 +128,43 @@ export class AssignmentTemplateComponent implements OnInit {
     )
   }
 
+  //getWodMember(id) {
+  //  this.wodMemberService.getByPeriodizationId(id, this.selectedWeekNumber).subscribe(
+  //    response => {
+  //      console.log("wods: ", response.result);
+  //      this.wods = (response.result as wodTemplateResponse[]);
+  //      this.modeCreate = true;
+  //      if (this.wods.length > 0) {
+  //        for (var i = 1; i < this.wods.length + 1; i++) {
+  //          this.newWods.push({ wodNumber: i, wod: this.getWod(this.wods[i]) })
+  //        }
+  //      }
+  //    },
+  //    error => console.error(error)
+  //  )
+  //}
+
   getById(id: number) {
-    this.requestingWod = true;
-    this.wodTemplateService.getById(id).subscribe((data) => {
-      this.selectedWod = (data.result as wodTemplateResponse);
-      console.log("periodización: ", this.periodization);
-      for (var i = 1; i < this.periodization.trainings + 1; i++) {
-        this.newWods.push({ wodNumber: i, wod: this.getWod(this.selectedWod) })
-      }
-      //this.calendar.selectedDates.forEach(d => {
-      //  this.newWods.push({ date: d, wod: this.getWod(this.selectedWod) })
-      //})
-      this.wod = this.getWod(this.selectedWod)
-      this.requestingWod = false;
-    }, e => {
-      this.requestingWod = false;
-    })
+    this.wodMemberService.add(id, this.weekNumber, this.periodization).subscribe(
+      response => {
+        console.log("wods guardados");
+        this.router.navigate(['/editar-asignacion-wod'], { queryParams: { id: this.periodization.id, week: this.weekNumber, memberId: this.periodization.memberId } });
+      },
+      error => console.error(error)
+    )
+
+  }
+
+  selectWeekNumber(weekNumber) {
+    this.weekNumber = weekNumber;
+    let weeksPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true" && x.weekNumber == weekNumber);
+    if (weeksPlanned.length > 0) {
+      this.router.navigate(['/editar-asignacion-wod'], { queryParams: { id: this.periodization.id, week: this.weekNumber, memberId: this.periodization.memberId } });
+    }
+  }
+
+  updateWeek() {
+    this.ngOnInit();
   }
 
   cancel() {
@@ -109,8 +175,8 @@ export class AssignmentTemplateComponent implements OnInit {
     this.wod = null;
   }
 
-  deleteWod(date) {
-    console.log(date)
+  deleteWod(wodNumber) {
+    console.log(wodNumber)
   }
 
   getWod(wodTemplate: wodTemplateResponse): Wod {
@@ -120,6 +186,7 @@ export class AssignmentTemplateComponent implements OnInit {
     indexes = indexes.filter((x, i, a) => a.indexOf(x) == i)
     wod.name = wodTemplate.name;
     wod.goal = wodTemplate.goal;
+    wod.mode = "None";
 
     indexes.forEach(i => {
       var wodGroup = new WodGroup();

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssignmentMemberComponent } from './assignment-member.component';
+import { IntensityCreateComponent } from './intensity-create.component';
 
-describe('AssignmentMemberComponent', () => {
-  let component: AssignmentMemberComponent;
-  let fixture: ComponentFixture<AssignmentMemberComponent>;
+describe('IntensityCreateComponent', () => {
+  let component: IntensityCreateComponent;
+  let fixture: ComponentFixture<IntensityCreateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssignmentMemberComponent ]
+      declarations: [ IntensityCreateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssignmentMemberComponent);
+    fixture = TestBed.createComponent(IntensityCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

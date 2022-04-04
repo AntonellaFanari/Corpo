@@ -29,9 +29,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody] Periodization periodization)
+        public async Task<ActionResult> Update(int id, [FromBody] Periodization periodization)
         {
-            var response = await _periodizationService.Update(periodization);
+            var response = await _periodizationService.Update(id, periodization);
             return this.ToActionResult(response);
         }
 

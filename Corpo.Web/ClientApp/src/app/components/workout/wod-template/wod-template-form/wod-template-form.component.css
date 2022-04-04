@@ -19,6 +19,15 @@
   text-align: center;
 }
 
+.hideValidators {
+    display: none;
+}
+
+.validators {
+  font-size: 13px;
+  color: red;
+}
+
 .checkbox-tags {
   margin: 0.5em;
   transform: scale(1.5);

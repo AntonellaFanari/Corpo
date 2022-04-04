@@ -4,7 +4,9 @@ export class PeriodizationList {
   year: number;
   periodizationWeeks: PeriodizationWeekList[] = [];
   goal?: string[];
-  trainings: number
+  trainings: number;
+  volume: string;
+  intensity: string
 }
 
 export class PeriodizationWeekList {
@@ -19,5 +21,7 @@ export class PeriodizationWeekList {
   saturday: string;
   sunday: string;
   goals: string[];
-  planned: string
+  planned: string;
+  volume: string;
+  intensity: string
 }

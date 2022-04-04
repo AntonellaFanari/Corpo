@@ -23,5 +23,8 @@ namespace Corpo.Domain.Models
         public Periodization Periodization { get; set; }
         public int PeriodizationId { get; set; }
         public string Planned { get; set; }
+        public int WodTemplateId { get; set; }
+        public string Volume { get; set; }
+        public string Intensity { get; set; }
     }
 }

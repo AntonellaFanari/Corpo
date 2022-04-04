@@ -20,8 +20,6 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> Add(Periodization periodization)
         {
-            periodization.Month = DateTime.Now.Month;
-            periodization.Year = DateTime.Now.Year;
             try
             {
                 var validPeriodization = await _periodizationRepository.GetValidByMemberId(periodization.MemberId);               
@@ -73,16 +71,19 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public async Task<DomainResponse> Update(Periodization periodization)
+        public async Task<DomainResponse> Update(int id, Periodization periodization)
         {
             try
             {
-                var periodizationQuery = await _periodizationRepository.GetById(periodization.Id);
+                var periodizationQuery = await _periodizationRepository.GetById(id);
+                periodizationQuery.Goal = periodization.Goal;
                 periodizationQuery.MemberId = periodization.MemberId;
-                periodizationQuery.Month = periodization.Month;
-                periodizationQuery.Year = periodizationQuery.Year;
                 periodizationQuery.Valid = periodization.Valid;
-                periodization.Trainings = periodization.Trainings;
+                periodizationQuery.Trainings = periodization.Trainings;
+                periodizationQuery.Year = periodization.Year;
+                periodizationQuery.Month = periodization.Month;
+                periodizationQuery.Volume = periodization.Volume;
+                periodizationQuery.Intensity = periodization.Intensity;
                 periodizationQuery.PeriodizationWeeks = periodization.PeriodizationWeeks;
                 await _periodizationRepository.Update(periodizationQuery);
                 return new DomainResponse

@@ -1,0 +1,140 @@
+<!-- Page Content -->
+<section class="wrapper">
+  <div class="task-panel ">
+    <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD</h4>
+  </div>
+  <hr />
+  <section class="wrapper" >
+    <div class="row">
+      <div class="col-12 col-lg-8 "  *ngIf="!requestingAssignment && periodization">
+
+        <mat-tab-group [class.d-none]="wods.length == 0">
+          <mat-tab label="Wod Nº {{newWod.wodNumber}}" *ngFor="let newWod of wods">
+            <app-wod-template-form [wod]="newWod.wod" [date]="newWod.date" [weekNumber]="weekNumber" [periodizationId]="periodization.id"
+                                   [wodNumber]="newWod.wodNumber" [memberId]="memberId"
+                                   (goBackEvent)="cancelWod()" (saveEvent)=deleteWod($event)></app-wod-template-form>
+          </mat-tab>
+        </mat-tab-group>
+
+
+      </div>
+      <div class=" col-12 col-lg-4">
+
+        <button  *ngIf="!requestingAssignment && periodization && wods.length > 0" class="btn btn-primary w-100 mt-3 " type="button" data-toggle="modal" href="#modal-wod"
+                >
+          Vista previa
+        </button>
+
+        <button class="btn btn-success w-100 mt-3 mb-3" type="button" data-toggle="modal" href="#modal"
+                *ngIf="!requestingAssignment && periodization">
+          Periodización
+        </button>
+
+        <button *ngIf="!requestingAssignment && periodization" class="btn btn-success w-100 mb-3" type="button" data-toggle="modal" href="#modalMedicalHistory">
+          Historia Médica
+        </button>
+
+        <button *ngIf="!requestingAssignment && periodization" class="btn btn-danger w-100 mb-3" type="button" (click)="deleteWods()"
+                >
+          Eliminar Wods
+        </button>
+
+        <button *ngIf="!requestingAssignment && periodization" class="btn btn-secondary w-100 mt-3" type="button" [routerLink]="['/asignacion-wod']">
+          Volver
+        </button>
+
+        <label class="control-label">Seleccionar Semana:</label>
+        <div class="formValidators">
+          <select class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)">
+            <option disabled value="0">Seleccionar</option>
+            <option class="week-option week-not-planned" value="1">1</option>
+            <option class="week-option week-not-planned" value="2">2</option>
+            <option class="week-option week-not-planned" value="3">3</option>
+            <option class="week-option week-not-planned" value="4">4</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <div class="w-100 text-center" *ngIf="requestingAssignment && !periodization">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal" *ngIf="periodization">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Periodización {{periodization.month}}/{{periodization.year}}</h4>
+          <button type="button" class="close" data-dismiss="modal">X</button>
+        </div>
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <app-workout-periodizaion-detail [memberId]="memberId"></app-workout-periodizaion-detail>
+        </div>
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success btn-float-left" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
+          <button type="button" class="btn btn-success btn-float-right" data-dismiss="modal">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="modal-wod">
+    <div class="modal-dialog modal-dialog-full modal-fullscreen-xl-down">
+      <div class="modal-content modal-content-full">
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Planificación Semanal</h4>
+          <button type="button" class="close" data-dismiss="modal">X</button>
+        </div>
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <div class="row">
+            <div *ngFor="let newWod of wods" class="col">
+              <app-wod-detail [wod]="newWod.wod" [wodNumber]="newWod.wodNumber"></app-wod-detail>
+            </div>
+          </div>
+        </div>
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalMedicalHistory">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Historia Médica</h4>
+          <button type="button" class="close" data-dismiss="modal">X</button>
+        </div>
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <app-member-view [id]="memberId" [hideGoBack]="true"></app-member-view>
+        </div>
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

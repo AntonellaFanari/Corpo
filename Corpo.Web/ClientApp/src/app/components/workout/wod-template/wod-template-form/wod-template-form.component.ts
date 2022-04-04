@@ -2,16 +2,17 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { fi } from 'date-fns/locale';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CategoryExercises } from 'src/app/domain/category-exercises';
 import { Exercise } from 'src/app/domain/exercise';
 import { Tag } from 'src/app/domain/tag';
 import { ExerciseItem, Wod, WodGroup, WodTemplate } from 'src/app/domain/wod';
-import { WodMember } from 'src/app/domain/wod-member';
 import { Modality } from 'src/app/domain/wod/modality';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { WodMemberService } from 'src/app/wod/wod-member.service';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
+import { WodMember } from '../../../../domain/wod-member';
 import { WeeklyGoal } from '../../../../domain/wod/weekly-goal';
 import { ModalityService } from '../../../../services/modality.service';
 import { WeeklyGoalService } from '../../../../services/weekly-goal.service';
@@ -40,15 +41,22 @@ export class WodTemplateFormComponent implements OnInit {
   name: string
   detail: string;
   editDetail: boolean;
-  saved: boolean;
-  value: number
-  mode: string = "None";
+  mode = "None";
+  value: number;
   goal: string;
   weeklyGoals: WeeklyGoal[] = [];
   weeklyGoalsDropdownSettings: IDropdownSettings = {};
   weeklyGoalsList: WeeklyGoal[] = [];
   selectedWeeklyGoals = [];
-
+  checkedKgs: boolean;
+  checkedPercentage: boolean;
+  checkedRPE: boolean;
+  checkedRPEs: boolean;
+  checkedNone = true;
+  validatorsRequiredModality: boolean;
+  validatorsRequiredExercise: boolean;
+  saved: boolean;
+  modeEdit: boolean;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -59,19 +67,24 @@ export class WodTemplateFormComponent implements OnInit {
   }
 
   @Input() wod: Wod;
+  @Input() modeCreate: boolean;
   @Input() memberId: number;
   @Input() date: string;
+  @Input() wodTemplateId: number;
   @Input() weekNumber: number;
   @Input() wodNumber: number;
   @Input() periodizationId: number;
   @Output() goBackEvent = new EventEmitter();
   @Output() saveEvent = new EventEmitter();
+  @Output() updateWeek = new EventEmitter();
 
 
   ngOnInit() {
     console.log(this.wod);
     this.name = this.wod.name;
     this.goal = this.wod.goal;
+    this.checkedNone = true;
+    this.mode = "None";
      
     console.log(this.weeklyGoalsList);
     this.getAll();
@@ -135,21 +148,68 @@ export class WodTemplateFormComponent implements OnInit {
     if (this.wod.wodGroups.length == 0) {
       this.addwodGroup();
     }
-    var exercise = this.exercises.find(x => x.id == this.selectedExercise);
-    var exerciseItem = new ExerciseItem();
-    exerciseItem.exercise = exercise;
-    exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
-    exerciseItem.units = this.units;
-    exerciseItem.mode = this.mode;
-    exerciseItem.value = this.value;
 
-    this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
+    if (this.selectedExercise !== null && this.selectedExercise != undefined && this.selectedExercise !== "" && this.selectedModality !== null) {
+      var exercise = this.exercises.find(x => x.id == this.selectedExercise);
+      var exerciseItem = new ExerciseItem();
+      exerciseItem.exercise = exercise;
+      exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
+      exerciseItem.units = this.units;
+      if (this.mode == null) {
+        exerciseItem.mode = "None";
+      } else {
+        exerciseItem.mode = this.mode;
+      }
 
-    this.selectedModality = null;
-    this.selectedExercise = "";
-    this.units = null;
-    this.mode = "None";
-    this.value = 0;
+      exerciseItem.value = this.value;
+
+      this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
+
+      this.selectedModality = null;
+      this.selectedExercise = "";
+      this.units = null;
+      this.selectMode("None");
+      this.value = 0;
+    } else {
+      if (this.selectedExercise == null || this.selectedExercise == "") {
+        this.validatorsRequiredExercise = true;
+      } if (this.selectedModality == null) {
+        this.validatorsRequiredModality = true;
+      }
+    }
+    
+  }
+
+  selectExercise() {
+    this.validatorsRequiredExercise = false;
+  }
+
+  selectModality() {
+    this.validatorsRequiredModality = false;
+  }
+
+  selectMode(mode) {
+    console.log(mode);
+    this.mode = mode;
+    switch (mode) {
+      case "Kgs":
+        this.checkedKgs = true;
+        break;
+      case "%":
+        this.checkedPercentage = true;
+        break;
+      case "RPE":
+        this.checkedRPE = true;
+        break;
+      case "RPEs":
+        this.checkedRPEs = true;
+        break;
+      case "None":
+        this.checkedKgs = false;
+        this.checkedNone = true;
+        break;
+      default:
+    }
   }
 
   changeValue() {
@@ -194,13 +254,22 @@ export class WodTemplateFormComponent implements OnInit {
   }
 
   save() {
-    this.wodMemberService.add(this.getWod(this.wod)).subscribe(() => {
-      console.log("success")
-      this.saveEvent.emit(this.date);
-      this.saved = true;
-    }, error => {
-      console.log(error)
-    })
+      var wod = this.getWod(this.wod);
+      wod.id = this.wod.id;
+      this.wodMemberService.update(wod).subscribe(
+        response => {
+          console.log(response);
+          console.log("success");
+          this.saved = true;
+          this.checkedKgs = false;
+          this.checkedPercentage = false;
+          this.checkedRPE = false;
+          this.checkedRPEs = false;
+          this.checkedNone = true;
+        }, error => {
+          console.log(error)
+        })
+   
   }
 
 

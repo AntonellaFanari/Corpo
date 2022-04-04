@@ -29,8 +29,8 @@ export class PeriodizationService {
     return this.http.post(this.url + 'api/periodization', periodization, httpOptions);
   }
 
-  public update(periodization) {
-    return this.http.put(this.url + 'api/periodization', periodization, httpOptions);
+  public update(periodization: Periodization, id: number) {
+    return this.http.put(this.url + 'api/periodization?id='+ id, periodization, httpOptions);
   }
 
   public delete(id) {

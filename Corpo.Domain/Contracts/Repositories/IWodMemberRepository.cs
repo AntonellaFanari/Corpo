@@ -18,5 +18,6 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<int> GetByPeriodizationIdByWeekNumber(int periodizationId, int weekNumber);
         Task<List<WodMemberAttendanceDto>> GetAttended(int id, int memberId);
         Task<List<WodMember>> GetByWeekNumber(int weekNumber, int periodizationId);
+        
     }
 }

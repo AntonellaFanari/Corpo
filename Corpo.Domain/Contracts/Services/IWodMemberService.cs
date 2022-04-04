@@ -9,7 +9,7 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IWodMemberService
     {
-        Task<DomainResponse> Add(WodMember wodMember);
+        Task<DomainResponse> Add(int id, int weekNumber, Periodization periodization);
         Task<DomainResponse> Update(WodMember wodMember);
         Task<DomainResponse> Delete(int id);
         Task<DomainResponse> GetAllWodMember(int id, DateTime from, DateTime to);
@@ -17,5 +17,7 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> AddRate(int id, int rate);
         Task<DomainResponse> GetAttended(int id, int memberId);
         Task<DomainResponse> GetByWeekNumber(int weekNumber, int memberId);
+        Task<DomainResponse> GetByPeriodizationIdWeekNumber(int id, int weekNumber);
+        Task<DomainResponse> DeleteWods(int periodizationId, int weekNumber);
     }
 }

@@ -90,8 +90,8 @@
     <None Remove="ClientApp\src\app\domain\user.ts" />
     <None Remove="ClientApp\src\app\domain\withdrawal-name.ts" />
     <None Remove="ClientApp\src\app\domain\withdrawal.ts" />
-    <None Remove="ClientApp\src\app\domain\wod-group-member.ts" />
     <None Remove="ClientApp\src\app\domain\wod-member.ts" />
+    <None Remove="ClientApp\src\app\domain\wod\intensity.ts" />
     <None Remove="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <None Remove="ClientApp\src\app\domain\wod\PeriodizationList.ts" />
     <None Remove="ClientApp\src\app\domain\wod\weekly-goal.ts" />
@@ -159,8 +159,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal-name.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\domain\wod-group-member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod-member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\intensity.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\PeriodizationList.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\weekly-goal.ts" />

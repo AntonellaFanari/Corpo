@@ -484,6 +484,24 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Injury");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.Intensity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Down")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Up")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Intensity");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.MedicalHistory", b =>
                 {
                     b.Property<int>("Id")
@@ -719,6 +737,9 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Goal")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Intensity")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -730,6 +751,9 @@ namespace Corpo.Data.Migrations
 
                     b.Property<bool>("Valid")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Volume")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -750,6 +774,9 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Goal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Intensity")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("M")
@@ -779,10 +806,16 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Tuesday")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Volume")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Wednesday")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("WeekNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WodTemplateId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

@@ -22,9 +22,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody] WodMember wodMember)
+        public async Task<ActionResult> Add(int id, int weekNumber, [FromBody] Periodization periodization)
         {
-            var response = await _wodMemberService.Add(wodMember);
+            var response = await _wodMemberService.Add(id, weekNumber, periodization);
             return this.ToActionResult(response);
         }
 
@@ -96,6 +96,20 @@ namespace Corpo.Web.Controllers
                 userId = memberId.Value;
             }
             var response = await _wodMemberService.GetByWeekNumber(weekNumber, userId);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("by-Week")]
+        public async Task<ActionResult<WodMember>> GetByPeriodizationIdWeekNumber(int id, int weekNumber)
+        {
+            var response = await _wodMemberService.GetByPeriodizationIdWeekNumber(id, weekNumber);
+            return this.ToActionResult(response);
+        }
+
+        [HttpDelete("delete-wods")]
+        public async Task<ActionResult> DeleteWods(int periodizationId, int weekNumber)
+        {
+            var response = await _wodMemberService.DeleteWods(periodizationId, weekNumber);
             return this.ToActionResult(response);
         }
     }

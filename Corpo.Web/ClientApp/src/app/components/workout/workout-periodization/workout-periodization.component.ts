@@ -9,8 +9,10 @@ import { Periodization, PeriodizationWeek } from 'src/app/domain/wod/periodizati
 import { MemberService } from 'src/app/services/member.service';
 import { PeriodizationService } from 'src/app/services/wod/periodization.service';
 import 'zone.js/dist/long-stack-trace-zone';
+import { Intensity } from '../../../domain/wod/intensity';
 import { MonthlyGoal } from '../../../domain/wod/monthly-goal';
 import { WeeklyGoal } from '../../../domain/wod/weekly-goal';
+import { IntensityService } from '../../../services/intensity.service';
 import { MonthlyGoalService } from '../../../services/monthly-goal.service';
 import { WeeklyGoalService } from '../../../services/weekly-goal.service';
 //import * as pluginDataLabels from 'chartjs-plugin-datalabels';
@@ -27,7 +29,9 @@ export class Week {
   saturday: string;
   sunday: string;
   goal?: string;
-  planned: string
+  planned: string;
+  volume: string;
+  intensity: string
 }
 
 export class Total {
@@ -47,10 +51,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false" };
-  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
-  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
-  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
+  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume:"", intensity: "" };
+  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
+  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
+  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -88,13 +92,25 @@ export class WorkoutPeriodizationComponent implements OnInit {
   weeklyGoals: WeeklyGoal[] = [];
   weeklyGoalsDropdownSettings: IDropdownSettings = {};
   trainings: number;
+  year: number;
+  month: number;
+  months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+  intensities: Intensity[] = [];
+  intensityMonthly = "";
+  selectedIntensityMonthly = 0;
+  selectedIntensityWeek1 = 0;
+  selectedIntensityWeek2 = 0;
+  selectedIntensityWeek3 = 0;
+  selectedIntensityWeek4 = 0;
+  volumeMonthly = "";
 
   constructor(private periodizacionService: PeriodizationService,
     private route: ActivatedRoute,
     private router: Router,
     private memberService: MemberService,
     private monthlyGoalService: MonthlyGoalService,
-    private weeklyGoalService: WeeklyGoalService) {
+    private weeklyGoalService: WeeklyGoalService,
+    private intensityService: IntensityService) {
     this.route.queryParams.subscribe(params => {
       this.memberId = parseInt(params['memberId'])
       memberService.getById(this.memberId).subscribe(data => {
@@ -102,6 +118,8 @@ export class WorkoutPeriodizationComponent implements OnInit {
       })
     });
     this.getPeriodization();
+    this.year = new Date().getFullYear();
+    this.month = new Date().getMonth()+1;
   }
 
 
@@ -153,10 +171,53 @@ export class WorkoutPeriodizationComponent implements OnInit {
       friday: friday,
       saturday: "Libre",
       sunday: "Libre",
-      planned: "false"
+      planned: "false",
+      volume: "",
+      intensity: ""
     };
 
 
+  }
+
+  getIntensities() {
+    this.intensityService.getAll().subscribe(
+      response => {
+        this.intensities = response.result;
+      },
+      error => console.error(error)
+    )
+  }
+
+  selectIntensity(id, type) {
+    let intensity = this.intensities.find(x => x.id == id);
+    switch (type) {
+      case 0:
+        this.selectedIntensityMonthly = id;
+        this.intensityMonthly = intensity.up + "x" + intensity.down;
+        console.log(this.intensityMonthly);
+        break;
+      case 1:
+        this.selectedIntensityWeek1 = id;
+        this.week1.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week1.intensity);
+        break;
+      case 2:
+        this.selectedIntensityWeek2 = id;
+        this.week2.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week2.intensity);
+        break;
+      case 3:
+        this.selectedIntensityWeek3 = id;
+        this.week3.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week3.intensity);
+        break;
+      case 4:
+        this.selectedIntensityWeek4 = id;
+        this.week4.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week4.intensity);
+        break;
+      default:
+    }
   }
 
   getType() {
@@ -184,6 +245,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getIntensities();
     this.getMonthlyGoals();
     this.monthlyGoalsDropdownSettings = {
       idField: 'id',
@@ -436,6 +498,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
     }
   }
 
+  selectMonth(month) {
+    this.month = month;
+  }
+
   render() {
     const labels = ["Weightlifting", "Strength", "Metabolic", "Gymnastic"];
     const data = {
@@ -524,10 +590,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
   }
 
   updateType() {
-    this[this.week][this.day] = this.type;
+    this[this.week][this.day] = this.getCheckedCheckboxes();
     var td = document.querySelector("#" + this.week + " td[day='" + this.day + "']");
     td.innerHTML = this[this.week][this.day];
-    var res = this.getWeekPercentage(this[this.week], this.week)
+/*    var res = this.getWeekPercentage(this[this.week], this.week)*/
 
     document.getElementById('modal-button').click();
     this.type = "";
@@ -747,6 +813,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
     var periodization = new Periodization();
     periodization.memberId = this.memberId;
     periodization.trainings = this.trainings;
+    periodization.month = this.month;
+    periodization.year = this.year;
+    periodization.volume = this.volumeMonthly;
+    periodization.intensity = this.intensityMonthly;
     console.log("week1: ", this.week1);
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week1));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week2));

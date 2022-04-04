@@ -114,8 +114,6 @@ import { WodTemplateComponent } from './components/workout/wod-template/wod-temp
 import { WodTemplateFormComponent } from './components/workout/wod-template/wod-template-form/wod-template-form.component';
 import { WorkoutPeriodizationComponent } from './components/workout/workout-periodization/workout-periodization.component';
 import { AssignmentListComponent } from './components/workout/assignment-list/assignment-list.component';
-import { AssignmentWodComponent } from './components/workout/assignment-wod/assignment-wod.component';
-import { AssignmentMemberComponent } from './components/workout/assignment-member/assignment-member.component';
 import { AssignmentTemplateComponent } from './components/workout/assignment-template/assignment-template.component';
 import { AssignmentTemplateFormComponent } from './components/workout/assignment-template-form/assignment-template-form.component';
 import { AssignmentCalendarComponent } from './components/workout/assignment-calendar/assignment-calendar.component';
@@ -138,6 +136,11 @@ import { MonthlyGoalListComponent } from './components/monthly-goal/monthly-goal
 import { WeeklyGoalListComponent } from './components/weekly-goal/weekly-goal-list/weekly-goal-list.component';
 import { WeeklyGoalCreateComponent } from './components/weekly-goal/weekly-goal-create/weekly-goal-create.component';
 import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-edit/weekly-goal-edit.component';
+import { AssignmentTemplateEditComponent } from './components/workout/assignment-template-edit/assignment-template-edit.component';
+import { IntensityCreateComponent } from './components/intensity/intensity-create/intensity-create.component';
+import { IntensityEditComponent } from './components/intensity/intensity-edit/intensity-edit.component';
+import { IntensityListComponent } from './components/intensity/intensity-list/intensity-list.component';
+import { SearchFilterIntensityPipe } from './pipes/search-filter-intensity.pipe';
 
 
 @NgModule({
@@ -246,8 +249,6 @@ import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-ed
     WorkoutPeriodizationComponent,
     IncomeDetailComponent,
     AssignmentListComponent,
-    AssignmentWodComponent,
-    AssignmentMemberComponent,
     AssignmentTemplateComponent,
     AssignmentTemplateFormComponent,
     AssignmentCalendarComponent,
@@ -266,7 +267,12 @@ import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-ed
     MonthlyGoalListComponent,
     WeeklyGoalListComponent,
     WeeklyGoalCreateComponent,
-    WeeklyGoalEditComponent
+    WeeklyGoalEditComponent,
+    AssignmentTemplateEditComponent,
+    IntensityCreateComponent,
+    IntensityEditComponent,
+    IntensityListComponent,
+    SearchFilterIntensityPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -296,6 +302,7 @@ import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-ed
       { path: 'periodizacion', component: WorkoutPeriodizationComponent },
       { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent },
       { path: 'editar-periodizacion', component: WorkoutPeriodizaionEditComponent },
+      { path: 'editar-asignacion-wod', component: AssignmentTemplateEditComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
@@ -378,7 +385,10 @@ import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-ed
       { path: 'objetivo-mensual-editar', component: MonthlyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'objetivos-semanales-list', component: WeeklyGoalListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'objetivo-semanal-crear', component: WeeklyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'objetivo-semanal-editar', component: WeeklyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } }
+      { path: 'objetivo-semanal-editar', component: WeeklyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
+      { path: 'intensidades-list', component: IntensityListComponent },
+      { path: 'intensidad-crear', component: IntensityCreateComponent },
+      { path: 'intensidad-editar', component: IntensityEditComponent }
     ])
   ],
   entryComponents: [

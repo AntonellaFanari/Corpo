@@ -13,29 +13,52 @@ namespace Corpo.Domain.Services
     {
         private IWodMemberRepository _wodMemberRepository;
         private IPeriodizationRepository _periodizationRepository;
+        private IWodTemplateRepository _wodTemplateRepository;
 
-        public WodMemberService(IWodMemberRepository wodMemberRepository, IPeriodizationRepository periodizationRepository)
+        public WodMemberService(IWodMemberRepository wodMemberRepository, IPeriodizationRepository periodizationRepository,
+            IWodTemplateRepository wodTemplateRepository)
         {
             _wodMemberRepository = wodMemberRepository;
             _periodizationRepository = periodizationRepository;
+            _wodTemplateRepository = wodTemplateRepository;
         }
 
-        public async Task<DomainResponse> Add(WodMember wodMember)
+        public async Task<DomainResponse> Add(int id, int weekNumber, Periodization periodization)
         {
             try
             {
-                var id = await _wodMemberRepository.Add(wodMember);
-                var wodsNumber = await _wodMemberRepository.GetByPeriodizationIdByWeekNumber(wodMember.PeriodizationId, wodMember.WeekNumber);
-                var periodization = await _periodizationRepository.GetById(wodMember.PeriodizationId);
-                if (wodsNumber == periodization.Trainings)
+                
+                var wodTemplate = await _wodTemplateRepository.GetById(id);
+                for (int i = 0; i < periodization.Trainings; i++)
                 {
-                    periodization.PeriodizationWeeks.FirstOrDefault(x => x.WeekNumber == wodMember.WeekNumber).Planned = "true";
-                    await _periodizationRepository.Update(periodization);
+                    var wodMember = new WodMember();
+                    wodMember.Goal = wodTemplate.Goal;
+                    wodMember.MemberId = periodization.MemberId;
+                    wodMember.PeriodizationId = periodization.Id;
+                    wodMember.WeekNumber = weekNumber;
+                    wodMember.WodNumber = (i + 1);
+                    wodMember.WodGroupsMember = new List<WodGroupMember>();
+                    foreach (var wodGroup in wodTemplate.WodGroups)
+                    {
+                        var wodGroupMember = new WodGroupMember();
+                        wodGroupMember.ExerciseId = wodGroup.ExerciseId;
+                        wodGroupMember.ModalityId = wodGroup.ModalityId;
+                        wodGroupMember.Detail = wodGroup.Detail;
+                        wodGroupMember.Units = wodGroup.Units;
+                        wodGroupMember.GroupIndex = wodGroup.GroupIndex;
+                        wodGroupMember.Mode = wodGroup.Mode;
+                        wodGroupMember.Value = wodGroup.Value;
+                        wodMember.WodGroupsMember.Add(wodGroupMember);
+                    }
+                    await _wodMemberRepository.Add(wodMember);
                 }
+                periodization.PeriodizationWeeks.FirstOrDefault(x => x.WeekNumber == weekNumber).Planned = "true";
+                await _periodizationRepository.Update(periodization);
+
                 return new DomainResponse
                 {
                     Success = true,
-                    Result = new {id}
+                    Result = new {id = id}
                 };
             }
             catch (Exception ex)
@@ -82,6 +105,12 @@ namespace Corpo.Domain.Services
             try
             {
                 var wodMemberQuery = await _wodMemberRepository.GetById(wodMember.Id);
+                wodMemberQuery.Goal = wodMember.Goal;
+                wodMemberQuery.PeriodizationId = wodMember.PeriodizationId;
+                wodMemberQuery.Rate = wodMember.Rate;
+                wodMemberQuery.WeekNumber = wodMember.WeekNumber;
+                wodMemberQuery.WodNumber = wodMember.WodNumber;
+                wodMemberQuery.Attended = wodMember.Attended;
                 wodMemberQuery.Detail = wodMember.Detail;
                 wodMemberQuery.MemberId = wodMember.MemberId;
                 wodMemberQuery.WodGroupsMember = wodMember.WodGroupsMember;
@@ -135,6 +164,33 @@ namespace Corpo.Domain.Services
             {
                 Success = true,
                 Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetByPeriodizationIdWeekNumber(int id, int weekNumber)
+        {
+            var response = await _wodMemberRepository.GetByWeekNumber(weekNumber, id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> DeleteWods(int periodizationId, int weekNumber)
+        {
+            var wods = await _wodMemberRepository.GetByWeekNumber(weekNumber, periodizationId);
+            foreach (var wod in wods)
+            {
+                await _wodMemberRepository.Delete(wod.Id);
+            }
+            var periodization = await _periodizationRepository.GetById(periodizationId);
+            periodization.PeriodizationWeeks.Find(x => x.WeekNumber == weekNumber).Planned = "false";
+            await _periodizationRepository.Update(periodization);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = periodization
             };
         }
     }

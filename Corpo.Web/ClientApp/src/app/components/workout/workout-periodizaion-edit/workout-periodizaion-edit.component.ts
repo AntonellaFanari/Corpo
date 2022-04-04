@@ -9,8 +9,10 @@ import { Periodization, PeriodizationWeek } from 'src/app/domain/wod/periodizati
 import { MemberService } from 'src/app/services/member.service';
 import { PeriodizationService } from 'src/app/services/wod/periodization.service';
 import 'zone.js/dist/long-stack-trace-zone';
+import { Intensity } from '../../../domain/wod/intensity';
 import { MonthlyGoal } from '../../../domain/wod/monthly-goal';
 import { WeeklyGoal } from '../../../domain/wod/weekly-goal';
+import { IntensityService } from '../../../services/intensity.service';
 import { MonthlyGoalService } from '../../../services/monthly-goal.service';
 import { WeeklyGoalService } from '../../../services/weekly-goal.service';
 //import * as pluginDataLabels from 'chartjs-plugin-datalabels';
@@ -27,7 +29,9 @@ export class Week {
   saturday: string;
   sunday: string;
   goal?: string;
-  planned: string
+  planned: string;
+  volume: string;
+  intensity: string
 }
 
 export class Total {
@@ -47,10 +51,10 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false" };
-  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
-  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
-  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false" };
+  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume: "", intensity: "" };
+  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
+  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
+  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -95,13 +99,25 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
   selectedWeek2Goals = [];
   selectedWeek3Goals = [];
   selectedWeek4Goals = [];
+  year: number;
+  month: number;
+  months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+  intensities: Intensity[] = [];
+  intensityMonthly = "";
+  selectedIntensityMonthly = 0;
+  selectedIntensityWeek1 = 0;
+  selectedIntensityWeek2 = 0;
+  selectedIntensityWeek3 = 0;
+  selectedIntensityWeek4 = 0;
+  volumeMonthly = "";
 
   constructor(private periodizacionService: PeriodizationService,
     private route: ActivatedRoute,
     private router: Router,
     private memberService: MemberService,
     private monthlyGoalService: MonthlyGoalService,
-    private weeklyGoalService: WeeklyGoalService) {
+    private weeklyGoalService: WeeklyGoalService,
+    private intensityService: IntensityService  ) {
     //this.route.queryParams.subscribe(params => {
     //  this.memberId = parseInt(params['memberId'])
     //  memberService.getById(this.memberId).subscribe(data => {
@@ -109,24 +125,49 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
     //  });
     this.route.queryParams.subscribe(params => {
       this.id = parseInt(params['id'])
-      periodizacionService.getById(this.id).subscribe(data => {
-        this.periodization = data.result;
-        console.log("LLego periodización", data);
-        this.trainings = this.periodization.trainings;
-        this.week1 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "1");
-        this.week2 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "2");
-        this.week3 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "3");
-        this.week4 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "4");
-        this.getMonthlyGoals();
-        this.getWeeklyGoals();
-        memberService.getById(this.periodization.memberId).subscribe(data => {
-          this.member = data;
-        });
-      })
+      
     });
+    this.getIntensities();
+    this.getPeriodizationById();
       this.getPeriodization();
   }
 
+  getPeriodizationById() {
+    this.periodizacionService.getById(this.id).subscribe(data => {
+      this.periodization = data.result;
+      console.log("LLego periodización", data);
+      this.trainings = this.periodization.trainings;
+      this.year = this.periodization.year;
+      this.month = this.periodization.month;
+      this.volumeMonthly = this.periodization.volume;
+      this.intensityMonthly = this.periodization.intensity;
+      this.selectedIntensityMonthly = this.getIntensityId(this.periodization.intensity);
+      this.week1 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "1");
+      this.selectedIntensityWeek1 = this.getIntensityId(this.week1.intensity);
+      this.week2 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "2");
+      this.selectedIntensityWeek2 = this.getIntensityId(this.week2.intensity);
+      this.week3 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "3");
+      this.selectedIntensityWeek3 = this.getIntensityId(this.week3.intensity);
+      this.week4 = this.periodization.periodizationWeeks.find(x => x.weekNumber == "4");
+      this.selectedIntensityWeek4 = this.getIntensityId(this.week4.intensity);
+      this.getMonthlyGoals();
+      this.getWeeklyGoals();
+      this.getMember();
+    })
+  }
+
+  getMember() {
+    this.memberService.getById(this.periodization.memberId).subscribe(data => {
+      this.member = data;
+    });
+  }
+
+  getIntensityId(intensity) {
+    let intensityValues = intensity.split("x");
+    let up = intensityValues[0];
+    let down = intensityValues[1];
+    return this.intensities.find(x => x.up == up && x.down == down).id;
+  }
 
   getPeriodization() {
     this.index = this.types.indexOf(this.periodizationInit)
@@ -170,10 +211,53 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
       friday: friday,
       saturday: "Libre",
       sunday: "Libre",
-      planned: "false"
+      planned: "false",
+      volume: "",
+      intensity: ""
     };
 
 
+  }
+
+  getIntensities() {
+    this.intensityService.getAll().subscribe(
+      response => {
+        this.intensities = response.result;
+      },
+      error => console.error(error)
+    )
+  }
+
+  selectIntensity(id, type) {
+    let intensity = this.intensities.find(x => x.id == id);
+    switch (type) {
+      case 0:
+        this.selectedIntensityMonthly = id;
+        this.intensityMonthly = intensity.up + "x" + intensity.down;
+        console.log(this.intensityMonthly);
+        break;
+      case 1:
+        this.selectedIntensityWeek1 = id;
+        this.week1.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week1.intensity);
+        break;
+      case 2:
+        this.selectedIntensityWeek2 = id;
+        this.week2.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week2.intensity);
+        break;
+      case 3:
+        this.selectedIntensityWeek3 = id;
+        this.week3.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week3.intensity);
+        break;
+      case 4:
+        this.selectedIntensityWeek4 = id;
+        this.week4.intensity = intensity.up + "x" + intensity.down;
+        console.log(this.week4.intensity);
+        break;
+      default:
+    }
   }
 
   getType() {
@@ -201,7 +285,7 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
   }
 
   ngOnInit() {
-/*    this.getMonthlyGoals();*/
+    /*    this.getMonthlyGoals();*/
     this.monthlyGoalsDropdownSettings = {
       idField: 'id',
       textField: 'goal',
@@ -259,6 +343,7 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
     this.monthlyGoalService.getAll().subscribe(
       response => {
         this.monthlyGoals = response.result;
+        this.monthlyGoal = this.periodization.goal;
         let goalsList = this.periodization.goal.split("-");
         for (var i = 0; i < goalsList.length; i++) {
           let goal = this.monthlyGoals.find(x => x.goal == goalsList[i]);
@@ -450,26 +535,31 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
         console.log(goal);
         let index = this.monthlyGoalsList.findIndex(x => x.id == goal.id);
         this.monthlyGoalsList.splice(index, 1);
+        this.monthlyGoal = this.getGoal(this.monthlyGoalsList);
         break;
       case 1:
         console.log(goal);
         let index1 = this.week1GoalsList.findIndex(x => x.id == goal.id);
         this.week1GoalsList.splice(index1, 1);
+        this.week1.goal = this.getGoal(this.week1GoalsList);
         break;
       case 2:
         console.log(goal);
         let index2 = this.week2GoalsList.findIndex(x => x.id == goal.id);
         this.week2GoalsList.splice(index2, 1);
+        this.week2.goal = this.getGoal(this.week2GoalsList);
         break;
       case 3:
         console.log(goal);
         let index3 = this.week3GoalsList.findIndex(x => x.id == goal.id);
         this.week3GoalsList.splice(index3, 1);
+        this.week3.goal = this.getGoal(this.week3GoalsList);
         break;
       case 4:
         console.log(goal);
         let index4 = this.week4GoalsList.findIndex(x => x.id == goal.id);
         this.week4GoalsList.splice(index4, 1);
+        this.week4.goal = this.getGoal(this.week4GoalsList);
         break;
       default:
     }
@@ -500,6 +590,24 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
       default:
     }
   }
+
+  getGoal(goals) {
+    let goal = "";
+    for (var i = 0; i < goals.length; i++) {
+      if (i == 0) {
+        goal = goals[i].goal;
+      } else {
+        goal = goal + "-" + goals[i].goal;
+      }
+    }
+    return goal;
+  }
+
+
+  selectMonth(month) {
+    this.month = month;
+  }
+
 
   render() {
     const labels = ["Weightlifting", "Strength", "Metabolic", "Gymnastic"];
@@ -553,7 +661,7 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
     console.log("weekName: ", weekName)
     console.log("week: ", this[weekName])
     this.init = selectedTd;
-    document.getElementById('modal-init-button').click();
+ /*   document.getElementById('modal-init-button').click();*/
     this.selectedWeek = weekName;
 
   }
@@ -589,10 +697,10 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
   }
 
   updateType() {
-    this[this.week][this.day] = this.type;
+    this[this.week][this.day] = this.getCheckedCheckboxes();
     var td = document.querySelector("#" + this.week + " td[day='" + this.day + "']");
     td.innerHTML = this[this.week][this.day];
-    var res = this.getWeekPercentage(this[this.week], this.week)
+/*    var res = this.getWeekPercentage(this[this.week], this.week)*/
 
     document.getElementById('modal-button').click();
     this.type = "";
@@ -617,8 +725,8 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
     var typeCount = 0;
     var types: Array<string> = [];
     Object.entries(week).forEach(([key, value]) => {
-      if ((value != "Libre") && (value != "")) {
-        var exercices = value.split("");
+      if ((value != "Libre") && (value != "") && (key != 'id') && (key != undefined)) {
+        var exercices = value.toString().split("");
         exercices.forEach(x => {
           res[x] = res[x] ? res[x] + (1 / (exercices.length)) : (1 / (exercices.length));
           if (types.indexOf(x) < 0)
@@ -632,7 +740,7 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
       var percentage = res[key] / typeCount * 100;
       this.values.push(percentage);
     })
-    this.renderTableChart(types, this.values, name);
+    //this.renderTableChart(types, this.values, name);
 
     return res;
   }
@@ -810,8 +918,13 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
 
   save() {
     var periodization = new Periodization();
-    periodization.memberId = this.memberId;
+    periodization.memberId = this.periodization.memberId;
     periodization.trainings = this.trainings;
+    periodization.valid = this.periodization.valid;
+    periodization.month = this.month;
+    periodization.year = this.year;
+    periodization.volume = this.volumeMonthly;
+    periodization.intensity = this.intensityMonthly;
     console.log("week1: ", this.week1);
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week1));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week2));
@@ -819,7 +932,7 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week4));
     periodization.goal = this.monthlyGoal;
     console.log(periodization)
-    this.periodizacionService.add(periodization).subscribe(() => {
+    this.periodizacionService.update(periodization, this.id).subscribe(() => {
       console.log("success")
       this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId } });
     })

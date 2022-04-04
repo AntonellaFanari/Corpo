@@ -77,7 +77,16 @@ namespace Corpo.Data.Repositories
 
         public Task<List<WodMember>> GetByWeekNumber(int weekNumber, int periodizationId)
         {
-            return _context.WodMember.Where(x => x.PeriodizationId == periodizationId && x.WeekNumber == weekNumber).Include(x => x.WodGroupsMember).ToListAsync();
+            return _context.WodMember.Where(x => x.PeriodizationId == periodizationId && x.WeekNumber == weekNumber)
+
+                .Include(x => x.WodGroupsMember)
+                .ThenInclude(x=>x.Exercise)
+
+                .Include(x => x.WodGroupsMember)
+                .ThenInclude(x => x.Modality)
+                .ToListAsync();
         }
+
+
     }
 }

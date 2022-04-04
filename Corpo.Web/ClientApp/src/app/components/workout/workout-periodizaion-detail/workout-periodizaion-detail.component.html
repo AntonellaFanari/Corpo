@@ -13,6 +13,18 @@
       <strong>{{periodization.trainings}}</strong>
     </div>
   </div>
+  <div class="card mb-3" *ngIf="periodization">
+    <div class="card-body">
+      <label class="label-goal">Volumen Mensual: </label>&nbsp;
+      <strong>{{periodization.volume}}</strong>
+    </div>
+  </div>
+  <div class="card mb-3" *ngIf="periodization">
+    <div class="card-body">
+      <label class="label-goal">Intensidad Mensual: </label>&nbsp;
+      <strong>{{periodization.intensity}}</strong>
+    </div>
+  </div>
 
   <div class="card mb-2" *ngFor="let week of periodization.periodizationWeeks">
     <h6 class="goal">Semana {{week.weekNumber}}</h6>
@@ -74,6 +86,14 @@
             </tbody>
           </table>
         </section>
+      </div>
+      <div class="card-body col-lg-6 btn-float-left">
+        <label class="label-goal">Volumen: </label>&nbsp;
+        <strong>{{week.volume}}</strong>
+      </div>
+      <div class="card-body col-lg-6 btn-float-right">
+        <label class="label-goal">Intensidad: </label>&nbsp;
+        <strong>{{week.intensity}}</strong>
       </div>
     </div>
 

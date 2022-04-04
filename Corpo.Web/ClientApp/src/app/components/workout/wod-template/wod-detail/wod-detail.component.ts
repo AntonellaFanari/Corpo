@@ -10,7 +10,7 @@ export class WodDetailComponent implements OnInit {
 
 
   @Input() wod: Wod;
-  @Input() date: string;
+  @Input() wodNumber: string;
   goalsList = [];
   constructor() { }
 

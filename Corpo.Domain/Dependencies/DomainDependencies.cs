@@ -41,6 +41,7 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<IPeriodizationService, PeriodizationService>();
             services.AddTransient<IMonthlyGoalService, MonthlyGoalService>();
             services.AddTransient<IWeeklyGoalService, WeeklyGoalService>();
+            services.AddTransient<IIntensityService, IntensityService>();
         }
     }
 }

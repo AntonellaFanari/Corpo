@@ -33,12 +33,12 @@ export class LoginComponent implements OnInit {
 
   logIn() {
     this.sent = true;
-    this.requestingLogin = true;
     if (this.formLogin.valid) {
+      this.requestingLogin = true;
       let account = new Account()
       {
         account.email = this.formLogin.value.email,
-        account.password = this.formLogin.value.password
+          account.password = this.formLogin.value.password
       };
       this.accountService.logIn(account).subscribe(
         result => {
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
           this.accountService.setLoggedUser(result.user);
           this.logueado = this.accountService.isAuthenticated();
           window.location.href = '/home';
-       },
+        },
         error => {
           this.requestingLogin = false;
           console.error(error);
@@ -59,6 +59,8 @@ export class LoginComponent implements OnInit {
             this.customAlertService.displayAlert("Gestión de Autenticación de Usuarios", ["Hubo un problema al intentar iniciar sesión."]);
           }
         });
+    } else {
+      this.customAlertService.displayAlert("Gestión de Autenticación de Usuarios", ["El Email ingresado no es correcto."]);
     }
     
   }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Domain.Services
 {
-    public class PeriodizationService: IPeriodizationService
+    public class PeriodizationService : IPeriodizationService
     {
         private IPeriodizationRepository _periodizationRepository;
 
@@ -22,18 +22,26 @@ namespace Corpo.Domain.Services
         {
             try
             {
-                var validPeriodization = await _periodizationRepository.GetValidByMemberId(periodization.MemberId);               
-                periodization.Valid = true;
-                await _periodizationRepository.Add(periodization);
-                if (validPeriodization != null)
+                var periodizationExists = await _periodizationRepository.GetExists(periodization.Year, periodization.Month, periodization.MemberId);
+                var validPeriodization = await _periodizationRepository.GetValidByMemberId(periodization.MemberId);
+                if (periodizationExists != null)
                 {
-                    validPeriodization.Valid = false;
-                    await _periodizationRepository.Update(validPeriodization);
-                };
-                return new DomainResponse
+                    return new DomainResponse(false, "No se puede guardar la periodización.", "Ya existe una periodización registrada para este periodo.");
+                }
+                else
                 {
-                    Success = true
-                };
+                    periodization.Valid = true;
+                    await _periodizationRepository.Add(periodization);
+                    if (validPeriodization != null)
+                    {
+                        validPeriodization.Valid = false;
+                        await _periodizationRepository.Update(validPeriodization);
+                    };
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
             }
             catch (Exception ex)
             {
@@ -51,8 +59,22 @@ namespace Corpo.Domain.Services
             };
         }
 
+        public async Task<DomainResponse> GetPeriodizationWeek(int id)
+        {
+            var response = await _periodizationRepository.GetByPeriodizationWeek(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
         public async Task<DomainResponse> GetByYear(int year, int id)
         {
+            if (year == 0)
+            {
+                year = DateTime.Now.Year;
+            }
             var response = await _periodizationRepository.GetByYear(year, id);
             return new DomainResponse
             {
@@ -73,23 +95,32 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> Update(int id, Periodization periodization)
         {
+
             try
             {
-                var periodizationQuery = await _periodizationRepository.GetById(id);
-                periodizationQuery.Goal = periodization.Goal;
-                periodizationQuery.MemberId = periodization.MemberId;
-                periodizationQuery.Valid = periodization.Valid;
-                periodizationQuery.Trainings = periodization.Trainings;
-                periodizationQuery.Year = periodization.Year;
-                periodizationQuery.Month = periodization.Month;
-                periodizationQuery.Volume = periodization.Volume;
-                periodizationQuery.Intensity = periodization.Intensity;
-                periodizationQuery.PeriodizationWeeks = periodization.PeriodizationWeeks;
-                await _periodizationRepository.Update(periodizationQuery);
-                return new DomainResponse
+                var periodizationExists = await _periodizationRepository.GetExists(periodization.Year, periodization.Month, periodization.MemberId);
+                if (periodizationExists != null && periodizationExists.Id != periodization.Id)
                 {
-                    Success = true
-                };
+                    return new DomainResponse(false, "No se puede guardar la periodización.", "Ya existe una periodización registrada para este periodo.");
+                }
+                else
+                {
+                    var periodizationQuery = await _periodizationRepository.GetById(id);
+                    periodizationQuery.Goal = periodization.Goal;
+                    periodizationQuery.MemberId = periodization.MemberId;
+                    periodizationQuery.Valid = periodization.Valid;
+                    periodizationQuery.Trainings = periodization.Trainings;
+                    periodizationQuery.Year = periodization.Year;
+                    periodizationQuery.Month = periodization.Month;
+                    periodizationQuery.Volume = periodization.Volume;
+                    periodizationQuery.TrainingSystem = periodization.TrainingSystem;
+                    periodizationQuery.PeriodizationWeeks = periodization.PeriodizationWeeks;
+                    await _periodizationRepository.Update(periodizationQuery);
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
             }
             catch (Exception ex)
             {

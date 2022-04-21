@@ -46,10 +46,21 @@
     text-align: center;
   }
 
-  @media screen and (min-width: 800px) {
-  
-      td {
+  .hide-percentage{
+      display : none;
+  }
+
+.validators{
+    color: red;
+    display: block;
+}
+
+.hide-validators{
+    display: none;
+}
+
+@media screen and (min-width: 800px) {
+  td {
           width: 14%;
         }
   }
-  

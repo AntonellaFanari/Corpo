@@ -1,4 +1,5 @@
 import { WodGroupMember } from "./wod-group-member";
+import { IntensityType } from "./wod/periodization";
 
 export class WodMember {
   id?: number;
@@ -9,5 +10,8 @@ export class WodMember {
   periodizationId: number;
   weekNumber: number;
   wodNumber: number;
-  attended: string
+  attended: string;
+  rate: number;
+  intensityType: IntensityType;
+  intensity: number
 }

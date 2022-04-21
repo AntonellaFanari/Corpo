@@ -25,6 +25,14 @@ namespace Corpo.Domain.Models
         public string Planned { get; set; }
         public int WodTemplateId { get; set; }
         public string Volume { get; set; }
-        public string Intensity { get; set; }
+        public string TrainingSystem { get; set; }
+        public IntensityType IntensityType { get; set; }
+        public int Intensity { get; set; }
+    }
+
+    public enum IntensityType
+    {
+        PSE = 1,
+        PFM = 2
     }
 }

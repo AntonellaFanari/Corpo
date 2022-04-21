@@ -63,7 +63,12 @@ namespace Corpo.Data
         public DbSet<GeneralSetting> GeneralSetting { get; set; }
         public DbSet<MonthlyGoal> MonthlyGoal { get; set; }
         public DbSet<WeeklyGoal> WeeklyGoal { get; set; }
-        public DbSet<Intensity> Intensity { get; set; }
-
+        public DbSet<TrainingSystem> TrainingSystem { get; set; }
+        public DbSet<TestTemplate> TestTemplate { get; set; }
+        public DbSet<TestExercise> TestExercise { get; set; }
+        public DbSet<TestMember> TestMember { get; set; }
+        public DbSet<TestHeartRateExercise> TestHeartRateExercise { get; set; }
+        public DbSet<TestRepetitionExercise> TestRepetitionExercise { get; set; }
+        public DbSet<TestVideoExercise> TestVideoExercise { get; set; }
     }
 }

@@ -484,24 +484,6 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Injury");
                 });
 
-            modelBuilder.Entity("Corpo.Domain.Models.Intensity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Down")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Up")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Intensity");
-                });
-
             modelBuilder.Entity("Corpo.Domain.Models.MedicalHistory", b =>
                 {
                     b.Property<int>("Id")
@@ -737,14 +719,14 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Goal")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Intensity")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");
+
+                    b.Property<string>("TrainingSystem")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Trainings")
                         .HasColumnType("int");
@@ -776,8 +758,11 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Goal")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Intensity")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Intensity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IntensityType")
+                        .HasColumnType("int");
 
                     b.Property<int>("M")
                         .HasColumnType("int");
@@ -801,6 +786,9 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Thursday")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingSystem")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tuesday")
@@ -1068,6 +1056,176 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Tag");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.TestExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Minutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Seconds")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestTemplateId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestTemplateId");
+
+                    b.ToTable("TestExercise");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestHeartRateExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FinalHeartRate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InitialHeartRate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestExerciseId");
+
+                    b.HasIndex("TestMemberId");
+
+                    b.ToTable("TestHeartRateExercise");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TestMember");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestRepetitionExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FinalHeartRate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InitialHeartRate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Repetitions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestExerciseId");
+
+                    b.HasIndex("TestMemberId");
+
+                    b.ToTable("TestRepetitionExercise");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TestTemplate");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestVideoExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TestExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestExerciseId");
+
+                    b.HasIndex("TestMemberId");
+
+                    b.ToTable("TestVideoExercise");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TrainingSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Down")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Up")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainingSystem");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -1263,6 +1421,12 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("Goal")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Intensity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IntensityType")
+                        .HasColumnType("int");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -1270,6 +1434,9 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rest")
                         .HasColumnType("int");
 
                     b.Property<int>("WeekNumber")
@@ -1594,6 +1761,74 @@ namespace Corpo.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.TestExercise", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.TestTemplate", "TestTemplate")
+                        .WithMany("TestExercises")
+                        .HasForeignKey("TestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestTemplate");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestHeartRateExercise", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.TestExercise", "TestExercise")
+                        .WithMany()
+                        .HasForeignKey("TestExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.TestMember", "TestMember")
+                        .WithMany("TestHeartRateExercises")
+                        .HasForeignKey("TestMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestExercise");
+
+                    b.Navigation("TestMember");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestRepetitionExercise", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.TestExercise", "TestExercise")
+                        .WithMany()
+                        .HasForeignKey("TestExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.TestMember", "TestMember")
+                        .WithMany("TestRepetitionExercises")
+                        .HasForeignKey("TestMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestExercise");
+
+                    b.Navigation("TestMember");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestVideoExercise", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.TestExercise", "TestExercise")
+                        .WithMany()
+                        .HasForeignKey("TestExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Corpo.Domain.Models.TestMember", "TestMember")
+                        .WithMany("TestVideoExercises")
+                        .HasForeignKey("TestMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestExercise");
+
+                    b.Navigation("TestMember");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.User", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Account", "Account")
@@ -1738,6 +1973,20 @@ namespace Corpo.Data.Migrations
             modelBuilder.Entity("Corpo.Domain.Models.Sale", b =>
                 {
                     b.Navigation("DetailsSale");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestMember", b =>
+                {
+                    b.Navigation("TestHeartRateExercises");
+
+                    b.Navigation("TestRepetitionExercises");
+
+                    b.Navigation("TestVideoExercises");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.TestTemplate", b =>
+                {
+                    b.Navigation("TestExercises");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.WodMember", b =>

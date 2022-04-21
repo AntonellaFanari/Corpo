@@ -21,6 +21,18 @@
   padding: 30px;
 }
 
+.hide-percentage {
+  display: none;
+}
+
+.validators {
+  color: red;
+  display: block;
+}
+
+.hide-validators {
+  display: none;
+}
 
 input[type="radio"] {
   width: 1.15em;

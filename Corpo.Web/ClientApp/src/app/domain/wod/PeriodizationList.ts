@@ -1,3 +1,5 @@
+import { IntensityType } from "./periodization";
+
 export class PeriodizationList {
   memberId: number;
   month: number;
@@ -6,7 +8,7 @@ export class PeriodizationList {
   goal?: string[];
   trainings: number;
   volume: string;
-  intensity: string
+  trainingSystem: string;
 }
 
 export class PeriodizationWeekList {
@@ -23,5 +25,8 @@ export class PeriodizationWeekList {
   goals: string[];
   planned: string;
   volume: string;
-  intensity: string
+  intensity: number;
+  intensityType: IntensityType;
+  trainingSystem: string;
+  periodizationId: number
 }

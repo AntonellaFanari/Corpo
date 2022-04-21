@@ -8,6 +8,7 @@ import { PeriodizationService } from 'src/app/services/wod/periodization.service
 import { MemberView } from '../../../domain/member-view';
 import { Wod, WodGroup, WodTemplate, wodTemplateResponse } from '../../../domain/wod';
 import { WodMember } from '../../../domain/wod-member';
+import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 import { WodMemberService } from '../../../wod/wod-member.service';
 import { WodTemplateService } from '../../../wod/wod-template.service';
@@ -50,7 +51,8 @@ export class AssignmentTemplateComponent implements OnInit {
     private periodizationService: PeriodizationService,
     private wodMemberService: WodMemberService,
     private render2: Renderer2,
-    private router: Router) {
+    private router: Router,
+    private customAlertService: CustomAlertService) {
 
   }
 
@@ -64,9 +66,7 @@ export class AssignmentTemplateComponent implements OnInit {
     });
     this.getPeriodization();
 
-    this.requestingList = true;
     this.wodTemplateService.getAll().subscribe((data) => {
-      this.requestingList = false;
       this.wodTemplates = data.result;
       this.getMember();
     }, e => {
@@ -77,18 +77,20 @@ export class AssignmentTemplateComponent implements OnInit {
   }
 
   getPeriodization() {
-    this.requestingPeriodization = true;
 
     this.periodizationService.getByMemberId(this.memberId).subscribe(data => {
       console.log("periodization", data.result);
-      this.requestingPeriodization = false;
-      this.periodization = data.result;
-      //this.weekNumber = parseInt(this.periodization.periodizationWeeks.find(x => x.planned == "false").weekNumber);
+      if (data.result != null) {
+        this.periodization = data.result;
+        //this.weekNumber = parseInt(this.periodization.periodizationWeeks.find(x => x.planned == "false").weekNumber);
+        this.getWeekPlanned();
+      }
+
       this.requestingAssignment = false;
-      this.getWeekPlanned();
 
     }, error => {
-      this.requestingPeriodization = false;
+
+      this.requestingAssignment = false;
     })
   }
 
@@ -145,13 +147,26 @@ export class AssignmentTemplateComponent implements OnInit {
   //}
 
   getById(id: number) {
-    this.wodMemberService.add(id, this.weekNumber, this.periodization).subscribe(
-      response => {
-        console.log("wods guardados");
-        this.router.navigate(['/editar-asignacion-wod'], { queryParams: { id: this.periodization.id, week: this.weekNumber, memberId: this.periodization.memberId } });
-      },
-      error => console.error(error)
-    )
+    console.log(this.weekNumber);
+    if (this.periodization && this.weekNumber>0) {
+      this.requestingAssignment = true;
+      this.wodMemberService.add(id, this.weekNumber, this.periodization).subscribe(
+        response => {
+          this.requestingAssignment = false;
+          console.log("wods guardados");
+          this.router.navigate(['/editar-asignacion-wod'], { queryParams: { id: this.periodization.id, week: this.weekNumber, memberId: this.periodization.memberId } });
+        },
+        error => console.error(error)
+      )
+    } else {
+      if (!this.periodization) {
+        this.customAlertService.displayAlert("Gestion de Periodizacioness", ["Debe crear la periodización."]);
+      } else {
+        this.customAlertService.displayAlert("Gestion de Periodizacioness", ["Debe seleccionar una semana."]);
+      }
+     
+    }
+   
 
   }
 

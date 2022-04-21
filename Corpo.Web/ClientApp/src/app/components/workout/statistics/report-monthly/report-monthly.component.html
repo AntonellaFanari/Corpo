@@ -1,0 +1,27 @@
+<section class="wrapper" *ngIf="periodization">
+  <div class="task-panel " *ngIf="member">
+    <h4 class="table-title text-center">{{member.lastName}} {{member.name}} - {{getMonth(periodization.month)}}</h4>
+  </div>
+  <hr />
+  <div class="card-body">
+    <div class="month text-center">
+      <div>Objetivo: {{periodization.goal}}</div>
+    </div>
+    <div class="row mt-3 week-container">
+      <div class="col-12 mt-3" *ngFor="let periodizationWeek of periodization.periodizationWeeks">
+        <div [ngClass]="periodizationWeek.planned == 'true' ? 'week-planned': 'week-not-planned'"
+             class="text-center cursor-pointer" [routerLink]="['/reporte-semanal']" [queryParams]="{id: periodizationWeek.id, memberId: periodization.memberId}">
+          <h6>semana {{periodizationWeek.weekNumber}}</h6>
+          <p class="goal-text">Objetivo: {{periodizationWeek.goal}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="wrapper">
+    <canvas #barCanvas1 style="position: relative; height:20vh; width:40vw"></canvas>
+  </section>
+  <div class="container">
+    <button type="button" class="btn btn-secondary col-3 col-lg-2 btn-float-left btn-create" [routerLink]="['/reporte-anual']" [queryParams]="{id: periodization.memberId}">Volver</button>
+  </div>
+
+</section>

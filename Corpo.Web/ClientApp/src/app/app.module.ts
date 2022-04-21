@@ -137,10 +137,20 @@ import { WeeklyGoalListComponent } from './components/weekly-goal/weekly-goal-li
 import { WeeklyGoalCreateComponent } from './components/weekly-goal/weekly-goal-create/weekly-goal-create.component';
 import { WeeklyGoalEditComponent } from './components/weekly-goal/weekly-goal-edit/weekly-goal-edit.component';
 import { AssignmentTemplateEditComponent } from './components/workout/assignment-template-edit/assignment-template-edit.component';
-import { IntensityCreateComponent } from './components/intensity/intensity-create/intensity-create.component';
-import { IntensityEditComponent } from './components/intensity/intensity-edit/intensity-edit.component';
-import { IntensityListComponent } from './components/intensity/intensity-list/intensity-list.component';
 import { SearchFilterIntensityPipe } from './pipes/search-filter-intensity.pipe';
+import { StatisticsWodMemberComponent } from './components/workout/statistics/statistics-wod-member/statistics-wod-member.component';
+import { StatisticsPeriodizationComponent } from './components/workout/statistics/statistics-periodization/statistics-periodization.component';
+import { StatisticsMenuComponent } from './components/workout/statistics/statistics-menu/statistics-menu.component';
+import { ReportMonthlyComponent } from './components/workout/statistics/report-monthly/report-monthly.component';
+import { ReportWeeklyComponent } from './components/workout/statistics/report-weekly/report-weekly.component';
+import { ReportAnnualComponent } from './components/workout/statistics/report-annual/report-annual.component';
+import { TrainingSystemCreateComponent } from './components/training-system/training-system-create/training-system-create.component';
+import { TrainingSystemEditComponent } from './components/training-system/training-system-edit/training-system-edit.component';
+import { TrainingSystemListComponent } from './components/training-system/training-system-list/training-system-list.component';
+import { SearchFilterTrainingSystemPipe } from './pipes/search-filter-training-system.pipe';
+import { TestTemplateCreateComponent } from './components/test-template/test-template-create/test-template-create.component';
+import { TestTemplateEditComponent } from './components/test-template/test-template-edit/test-template-edit.component';
+import { TestTemplateListComponent } from './components/test-template/test-template-list/test-template-list.component';
 
 
 @NgModule({
@@ -269,10 +279,20 @@ import { SearchFilterIntensityPipe } from './pipes/search-filter-intensity.pipe'
     WeeklyGoalCreateComponent,
     WeeklyGoalEditComponent,
     AssignmentTemplateEditComponent,
-    IntensityCreateComponent,
-    IntensityEditComponent,
-    IntensityListComponent,
-    SearchFilterIntensityPipe
+    SearchFilterIntensityPipe,
+    StatisticsWodMemberComponent,
+    StatisticsPeriodizationComponent,
+    StatisticsMenuComponent,
+    ReportMonthlyComponent,
+    ReportWeeklyComponent,
+    ReportAnnualComponent,
+    TrainingSystemCreateComponent,
+    TrainingSystemEditComponent,
+    TrainingSystemListComponent,
+    SearchFilterTrainingSystemPipe,
+    TestTemplateCreateComponent,
+    TestTemplateEditComponent,
+    TestTemplateListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -303,6 +323,12 @@ import { SearchFilterIntensityPipe } from './pipes/search-filter-intensity.pipe'
       { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent },
       { path: 'editar-periodizacion', component: WorkoutPeriodizaionEditComponent },
       { path: 'editar-asignacion-wod', component: AssignmentTemplateEditComponent },
+      { path: 'estadisticas', component: StatisticsMenuComponent },
+      { path: 'estadisticas-wod', component: StatisticsWodMemberComponent },
+      { path: 'estadisticas-periodizaciones', component: StatisticsPeriodizationComponent },
+      { path: 'reporte-mensual', component: ReportMonthlyComponent },
+      { path: 'reporte-semanal', component: ReportWeeklyComponent },
+      { path: 'reporte-anual', component: ReportAnnualComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
@@ -386,9 +412,12 @@ import { SearchFilterIntensityPipe } from './pipes/search-filter-intensity.pipe'
       { path: 'objetivos-semanales-list', component: WeeklyGoalListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'objetivo-semanal-crear', component: WeeklyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
       { path: 'objetivo-semanal-editar', component: WeeklyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'intensidades-list', component: IntensityListComponent },
-      { path: 'intensidad-crear', component: IntensityCreateComponent },
-      { path: 'intensidad-editar', component: IntensityEditComponent }
+      { path: 'sistemas-entrenamiento-list', component: TrainingSystemListComponent },
+      { path: 'sistema-entrenamiento-crear', component: TrainingSystemCreateComponent },
+      { path: 'sistema-entrenamiento-editar', component: TrainingSystemEditComponent },
+      { path: 'test-templates-list', component: TestTemplateListComponent },
+      { path: 'test-template-crear', component: TestTemplateCreateComponent },
+      { path: 'test-template-editar', component: TestTemplateEditComponent }
     ])
   ],
   entryComponents: [

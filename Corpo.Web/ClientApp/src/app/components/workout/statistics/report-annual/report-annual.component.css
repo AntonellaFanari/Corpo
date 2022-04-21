@@ -1,0 +1,25 @@
+.week-planned {
+  background-color: #008b24;
+  border-radius: 4px;
+  color: white;
+}
+
+.week-not-planned {
+  background-color: #d20e0ed9;
+  border-radius: 4px;
+  color: white;
+}
+
+.month {
+  background-color: #94e494;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+ion-card.card-chart {
+  background-color: #e6e6e6;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

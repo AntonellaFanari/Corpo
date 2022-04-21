@@ -1,12 +1,12 @@
 <!-- Page Content -->
-<section class="wrapper">
-  <div class="task-panel ">
+<section class="wrapper"  >
+  <div class="task-panel " *ngIf="!requestingAssignment && periodization">
     <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD</h4>
   </div>
-  <hr />
+  <hr *ngIf="!requestingAssignment && periodization" />
   <section class="wrapper" >
     <div class="row">
-      <div class="col-12 col-lg-8 "  *ngIf="!requestingAssignment && periodization">
+      <div class="col-12 col-lg-8 " *ngIf="!requestingAssignment && periodization">
 
         <mat-tab-group [class.d-none]="wods.length == 0">
           <mat-tab label="Wod Nº {{newWod.wodNumber}}" *ngFor="let newWod of wods">
@@ -25,8 +25,7 @@
           Vista previa
         </button>
 
-        <button class="btn btn-success w-100 mt-3 mb-3" type="button" data-toggle="modal" href="#modal"
-                *ngIf="!requestingAssignment && periodization">
+        <button *ngIf="!requestingAssignment && periodization" class="btn btn-success w-100 mt-3 mb-3" type="button" data-toggle="modal" href="#modal">
           Periodización
         </button>
 
@@ -43,24 +42,27 @@
           Volver
         </button>
 
-        <label class="control-label">Seleccionar Semana:</label>
-        <div class="formValidators">
-          <select class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)">
-            <option disabled value="0">Seleccionar</option>
-            <option class="week-option week-not-planned" value="1">1</option>
-            <option class="week-option week-not-planned" value="2">2</option>
-            <option class="week-option week-not-planned" value="3">3</option>
-            <option class="week-option week-not-planned" value="4">4</option>
-          </select>
+        <div [ngClass]="{'hide': display }" >
+          <label class="control-label">Seleccionar Semana:</label>
+          <div class="formValidators">
+            <select id="select-week" class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)">
+              <option disabled value="0">Seleccionar</option>
+              <option class="week-option week-not-planned" value="1">1</option>
+              <option class="week-option week-not-planned" value="2">2</option>
+              <option class="week-option week-not-planned" value="3">3</option>
+              <option class="week-option week-not-planned" value="4">4</option>
+            </select>
+          </div>
         </div>
       </div>
 
     </div>
   </section>
+  </section>
 
 
 
-  <div class="w-100 text-center" *ngIf="requestingAssignment && !periodization">
+  <div class="w-100 text-center" *ngIf="requestingAssignment">
     <div class="spinner-border text-success" role="status">
       <span class="sr-only">Loading...</span>
     </div>
@@ -137,4 +139,3 @@
       </div>
     </div>
   </div>
-</section>

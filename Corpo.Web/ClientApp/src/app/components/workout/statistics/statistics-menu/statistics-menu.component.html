@@ -1,0 +1,19 @@
+<section class="wrapper">
+  <div class="container">
+    <div class="task-panel ">
+      <h4 class="table-title text-center" *ngIf="member">Estadisticas de {{member.lastName}} {{member.name}}</h4>
+    </div>
+    <hr />
+    <div class="row mt-2">
+      <div class="col-4 col-lg-3">
+        <button type="button" class="btn btn-outline-primary btn-block" [routerLink]="['/estadisticas-wod']" [queryParams]="{id: memberId}">Asistencias</button>
+      </div>
+      <div class="col-4 col-lg-3">
+        <button type="button" class="btn btn-outline-primary btn-block" [routerLink]="['/reporte-anual']" [queryParams]="{id: memberId}">Reporte Anual</button>
+      </div>
+    </div>
+  </div>
+  <!--<div class="card">
+
+  </div>-->
+</section>

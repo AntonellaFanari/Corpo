@@ -1,5 +1,6 @@
 import { Exercise } from "./exercise";
 import { Modality } from "./wod/modality";
+import { IntensityType } from "./wod/periodization";
 
 export class WodGroup {
   groupIndex: string;
@@ -39,6 +40,8 @@ export class Wod {
   goal: string;
   wodGroups: WodGroup[] = [];
   mode: string;
+  intensityType: IntensityType;
+  intensity: number;
 
   addGroup(wodGroup: WodGroup) {
 
@@ -55,6 +58,8 @@ export class WodTemplate {
   id: number;
   name: string;
   goal: string;
+  intensityType: IntensityType;
+  intensity: number;
   wodGroups: wodTemplateGroup[] = [];
 
   constructor(wod: Wod) {
@@ -79,6 +84,8 @@ export class WodTemplate {
 export class wodTemplateResponse {
   name: string;
   goal?: string;
+  intensityType: IntensityType;
+  intensity: number;
   wodGroups: wodTemplateGroupResponse[] = [];
   id: number;
   getWod(): Wod {

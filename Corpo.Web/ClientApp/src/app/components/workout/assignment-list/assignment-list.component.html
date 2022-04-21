@@ -27,7 +27,8 @@
               <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
               <td class="td-title td-padding-action" data-title="Acción">
                 <div class="text-center">
-                  <button class="btn btn-primary btn-action-list" (click)="getAssignment(member.id)">WOD</button>
+                  <button class="btn btn-primary btn-action-list me-2" (click)="getAssignment(member.id)">WOD</button>
+                  <button class="btn btn-warning btn-action-list text-white" [routerLink]="['/reporte-anual']" [queryParams]="{id: member.id}">Estadisticas</button>
                 </div>
               </td>
             </tr>

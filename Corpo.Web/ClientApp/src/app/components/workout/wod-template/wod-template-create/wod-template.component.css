@@ -164,3 +164,11 @@ input[type="radio"] {
   margin-left: 40px;
   margin-right: 10px;
 }
+
+.validators {
+  font-size: 13px;
+  color: red;
+}
+.hide-validators {
+  display: none;
+}

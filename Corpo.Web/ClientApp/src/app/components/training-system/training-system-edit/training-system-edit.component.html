@@ -1,0 +1,40 @@
+<section class="wrapper">
+  <div class="container-fluid modal-content modal-lg p-0">
+    <header class="modal-header d-block bg-success"><h3 class="mb text-center text-white">Editar Sistema de Entrenamiento</h3></header>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <form [formGroup]="formEdit">
+            <div class="col-12 card">
+              <div class="row card-body justify-content-center align-items-center">
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <label class="col-12 control-label">A:</label>
+                    <div class="col-12 formValidators">
+                      <input type="text" class="form-control" formControlName="up">
+                      <p *ngIf="sendForm && f.up.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <label class="col-12 control-label">B:</label>
+                    <div class="col-12 formValidators">
+                      <input type="text" class="form-control" formControlName="down">
+                      <p *ngIf="sendForm && f.down.errors?.required">*el campo es requerido</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid modal-lg div-btn-create">
+    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/sistemas-entrenamiento-list']">Cancelar</button>
+    <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
+  </div>
+</section>
+
+
+

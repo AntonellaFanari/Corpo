@@ -21,8 +21,8 @@
   </div>
   <div class="card mb-3" *ngIf="periodization">
     <div class="card-body">
-      <label class="label-goal">Intensidad Mensual: </label>&nbsp;
-      <strong>{{periodization.intensity}}</strong>
+      <label class="label-goal">Sistema de Entrenamiento: </label>&nbsp;
+      <strong>{{periodization.trainingSystem}}</strong>
     </div>
   </div>
 
@@ -87,13 +87,18 @@
           </table>
         </section>
       </div>
-      <div class="card-body col-lg-6 btn-float-left">
+      <div class="card-body col-lg-3 btn-float-left">
         <label class="label-goal">Volumen: </label>&nbsp;
         <strong>{{week.volume}}</strong>
       </div>
-      <div class="card-body col-lg-6 btn-float-right">
+      <div class="card-body col-lg-3 btn-float-left">
         <label class="label-goal">Intensidad: </label>&nbsp;
         <strong>{{week.intensity}}</strong>
+        <strong [ngClass]="{'hide-percentage': week.intensityType == '1'}">%</strong>
+      </div>
+      <div class="card-body col-lg-6 btn-float-right">
+        <label class="label-goal">Sistema de Entrenamiento: </label>&nbsp;
+        <strong>{{week.trainingSystem}}</strong>
       </div>
     </div>
 

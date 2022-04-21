@@ -72,7 +72,16 @@ namespace Corpo.Web.Controllers
             {
                 userId = memberId.Value;
             }
+            
             var response = await _periodizationService.GetByYear(year, userId);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("by-periodization-week")]
+        public async Task<ActionResult<Periodization>> GetPeriodizationWeek(int id)
+        {
+            
+            var response = await _periodizationService.GetPeriodizationWeek(id);
             return this.ToActionResult(response);
         }
     }

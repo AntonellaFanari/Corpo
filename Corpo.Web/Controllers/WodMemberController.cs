@@ -58,16 +58,17 @@ namespace Corpo.Web.Controllers
         }
 
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult> AddRate(int id, int rate)
+        [HttpPut("rate")]
+        public async Task<ActionResult> UpdateRate(int id, int rate)
         {
-            var response = await _wodMemberService.AddRate(id, rate);
+            var response = await _wodMemberService.UpdateRate(id, rate);
             return this.ToActionResult(response);
         }
 
         [HttpGet("attended/{periodizationId}")]
         public async Task<ActionResult> GetAttended(int periodizationId, int? memberId)
         {
+           
             int userId = 0;
             if (memberId == null)
             {
@@ -110,6 +111,30 @@ namespace Corpo.Web.Controllers
         public async Task<ActionResult> DeleteWods(int periodizationId, int weekNumber)
         {
             var response = await _wodMemberService.DeleteWods(periodizationId, weekNumber);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("attendance-by-year")]
+        public async Task<ActionResult> GetAttendanceByYear(int year, int? memberId)
+        {
+            int userId = 0;
+            if (memberId == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = memberId.Value;
+            }
+            var response = await _wodMemberService.GetAttendanceByYear(year, userId);
+            return this.ToActionResult(response);
+        }
+
+        [HttpPut("rest")]
+        public async Task<ActionResult> UpdateRest(int id, int rest)
+        {
+            var response = await _wodMemberService.UpdateRest(id, rest);
             return this.ToActionResult(response);
         }
     }

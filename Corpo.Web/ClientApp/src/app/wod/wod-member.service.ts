@@ -52,4 +52,12 @@ export class WodMemberService {
   public deleteWods(periodizationId: number, weekNumber: number) {
     return this.http.delete<DomainResponse<any>>(this.url + 'api/wod-member/delete-wods?periodizationId=' + periodizationId + '&weekNumber=' + weekNumber);
   }
+
+  public getAttended(periodizationId: number, memberId: number) {
+    return this.http.get<DomainResponse<any>>(this.url + 'api/wod-member/attended/' + periodizationId + '?memberId=' + memberId);
+  }
+
+  public getAttendancesByYear(year: number, memberId: number) {
+    return this.http.get<DomainResponse<any>>(this.url + 'api/wod-member/attendance-by-year?year=' + year + '&memberId=' + memberId);
+  }
 }

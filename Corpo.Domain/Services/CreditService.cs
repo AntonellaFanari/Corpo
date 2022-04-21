@@ -37,12 +37,16 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse UpdateRecharge(Credit credit)
+        public async  Task<DomainResponse> UpdateRecharge(Credit credit)
         {
-
+            var creditQuery = await _creditRepository.GetById(credit.Id);
+            creditQuery.Expiration = credit.Expiration;
+            creditQuery.FirstDay = credit.FirstDay;
+            creditQuery.InitialCredit = credit.InitialCredit;
+            creditQuery.Negative = credit.Negative;
             try
             {
-                _creditRepository.Update(credit);
+                _creditRepository.Update(creditQuery);
                 return new DomainResponse
                 {
                     Success = true

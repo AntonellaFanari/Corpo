@@ -37,9 +37,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("update-recharge")]
-        public ActionResult UpdateRecharge([FromBody] Credit credit)
+        public async Task<ActionResult> UpdateRecharge([FromBody] Credit credit)
         {
-            var response = _creditService.UpdateRecharge(credit);
+            var response = await _creditService.UpdateRecharge(credit);
             return this.ToActionResult(response);
         }
     }

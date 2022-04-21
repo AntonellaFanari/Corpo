@@ -43,7 +43,8 @@ namespace Corpo.Data.Dependencies
             services.AddTransient<IPeriodizationRepository, PeriodizationRepository>();
             services.AddTransient<IMonthlyGoalRepository, MonthlyGoalRepository>();
             services.AddTransient<IWeeklyGoalRepository, WeeklyGoalRepository>();
-            services.AddTransient<IIntensityRepository, IntensityRepository>();
+            services.AddTransient<ITrainingSystemRepository, TrainingSystemRepository>();
+            services.AddTransient<ITestTemplateRepository, TestTemplateRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

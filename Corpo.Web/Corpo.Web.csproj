@@ -86,14 +86,16 @@
     <None Remove="ClientApp\src\app\domain\status-attendance.ts" />
     <None Remove="ClientApp\src\app\domain\status.ts" />
     <None Remove="ClientApp\src\app\domain\tag.ts" />
+    <None Remove="ClientApp\src\app\domain\test\test-exercise.ts" />
+    <None Remove="ClientApp\src\app\domain\test\test-template.ts" />
     <None Remove="ClientApp\src\app\domain\user-view.ts" />
     <None Remove="ClientApp\src\app\domain\user.ts" />
     <None Remove="ClientApp\src\app\domain\withdrawal-name.ts" />
     <None Remove="ClientApp\src\app\domain\withdrawal.ts" />
     <None Remove="ClientApp\src\app\domain\wod-member.ts" />
-    <None Remove="ClientApp\src\app\domain\wod\intensity.ts" />
     <None Remove="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <None Remove="ClientApp\src\app\domain\wod\PeriodizationList.ts" />
+    <None Remove="ClientApp\src\app\domain\wod\training-system.ts" />
     <None Remove="ClientApp\src\app\domain\wod\weekly-goal.ts" />
     <None Remove="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
@@ -154,13 +156,15 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\status-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\status.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\tag.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-exercise.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-template.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal-name.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod-member.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\intensity.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\training-system.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\PeriodizationList.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\weekly-goal.ts" />

@@ -10,8 +10,10 @@ export class Periodization {
   trainings: number;
   valid: string;
   volume: string;
-  intensity: string
+  trainingSystem: string;
 }
+
+
 
 export class PeriodizationWeek {
   weekNumber: string;
@@ -28,7 +30,11 @@ export class PeriodizationWeek {
   planned: string;
   wodTemplateId: number;
   volume: string;
-  intensity: string
+  intensityType: IntensityType;
+  intensity: number;
+  trainingSystem: string;
+  periodizationId: number
+
 
 
   constructor(week: Week) {
@@ -45,9 +51,15 @@ export class PeriodizationWeek {
     this.sunday = week.sunday;
     this.planned = week.planned;
     this.volume = week.volume;
-    this.intensity = week.intensity
+    this.intensity = week.intensity;
+    this.intensityType = week.intensityType;
+    this.trainingSystem = week.trainingSystem;
   }
 }
 
 
+export enum IntensityType {
+  PSE = 1,
+  PFM = 2
+}
 

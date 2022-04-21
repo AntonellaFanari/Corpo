@@ -30,3 +30,8 @@
 .modal-title {
   background-color: #40bf0b;
 }
+
+.validators{
+    color: red;
+    font-size: 13px;
+}

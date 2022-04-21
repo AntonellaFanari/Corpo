@@ -19,7 +19,11 @@
   text-align: center;
 }
 
-.hideValidators {
+.hide-percentage {
+  display: none;
+}
+
+.hide-validators {
     display: none;
 }
 

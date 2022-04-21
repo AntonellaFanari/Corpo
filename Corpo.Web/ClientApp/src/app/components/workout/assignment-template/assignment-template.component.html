@@ -1,10 +1,10 @@
 <!-- Page Content -->
-<div *ngIf="memberId">
+<div *ngIf="!requestingAssignment && member">
   <section class="wrapper">
     <div class="row">
       <div class="col-12 col-lg-8 ">
 
-        <div class="row mt" [class.d-none]="newWods.length > 0">
+        <div class="row mt">
           <div class="col-md-12">
             <div class="task-panel ">
               <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD</h4>
@@ -17,7 +17,7 @@
                 </div>
               </div>
             </div>
-            <section *ngIf="!requestingList && wodTemplates.length > 0" id="no-more-tables" class="mt-3">
+            <section id="no-more-tables" class="mt-3">
               <table id="wod-template-table" class="table table-bordered table-condensed cf scrollme user-table">
                 <thead class="cf">
                   <tr>
@@ -47,7 +47,7 @@
           Periodización
         </button>
 
-        <button class="btn btn-success w-100 mb-3 mt-3" type="button" *ngIf="!periodization && !requestingPeriodization"
+        <button class="btn btn-success w-100 mb-3 mt-3" type="button" *ngIf="!periodization"
                 [routerLink]="['/periodizacion']" [queryParams]="{memberId: memberId}">
           Crear periodización
         </button>
@@ -93,33 +93,6 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-success btn-float-left" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
           <button type="button" class="btn btn-success btn-float-right" data-dismiss="modal">
-            Aceptar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="modal-wod">
-    <div class="modal-dialog modal-dialog-full modal-fullscreen-xl-down">
-      <div class="modal-content modal-content-full">
-        <!-- cabecera del diálogo -->
-        <div class="modal-header modal-title">
-          <h4 class="modal-title">Planificación Semanal</h4>
-          <button type="button" class="close" data-dismiss="modal">X</button>
-        </div>
-        <!-- cuerpo del diálogo -->
-        <div class="modal-body">
-          <div class="row">
-            <div *ngFor="let newWod of newWods" class="col">
-              <app-wod-detail [wod]="newWod.wod" [wodNumber]="newWod.wodNumber"></app-wod-detail>
-            </div>
-          </div>
-        </div>
-        <!-- pie del diálogo -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">
             Aceptar
           </button>
         </div>

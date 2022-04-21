@@ -17,7 +17,7 @@ namespace Corpo.Domain.Models
         public List<PeriodizationWeek> PeriodizationWeeks { get; set; }
         public int Trainings { get; set; }
         public string Volume { get; set; }
-        public string Intensity { get; set; }
+        public string TrainingSystem { get; set; }
     }
     
 }

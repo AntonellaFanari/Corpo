@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { DomainResponse } from '../../domain/domain-response';
-import { Periodization } from '../../domain/wod/periodization';
+import { Periodization, PeriodizationWeek } from '../../domain/wod/periodization';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -44,5 +44,12 @@ export class PeriodizationService {
   public getById(id: number) {
     return this.http.get<DomainResponse<Periodization>>(this.url + 'api/periodization/' + id);
   }
- 
+
+  public getByYear(year: number, memberId?: number) {
+    return this.http.get<DomainResponse<Array<Periodization>>>(this.url + 'api/periodization/by-year?year=' + year + '&memberId=' + memberId);
+  }
+
+  public getByPeriodizationWeek(periodizationWeekId: number) {
+    return this.http.get<DomainResponse<PeriodizationWeek>>(this.url + 'api/periodization/by-periodization-week?id=' + periodizationWeekId);
+  }
 }

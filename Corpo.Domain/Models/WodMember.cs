@@ -18,5 +18,8 @@ namespace Corpo.Domain.Models
         public string Detail { get; set; }
         public int Rate { get; set; }
         public string Attended { get; set; }
+        public int Rest { get; set; }
+        public IntensityType IntensityType { get; set; }
+        public int Intensity { get; set; }
     }
 }

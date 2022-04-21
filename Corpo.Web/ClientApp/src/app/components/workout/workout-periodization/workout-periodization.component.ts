@@ -5,16 +5,17 @@ import { timeStamp } from 'console';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Member } from 'src/app/domain/member';
 import { MemberView } from 'src/app/domain/member-view';
-import { Periodization, PeriodizationWeek } from 'src/app/domain/wod/periodization';
+import { IntensityType, Periodization, PeriodizationWeek } from 'src/app/domain/wod/periodization';
 import { MemberService } from 'src/app/services/member.service';
 import { PeriodizationService } from 'src/app/services/wod/periodization.service';
 import 'zone.js/dist/long-stack-trace-zone';
-import { Intensity } from '../../../domain/wod/intensity';
 import { MonthlyGoal } from '../../../domain/wod/monthly-goal';
+import { TrainingSystem } from '../../../domain/wod/training-system';
 import { WeeklyGoal } from '../../../domain/wod/weekly-goal';
-import { IntensityService } from '../../../services/intensity.service';
+import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MonthlyGoalService } from '../../../services/monthly-goal.service';
 import { WeeklyGoalService } from '../../../services/weekly-goal.service';
+import { TrainingSystemService } from '../../../services/wod/training-system.service';
 //import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 export class Week {
@@ -31,8 +32,11 @@ export class Week {
   goal?: string;
   planned: string;
   volume: string;
-  intensity: string
+  intensityType: IntensityType;
+  intensity: number;
+  trainingSystem: string;
 }
+
 
 export class Total {
   type: string;
@@ -51,10 +55,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume:"", intensity: "" };
-  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
-  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
-  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: "" };
+  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -95,14 +99,22 @@ export class WorkoutPeriodizationComponent implements OnInit {
   year: number;
   month: number;
   months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-  intensities: Intensity[] = [];
-  intensityMonthly = "";
-  selectedIntensityMonthly = 0;
-  selectedIntensityWeek1 = 0;
-  selectedIntensityWeek2 = 0;
-  selectedIntensityWeek3 = 0;
-  selectedIntensityWeek4 = 0;
+  trainingSystems: TrainingSystem[] = [];
+  trainingSystemMonthly = "";
+  selectedTrainingSystemMonthly = 0;
+  selectedTrainingSystemWeek1 = 0;
+  selectedTrainingSystemWeek2 = 0;
+  selectedTrainingSystemWeek3 = 0;
+  selectedTrainingSystemWeek4 = 0;
   volumeMonthly = "";
+  selectedIntensityTypeWeek1 = 0;
+  selectedIntensityTypeWeek2 = 0;
+  selectedIntensityTypeWeek3 = 0;
+  selectedIntensityTypeWeek4 = 0;
+  hidePercentageWeek1 = true;
+  hidePercentageWeek2 = true;
+  hidePercentageWeek3 = true;
+  hidePercentageWeek4 = true;
 
   constructor(private periodizacionService: PeriodizationService,
     private route: ActivatedRoute,
@@ -110,7 +122,8 @@ export class WorkoutPeriodizationComponent implements OnInit {
     private memberService: MemberService,
     private monthlyGoalService: MonthlyGoalService,
     private weeklyGoalService: WeeklyGoalService,
-    private intensityService: IntensityService) {
+    private trainingSystemService: TrainingSystemService,
+private customAlertService: CustomAlertService  ) {
     this.route.queryParams.subscribe(params => {
       this.memberId = parseInt(params['memberId'])
       memberService.getById(this.memberId).subscribe(data => {
@@ -173,52 +186,86 @@ export class WorkoutPeriodizationComponent implements OnInit {
       sunday: "Libre",
       planned: "false",
       volume: "",
-      intensity: ""
+      intensity: 0,
+      intensityType: 0,
+      trainingSystem: ""
     };
 
 
   }
 
-  getIntensities() {
-    this.intensityService.getAll().subscribe(
+  getTrainingSystems() {
+    this.trainingSystemService.getAll().subscribe(
       response => {
-        this.intensities = response.result;
+        this.trainingSystems = response.result;
       },
       error => console.error(error)
     )
   }
 
-  selectIntensity(id, type) {
-    let intensity = this.intensities.find(x => x.id == id);
+  selectTrainingSystem(id, type) {
+    let trainingSystem = this.trainingSystems.find(x => x.id == id);
     switch (type) {
       case 0:
-        this.selectedIntensityMonthly = id;
-        this.intensityMonthly = intensity.up + "x" + intensity.down;
-        console.log(this.intensityMonthly);
+        this.selectedTrainingSystemMonthly = id;
+        this.trainingSystemMonthly = trainingSystem.up + "x" + trainingSystem.down;
+        console.log(this.trainingSystemMonthly);
         break;
       case 1:
-        this.selectedIntensityWeek1 = id;
-        this.week1.intensity = intensity.up + "x" + intensity.down;
-        console.log(this.week1.intensity);
+        this.selectedTrainingSystemWeek1 = id;
+        this.week1.trainingSystem = trainingSystem.up + "x" + trainingSystem.down;
+        console.log(this.week1.trainingSystem);
         break;
       case 2:
-        this.selectedIntensityWeek2 = id;
-        this.week2.intensity = intensity.up + "x" + intensity.down;
-        console.log(this.week2.intensity);
+        this.selectedTrainingSystemWeek2 = id;
+        this.week2.trainingSystem = trainingSystem.up + "x" + trainingSystem.down;
+        console.log(this.week2.trainingSystem);
         break;
       case 3:
-        this.selectedIntensityWeek3 = id;
-        this.week3.intensity = intensity.up + "x" + intensity.down;
-        console.log(this.week3.intensity);
+        this.selectedTrainingSystemWeek3 = id;
+        this.week3.trainingSystem = trainingSystem.up + "x" + trainingSystem.down;
+        console.log(this.week3.trainingSystem);
         break;
       case 4:
-        this.selectedIntensityWeek4 = id;
-        this.week4.intensity = intensity.up + "x" + intensity.down;
-        console.log(this.week4.intensity);
+        this.selectedTrainingSystemWeek4 = id;
+        this.week4.trainingSystem = trainingSystem.up + "x" + trainingSystem.down;
+        console.log(this.week4.trainingSystem);
         break;
       default:
     }
   }
+
+  selectIntensityType(type, week) {
+    switch (week) {
+      case 1:
+        this.selectedIntensityTypeWeek1 = type;
+        console.log(this.selectedIntensityTypeWeek1);
+        this.hidePercentageWeek1 = this.hidePercentage(type);
+        break;
+      case 2:
+        this.selectedIntensityTypeWeek2 = type;
+        console.log(this.selectedIntensityTypeWeek2);
+        this.hidePercentageWeek2 = this.hidePercentage(type);
+        break;
+      case 3:
+        this.selectedIntensityTypeWeek3 = type;
+        console.log(this.selectedIntensityTypeWeek3);
+        this.hidePercentageWeek3 = this.hidePercentage(type);
+        break;
+      case 4:
+        //this.selectedIntensityTypeWeek4 = type;
+        //console.log(this.selectedIntensityTypeWeek4);
+        this.hidePercentageWeek4 = this.hidePercentage(type);
+        break;
+      default:
+    }
+  }
+
+  hidePercentage(type) {
+    if (type == 1) { return true } else { return false};
+  }
+
+ 
 
   getType() {
     if (this.index >= 4) this.index = 0;
@@ -245,7 +292,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getIntensities();
+    this.getTrainingSystems();
     this.getMonthlyGoals();
     this.monthlyGoalsDropdownSettings = {
       idField: 'id',
@@ -273,9 +320,9 @@ export class WorkoutPeriodizationComponent implements OnInit {
     document.querySelectorAll('.periodization td:not(.first-td)')
       .forEach(e => e.addEventListener("click", this.clickModalHandler.bind(this)));
     this.render();
-    document.querySelectorAll(".predominance th")
-      .forEach(e => e.addEventListener("click", () => document.getElementById('modal-predominance').click()));
-    this.render();
+    //document.querySelectorAll(".predominance th")
+    //  .forEach(e => e.addEventListener("click", () => document.getElementById('modal-predominance').click()));
+    //this.render();
 
     var tds = document.querySelectorAll(".predominance td");
     for (var i = 0; i < tds.length; i++) {
@@ -500,6 +547,48 @@ export class WorkoutPeriodizationComponent implements OnInit {
 
   selectMonth(month) {
     this.month = month;
+  }
+
+  validate(week) {
+    switch (week) {
+      case 1:        
+        this.resetClass(1, this.hidePercentageWeek1, this.week1);
+        break;
+      case 2:
+        this.resetClass(2, this.hidePercentageWeek2, this.week2);
+        break;
+      case 3:
+        this.resetClass(3, this.hidePercentageWeek3, this.week3);
+        break;
+      case 4:
+        this.resetClass(4, this.hidePercentageWeek4, this.week4);
+        break;
+      default:
+    }
+  }
+
+
+  resetClass(i, hidePercentage, week) {
+    let className = "validators-week" + i;
+    let p = document.getElementsByClassName(className);
+    if (hidePercentage) {
+      if (week.intensity > 10 || week.intensity < 0) {
+        p[0].classList.remove("hide-validators");
+        p[0].classList.add("validators");
+      } else {
+        p[0].classList.remove("validators");
+        p[0].classList.add("hide-validators");
+      }
+    } else {
+      if (week.intensity > 100 || week.intensity < 0) {
+        let p = document.getElementsByClassName("validators-week1");
+        p[1].classList.remove("hide-validators");
+        p[1].classList.add("validators");
+      } else {
+        p[1].classList.remove("validators");
+        p[1].classList.add("hide-validators");
+      }
+    }
   }
 
   render() {
@@ -816,7 +905,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
     periodization.month = this.month;
     periodization.year = this.year;
     periodization.volume = this.volumeMonthly;
-    periodization.intensity = this.intensityMonthly;
+    periodization.trainingSystem = this.trainingSystemMonthly;
     console.log("week1: ", this.week1);
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week1));
     periodization.periodizationWeeks.push(new PeriodizationWeek(this.week2));
@@ -827,10 +916,13 @@ export class WorkoutPeriodizationComponent implements OnInit {
     this.periodizacionService.add(periodization).subscribe(() => {
       console.log("success")
       this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId } });
-    })
+    },
+      error => {
+        if (error.status == 400) {
+          this.customAlertService.displayAlert("Gestión de Periodizaciones", error.error.errores);
+        }
+      })
   }
 
-  getWeek() {
 
-  }
 }

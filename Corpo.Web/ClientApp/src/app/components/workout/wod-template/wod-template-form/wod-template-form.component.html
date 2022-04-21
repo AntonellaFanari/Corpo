@@ -24,6 +24,26 @@
       <strong>No se asignaron objetivos</strong>
     </div>
   </div>
+  <div class="row">
+    <div class="col-6  mt-3 mb-3 pe-3 btn-float-left">
+      <label class="col-12 control-label">Tipo de Intensidad:</label>
+      <div class="formValidators">
+        <select class="form-control" [(ngModel)]="intensityType" (change)="selectIntensityType($event.target.value)">
+          <option value="0" disabled>Seleccionar</option>
+          <option value="1">PSE</option>
+          <option value="2">PFM</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-6  mt-3 mb-3 pe-3 btn-float-left">
+      <label class="col-12 control-label">Intensidad :</label>
+      <div class="input-group">
+        <input type="number" class="form-control" [(ngModel)]="intensity" (blur)="validate()" />
+        <div [ngClass]="{'hide-percentage': hidePercentageIntensity }" class="input-group-append"><span class="input-group-text">%</span></div>
+      </div>
+      <p [ngClass]="validatorsIntensityNumber ? 'validators': 'hide-validators'">*Ingrese un número entre 0 y 10</p><p [ngClass]="validatorsIntensityPercentage ? 'validators': 'hide-validators'">*Ingrese un número entre 0 y 100</p>
+    </div>
+  </div>
 
   <div class="form-group mt-2">
     <label class="control-label">Ejercicio:</label>
@@ -31,7 +51,7 @@
       <ng-select class="custom" [items]="exercises" [(ngModel)]="selectedExercise" (change)="selectExercise()" bindLabel="name" bindValue="id">
       </ng-select>
     </div>
-    <p [ngClass]="validatorsRequiredExercise ? 'validators': 'hideValidators'">*Debe seleccionar un ejercicio.</p>
+    <p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>
   </div>
 
   <div class="form-group mt-2 col-12">
@@ -75,7 +95,7 @@
         <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" (change)="selectModality()" bindLabel="name" bindValue="id">
         </ng-select>
       </div>
-      <p [ngClass]="validatorsRequiredModality ? 'validators': 'hideValidators'">*Debe seleccionar una modalidad.</p>
+      <p [ngClass]="validatorsRequiredModality ? 'validators': 'hide-validators'">*Debe seleccionar una modalidad.</p>
     </div>
 
     <div class="form-group mt-2 col-6">

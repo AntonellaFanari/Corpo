@@ -37,6 +37,8 @@ namespace Corpo.Domain.Services
                     wodMember.PeriodizationId = periodization.Id;
                     wodMember.WeekNumber = weekNumber;
                     wodMember.WodNumber = (i + 1);
+                    wodMember.IntensityType = periodization.PeriodizationWeeks.Find(x => x.WeekNumber == weekNumber).IntensityType;
+                    wodMember.Intensity = periodization.PeriodizationWeeks.Find(x => x.WeekNumber == weekNumber).Intensity;
                     wodMember.WodGroupsMember = new List<WodGroupMember>();
                     foreach (var wodGroup in wodTemplate.WodGroups)
                     {
@@ -113,6 +115,8 @@ namespace Corpo.Domain.Services
                 wodMemberQuery.Attended = wodMember.Attended;
                 wodMemberQuery.Detail = wodMember.Detail;
                 wodMemberQuery.MemberId = wodMember.MemberId;
+                wodMemberQuery.IntensityType = wodMember.IntensityType;
+                wodMemberQuery.Intensity = wodMember.Intensity;
                 wodMemberQuery.WodGroupsMember = wodMember.WodGroupsMember;
                 await _wodMemberRepository.Update(wodMemberQuery);
                 return new DomainResponse
@@ -127,7 +131,7 @@ namespace Corpo.Domain.Services
             }
         }
 
-        public async Task<DomainResponse> AddRate(int id, int rate)
+        public async Task<DomainResponse> UpdateRate(int id, int rate)
         {
             var wodMember = await _wodMemberRepository.GetById(id);
             wodMember.Rate = rate;
@@ -142,12 +146,13 @@ namespace Corpo.Domain.Services
             }
             catch (Exception ex)
             {
-                return new DomainResponse(false, ex.Message, "No se pudo agregar la valorización.");
+                return new DomainResponse(false, ex.Message, "No se pudo modificar la valorización.");
             }
         }
 
         public async Task<DomainResponse> GetAttended(int id, int memberId)
         {
+           
             var response = await _wodMemberRepository.GetAttended(id, memberId);
             return new DomainResponse
             {
@@ -192,6 +197,41 @@ namespace Corpo.Domain.Services
                 Success = true,
                 Result = periodization
             };
+        }
+
+        public async Task<DomainResponse> GetAttendanceByYear(int year, int memberId)
+        {
+            var response = await _wodMemberRepository.GetAttendanceByYear(year, memberId);
+            if (response != null)
+            {
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = response
+                };
+            }
+            else
+            {
+                return new DomainResponse(false, "", "No registra periodizaciones para este año.");
+            }
+        }
+
+        public async Task<DomainResponse> UpdateRest(int id, int rest)
+        {
+            var wodMember = await _wodMemberRepository.GetById(id);
+            wodMember.Rest = rest;
+            try
+            {
+                await _wodMemberRepository.Update(wodMember);
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo modificar el descanso.");
+            }
         }
     }
 }

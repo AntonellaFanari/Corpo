@@ -6,3 +6,7 @@
   color: #000000;
   margin-left: 10px;
 }
+
+.hide-percentage {
+    display: none;
+}

@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgSelectConfig } from '@ng-select/ng-select';
+import id from 'date-fns/esm/locale/id/index.js';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CategoryExercises } from 'src/app/domain/category-exercises';
 import { Exercise } from 'src/app/domain/exercise';
@@ -49,6 +50,15 @@ export class WodTemplateComponent implements OnInit {
   goal = "";
   selectedCategory: any;
   checkedTags: any[] = [];
+  validatorsRequiredExercise: boolean;
+  validatorsRequiredModality: boolean;
+  validatorsRequiredName: boolean;
+  validatorsRequiredGoal: boolean;
+  checkedKgs: boolean;
+  checkedPercentage: boolean;
+  checkedRPE: boolean;
+  checkedRPEs: boolean;
+  checkedNone = true;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -58,6 +68,8 @@ export class WodTemplateComponent implements OnInit {
     private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
+    this.checkedNone = true;
+    this.mode = "None";
     this.getAll();
     this.getModalities();
     //this.wod.addGroup(new WodGroup(this.createGuid()));
@@ -91,6 +103,15 @@ export class WodTemplateComponent implements OnInit {
       this.selectedCategory = id;
       this.filterByCategory();
   }
+
+  selectExercise() {
+    this.validatorsRequiredExercise = false;
+  }
+
+  selectModality() {
+    this.validatorsRequiredModality = false;
+  }
+
 
   onItemSelect(goal) {
     if (this.goal.length == 0) {
@@ -137,26 +158,58 @@ export class WodTemplateComponent implements OnInit {
     if (this.wod.wodGroups.length == 0) {
       this.addwodGroup();
     }
-    if ((this.selectedExercise) && (this.selectedModality) && (this.units)) {
-      this.validationError = false;
+
+    if (this.selectedExercise !== null && this.selectedExercise != undefined && this.selectedExercise !== "" && this.selectedModality !== null) {
       var exercise = this.exercises.find(x => x.id == this.selectedExercise);
       var exerciseItem = new ExerciseItem();
       exerciseItem.exercise = exercise;
       exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
       exerciseItem.units = this.units;
-      exerciseItem.mode = this.mode;
+      if (this.mode == null) {
+        exerciseItem.mode = "None";
+      } else {
+        exerciseItem.mode = this.mode;
+      }
+
       exerciseItem.value = this.value;
 
       this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
 
       this.selectedModality = null;
       this.selectedExercise = "";
-      this.mode = "None";
-      this.value = 0;
       this.units = null;
+      this.selectMode("None");
+      this.value = 0;
+    } else {
+      if (this.selectedExercise == null || this.selectedExercise == "") {
+        this.validatorsRequiredExercise = true;
+      } if (this.selectedModality == null) {
+        this.validatorsRequiredModality = true;
+      }
     }
-    else {
-      this.validationError = true;
+  }
+
+  selectMode(mode) {
+    console.log(mode);
+    this.mode = mode;
+    switch (mode) {
+      case "Kgs":
+        this.checkedKgs = true;
+        break;
+      case "%":
+        this.checkedPercentage = true;
+        break;
+      case "RPE":
+        this.checkedRPE = true;
+        break;
+      case "RPEs":
+        this.checkedRPEs = true;
+        break;
+      case "None":
+        this.checkedKgs = false;
+        this.checkedNone = true;
+        break;
+      default:
     }
   }
 
@@ -197,22 +250,31 @@ export class WodTemplateComponent implements OnInit {
   }
 
   save() {
-    var wodTemplate = new WodTemplate(this.wod);
-    wodTemplate.name = this.name;
-    wodTemplate.goal = this.goal;
-    /*    wodTemplate.goal = */
-    console.log(wodTemplate);
-    this.wodTemplateService.add(wodTemplate).subscribe(() => {
-      this.router.navigate(['/plantillas-wod']);
-    }, error => {
-      console.error(error);
-      if (error.status === 400) {
-        this.customAlertService.displayAlert("Gestión de WOD", error.error.errores);
+    if (this.name !== "" || this.name !== undefined || this.goal !== "" || this.goal !== undefined) {
+      var wodTemplate = new WodTemplate(this.wod);
+      wodTemplate.name = this.name;
+      wodTemplate.goal = this.goal;
+      /*    wodTemplate.goal = */
+      console.log(wodTemplate);
+      this.wodTemplateService.add(wodTemplate).subscribe(() => {
+        this.router.navigate(['/plantillas-wod']);
+      }, error => {
+        console.error(error);
+        if (error.status === 400) {
+          this.customAlertService.displayAlert("Gestión de WOD", error.error.errores);
+        }
+        if (error.status === 500) {
+          this.customAlertService.displayAlert("Gestión de WOD", ["No se pudo guardar la plantilla."]);
+        }
+      })
+    } else {
+      if (this.name == "" || this.name == undefined) {
+        this.validatorsRequiredName = true;
+      } if (this.goal == "" || this.goal == undefined) {
+        this.validatorsRequiredGoal = true;
       }
-      if (error.status === 500) {
-        this.customAlertService.displayAlert("Gestión de WOD", ["No se pudo guardar la plantilla."]);
-      }
-    })
+    }
+   
   }
 
   getAll() {

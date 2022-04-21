@@ -12,7 +12,7 @@ namespace Corpo.Domain.Contracts.Services
     {
         int Add(Credit credit);
         DomainResponse Update(Credit credit);
-        DomainResponse UpdateRecharge(Credit credit);
+        Task<DomainResponse> UpdateRecharge(Credit credit);
         Task<DomainResponse> GetById(int id);
     }
 }

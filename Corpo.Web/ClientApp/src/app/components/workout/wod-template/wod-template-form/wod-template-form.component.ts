@@ -57,6 +57,12 @@ export class WodTemplateFormComponent implements OnInit {
   validatorsRequiredExercise: boolean;
   saved: boolean;
   modeEdit: boolean;
+  intensityType = 0;
+  intensity = 0;
+  hidePercentageIntensity = true;
+  validatorsIntensity: boolean;
+  validatorsIntensityPercentage: boolean;
+  validatorsIntensityNumber: boolean;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -83,6 +89,10 @@ export class WodTemplateFormComponent implements OnInit {
     console.log(this.wod);
     this.name = this.wod.name;
     this.goal = this.wod.goal;
+    this.intensityType = this.wod.intensityType;
+    this.intensity = this.wod.intensity;
+
+    console.log(this.wod);
     this.checkedNone = true;
     this.mode = "None";
      
@@ -106,6 +116,33 @@ export class WodTemplateFormComponent implements OnInit {
       },
       error => console.error(error)
     )
+  }
+
+  selectIntensityType(type) {
+
+    this.intensityType = type;
+    this.hidePercentageIntensity = this.hidePercentage(type);
+
+  }
+
+  hidePercentage(type) {
+    if (type == 1) { return true } else { return false };
+  }
+
+  validate() {
+    if (this.intensityType == 1) {
+      if (this.intensity > 10 || this.intensity < 0) {
+        this.validatorsIntensityNumber = true;
+      } else {
+        this.validatorsIntensityNumber = false;
+      }
+    } else {
+      if (this.intensity > 100 || this.intensity < 0) {
+        this.validatorsIntensityPercentage = true;
+      } else {
+        this.validatorsIntensityPercentage = false;
+      }
+    }
   }
 
   getWeeklyGoals() {
@@ -294,6 +331,8 @@ export class WodTemplateFormComponent implements OnInit {
     wodMember.wodNumber = this.wodNumber;
     wodMember.memberId = this.memberId;
     wodMember.attended = "false";
+    wodMember.intensityType = this.intensityType;
+    wodMember.intensity = this.intensity;
     return wodMember;
   }
 

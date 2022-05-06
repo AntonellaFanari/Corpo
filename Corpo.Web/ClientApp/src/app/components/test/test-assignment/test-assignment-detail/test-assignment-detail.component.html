@@ -1,0 +1,28 @@
+<section class="wrapper" *ngIf="test">
+  <div class="container-fluid p-0">
+    <div class="">
+      <h3>Test Nivel 0</h3>
+    </div>
+    <hr />
+    <div class="card mt-3" *ngFor="let exercise of test.testExercisesMember">
+      <div class="row m-2">
+        <div class="card-header col-12 div-title">
+          <h5 class="h-title">Ejercicio: <strong>{{exercise.name}}</strong></h5>
+        </div>
+        <div class="col-12 col-lg-6 mt-2" *ngIf="exercise.testType == 2">
+          <label class="form-label">Minutos: <strong>{{exercise.minutes}}</strong></label>
+        </div>
+        <div class="col-12 col-lg-6 mt-2" *ngIf="exercise.testType == 2">
+          <label class="form-label">Segundos: <strong>{{exercise.seconds}}</strong></label>
+        </div>
+        <div class="col-12 mt-2" *ngIf="exercise.testType == 3">
+          <label class="form-label me-2">Video: </label> <a class="link-video" href="https://www.youtube.com/embed/KtZsQrYAJ0Y"><strong>Ver</strong></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-box col-6 col-lg-3 btn-float-left">
+      <button class="btn btn-secondary btn-width " routerLink="/test-asignados-list" [queryParams]="{id: test.memberId}">Volver</button>
+    </div>
+  </div>
+</section>

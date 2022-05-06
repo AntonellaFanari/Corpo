@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MatIconModule } from '@angular/material/icon'
 
 import { WodDetailComponent } from './components/workout/wod-template/wod-detail/wod-detail.component';
 import { AppComponent } from './app.component';
@@ -148,9 +149,17 @@ import { TrainingSystemCreateComponent } from './components/training-system/trai
 import { TrainingSystemEditComponent } from './components/training-system/training-system-edit/training-system-edit.component';
 import { TrainingSystemListComponent } from './components/training-system/training-system-list/training-system-list.component';
 import { SearchFilterTrainingSystemPipe } from './pipes/search-filter-training-system.pipe';
-import { TestTemplateCreateComponent } from './components/test-template/test-template-create/test-template-create.component';
-import { TestTemplateEditComponent } from './components/test-template/test-template-edit/test-template-edit.component';
-import { TestTemplateListComponent } from './components/test-template/test-template-list/test-template-list.component';
+import { TestTemplateCreateComponent } from './components/test/test-template/test-template-create/test-template-create.component';
+import { TestTemplateEditComponent } from './components/test/test-template/test-template-edit/test-template-edit.component';
+import { TestTemplateListComponent } from './components/test/test-template/test-template-list/test-template-list.component';
+import { TestAssignmentCreateComponent } from './components/test/test-assignment/test-assignment-create/test-assignment-create.component';
+import { TestAssignmentListComponent } from './components/test/test-assignment/test-assignment-list/test-assignment-list.component';
+import { TestAssignmentEditComponent } from './components/test/test-assignment/test-assignment-edit/test-assignment-edit.component';
+import { TestAssignmentDetailComponent } from './components/test/test-assignment/test-assignment-detail/test-assignment-detail.component';
+import { TestResultComponent } from './components/test/test-result/test-result.component';
+import { TestListComponent } from './components/test/test-list/test-list.component';
+import { SafePipe } from './pipes/safe.pipe';
+import { TestDetailComponent } from './components/test/test-detail/test-detail.component';
 
 
 @NgModule({
@@ -292,7 +301,15 @@ import { TestTemplateListComponent } from './components/test-template/test-templ
     SearchFilterTrainingSystemPipe,
     TestTemplateCreateComponent,
     TestTemplateEditComponent,
-    TestTemplateListComponent
+    TestTemplateListComponent,
+    TestAssignmentCreateComponent,
+    TestAssignmentListComponent,
+    TestAssignmentEditComponent,
+    TestAssignmentDetailComponent,
+    TestResultComponent,
+    TestListComponent,
+    SafePipe,
+    TestDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -312,23 +329,12 @@ import { TestTemplateListComponent } from './components/test-template/test-templ
     MatRippleModule,
     MatTabsModule,
     BrowserAnimationsModule,
+    MatIconModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'asignacion-calendario', component: AssignmentCalendarComponent },
       { path: 'member-report', component: MemberReportComponent, canActivate: [AuthGuard], data: { name: 'informes' } },
-      { path: 'wod-template', component: WodTemplateComponent },
-      { path: 'plantillas-wod', component: WodTemplateListComponent },
-      { path: 'periodizacion', component: WorkoutPeriodizationComponent },
-      { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent },
-      { path: 'editar-periodizacion', component: WorkoutPeriodizaionEditComponent },
-      { path: 'editar-asignacion-wod', component: AssignmentTemplateEditComponent },
-      { path: 'estadisticas', component: StatisticsMenuComponent },
-      { path: 'estadisticas-wod', component: StatisticsWodMemberComponent },
-      { path: 'estadisticas-periodizaciones', component: StatisticsPeriodizationComponent },
-      { path: 'reporte-mensual', component: ReportMonthlyComponent },
-      { path: 'reporte-semanal', component: ReportWeeklyComponent },
-      { path: 'reporte-anual', component: ReportAnnualComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user-create', component: UserCreateComponent, canActivate: [AuthGuard], data: { name: 'usuarios' }  },
       { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard], data: { name: 'usuarios' } },
@@ -406,18 +412,37 @@ import { TestTemplateListComponent } from './components/test-template/test-templ
       { path: 'ganancias-mensuales', component: MonthlyEarningComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
       { path: 'estadisticas-segmentadas', component: SegmentedStatisticsComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
       { path: 'configuraciones', component: GeneralSettingsComponent, canActivate: [AuthGuard], data: { name: 'ajustes' } },
-      { path: 'objetivos-mensuales-list', component: MonthlyGoalListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'objetivo-mensual-crear', component: MonthlyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'objetivo-mensual-editar', component: MonthlyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'objetivos-semanales-list', component: WeeklyGoalListComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'objetivo-semanal-crear', component: WeeklyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'objetivo-semanal-editar', component: WeeklyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'abm' } },
-      { path: 'sistemas-entrenamiento-list', component: TrainingSystemListComponent },
-      { path: 'sistema-entrenamiento-crear', component: TrainingSystemCreateComponent },
-      { path: 'sistema-entrenamiento-editar', component: TrainingSystemEditComponent },
-      { path: 'test-templates-list', component: TestTemplateListComponent },
-      { path: 'test-template-crear', component: TestTemplateCreateComponent },
-      { path: 'test-template-editar', component: TestTemplateEditComponent }
+      { path: 'objetivos-mensuales-list', component: MonthlyGoalListComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'objetivo-mensual-crear', component: MonthlyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'objetivo-mensual-editar', component: MonthlyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'objetivos-semanales-list', component: WeeklyGoalListComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'objetivo-semanal-crear', component: WeeklyGoalCreateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'objetivo-semanal-editar', component: WeeklyGoalEditComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'sistemas-entrenamiento-list', component: TrainingSystemListComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'sistema-entrenamiento-crear', component: TrainingSystemCreateComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'sistema-entrenamiento-editar', component: TrainingSystemEditComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'wod-template', component: WodTemplateComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'plantillas-wod', component: WodTemplateListComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'periodizacion', component: WorkoutPeriodizationComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'editar-periodizacion', component: WorkoutPeriodizaionEditComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'editar-asignacion-wod', component: AssignmentTemplateEditComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'estadisticas', component: StatisticsMenuComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'estadisticas-wod', component: StatisticsWodMemberComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'estadisticas-periodizaciones', component: StatisticsPeriodizationComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'reporte-mensual', component: ReportMonthlyComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'reporte-semanal', component: ReportWeeklyComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'reporte-anual', component: ReportAnnualComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'test-templates-list', component: TestTemplateListComponent, canActivate: [AuthGuard], data: { name: 'test' }  },
+      { path: 'test-template-crear', component: TestTemplateCreateComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'test-template-editar', component: TestTemplateEditComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'test-asignacion', component: TestAssignmentCreateComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'test', component: TestListComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'test-asignado-editar', component: TestAssignmentEditComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'test-asignados-list', component: TestAssignmentListComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'resultado-test', component: TestResultComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'test-detalle', component: TestDetailComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'test-asignado-detalle', component: TestAssignmentDetailComponent, canActivate: [AuthGuard], data: { name: 'test' } }
     ])
   ],
   entryComponents: [

@@ -43,6 +43,7 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<IWeeklyGoalService, WeeklyGoalService>();
             services.AddTransient<ITrainingSystemService, TrainingSystemService>();
             services.AddTransient<ITestTemplateService, TestTemplateService>();
+            services.AddTransient<ITestMemberService, TestMemberService>();
         }
     }
 }

@@ -175,7 +175,7 @@ namespace Corpo.Domain.Services
             {
                 credit.Expiration = fee.Member.EntryDate;
             };
-            _creditRepository.Update(credit);
+            await _creditRepository.Update(credit);
             var balance = await _balanceRepository.GetByIdTransaction(id, TransactionType.Fee);
             if (balance == null)
             {

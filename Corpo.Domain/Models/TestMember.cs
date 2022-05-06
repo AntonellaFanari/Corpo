@@ -10,9 +10,16 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public string Name { get; set; }
         public int MemberId { get; set; }
-        public virtual List<TestHeartRateExercise> TestHeartRateExercises { get; set; }
-        public virtual List<TestRepetitionExercise> TestRepetitionExercises { get; set; }
-        public virtual List<TestVideoExercise> TestVideoExercises { get; set; }
+        public List<TestExerciseMember> TestExercisesMember { get; set; }
+        public StatusTest Status { get; set; }
+        public int TestTemplateId { get; set; }
+    }
+
+    public enum StatusTest
+    {
+        Executed = 1,
+        Pending = 2
     }
 }

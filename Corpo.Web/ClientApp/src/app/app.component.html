@@ -35,7 +35,7 @@
               Socios
             </a>
           </li>
-          <li *access="'socios'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
+          <li *access="'wod'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
               <i class="fa fa-dumbbell me-1"></i>
               WOD
@@ -51,6 +51,17 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/plantillas-wod']">Plantillas WOD</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/asignacion-wod']">WOD personalizado</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/test-templates-list']">Test</a></li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/test']" [queryParams]="{display: 'true'}">Test Personalizado</a></li>
+            </ul>
+          </li>
+          <li *access="'test'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
+            <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
+              <i class="fa fa-clipboard" aria-hidden="true"></i>
+              Test
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/test-templates-list']">Test Plantillas</a></li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/test']" [queryParams]="{display: 'true'}">Test Personalizado</a></li>
             </ul>
           </li>
           <li *access="'deudas'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
@@ -100,7 +111,7 @@
       <div *ngIf="logueado">
         <div class="btn-group me-3">
           <span class="text-white me-2">Bienvenido {{user.name }}</span>
-          <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button"><i class="fa fa-user"></i></a>
+          <a class="nav-item dropdown-toggle text-white" id="dropdown1" data-toggle="dropdown" role="button"><i class="fa fa-user"></i></a>
           <ul class="dropdown-menu width-dropdown-account">
             <li><a [routerLink]="['/datos-personales']"><i class="fa fa-user ms-2 me-3"></i>Mis datos</a></li>
             <li><a [routerLink]="['/modificar-contraseña']"><i class="fa fa-key ms-2 me-2"></i>Contraseña</a></li>

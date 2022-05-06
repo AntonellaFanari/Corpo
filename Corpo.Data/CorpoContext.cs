@@ -70,5 +70,6 @@ namespace Corpo.Data
         public DbSet<TestHeartRateExercise> TestHeartRateExercise { get; set; }
         public DbSet<TestRepetitionExercise> TestRepetitionExercise { get; set; }
         public DbSet<TestVideoExercise> TestVideoExercise { get; set; }
+        public DbSet<TestExerciseMember> TestExerciseMember { get; set; }
     }
 }

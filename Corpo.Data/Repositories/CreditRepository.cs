@@ -30,10 +30,10 @@ namespace Corpo.Data.Repositories
             return _context.Credit.FirstOrDefaultAsync(x=> x.Id == id);
         }
 
-        public void Update(Credit credit)
+        public async Task Update(Credit credit)
         {
             _context.Credit.Update(credit);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

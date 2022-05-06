@@ -1,0 +1,44 @@
+
+.btn-add {
+  float: right;
+}
+
+tr.span-margin > td > span {
+  margin-left: 15px;
+}
+
+td.text-ajust {
+  text-overflow: ellipsis;
+}
+
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 27%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
+
+
+
+}
+
+
+
+.btn-action-list {
+  height: 35px;
+  width: 38px;
+  margin: 2px;
+}
+
+.btn-width {
+  width: 100%;
+}
+
+.button-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

@@ -45,6 +45,7 @@ namespace Corpo.Data.Dependencies
             services.AddTransient<IWeeklyGoalRepository, WeeklyGoalRepository>();
             services.AddTransient<ITrainingSystemRepository, TrainingSystemRepository>();
             services.AddTransient<ITestTemplateRepository, TestTemplateRepository>();
+            services.AddTransient<ITestMemberRepository, TestMemberRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

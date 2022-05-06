@@ -1,0 +1,43 @@
+.hide {
+  display: none;
+}
+
+.display {
+  display: block;
+}
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 27%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
+
+  .btn-width {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 801px) {
+  .btn-width {
+    width: 25%;
+  }
+}
+
+.btn-return {
+    width: 100%;
+}
+
+.button-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.btn-action-list {
+  height: 35px;
+  width: 38px;
+  margin: 2px;
+}

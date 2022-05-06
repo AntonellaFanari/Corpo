@@ -86,7 +86,10 @@
     <None Remove="ClientApp\src\app\domain\status-attendance.ts" />
     <None Remove="ClientApp\src\app\domain\status.ts" />
     <None Remove="ClientApp\src\app\domain\tag.ts" />
+    <None Remove="ClientApp\src\app\domain\test\test-exercise-member.ts" />
     <None Remove="ClientApp\src\app\domain\test\test-exercise.ts" />
+    <None Remove="ClientApp\src\app\domain\test\test-member.ts" />
+    <None Remove="ClientApp\src\app\domain\test\test-template-list.ts" />
     <None Remove="ClientApp\src\app\domain\test\test-template.ts" />
     <None Remove="ClientApp\src\app\domain\user-view.ts" />
     <None Remove="ClientApp\src\app\domain\user.ts" />
@@ -156,7 +159,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\status-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\status.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\tag.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-exercise-member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-exercise.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-template-list.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-template.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\user.ts" />

@@ -1,10 +1,12 @@
+import { StatusTest } from "./test-member";
+
 export class TestExercise {
   id: number;
   name: string;
   testType: TestType;
   video: string;
   minutes: number;
-  seconds: number
+  seconds: number;
 }
 
 export enum TestType {
@@ -12,3 +14,4 @@ export enum TestType {
   Repetition = 2,
   video = 3
 }
+

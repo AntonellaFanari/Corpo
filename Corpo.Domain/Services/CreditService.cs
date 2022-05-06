@@ -46,7 +46,7 @@ namespace Corpo.Domain.Services
             creditQuery.Negative = credit.Negative;
             try
             {
-                _creditRepository.Update(creditQuery);
+                await _creditRepository.Update(creditQuery);
                 return new DomainResponse
                 {
                     Success = true

@@ -1,0 +1,116 @@
+<section class="wrapper" *ngIf="testMember">
+  <div class="task-panel ">
+    <h4 class="table-title">Editar Test {{testMember.name}}</h4>
+  </div>
+  <hr />
+  <form [formGroup]="formEdit">
+    <div class="form-group mt-3">
+      <label class="control-label">Tipo de Ejercicio:</label>
+      <div class="">
+        <select class="form-control" formControlName="type" (change)="selectType($event.target.value)">
+          <option value="0" disabled>Seleccionar...</option>
+          <option value="1">FC</option>
+          <option value="2">Repeticiones</option>
+          <option value="3">FMS/Video</option>
+        </select>
+      </div>
+      <p class="validators" *ngIf="sendExercise && selectedType == 0">*Debe seleccionar tipo de ejercicio.</p>
+    </div>
+    <div class="row">
+      <div class="form-group mt-3 col-12">
+        <label class="control-label">Ejercicio:</label>
+        <div class="formValidators">
+          <input class="form-control" formControlName="name" />
+        </div>
+        <p class="validators" *ngIf="sendExercise && f.name.errors?.required">*Debe completar el campo.</p>
+      </div>
+      <div class="form-group mt-3 col-12 pe-0">
+        <div class="formValidators row btn-float-left col-12 col-lg-3">
+          <div class="formValidators btn-float-left col-6 pe-0">
+            <label class="control-label">Minutos:</label>
+            <input class="form-control" type="number" formControlName="minutes" />
+          </div>
+          <div class="formValidators btn-float-right col-6 pe-0">
+            <label class="control-label">Segundos:</label>
+            <input class="form-control" type="number" formControlName="seconds" />
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-3 col-12">
+        <label class="control-label">Video:</label>
+        <div class="formValidators">
+          <input class="form-control" formControlName="video" />
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="button-box col-6" *ngIf="addMode">
+        <button class="btn btn-success btn-width " (click)="addExercise()">Agregar</button>
+      </div>
+      <div class="button-box col-6 pe-1 btn-float-left" *ngIf="!addMode">
+        <button class="btn btn-success btn-width " (click)="editExercise()">Modificar</button>
+      </div>
+      <div class="button-box col-6 ps-1 btn-float-right" *ngIf="!addMode">
+        <button class="btn btn-danger btn-width " (click)="editCancel()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <table class="table table-bordered table-condensed cf scrollme user-table" *ngIf="testExercisesMember.length>0" id="no-more-tables">
+      <thead class="cf">
+        <tr>
+          <th>Ejercicio</th>
+          <th>Tipo</th>
+          <th>Tiempo</th>
+          <th>Video</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exercise of testExercisesMember; index as i" (click)="completeFormEdit(exercise, i)">
+          <td class="td-title" data-title="Ejercicio">
+            {{exercise.name}}
+          </td>
+          <td class="td-title" data-title="Tipo">
+            <span *ngIf="exercise.testType == 1">FC</span>
+            <span *ngIf="exercise.testType == 2">Repeticiones</span>
+            <span *ngIf="exercise.testType == 3">FMS/Video</span>
+          </td>
+          <td class="td-title" data-title="Tiempo">
+            <span *ngIf="exercise.minutes > 0">{{exercise.minutes}}&nbsp; min&nbsp;</span>
+            <span *ngIf="exercise.seconds > 0">{{exercise.seconds}}&nbsp; seg</span>
+            <span *ngIf="!exercise.minutes && !exercise.seconds">-</span>
+          </td>
+          <td class="td-title" data-title="Video">
+            <span *ngIf="exercise.video">{{exercise.video}}</span>
+            <span *ngIf="!exercise.video">-</span>
+          </td>
+          <td class="td-title" data-title="Acción">
+            <a [routerLink]="" (click)="deleteExercise(i)" class="delete-button">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="card p-2" *ngIf="send && testExercisesMember.length == 0">
+      <h4 class="validators">*No se agregaron ejercicios.</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="button-box col-6 col-lg-3 pe-1 btn-float-left">
+        <button class="btn btn-secondary btn-width " routerLink="/test-asignados-list" [queryParams]="{id: testMember.memberId}">Volver</button>
+      </div>
+      <div class="button-box col-6 col-lg-3 ps-1 btn-float-right">
+        <button class="btn btn-success btn-width " (click)="save()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</section>

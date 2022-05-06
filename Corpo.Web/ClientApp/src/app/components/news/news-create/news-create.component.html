@@ -33,7 +33,7 @@
                   <!--<i class="fas fa-upload"></i>-->
                   Seleccionar
                 </a>
-                <input type="file" id="file-button" (change)="onFileSelection($event)" style="display: none;" />
+                <input type="file" id="file-button"  (change)="onFileSelection($event)" style="display: none;" />
               </div>
               <div class="row col-12 justify-content-center align-items-center text-center mt-3" *ngFor='let url of urls'>
                 <img [src]="url" class="preview-picture text-center"> <br />

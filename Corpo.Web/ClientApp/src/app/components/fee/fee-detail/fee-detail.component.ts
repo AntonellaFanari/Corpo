@@ -41,6 +41,7 @@ export class FeeDetailComponent implements OnInit {
     this.customAlertService.displayAlert("Gestión de Cuotas", ["¿Está seguro que desea eliminar esta cuota?"], () => {
       this.feeService.delete(this.fee.id).subscribe(
         result => {
+          this.modalClick();
           this.updateFeeCash();
         },
         error => {

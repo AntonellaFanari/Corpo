@@ -1,0 +1,62 @@
+.color-result {
+  background-color: #008b2433;
+}
+
+.div-title {
+  height: 50px !important;
+  text-align: center;
+  background-color: #008b24;
+}
+
+.h-title {
+    margin-bottom: 0px;
+    margin-top: 3px;
+    font-size: 1.25rem;
+    color: white;
+    text-align: center;
+}
+
+.video {
+    width: 500px;
+}
+
+.btn-width {
+  width: 100%;
+}
+
+.button-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.video-style{
+    height: 150px;
+    width: 250px;
+}
+
+.link-video {
+  color: #2dd36f;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+@media only screen and (max-width: 800px) {
+  .video-style{
+      height: 100px;
+      width: 150px;
+  }
+
+  .div-title {
+    height: 35px !important;
+    text-align: center;
+    background-color: #008b24;
+  }
+
+  .h-title {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+  }
+}

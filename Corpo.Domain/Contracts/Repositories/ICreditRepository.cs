@@ -10,7 +10,7 @@ namespace Corpo.Domain.Contracts.Repositories
     public interface ICreditRepository
     {
         int Add(Credit credit);
-        void Update(Credit credit);
+        Task Update(Credit credit);
         Task<Credit> GetById(int id);
     }
 }

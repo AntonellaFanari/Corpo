@@ -28,13 +28,13 @@ namespace Corpo.Data.Repositories
             return id;
         }
 
-        public Member GetById(int id)
+        public async Task<Member> GetById(int id)
         {
-            return _context.Member
+            return await _context.Member
                     .Include(x => x.Plan)
                     .Include(x => x.Account)
                     .Include(x => x.Credit)
-                    .FirstOrDefault(x => x.Id == id);
+                    .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Member GetByAccountId(int id)
@@ -55,10 +55,10 @@ namespace Corpo.Data.Repositories
             return list;
         }
 
-        public int Update(Member member)
+        public async Task<int> Update(Member member)
         {
             _context.Member.Update(member);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return member.Id;
         }
 
@@ -126,6 +126,13 @@ namespace Corpo.Data.Repositories
             _context.MedicalHistory.Remove(medicalHistory);
             _context.SaveChanges();
         }
+
+        public async Task<MedicalHistory> GetExistsMedicalHistory(int id)
+        {
+            return await _context.MedicalHistory.FirstOrDefaultAsync(x => x.MemberId == id);
+        
+        }
+
         public int AddInjury(Injury injury)
         {
             _context.Injury.Add(injury);
@@ -166,5 +173,15 @@ namespace Corpo.Data.Repositories
             return _context.File.Where(x => x.InjuryId == id).ToList();
         }
 
+        public Task<PhysicalLevel> GetLevel(int id)
+        {
+            return _context.PhysicalLevel.OrderBy(x => x.Date).LastOrDefaultAsync(x => x.MemberId == id);
+        }
+
+        public Task<List<PhysicalLevel>> GetLevelsHistory(int id)
+        {
+            return _context.PhysicalLevel.OrderBy(x => x.Date).Where(x => x.MemberId == id).ToListAsync();
+
+        }
     }
 }

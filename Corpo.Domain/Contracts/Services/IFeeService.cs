@@ -11,9 +11,9 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IFeeService
     {
-        DomainResponse Add(LoggedUser user, FeeDto feeDto);
-        DomainResponse GetAll(int id);
-        Fee GetById(int id);
+        Task<DomainResponse> Add(LoggedUser user, FeeDto feeDto);
+        Task<DomainResponse> GetAll(int id);
+        Task<DomainResponse> GetById(int id);
         DomainResponse GetAllByIdMember(int id);
         Task<DomainResponse> Delete(int id);
     }

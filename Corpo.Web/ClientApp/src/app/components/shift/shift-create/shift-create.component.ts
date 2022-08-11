@@ -107,7 +107,7 @@ export class ShiftCreateComponent implements OnInit {
     schedule.hour = this.dp.transform(new Date(), '00:00:00')
     this.schedules.push(schedule);
     console.log(this.schedules);
-    
+
   }
 
   delete(i) {
@@ -123,12 +123,12 @@ export class ShiftCreateComponent implements OnInit {
     for (var i = 0; i < this.schedules.length; i++) {
       let schedule = this.schedules[i];
       let shiftDates = [];
-      if (schedule.monday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 1));
-      if (schedule.tuesday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 2));
-      if (schedule.wednesday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 3));
-      if (schedule.thursday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 4));
-      if (schedule.friday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 5));
-      if (schedule.saturday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 6));
+      if (schedule.monday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 1, schedule.hour));
+      if (schedule.tuesday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 2, schedule.hour));
+      if (schedule.wednesday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 3, schedule.hour));
+      if (schedule.thursday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 4, schedule.hour));
+      if (schedule.friday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 5, schedule.hour));
+      if (schedule.saturday) shiftDates = shiftDates.concat(this.getDatesOfDay(moment(this.from), moment(this.to), 6, schedule.hour));
       console.log(shiftDates);
       for (var j = 0; j < shiftDates.length; j++) {
         let newShift = this.getNewShift(schedule);
@@ -138,7 +138,7 @@ export class ShiftCreateComponent implements OnInit {
     };
     console.log(this.shifts);
   }
-  
+
 
   getNewShift(schedule) {
     let newShift = new Shift();
@@ -153,23 +153,38 @@ export class ShiftCreateComponent implements OnInit {
   }
 
 
-  getDatesOfDay(start, end, day) {
+  getDatesOfDay(start, end, day, hour) {
+    let shift = moment(start._i + "T" + hour);
+    let newStart = shift.clone().weekday(day);
+    let newtmp = newStart.add(-1, 'days');
+    var shiftDay = [];
+    let now = moment();
     console.log(start);
     console.log(end);
-    var shiftDay = [];
-    let tmp = start.clone().weekday(day);
-    var d = tmp.isAfter(start, 'd')
-    if (tmp.isAfter(start, 'd')) {
-      shiftDay.push(tmp.format('YYYY-MM-DD'));
-    }
-    tmp.add(7, 'days');
-    while (tmp.isBefore(end) || tmp.isSame(end)) {
-      
-      shiftDay.push(tmp.format('YYYY-MM-DD'));
+    let tmp = newtmp.clone().weekday(day);
+    if (now < tmp) {
+      var d = tmp.isAfter(newStart, 'd')
+      if (tmp.isAfter(newStart, 'd')) {
+        shiftDay.push(tmp.format('YYYY-MM-DD'));
+      }
       tmp.add(7, 'days');
+      while (tmp.isBefore(end) || tmp.isSame(end)) {
+
+        shiftDay.push(tmp.format('YYYY-MM-DD'));
+        tmp.add(7, 'days');
+      }
+      console.log(shiftDay);
+      return shiftDay;
+    } else {
+      tmp.add(7, 'days');
+      while (tmp.isBefore(end) || tmp.isSame(end)) {
+
+        shiftDay.push(tmp.format('YYYY-MM-DD'));
+        tmp.add(7, 'days');
+      }
+      return shiftDay;
     }
-    console.log(shiftDay);
-    return shiftDay;
+
   }
 
   submit() {

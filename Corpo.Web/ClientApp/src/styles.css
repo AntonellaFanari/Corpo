@@ -20,6 +20,12 @@ a {
   width: 50px;
 }
 
+.logo-home {
+  height: 100%;
+  width: 100%;
+  left: 0;
+}
+
   a:link,
   a:visited,
   a:active {
@@ -37,6 +43,13 @@ a {
   color: dimgray !important;
 }
 
+.label-detail-title {
+  color: #696d6d;
+}
+
+.detail-cancelled{
+    color: red;
+}
 .margLeft {
   margin-left: 15px;
 }

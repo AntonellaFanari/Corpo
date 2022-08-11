@@ -10,10 +10,13 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Protocol { get; set; }
         public TestType TestType { get; set; }
         public int? Minutes { get; set; }
         public int? Seconds { get; set; }
         public string? Video { get; set; }
+        public virtual ExerciseFMS ExerciseFMS { get; set; }
+        public int? ExerciseFmsId { get; set; }
         public virtual TestTemplate TestTemplate { get; set; }
         public int TestTemplateId { get; set; }
     }

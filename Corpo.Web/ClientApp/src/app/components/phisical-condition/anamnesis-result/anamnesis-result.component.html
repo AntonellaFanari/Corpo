@@ -1,0 +1,104 @@
+<section class="wrapper" >
+  <div *ngIf="!requesting && resultAnamnesis">
+    <div class="card card-header div-header text-center">
+      <h4 class="text-white">Anamnesis - Evalución de Condición Física</h4>
+    </div>
+
+
+    <div class="card card-header div-header text-center">
+      <h4 class="text-white">Nivel: {{resultAnamnesis.level}}</h4>
+    </div>
+
+
+    <div class="card bg-ligth mb-2 text-center">
+      <div class="div-question text-white">¿Realiza actividad física actualmente?</div>
+      <div class="div-response"><span [class.d-none]="!resultAnamnesis.currentlyPhysicalActivity">Si</span><span [class.d-none]="resultAnamnesis.currentlyPhysicalActivity">No</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center" [class.d-none]="resultAnamnesis.currentlyPhysicalActivity">
+      <div class="div-question text-white">¿Realizó alguna vez actividad física?</div>
+      <div class="div-response"><span [class.d-none]="!resultAnamnesis.physicalActivityInThePast">Si</span><span [class.d-none]="resultAnamnesis.physicalActivityInThePast">No</span></div>
+    </div>
+    <div [class.d-none]="
+      (!resultAnamnesis.currentlyPhysicalActivity &&
+      !resultAnamnesis.physicalActivityInThePast)
+  ">
+      <div class="card bg-ligth  mb-2 text-center">
+        <div class="div-question text-white ">¿De forma competitiva-deporte?</div>
+        <div class="div-response "><span [class.d-none]="!resultAnamnesis.competitive">Si</span><span [class.d-none]="resultAnamnesis.competitive">No</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="resultAnamnesis.competitive">
+        <div class="div-question text-white ">¿De forma constante con una planilla de seguimiento?</div>
+        <div class="div-response "><span [class.d-none]="!resultAnamnesis.constantfollowUpSpreadsheet">Si</span><span [class.d-none]="resultAnamnesis.constantfollowUpSpreadsheet">No</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="!resultAnamnesis.competitive">
+        <div class="div-question text-white ">¿Qué deporte?</div>
+        <div class="div-response ">{{resultAnamnesis.sport}}</div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="resultAnamnesis.competitive || resultAnamnesis.physicalActivityInThePast">
+        <div class="div-question text-white ">¿Qué tipo de entrenamiento realiza?</div>
+        <div class="div-response "><span [class.d-none]="resultAnamnesis.trainingType != 'aerobic'">Aeróbico</span><span [class.d-none]="resultAnamnesis.trainingType != 'strength'">Fuerza</span><span [class.d-none]="resultAnamnesis.trainingType != 'aerobic-strength'">Aeróbico-Fuerza</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="
+					!(
+						resultAnamnesis.physicalActivityInThePast &&
+						!resultAnamnesis.competitive
+					)
+				">
+        <div class="div-question text-white ">¿Qué tipo de entrenamiento realizó?</div>
+        <div class="div-response "><span [class.d-none]="resultAnamnesis.trainingType != 'aerobic'">Aeróbico</span><span [class.d-none]="resultAnamnesis.trainingType != 'strength'">Fuerza</span><span [class.d-none]="resultAnamnesis.trainingType != 'aerobic-strength'">Aeróbico-Fuerza</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="!resultAnamnesis.currentlyPhysicalActivity">
+        <div class="div-question text-white ">¿Cuántas veces a la semana entrena?</div>
+        <div class="div-response "> <span [class.d-none]="resultAnamnesis.numberTrainingSessionsWeek == 0">{{resultAnamnesis.numberTrainingSessionsWeek}}</span><span [class.d-none]="resultAnamnesis.numberStrengthTrainingSessionsWeek == 0 || resultAnamnesis.trainingType == 'aerobic-strength' || resultAnamnesis.numberTrainingSessionsWeek != 0">{{resultAnamnesis.numberStrengthTrainingSessionsWeek}}</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="!resultAnamnesis.currentlyPhysicalActivity">
+        <div class="div-question text-white ">¿Cuántas horas a la semana entrena?</div>
+        <div class="div-response "> <span [class.d-none]="resultAnamnesis.hoursTrainingSessionsWeek == 0">{{resultAnamnesis.hoursTrainingSessionsWeek}}</span><span [class.d-none]="resultAnamnesis.hoursStrengthTrainingSessionsWeek == 0">{{resultAnamnesis.hoursStrengthTrainingSessionsWeek}}</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="
+					!(
+						resultAnamnesis.currentlyPhysicalActivity &&
+						resultAnamnesis.competitive
+					)
+				">
+        <div class="div-question text-white ">¿Realiza entrenamiento de fuerza?</div>
+        <div class="div-response "><span [class.d-none]="!resultAnamnesis.currentlyStrengthTraining">Si</span><span [class.d-none]="resultAnamnesis.currentlyStrengthTraining">No</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="
+					resultAnamnesis.numberStrengthTrainingSessionsWeek == 0 ||
+					(resultAnamnesis.trainingType == 'strength' &&
+						resultAnamnesis.numberTrainingSessionsWeek == 0) ||
+					!resultAnamnesis.currentlyStrengthTraining
+				">
+        <div class="div-question text-white ">¿Cuántas veces a la semana entrena fuerza?</div>
+        <div class="div-response ">{{resultAnamnesis.numberStrengthTrainingSessionsWeek}}</div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="resultAnamnesis.currentlyStrengthTraining || !resultAnamnesis.currentlyPhysicalActivity">
+        <div class="div-question text-white ">¿Realizó alguna vez entrenamiento de fuerza?</div>
+        <div class="div-response "><span [class.d-none]="!resultAnamnesis.strengthTrainingInThePast">Si</span><span [class.d-none]="resultAnamnesis.strengthTrainingInThePast">No</span></div>
+      </div>
+      <div class="card bg-ligth  mb-2 text-center" [class.d-none]="!resultAnamnesis.strengthTrainingInThePast && !resultAnamnesis.timeSinceLastTraining">
+        <div class="div-question text-white ">¿Hace cuánto?</div>
+        <div class="div-response ">{{resultAnamnesis.timeSinceLastTraining}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center" *ngIf="!requesting && !resultAnamnesis">
+    <h5>No realizó la evaluación de condición física.</h5>
+  </div>
+  <div *ngIf="!requesting">
+    <div class="button-box col-12 col-lg-2 pe-1 btn-float-left">
+      <button class="btn btn-secondary btn-width " [routerLink]="['/personalizados']">Volver</button>
+    </div>
+  </div>
+
+</section>
+
+<section class="wrapper">
+  <div class="w-100 text-center" *ngIf="requesting && !resultAnamnesis">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+</section>

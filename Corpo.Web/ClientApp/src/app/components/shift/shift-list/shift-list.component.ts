@@ -69,7 +69,7 @@ export class ShiftListComponent implements OnInit {
     this.shiftService.getAll(this.from, this.to, this.selectedClass).subscribe(
       result => {
         this.requestingList = false;
-        this.getShiftsList(result);
+        this.getShiftsList(result.result);
         this.getUsers();
       },
       error => this.requestingList = false

@@ -64,4 +64,5 @@ export class AssignmentListComponent implements OnInit {
   getAssignment(id) {
     this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: id, week: this.week } });
   }
+
 }

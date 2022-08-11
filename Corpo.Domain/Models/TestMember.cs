@@ -10,7 +10,7 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public string Name { get; set; }
+        public int Level { get; set; }
         public int MemberId { get; set; }
         public List<TestExerciseMember> TestExercisesMember { get; set; }
         public StatusTest Status { get; set; }

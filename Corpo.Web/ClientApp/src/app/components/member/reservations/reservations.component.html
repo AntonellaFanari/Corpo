@@ -1,10 +1,10 @@
-<section class="wrapper">
+<section class="wrapper" *ngIf="member && !requesting">
   <div class="task-panel ">
-    <h4 class="table-title">Reservas</h4>
-    <button type="button" class="btn btn-secondary btn-float-right" routerLink="/member-list">Volver</button>
+    <h4 class="table-title">Reservas - {{member.lastName}} {{member.name}}</h4>
+    <button type="button" class="btn btn-secondary col-4 col-lg-2 btn-float-right" routerLink="/member-list">Volver</button>
   </div>
   <hr>
-  <div class="col-md-12">
+  <div class="col-12 pt-3" *ngIf="reservations.length>0">
     <section id="no-more-tables">
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-bordered table-condensed table-hover table-striped cf mb-0 user-table">
@@ -29,18 +29,34 @@
             <tr class="scrollme span-margin" *ngFor="let reservation of reservation.reservations">
               <td class="td-title" data-title="Turno"><span>{{reservation.dateShift}}</span></td>
               <td class="td-title text-ajust" data-title="Clase"><span>{{reservation.shift.class.name}}</span></td>
-              <td class="td-title" data-title="Fecha de reserva"><span>{{reservation.dateReservation}}</span></td>
-              <td class="td-title text-ajust" data-title="Con negativo"><span *ngIf="reservation.usingNegative">Si</span><span *ngIf="!reservation.usingNegative">-</span></td>
-              <td class="td-title" data-title="Fecha de cancelación"><span>{{reservation.dateCancellation}}</span></td>
-              <td class="td-title text-ajust" data-title="Devolución de crédito"><span *ngIf="reservation.dateCancellation && reservation.returnCredit">Si</span><span *ngIf="reservation.dateCancellation && !reservation.returnCredit">No</span></td>
-              <td class="td-title text-ajust" data-title="Asistió"><span *ngIf="reservation.attended">Si</span><span *ngIf="!reservation.attended">No</span></td>
+              <td class="td-title" data-title="Fcha reserva"><span>{{reservation.dateReservation}}</span></td>
+              <td class="td-title text-ajust" data-title="C/ negativo"><span *ngIf="reservation.usingNegative">Si</span><span *ngIf="!reservation.usingNegative">-</span></td>
+              <td class="td-title" data-title="Fcha de cancelac."><span *ngIf="reservation.dateCancellation">{{reservation.dateCancellation}}</span><span *ngIf="!reservation.dateCancellation">-</span></td>
+              <td class="td-title text-ajust" data-title="Devoluc. de créd."><span *ngIf="reservation.returnCredit">Si</span><span *ngIf="reservation.dateCancellation && !reservation.returnCredit">No</span><span *ngIf="!reservation.dateCancellation && !reservation.returnCredit">-</span></td>
+              <td class="td-title text-ajust" data-title="Asistió"><span *ngIf="reservation.status != 3 && reservation.status != 4">-</span><span *ngIf="reservation.status == 3">Si</span><span *ngIf="reservation.status == 4">No</span></td>
+            </tr>
+            <tr class="scrollme span-margin" *ngIf="reservation.reservations.length == 0">
+              <td colspan="7">
+                <h5 class=" text-center">No tiene reservas.</h5>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
   </div>
-  <ng-template #elseBlock><h5>No tienes reservas.</h5></ng-template>
+
+  <div *ngIf="!requesting && reservations.length == 0">
+    <h5 class=" text-center">El socio no tiene historial de cuotas pagadas.</h5>
+  </div>
+
+</section>
+<section class="wrapper">
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </section>
 
 

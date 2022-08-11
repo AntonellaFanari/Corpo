@@ -14,11 +14,12 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<WodMember> GetById(int id);
         Task Update(WodMember wodMember);
         Task Delete(int id);
-        Task<List<WodMember>> GetAllWodMember(int id, DateTime from, DateTime to);
+        Task<List<WodMember>> GetAllWodMember(int id, int periodizationId);
         Task<int> GetByPeriodizationIdByWeekNumber(int periodizationId, int weekNumber);
         Task<List<WodMemberAttendanceDto>> GetAttended(int id, int memberId);
         Task<List<WodMember>> GetByWeekNumber(int weekNumber, int periodizationId);
         Task<List<AttendanceMonthlyDto>> GetAttendanceByYear(int year, int memberId);
+        Task SetShiftDate(DateTime shiftDate);
 
 
     }

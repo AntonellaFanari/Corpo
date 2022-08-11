@@ -28,14 +28,14 @@ namespace Corpo.Data.Repositories
 
         }
 
-        public async Task<List<WodMember>> GetAllWodMember(int id, DateTime from, DateTime to)
+        public async Task<List<WodMember>> GetAllWodMember(int id, int periodizationId)
         {
             return await _context.WodMember
                .Include(x => x.WodGroupsMember)
                .ThenInclude(x => x.Modality)
                  .Include(x => x.WodGroupsMember)
                .ThenInclude(x => x.Exercise)
-               .Where(x => x.MemberId == id /*&& x.Date >= from && x.Date <= to*/)
+               .Where(x => x.MemberId == id && x.PeriodizationId == periodizationId)
                .ToListAsync();
         }
 
@@ -102,6 +102,13 @@ namespace Corpo.Data.Repositories
                                          Attendance = g.Count()
                                      }).ToListAsync();
             return attendances;
+        }
+
+        public async Task SetShiftDate(DateTime shiftDate)
+        {
+            var wodMember = await _context.WodMember.OrderBy(x => x.WodNumber).FirstOrDefaultAsync(x => x.ShiftDate != null);
+            wodMember.ShiftDate = shiftDate;
+            await Update(wodMember);
         }
     }
 }

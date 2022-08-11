@@ -60,6 +60,14 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpGet("detail-by-id")]
+        public async Task<ActionResult<TestMember>> GetDetailById(int id)
+        {
+            var response = await _testMemberService.GetDetailById(id);
+            return this.ToActionResult(response);
+        }
+
+
         [HttpPut]
         public async Task<ActionResult> Update([FromBody] TestMember test)
         {
@@ -94,7 +102,8 @@ namespace Corpo.Web.Controllers
         [HttpPost("result-test-heart-rate-exercise")]
         public async Task<ActionResult> AddResultTestHeartRateExercise(TestHeartRateExercise result)
         {
-            var response = await _testMemberService.AddResultTestHeartRateExercise(result);
+            var user = this.GetUser();
+            var response = await _testMemberService.AddResultTestHeartRateExercise(result, user.Id);
             return this.ToActionResult(response);
         }
 
@@ -111,10 +120,12 @@ namespace Corpo.Web.Controllers
             var message = HttpContext.Request;
             var exerciseId = HttpContext.Request.Form["exerciseId"].ToString();
             var testId = HttpContext.Request.Form["testId"].ToString();
+            var rate = HttpContext.Request.Form["rate"];
             var files = HttpContext.Request.Form.Files;
             var testVideoExercise = new TestVideoExercise();
             testVideoExercise.TestExerciseMemberId = Convert.ToInt32(exerciseId);
             testVideoExercise.TestMemberId = Convert.ToInt32(testId);
+            testVideoExercise.Rate = Convert.ToInt32(rate);
             var response = await _testMemberService.AddResultTestVideoExercise(testVideoExercise, files);
             return this.ToActionResult(response);
         }
@@ -125,6 +136,23 @@ namespace Corpo.Web.Controllers
             var response = await _testMemberService.GetResult(id);
             return this.ToActionResult(response);
         }
+
+        [HttpGet("exercise-fms")]
+        public async Task<ActionResult<ExerciseFMS>> GetExerciseFms(int id)
+        {
+            var response = await _testMemberService.GetExerciseFms(id);
+            return this.ToActionResult(response);
+        }
+
+
+        [HttpGet("exists-test-pending")]
+        public async Task<ActionResult> GetExistsTestPending()
+        {
+            var user = GetUser();
+            var response = await _testMemberService.GetExistsTestPending(user.Id);
+            return this.ToActionResult(response);
+        }
+
 
     }
 }

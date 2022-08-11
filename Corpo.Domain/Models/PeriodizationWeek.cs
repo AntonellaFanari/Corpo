@@ -9,6 +9,8 @@ namespace Corpo.Domain.Models
     public class PeriodizationWeek
     {
         public int Id { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
         public int WeekNumber { get; set; }
         public int M { get; set; }
         public int S { get; set; }

@@ -42,7 +42,7 @@ export class ReportService {
   }
 
   public getCashDetailed(opening: string, closing: string) {
-    return this.http.get<any>(this.url + 'api/report/cash-detailed?opening=' + opening + '&closing=' + closing);
+    return this.http.get<any>(this.url + 'api/report/cash-detailed?opening=' + opening + '&closing=' + ((closing) ? (closing) : ""));
   }
 
   public getCashDate(date: string) {

@@ -14,30 +14,30 @@
       <table class="table table-bordered table-condensed cf scrollme user-table" *ngIf="income">
         <thead class="cf">
           <tr>
-            <th colspan="3" *ngIf="userRegister" class="modal-title">Registro: {{userRegister.lastName}} {{userRegister.name}}</th>
+            <th *ngIf="userRegister" class="modal-title col-8"><span class="label-detail-title"> Registro:</span> {{userRegister.lastName}} {{userRegister.name}}</th>
+            <th *ngIf="income" class="modal-title col-4"><span class="label-detail-title"> Fecha:</span> {{income.date  | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
+
           </tr>
           <tr>
-            <th>Fecha:</th>
-            <th>Detalle:</th>
-            <th>Ingreso:</th>
+            <th class="col-8">Detalle:</th>
+            <th class="col-4">Ingreso:</th>
           </tr>
         </thead>
         <tbody>
           <tr class="scrollme">
-            <td class="td-title">{{income.date  | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
             <td class="td-title">{{income.detail}}</td>
             <td class="td-title">{{income.amount}}</td>
           </tr>
         </tbody>
       </table>
-
+    </div>
       <!-- pie del diálogo -->
-      <div class="modal-footer p-0">
+      <div class="modal-footer p-1">
         <button type="button" class="btn btn-danger col-3 col-lg-2 d-none" id="button-close-modal-income" data-dismiss="modal"></button>
         <button type="button" class="btn btn-danger col-3 col-lg-2" (click)="delete(income.id)">Eliminar</button>
         <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
       </div>
 
-    </div>
+
   </div>
 </section>

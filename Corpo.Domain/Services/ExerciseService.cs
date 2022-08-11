@@ -51,12 +51,13 @@ namespace Corpo.Domain.Services
 
             try
             {
-                var exerciseQuery = _exerciseRepository.GetExerciseById(id);
-                exerciseQuery.Name = exerciseEdit.Name;
-                exerciseQuery.CategoryExerciseId = exerciseEdit.CategoryExerciseId;
-                exerciseQuery.Tags = exerciseEdit.Tags;
-                exerciseQuery.Video = exerciseEdit.Video;
-                _exerciseRepository.UpdateExercise(exerciseQuery);
+                var exercise = new Exercise();
+                exercise.Name = exerciseEdit.Name;
+                exercise.CategoryExerciseId = exerciseEdit.CategoryExerciseId;
+                exercise.Tags = exerciseEdit.Tags;
+                exercise.Video = exerciseEdit.Video;
+                _exerciseRepository.DeleteExercise(id);
+                _exerciseRepository.UpdateExercise(exercise);
                 return new DomainResponse
                 {
                     Success = true

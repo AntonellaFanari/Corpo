@@ -17,6 +17,7 @@ namespace Corpo.Domain.Models
         public decimal Balance { get; set; }
         public decimal Pay { get; set; }
         public Statement Statement { get; set; }
+        public List<BalancePaid> BalancesPaids { get; set; }
     }
     public enum TransactionType
     {

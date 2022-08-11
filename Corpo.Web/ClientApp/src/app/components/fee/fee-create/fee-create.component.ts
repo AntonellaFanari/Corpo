@@ -181,7 +181,7 @@ export class FeeCreateComponent implements OnInit {
 
 
   calculateBalance() {
-    return this.formCreate.value.price - this.pay;
+    return (this.formCreate.value.price - (this.pay + this.formCreate.value.promotion));
   }
 
   clearInput() {

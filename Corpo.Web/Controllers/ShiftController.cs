@@ -23,18 +23,10 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult GetAll(string from, string to, int classId)
+        public async Task<ActionResult> GetAll(DateTime from, DateTime to, int classId)
         {
-            var response = _shiftService.GetAll(from, to, classId);
-            if (response.Result != null)
-            {
-                var list = ((IEnumerable)response.Result).Cast<Shift>().ToList();
-                return Ok(list);
-            }
-            else
-            {
-                return this.ToActionResult(response);
-            }    
+            var response = await _shiftService.GetAll(from, to, classId);
+            return this.ToActionResult(response);
         }
 
         [HttpPost("add")]

@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <section *ngIf="!requestingList && balancesToPay.length > 0"  id="no-more-tables">
+      <section *ngIf="!requestingList && balancesToPay.length > 0" id="no-more-tables">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -29,7 +29,7 @@
               <td data-title="Observación"><span *ngIf="balance.balance<0">(A Favor)</span><span *ngIf="balance.balance>0">-</span></td>
               <td data-title="Acción">
                 <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/deudas-detalle']" [queryParams]="{id:balance.idMember}">Ver</button>
-                <button class="btn btn-warning btn-xs btn-action-list text-white" data-toggle="modal" href="#myModalPay" (click)="selectBalance(balance)">Pagar</button>
+                <button *ngIf="balance.balance>0" class="btn btn-warning btn-xs btn-action-list text-white" data-toggle="modal" href="#myModalPay" (click)="selectBalance(balance)">Pagar</button>
               </td>
             </tr>
           </tbody>
@@ -46,6 +46,7 @@
     </div>
     <!-- /content-panel -->
   </div>
+
   <!-- /col-md-12 -->
 </section>
 
@@ -63,19 +64,21 @@
 
     <!-- cuerpo del diálogo -->
     <div class="modal-body">
-      <div class="row">
+      <!--<div class="row">
         <div class="col-12 mt-2 pull-left">
-          <input type="radio" id="totalPayment" name="pay" checked (change)="checked()">
+          <input type="radio" name="pay" value="true" [(ngModel)]="totalPayment" (change)="checked($event.target.value)">
           <label for="totalPayment" class="col-9 control-label labelFormStyle marginLabel">Pagar todo</label>
         </div>
         <div class="col-6 mt-2 btn-float-right">
-          <input type="radio" id="partialPayment" name="pay" (change)="checked()">
+          <input type="radio" name="pay" value="false" [(ngModel)]="totalPayment" (change)="checked($event.target.value)">
           <label for="partialPayment" class="col-9 control-label labelFormStyle marginLabel">Pago parcial</label>
         </div>
-        <div *ngIf="!totalPayment" class="col-6 mt-1">
-          <input type="text" class="form-control" [(ngModel)]="partialPay" />
-        </div>
-      </div>
+       
+          <div *ngIf="totalPayment == 'false'" class="col-6 mt-1">
+            <input type="text" class="form-control" [(ngModel)]="partialPay" />
+          </div>
+      </div>-->
+      <p>Está seguro que quiere cancelar el saldo?</p>
     </div>
 
     <!-- pie del diálogo -->
@@ -85,4 +88,7 @@
     </div>
 
   </div>
+
+
 </section>
+

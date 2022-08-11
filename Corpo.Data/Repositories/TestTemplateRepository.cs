@@ -38,9 +38,24 @@ namespace Corpo.Data.Repositories
                 .ToListAsync();
         }
 
+        public Task<List<ExerciseFMS>> GetAllExercisesFMS()
+        {
+            return _context.ExerciseFMS.ToListAsync();
+        }
+
         public async Task<TestTemplate> GetById(int id)
         {
             return await _context.TestTemplate.Include(x => x.TestExercises).FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public Task<TestTemplate> GetByLevel(int level)
+        {
+            return _context.TestTemplate.Include(x => x.TestExercises).FirstOrDefaultAsync(x => x.Level == level);
+        }
+
+        public async Task<TestTemplate> GetDetailById(int id)
+        {
+            return await _context.TestTemplate.Include(x => x.TestExercises).ThenInclude(y => y.ExerciseFMS.Files).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Update(TestTemplate test)

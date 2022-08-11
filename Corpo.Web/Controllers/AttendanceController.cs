@@ -46,9 +46,19 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAllReservations")]
-        async public Task<ActionResult<AttendanceReservationDto>> GetAllReservations(int id)
+        async public Task<ActionResult<AttendanceReservationDto>> GetAllReservations(int? id)
         {
-            var response = await _attendanceService.GetAllReservations(id);
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            var response = await _attendanceService.GetAllReservations(userId);
             return Ok(response);
         }
 
@@ -62,8 +72,34 @@ namespace Corpo.Web.Controllers
         [HttpGet("get-by-id-member-by-month")]
         public ActionResult GetByIdMemberByMonth(int month)
         {
+            if (month == 0)
+            {
+                month = DateTime.Now.Month;
+            }
             var user = GetUser();
             var response = _attendanceService.GetByIdMemberByMonth(user.Id, month);
+            return this.ToActionResult(response);
+        }
+
+
+        [HttpGet("all-by-month")]
+        public async Task<ActionResult<List<Attendance>>> GetAllByMonth(int? id, int month)
+        {
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            if (month == 0)
+            {
+                month = DateTime.Now.Month;
+            }
+            var response = await _attendanceService.GetAllByMonth(userId, month);
             return this.ToActionResult(response);
         }
 
@@ -80,6 +116,14 @@ namespace Corpo.Web.Controllers
         //    var response = _attendanceService.GetWeeklyAttendanceByMemberId(memberId);
         //    return this.ToActionResult(response);
         //}
+
+        [HttpGet("by-from-by-to-by-class")]
+        public async Task<ActionResult> GetByFromByToByClass(DateTime from, DateTime to, int classId)
+        {
+            var id = GetUser().Id;
+            var response = await _attendanceService.GetByFromByToByClass(id, from, to, classId);
+            return this.ToActionResult(response);
+        }
 
     }
 }

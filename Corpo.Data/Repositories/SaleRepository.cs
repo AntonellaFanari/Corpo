@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,36 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
-        public List<Sale> GetAll(DateTime from, DateTime? to)
+        public List<SaleFeeIncomeDto> GetAll(DateTime from, DateTime? to)
         {
-            return _context.Sale.Include(x => x.Member).Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
+            var list = new List<SaleFeeIncomeDto>();
+            var listSale = _context.Sale.Include(x => x.Member)
+                .Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from))
+                .Select(x => new SaleFeeIncomeDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Pay= x.Pay,
+                    IncomeType = IncomeType.sale
+                }).ToList();
+            var listBalancePaid = _context.BalancePaid
+                .Where(to != null ? (x => x.Date >= from && x.Date <= to && x.IncomeType == IncomeType.paySale) : (x => x.Date >= from && x.IncomeType == IncomeType.paySale))
+                .Select(x => new SaleFeeIncomeDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Pay = x.Pay,
+                    IncomeType = x.IncomeType
+                }).ToList();
+            foreach (var item in listSale)
+            {
+                list.Add(item);
+            };
+            foreach (var item in listBalancePaid)
+            {
+                list.Add(item);
+            };
+            return list.OrderBy(x => x.Date).ToList();
 
         }
 
@@ -47,6 +75,7 @@ namespace Corpo.Data.Repositories
         {
             var sale = _context.Sale.Find(id);
             sale.Status = Status.Canceled;
+            sale.Pay *= -1;
             _context.Sale.Update(sale);
             _context.SaveChanges();
             _context.CancelSale.Add(cancelSale);

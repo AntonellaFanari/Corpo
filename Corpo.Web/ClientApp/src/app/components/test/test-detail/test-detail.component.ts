@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ExerciseFms } from '../../../domain/test/exercise-fms';
 import { TestTemplate } from '../../../domain/test/test-template';
 import { TestTemplateService } from '../../../services/test-template.service';
 
@@ -11,15 +12,20 @@ import { TestTemplateService } from '../../../services/test-template.service';
 export class TestDetailComponent implements OnInit {
   testTemplate: TestTemplate;
   id: number;
+  memberId: number;
+  exercisesFms: ExerciseFms[] = [];
+  baseUrl: string;
 
   constructor(private testTemplateService: TestTemplateService,
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(
       params => {
         this.id = parseInt(params['id']);
+        this.memberId = parseInt(params['memberId']);
         this.getTest();
       }
-    )
+    );
+    this.baseUrl = this.testTemplateService.url;
   }
 
   ngOnInit() {
@@ -27,7 +33,7 @@ export class TestDetailComponent implements OnInit {
   }
 
   getTest() {
-    this.testTemplateService.getById(this.id).subscribe(
+    this.testTemplateService.getDetailById(this.id).subscribe(
       response => {
         console.log("test: ", response.result);
         this.testTemplate = response.result;

@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BalanceToPay, TransactionType } from '../../../domain/balance-to-pay';
 import { DetailsSale } from '../../../domain/details-sale';
+import { Fee } from '../../../domain/fee';
 import { MemberView } from '../../../domain/member-view';
 import { Product } from '../../../domain/product';
 import { Sale } from '../../../domain/sale';
@@ -12,9 +13,11 @@ import { Status } from '../../../domain/status';
 import { AccountService } from '../../../services/account.service';
 import { BalanceService } from '../../../services/balance.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
+import { FeeService } from '../../../services/fee.service';
 import { MemberService } from '../../../services/member.service';
 import { ProductService } from '../../../services/product.service';
 import { SaleService } from '../../../services/sale.service';
+import { DebtDetailComponent } from '../../debt/debt-detail/debt-detail.component';
 
 @Component({
   selector: 'app-sale-create',
@@ -41,10 +44,21 @@ export class SaleCreateComponent implements OnInit {
   pay = 0;
   //positiveBalance = 0;
   //positiveBalanceSaleDto = 0;
+  fees: Fee[] = [];
+  balances: BalanceToPay[] = [];
+  @ViewChild(DebtDetailComponent, { static: false }) debtDetailComponent: DebtDetailComponent;
+  viewDebts = true;
 
-  constructor(private memberService: MemberService, private productService: ProductService, private formBuilder: FormBuilder,
-    private accountService: AccountService, private dp: DatePipe, private saleService: SaleService, private router: Router,
-    private customAlertService: CustomAlertService, private balanceService: BalanceService) {
+  constructor(private memberService: MemberService,
+    private productService: ProductService,
+    private formBuilder: FormBuilder,
+    private accountService: AccountService,
+    private dp: DatePipe,
+    private saleService: SaleService,
+    private router: Router,
+    private customAlertService: CustomAlertService,
+    private balanceService: BalanceService,
+    private feeService: FeeService) {
     this.getFormDetailsSale();
   }
 
@@ -105,7 +119,28 @@ export class SaleCreateComponent implements OnInit {
     this.selectedMember = member;
     this.filterMember = member.lastName + " " + member.name;
     this.formDetailsSale.patchValue({ memberName: member.lastName + " " + member.name });
+    this.getFees(this.selectedMember.id);
+    this.getBalances(this.selectedMember.id);
   /*  this.getPositiveBalance(member.id);*/
+  }
+
+  getBalances(id) {
+    this.balanceService.getAllByIdMember(id).subscribe(
+      result => {
+        this.balances = result;
+      },
+      error => console.error(error)
+    )
+  }
+
+
+  getFees(id) {
+    this.feeService.getAllByIdMember(id).subscribe(
+      result => {
+        this.fees = result;
+      },
+      error => console.error(error)
+    )
   }
 
   selectProduct(prod) {
@@ -283,5 +318,12 @@ export class SaleCreateComponent implements OnInit {
       this.customAlertService.displayAlert("Gestión de Ventas", ["No se seleccionaron productos."]);
     }
 
+  }
+
+  getTransaction(balance) {
+    this.debtDetailComponent.getTransaction(balance);
+    this.debtDetailComponent.member = this.selectedMember;
+    this.viewDebts = false;
+    this.debtDetailComponent.viewDebts = true;
   }
 }

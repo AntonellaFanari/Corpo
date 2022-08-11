@@ -51,14 +51,15 @@ namespace Corpo.Domain.Services
         public DomainResponse Update(int id, Plan planEdit)
         {
             try
-            {
-                var planQuery = _planRepository.GetById(id);
-                planQuery.Name = planEdit.Name;
-                planQuery.Type = planEdit.Type;
-                planQuery.Credits = planEdit.Credits;
-                planQuery.Price = planEdit.Price;
-                planQuery.Classes = planEdit.Classes;
-                _planRepository.Update(planQuery);
+            {                
+                var plan = new Plan();
+                plan.Name = planEdit.Name;
+                plan.Type = planEdit.Type;
+                plan.Credits = planEdit.Credits;
+                plan.Price = planEdit.Price;
+                plan.Classes = planEdit.Classes;
+                _planRepository.Delete(id);
+                _planRepository.Add(plan);
                 return new DomainResponse
                 {
                     Success = true

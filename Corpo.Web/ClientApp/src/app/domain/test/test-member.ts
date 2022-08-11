@@ -2,7 +2,7 @@ import { TestExerciseMember } from "./test-exercise-member";
 
 export class TestMember {
   id: number;
-  name: string;
+  level: number;
   memberId: number;
   status: StatusTest;
   testTemplateId: number;

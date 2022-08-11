@@ -160,6 +160,9 @@ import { TestResultComponent } from './components/test/test-result/test-result.c
 import { TestListComponent } from './components/test/test-list/test-list.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { TestDetailComponent } from './components/test/test-detail/test-detail.component';
+import { WodTemplateEditComponent } from './components/workout/wod-template/wod-template-edit/wod-template-edit.component';
+import { AnamnesisResultComponent } from './components/phisical-condition/anamnesis-result/anamnesis-result.component';
+import { PaymentDetailsComponent } from './components/debt/payment-details/payment-details.component';
 
 
 @NgModule({
@@ -309,7 +312,10 @@ import { TestDetailComponent } from './components/test/test-detail/test-detail.c
     TestResultComponent,
     TestListComponent,
     SafePipe,
-    TestDetailComponent
+    TestDetailComponent,
+    WodTemplateEditComponent,
+    AnamnesisResultComponent,
+    PaymentDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -404,8 +410,7 @@ import { TestDetailComponent } from './components/test/test-detail/test-detail.c
       { path: 'reservas', component: ReservationsComponent, canActivate: [AuthGuard], data: { name: 'socios' }  },
       { path: 'caja-diaria', component: DailyCashComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
       { path: 'caja-detalle', component: CashDetailComponent, canActivate: [AuthGuard], data: { name: 'informes' }  },
-      { path: 'asignacion-wod', component: AssignmentListComponent },
-      { path: 'asignacion-plantilla', component: AssignmentTemplateComponent },
+      { path: 'personalizados', component: AssignmentListComponent },
       { path: 'modalidades-list', component: ModalityListComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'modalidad-crear', component: ModalityCreateComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
       { path: 'modalidad-editar', component: ModalityEditComponent, canActivate: [AuthGuard], data: { name: 'abm' }  },
@@ -422,7 +427,9 @@ import { TestDetailComponent } from './components/test/test-detail/test-detail.c
       { path: 'sistema-entrenamiento-crear', component: TrainingSystemCreateComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
       { path: 'sistema-entrenamiento-editar', component: TrainingSystemEditComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
       { path: 'wod-template', component: WodTemplateComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
-      { path: 'plantillas-wod', component: WodTemplateListComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'plantillas-wod', component: WodTemplateListComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'asignacion-plantilla', component: AssignmentTemplateComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
+      { path: 'plantilla-wod-editar', component: WodTemplateEditComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'periodizacion', component: WorkoutPeriodizationComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
       { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
       { path: 'editar-periodizacion', component: WorkoutPeriodizaionEditComponent, canActivate: [AuthGuard], data: { name: 'wod' }  },
@@ -442,7 +449,9 @@ import { TestDetailComponent } from './components/test/test-detail/test-detail.c
       { path: 'test-asignados-list', component: TestAssignmentListComponent, canActivate: [AuthGuard], data: { name: 'test' } },
       { path: 'resultado-test', component: TestResultComponent, canActivate: [AuthGuard], data: { name: 'test' } },
       { path: 'test-detalle', component: TestDetailComponent, canActivate: [AuthGuard], data: { name: 'test' } },
-      { path: 'test-asignado-detalle', component: TestAssignmentDetailComponent, canActivate: [AuthGuard], data: { name: 'test' } }
+      { path: 'test-asignado-detalle', component: TestAssignmentDetailComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'anamnesis', component: AnamnesisResultComponent, canActivate: [AuthGuard], data: { name: 'test' } },
+      { path: 'detalle-pago', component: PaymentDetailsComponent, canActivate: [AuthGuard], data: { name: 'caja' } }
     ])
   ],
   entryComponents: [

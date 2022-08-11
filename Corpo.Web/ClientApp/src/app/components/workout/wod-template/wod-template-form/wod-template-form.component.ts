@@ -63,6 +63,8 @@ export class WodTemplateFormComponent implements OnInit {
   validatorsIntensity: boolean;
   validatorsIntensityPercentage: boolean;
   validatorsIntensityNumber: boolean;
+  selectedExerciseView: any;
+
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -219,6 +221,11 @@ export class WodTemplateFormComponent implements OnInit {
 
   selectExercise() {
     this.validatorsRequiredExercise = false;
+  }
+
+  selectExerciseView(exercise) {
+    console.log("ejercicio mostrar: ", exercise)
+    this.selectedExerciseView = exercise;
   }
 
   selectModality() {

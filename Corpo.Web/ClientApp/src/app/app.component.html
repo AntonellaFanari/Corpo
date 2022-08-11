@@ -5,7 +5,7 @@
         <i class="fas fa-bars login-icon"></i>
       </button>
       <!-- logo -->
-      <a class="logo" href="#">
+      <a class="logo" routerLink="'/home'">
         <img src="http://antofanari-001-site1.gtempurl.com/logo-corpo.png" alt="" class="logo">
       </a>
       <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
@@ -49,20 +49,14 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/objetivos-mensuales-list']">Objetivos Mensuales</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/objetivos-semanales-list']">Objetivos Semanales</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/plantillas-wod']">Plantillas WOD</a></li>
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/asignacion-wod']">WOD personalizado</a></li>
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/test-templates-list']">Test</a></li>
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/test']" [queryParams]="{display: 'true'}">Test Personalizado</a></li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/test-templates-list']">Test Plantillas</a></li>
             </ul>
           </li>
           <li *access="'test'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
-            <a class="nav-item dropdown-toggle" id="dropdown1" data-toggle="dropdown" role="button">
-              <i class="fa fa-clipboard" aria-hidden="true"></i>
-              Test
+            <a [routerLink]="['/personalizados']">
+              <i class="fa fa-clipboard me-1"></i>
+              Personalizados
             </a>
-            <ul class="dropdown-menu">
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/test-templates-list']">Test Plantillas</a></li>
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/test']" [queryParams]="{display: 'true'}">Test Personalizado</a></li>
-            </ul>
           </li>
           <li *access="'deudas'" class="nav-item me-2" (click)="navbarCollapsed = !navbarCollapsed">
             <a [routerLink]="['/deudas-list']">
@@ -142,6 +136,5 @@
 
   <div class="container">
     <router-outlet></router-outlet>
-
   </div>
 </body>

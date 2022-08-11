@@ -6,11 +6,17 @@
 
   <form [formGroup]="formTestName">
     <div class="form-group mt-3">
-      <label class="control-label">Nombre:</label>
-      <div class="formValidators">
-        <input type="text" class="form-control" formControlName="testName">
+      <label class="control-label">Nivel:</label>
+      <div class="">
+        <select class="form-control" formControlName="level">
+          <option value="" disabled>Seleccionar...</option>
+          <option value="0">Nivel 0</option>
+          <option value="1">Nivel 1</option>
+          <option value="2">Nivel 2</option>
+          <option value="3">Nivel 3</option>
+        </select>
       </div>
-      <p class="validators" *ngIf="send && g.testName.errors?.required">*Debe completar el campo.</p>
+      <p class="validators" *ngIf="send && g.level.errors?.required">*Debe seleccionar un nivel.</p>
     </div>
   </form>
   <form [formGroup]="formCreate">
@@ -27,12 +33,29 @@
       <p class="validators" *ngIf="sendExercise && selectedType == 0">*Debe seleccionar tipo de ejercicio.</p>
     </div>
     <div class="row">
-      <div class="form-group mt-3 col-12">
+      <div class="form-group mt-3 col-12" [class.d-none]="selectedType == 3">
         <label class="control-label">Ejercicio:</label>
         <div class="formValidators">
           <input class="form-control" formControlName="name" />
         </div>
         <p class="validators" *ngIf="sendExercise && f.name.errors?.required">*Debe completar el campo.</p>
+      </div>
+      <div class="form-group mt-3" [class.d-none]="selectedType != 3">
+        <label class="control-label">Ejercicio:</label>
+        <div class="">
+          <select class="form-control" formControlName="exerciseFmsId" (change)="selectExerciseFms($event.target.value)">
+            <option value="0" disabled>Seleccionar...</option>
+            <option *ngFor="let exercise of exercisesFMS" value={{exercise.id}}>{{exercise.name}}</option>
+          </select>
+        </div>
+        <p class="validators" *ngIf="sendExercise && f.name.errors?.required">*Debe seleccionar ejercicio.</p>
+      </div>
+      <div class="form-group mt-3 col-12">
+        <label class="control-label">Protocolo:</label>
+        <div class="formValidators">
+          <input class="form-control" formControlName="protocol" />
+        </div>
+        <p class="validators" *ngIf="sendExercise && f.protocol.errors?.required">*Debe completar el campo.</p>
       </div>
       <div class="form-group mt-3 col-12 pe-0">
         <div class="formValidators row btn-float-left col-12 col-lg-3">
@@ -75,6 +98,7 @@
       <thead class="cf">
         <tr>
           <th>Ejercicio</th>
+          <th>Protocolo</th>
           <th>Tipo</th>
           <th>Tiempo</th>
           <th>Video</th>
@@ -85,6 +109,9 @@
         <tr *ngFor="let exercise of testExercises; index as i" (click)="completeFormEdit(exercise, i)">
           <td class="td-title" data-title="Ejercicio">
             {{exercise.name}}
+          </td>
+          <td class="td-title" data-title="Protocolo">
+            {{exercise.protocol}}
           </td>
           <td class="td-title" data-title="Tipo">
             <span *ngIf="exercise.testType == 1">FC</span>

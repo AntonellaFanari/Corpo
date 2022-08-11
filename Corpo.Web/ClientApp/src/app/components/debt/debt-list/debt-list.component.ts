@@ -13,13 +13,15 @@ import { CustomAlertService } from '../../../services/custom-alert.service';
 export class DebtListComponent implements OnInit {
   balancesToPay: BalanceToPayView[] = [];
   filterName = "";
-  totalPayment = true;
+  totalPayment = "true";
   partialPay = 0;
   totalBalance = 0;
   memberId: number;
   positiveBalance = 0;
   balancesMember: BalanceToPay[] = [];
   requestingList: boolean;
+  checkedAll = true;
+  hidePartialPay = true;
 
   constructor(private balanceService: BalanceService, private customAlertService: CustomAlertService) { }
 
@@ -33,48 +35,35 @@ export class DebtListComponent implements OnInit {
       result => {
         this.requestingList = false;
         this.balancesToPay = result;
+        console.log("balances de socios: ", this.balancesToPay);
       },
       error => this.requestingList = false
     );
   }
 
-  getAllBalancesByIdMember(id) {
-    this.balanceService.getAllByIdMember(id).subscribe(
-      result => {
-        this.balancesMember = result;
-        for (var i = 0; i < this.balancesMember.length; i++) {
-          if (this.balancesMember[i].balance < 0) {
-            this.positiveBalance += (this.balancesMember[i].balance * -1);
-          }
-        }
-        },
-        error => console.error(error)
-    )
-  }
-
   selectBalance(balance) {
-    this.totalBalance = balance.balance;
+    this.partialPay = 0;
+    this.totalBalance = balance.balance - balance.pay;
     this.memberId = balance.idMember;
-    this.getAllBalancesByIdMember(this.memberId);
   }
 
-  checked() {
-    this.totalPayment = !this.totalPayment;
+  checked(value) {
+    console.log("value: ", value);
+    console.log("totalPayment: ", this.totalPayment)
   }
 
   submit() {
-    let payCancelBalance = new PayCancelBalance();
-    payCancelBalance.id = this.memberId;
-    payCancelBalance.positiveBalance = this.positiveBalance;
-    let pay = 0;
-    if (this.totalPayment) {
-      payCancelBalance.pay = this.totalBalance;
-    } else {
-      payCancelBalance.pay = this.partialPay;
-    };
-    this.balanceService.cancelBalance(payCancelBalance).subscribe(
+    //let pay = 0;
+    //if (this.totalPayment == "true") {
+    //  pay = this.totalBalance;
+    //} else {
+    //  pay = this.partialPay;
+    //};
+    let pay = this.totalBalance;
+    this.balanceService.cancelBalance(this.memberId, pay).subscribe(
       result => {
         this.getAll();
+        this.totalPayment = "true";
       },
       error => {
         console.error(error);

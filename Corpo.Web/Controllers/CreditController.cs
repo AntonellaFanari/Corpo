@@ -30,9 +30,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("update")]
-        public ActionResult Update([FromBody] Credit credit)
+        public async Task<ActionResult> Update([FromBody] Credit credit)
         {
-            var response = _creditService.Update(credit);
+            var response = await _creditService.Update(credit);
             return this.ToActionResult(response);
         }
 

@@ -14,5 +14,7 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> Delete(int id);
         Task<DomainResponse> GetById(int id);
         Task<DomainResponse> Update(TestTemplate test);
+        Task<DomainResponse> GetAllExercisesFMS();
+        Task<DomainResponse> GetDetailById(int id);
     }
 }

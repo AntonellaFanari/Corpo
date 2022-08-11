@@ -21,5 +21,6 @@ namespace Corpo.Domain.Models
         public int Rest { get; set; }
         public IntensityType IntensityType { get; set; }
         public int Intensity { get; set; }
+        public DateTime? ShiftDate { get; set; }
     }
 }

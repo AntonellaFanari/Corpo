@@ -42,6 +42,10 @@ export class TestMemberService {
     return this.http.get<DomainResponse<TestMember>>(this.url + 'api/test-member/' + id);
   }
 
+  public getDetailById(id: number) {
+    return this.http.get<DomainResponse<TestMember>>(this.url + 'api/test-member/detail-by-id?id=' + id);
+  }
+
   public update(test: TestMember) {
     return this.http.put<DomainResponse<any>>(this.url + 'api/test-member/', test, httpOptions);
   }

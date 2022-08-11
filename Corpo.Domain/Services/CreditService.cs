@@ -57,12 +57,12 @@ namespace Corpo.Domain.Services
                 return new DomainResponse(false, ex.Message, "No se pudo cargar los creditos.");
             }
         }
-        public DomainResponse Update(Credit credit)
+        public async Task<DomainResponse> Update(Credit credit)
         {
          
             try
             {
-                if (credit.Expiration < DateTime.Now)
+                if (credit.Expiration < DateTime.Now || credit.InitialCredit == credit.CreditConsumption)
                 {
                     credit.Negative++;
                 }
@@ -71,7 +71,7 @@ namespace Corpo.Domain.Services
 
                     credit.CreditConsumption++;
                 }
-                _creditRepository.Update(credit);
+                await _creditRepository.Update(credit);
                 return new DomainResponse
                 {
                     Success = true

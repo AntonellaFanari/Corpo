@@ -17,5 +17,6 @@ namespace Corpo.Domain.Models.Dtos
         public DateTime? DateCancellation { get; set; }
         public bool UsingNegative { get; set; }
         public bool ReturnCredit { get; set; }
+        public Class Class { get; set; }
     }
 }

@@ -4,6 +4,7 @@ import { FileInjury } from '../../../domain/file';
 import { Injury } from '../../../domain/injury';
 import { MedicalHistory } from '../../../domain/medical-history';
 import { MemberView } from '../../../domain/member-view';
+import { PhysicalLevel } from '../../../domain/wod/physical-level';
 import { MemberService } from '../../../services/member.service';
 @Component({
   selector: 'app-member-view',
@@ -21,6 +22,9 @@ export class MemberViewComponent implements OnInit {
   @Input() id: number;
   @Input() hideGoBack: boolean;
   requestingList: boolean;
+  level: number;
+  displayLevelsHistory: boolean;
+  physicalLevelsHistory: PhysicalLevel[] = [];
 
   constructor(private memberService: MemberService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -40,9 +44,35 @@ export class MemberViewComponent implements OnInit {
         this.member = result;
         this.getMedicalHistory();
         this.getAge();
+        this.getLevel();
       },
       error => this.requestingList = false
     );
+  }
+
+  getLevel() {
+    this.memberService.getLevel(this.id).subscribe(
+      response => {
+        console.log("nivel fisico: ", response.result.level);
+        this.level = response.result.level;
+      },
+      error => console.error(error)
+    )
+  }
+
+  getLevelsHistory() {
+    this.memberService.getLevelsHistory(this.id).subscribe(
+      response => {
+        console.log("historial: ", response.result);
+        this.physicalLevelsHistory = response.result;
+        this.displayLevelsHistory = true;
+      },
+      error => console.error(error)
+    )
+  }
+
+  hideLevelsHistory() {
+    this.displayLevelsHistory = false;
   }
 
   getMedicalHistory() {

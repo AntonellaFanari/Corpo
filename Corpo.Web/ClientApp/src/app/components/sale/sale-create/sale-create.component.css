@@ -45,6 +45,25 @@ td.text-ajust {
   text-overflow: ellipsis;
 }
 
+.a-link-detail {
+  color: white !important;
+  text-align: left;
+}
+
+.a-link-detail:hover {
+  text-decoration: underline !important;
+  color: blue !important;
+}
+
+.view-debt-detail {
+  display: none;
+}
+
+
+.table-font {
+  font-size: small;
+}
+
 @media only screen and (max-width: 800px) {
   #no-more-tables td {
     padding-left: 30%;

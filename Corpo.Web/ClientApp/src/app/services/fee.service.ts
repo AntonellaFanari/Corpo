@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { DomainResponse } from '../domain/domain-response';
 import { Fee } from '../domain/fee';
 import { FeeDto } from '../domain/fee-dto';
 import { FeeView } from '../domain/fee-view';
+import { SaleFeeIncome } from '../domain/sale-fee-income';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,11 +24,11 @@ export class FeeService {
   }
 
   public getAll(id: number) {
-    return this.http.get<any>(this.url + 'api/fee/getAll?id='+ id);
+    return this.http.get<DomainResponse<SaleFeeIncome[]>>(this.url + 'api/fee/getAll?id=' + id);
   }
 
   public getById(id: number) {
-    return this.http.get<Fee>(this.url + 'api/fee/getById?id=' + id);
+    return this.http.get<DomainResponse<any>>(this.url + 'api/fee/getById?id=' + id);
   }
 
   public add(feeDto: FeeDto) {

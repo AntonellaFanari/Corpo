@@ -89,7 +89,7 @@ namespace Corpo.Data.Repositories
 
         public async Task<List<RecordCashDto>> GetDetailed(DateTime opening, DateTime? closing)
         {
-           
+            closing = closing ?? DateTime.Now;
             var list = new List<RecordCashDto>();
             var fees = await _context
                 .Fee

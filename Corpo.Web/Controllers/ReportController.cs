@@ -57,8 +57,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("cash-detailed")]
-        public async Task<ActionResult> GetCashDetailed(DateTime opening, DateTime closing)
+        public async Task<ActionResult> GetCashDetailed(DateTime opening, DateTime? closing)
         {
+            closing = closing ?? null;
 
             var response = await _cashService.GetDetailed(opening, closing);
             return this.ToActionResult(response);

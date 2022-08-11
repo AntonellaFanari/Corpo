@@ -4,6 +4,7 @@ import { MemberView } from '../../../domain/member-view';
 import { Wod, WodGroup, WodTemplate, wodTemplateResponse } from '../../../domain/wod';
 import { WodMember } from '../../../domain/wod-member';
 import { Periodization } from '../../../domain/wod/periodization';
+import { AnamnesisService } from '../../../services/anamnesis.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 import { PeriodizationService } from '../../../services/wod/periodization.service';
@@ -27,6 +28,7 @@ export class AssignmentTemplateEditComponent implements OnInit {
   requestingAssignment: boolean;
   member: MemberView;
   display = true;
+  level: number;
 
   constructor(private route: ActivatedRoute,
     private wodMemberService: WodMemberService,
@@ -34,7 +36,8 @@ export class AssignmentTemplateEditComponent implements OnInit {
     private router: Router,
     private wodTemplateService: WodTemplateService,
     private memberService: MemberService,
-    private customAlertService: CustomAlertService) {
+    private customAlertService: CustomAlertService,
+    private anamnesisService: AnamnesisService) {
     this.route.queryParams.subscribe(params => {
       this.id = parseInt(params['id']);
       this.weekNumber = parseInt(params['week']);
@@ -42,6 +45,7 @@ export class AssignmentTemplateEditComponent implements OnInit {
       console.log(this.id);
       console.log(this.weekNumber);
       this.getMember(this.memberId);
+      this.getLevel();
 
     });
 
@@ -53,6 +57,13 @@ export class AssignmentTemplateEditComponent implements OnInit {
         console.log("socio: ", response);
         this.member = response;
       },
+      error => console.error(error)
+    )
+  }
+
+  getLevel() {
+    this.memberService.getLevel(this.memberId).subscribe(
+      response => this.level = response.result.level,
       error => console.error(error)
     )
   }

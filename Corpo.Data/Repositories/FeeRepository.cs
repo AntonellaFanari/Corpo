@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Corpo.Domain.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,9 +36,36 @@ namespace Corpo.Data.Repositories
             return creditId;
         }
 
-        public List<Fee> GetAll(DateTime from, DateTime? to)
+        public async Task<List<SaleFeeIncomeDto>> GetAll(DateTime from, DateTime? to)
         {
-            return _context.Fee.Include(x => x.Member).Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from)).ToList();
+            var list = new List<SaleFeeIncomeDto>();
+            var listFee = await _context.Fee.Include(x => x.Member)
+                .Where(to != null ? (x => x.Date >= from && x.Date <= to) : (x => x.Date >= from))
+                .Select(x => new SaleFeeIncomeDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Pay = x.Pay,
+                    IncomeType = IncomeType.fee
+                }).ToListAsync();
+            var listBalancePaid = await _context.BalancePaid
+                .Where(to != null ? (x => x.Date >= from && x.Date <= to && x.IncomeType == IncomeType.payFee) : (x => x.Date >= from && x.IncomeType == IncomeType.payFee))
+                .Select(x => new SaleFeeIncomeDto
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Pay = x.Pay,
+                    IncomeType = x.IncomeType
+                }).ToListAsync();
+            foreach (var item in listFee)
+            {
+                list.Add(item);
+            };
+            foreach (var item in listBalancePaid)
+            {
+                list.Add(item);
+            };
+            return list.OrderBy(x => x.Date).ToList();
         }
 
         public List<Fee> GetAllByIdMember(int id)
@@ -45,14 +73,14 @@ namespace Corpo.Data.Repositories
             return _context.Fee.Where(x => x.MemberId == id).Include(x => x.Member).Include(x => x.Member.Plan).Include(x => x.Promotion).ToList();
         }
 
-        public Fee GetById(int id)
+        public async Task<Fee> GetById(int id)
         {
-            return _context.Fee.Include(x => x.Member).Include(x => x.Member.Plan).FirstOrDefault(x => x.Id == id);
+            return await _context.Fee.Include(x => x.Member).Include(x => x.Member.Plan).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Fee GetLastPayment(int id)
+        public async Task<Fee> GetLastPayment(int id)
         {
-            return _context.Fee.Where(x => x.MemberId == id).OrderBy(x => x.Date).LastOrDefault();
+            return await _context.Fee.Where(x => x.MemberId == id).OrderBy(x => x.Date).LastOrDefaultAsync();
         }
     }
 }

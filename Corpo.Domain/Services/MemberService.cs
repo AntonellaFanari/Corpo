@@ -44,21 +44,7 @@ namespace Corpo.Domain.Services
                 Password = GetHashString(member.Password),
                 UserType = UserType.Member
             };
-            var setting = _settingsRepository.GetByName("firstDayPlan").Result;
-            var planType = _planRepository.GetById(member.PlanId);
-            var newCredit = new Credit();
-            newCredit.InitialCredit = 0;
-            newCredit.CreditConsumption = 0;
-            newCredit.Negative = 0;
-            if (planType.Type == PlanType.Group && setting.Value == "true")
-            {
-                newCredit.Expiration = DateTime.Now.AddHours(24);
-                newCredit.FirstDay = "true";
-            }else 
-            {
-                newCredit.Expiration = DateTime.Now;
-                newCredit.FirstDay = "false";
-            }
+
             var newMember = new Member()
             {
                 LastName = member.LastName,
@@ -74,6 +60,24 @@ namespace Corpo.Domain.Services
                 PlanId = member.PlanId,
                 EntryDate = DateTime.Now
             };
+
+            var setting = _settingsRepository.GetByName("firstDayPlan").Result;
+            var planType = _planRepository.GetById(member.PlanId);
+            var newCredit = new Credit();
+            newCredit.InitialCredit = 0;
+            newCredit.CreditConsumption = 0;
+            newCredit.Negative = 0;
+            if (planType.Type == PlanType.Group && setting.Value == "true")
+            {
+                newCredit.Expiration = DateTime.Now.AddHours(24);
+                newCredit.FirstDay = "true";
+                newMember.Status = StatusMember.FirstDay;
+            }else 
+            {
+                newCredit.Expiration = DateTime.Now;
+                newCredit.FirstDay = "false";
+                newMember.Status = StatusMember.NotActive;
+            }
             try
             {
                 var idAccount = _accountService.Add(newAccount);
@@ -103,9 +107,14 @@ namespace Corpo.Domain.Services
      
         }
 
-        public Member GetById(int id)
+        public async Task<DomainResponse> GetById(int id)
         {
-            return _memberRepository.GetById(id);
+            var response = await _memberRepository.GetById(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
         }
 
         public DomainResponse GetAll()
@@ -118,9 +127,14 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse Update(int id, Member member)
+        //private Task UpdateStatus()
+        //{
+        //    _memberRepository.UpdateStatus();
+        //}
+
+        public async Task<DomainResponse> Update(int id, Member member)
         {
-            var memberQuery = _memberRepository.GetById(id);
+            var memberQuery = await _memberRepository.GetById(id);
             memberQuery.LastName = member.LastName;
             memberQuery.Name = member.Name;
             memberQuery.Phone = member.Phone;
@@ -132,7 +146,7 @@ namespace Corpo.Domain.Services
             memberQuery.Instagram = member.Instagram;
             memberQuery.Facebook = member.Facebook;
             memberQuery.PlanId = memberQuery.PlanId;
-            var idMember = _memberRepository.Update(memberQuery);
+            var idMember = await _memberRepository.Update(memberQuery);
             return new DomainResponse
             {
                 Success = true,
@@ -160,15 +174,15 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse UpdateDueDate(CreditExpirationDto expiration)
+        public async Task<DomainResponse> UpdateDueDate(CreditExpirationDto expiration)
         {
 
-            var memberQuery = _memberRepository.GetById(expiration.Id);
+            var memberQuery = await _memberRepository.GetById(expiration.Id);
             var credit = memberQuery.Credit;
             credit.Expiration = expiration.Expiration;
             try
             {
-                _creditService.Update(credit);
+                await _creditService.Update(credit);
                 return new DomainResponse
                 {
                     Success = true
@@ -221,6 +235,7 @@ namespace Corpo.Domain.Services
                 medicalHistoryUpdate.HeartDisease = medicalHistory.HeartDisease;
                 medicalHistoryUpdate.RespiratoryDisease = medicalHistory.RespiratoryDisease;
                 medicalHistoryUpdate.SurgicalIntervention = medicalHistory.SurgicalIntervention;
+                medicalHistoryUpdate.HabitualMedication = medicalHistory.HabitualMedication;
                 medicalHistoryUpdate.Observations = medicalHistory.Observations;
                 var medicalHistoryId = _memberRepository.UpdateMedicalHistory(medicalHistoryUpdate);
                 return new DomainResponse
@@ -282,16 +297,44 @@ namespace Corpo.Domain.Services
             return sb.ToString();
         }
 
-        public DomainResponse GetAge(int id)
+        public async Task<DomainResponse> GetAge(int id)
         {
-            var member = _memberRepository.GetById(id);
-            int age = (int)Math.Floor((DateTime.Now - member.BirthDate).TotalDays / 365.25D);
+            var age = await this.GetAgeMember(id);
             return new DomainResponse
             {
                 Success = true,
                 Result = new { age = age }
             };
         }
+
+        public async Task<int> GetAgeMember(int id)
+        {
+            var member = await _memberRepository.GetById(id);
+            return (int)Math.Floor((DateTime.Now - member.BirthDate).TotalDays / 365.25D);
+        }
+
+        public async Task<DomainResponse> GetExistsMedicalHistory(int id)
+        {
+            var response = await _memberRepository.GetExistsMedicalHistory(id);
+            if (response != null)
+            {
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = true
+                };
+            }
+            else
+            {
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = false
+                };
+            }
+           
+        }
+
 
 
         public DomainResponse AddInjury(Injury injury)
@@ -374,7 +417,28 @@ namespace Corpo.Domain.Services
             };
         }
 
-       
+        public async Task<DomainResponse> GetLevel(int id)
+        {
+            var response = await _memberRepository.GetLevel(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetLevelsHistory(int id)
+        {
+            var response = await _memberRepository.GetLevelsHistory(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+
+
 
         //public DomainResponse Download(string fileName)
         //{

@@ -17,5 +17,7 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<List<Periodization>> GetByYear(int year, int id);
         Task<Periodization> GetExists(int year, int month, int memberId);
         Task<PeriodizationWeek> GetByPeriodizationWeek(int id);
+        Task<PeriodizationWeek> GetPeriodizationWeekByPeriodizationIdByFromTo(int id, DateTime from, DateTime to);
+        Task<PeriodizationWeek> GetPeriodizationWeekPlannedByShiftDate(DateTime shiftDate);
     }
 }

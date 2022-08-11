@@ -60,7 +60,7 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("by-year")]
-        public async Task<ActionResult<Periodization>> GetByYear(int year, int? memberId)
+        public async Task<ActionResult<Periodization>> GetByYear(int? year, int? memberId)
         {
             int userId = 0;
             if (memberId == null)
@@ -71,9 +71,13 @@ namespace Corpo.Web.Controllers
             else
             {
                 userId = memberId.Value;
+            };
+            if (year == null)
+            {
+                year = DateTime.Now.Year;
             }
-            
-            var response = await _periodizationService.GetByYear(year, userId);
+
+            var response = await _periodizationService.GetByYear(year.Value, userId);
             return this.ToActionResult(response);
         }
 

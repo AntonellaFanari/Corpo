@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TestResult } from '../../../domain/test/test-result';
+import { MemberService } from '../../../services/member.service';
 import { TestMemberService } from '../../../services/test-member.service';
 
 @Component({
@@ -11,17 +12,21 @@ import { TestMemberService } from '../../../services/test-member.service';
 export class TestResultComponent implements OnInit {
   memberId: number;
   id: number;
-  url = 'https://www.youtube.com/watch?v=KtZsQrYAJ0Y';
   testResults: TestResult[] = [];
   requestingResult: boolean;
   urlBase: string;
+  member: string;
+  level: number;
 
   constructor(private route: ActivatedRoute,
-    private testMemberService: TestMemberService) {
+    private testMemberService: TestMemberService,
+    private memberService: MemberService) {
     this.route.queryParams.subscribe(
       params => {
         this.id = parseInt(params['id']);
         this.memberId = parseInt(params['memberId']);
+        this.level = parseInt(params['level']);
+        this.getMember();
         this.getResult();
       });
     this.urlBase = this.testMemberService.url;
@@ -30,6 +35,14 @@ export class TestResultComponent implements OnInit {
   ngOnInit() {
   }
 
+  getMember() {
+    this.memberService.getById(this.memberId).subscribe(
+      response => {
+        console.log("socio: ", response);
+        this.member = response.lastName + " " + response.name;
+      },
+      error => console.error)
+  }
 
   getResult() {
     this.requestingResult = true;

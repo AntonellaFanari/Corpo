@@ -32,10 +32,13 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\components\validations\control-equal.ts" />
     <None Remove="ClientApp\src\app\domain\account.ts" />
+    <None Remove="ClientApp\src\app\domain\anamnesis\anamnesis.ts" />
     <None Remove="ClientApp\src\app\domain\attendance-reservation.ts" />
     <None Remove="ClientApp\src\app\domain\attendance.ts" />
+    <None Remove="ClientApp\src\app\domain\balance-paid.ts" />
     <None Remove="ClientApp\src\app\domain\balance-to-pay-view.ts" />
     <None Remove="ClientApp\src\app\domain\balance-to-pay.ts" />
+    <None Remove="ClientApp\src\app\domain\cancel-balance-paid.ts" />
     <None Remove="ClientApp\src\app\domain\cancel-sale.ts" />
     <None Remove="ClientApp\src\app\domain\cash.ts" />
     <None Remove="ClientApp\src\app\domain\category-exercises.ts" />
@@ -79,6 +82,7 @@
     <None Remove="ClientApp\src\app\domain\role-access.ts" />
     <None Remove="ClientApp\src\app\domain\role.ts" />
     <None Remove="ClientApp\src\app\domain\sale-dto.ts" />
+    <None Remove="ClientApp\src\app\domain\sale-fee-income.ts" />
     <None Remove="ClientApp\src\app\domain\sale.ts" />
     <None Remove="ClientApp\src\app\domain\shift-list.ts" />
     <None Remove="ClientApp\src\app\domain\shift-schedule.ts" />
@@ -86,6 +90,9 @@
     <None Remove="ClientApp\src\app\domain\status-attendance.ts" />
     <None Remove="ClientApp\src\app\domain\status.ts" />
     <None Remove="ClientApp\src\app\domain\tag.ts" />
+    <None Remove="ClientApp\src\app\domain\test\exercise-fms.ts" />
+    <None Remove="ClientApp\src\app\domain\test\file-fms.ts" />
+    <None Remove="ClientApp\src\app\domain\test\result-test-video-exercice.ts" />
     <None Remove="ClientApp\src\app\domain\test\test-exercise-member.ts" />
     <None Remove="ClientApp\src\app\domain\test\test-exercise.ts" />
     <None Remove="ClientApp\src\app\domain\test\test-member.ts" />
@@ -98,6 +105,7 @@
     <None Remove="ClientApp\src\app\domain\wod-member.ts" />
     <None Remove="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <None Remove="ClientApp\src\app\domain\wod\PeriodizationList.ts" />
+    <None Remove="ClientApp\src\app\domain\wod\physical-level.ts" />
     <None Remove="ClientApp\src\app\domain\wod\training-system.ts" />
     <None Remove="ClientApp\src\app\domain\wod\weekly-goal.ts" />
     <None Remove="ClientApp\src\app\services\authentication-interceptor.ts" />
@@ -106,10 +114,13 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\validations\control-equal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\account.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\anamnesis\anamnesis.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\attendance-reservation.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\attendance.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\balance-paid.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay-view.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\balance-to-pay.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\cancel-balance-paid.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\cancel-sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\cash.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\category-exercises.ts" />
@@ -152,6 +163,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\injury.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\role.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\sale-dto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\sale-fee-income.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\sale.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\shift-list.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\shift-schedule.ts" />
@@ -159,6 +171,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\status-attendance.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\status.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\tag.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\exercise-fms.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\file-fms.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\test\result-test-video-exercice.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-exercise-member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-exercise.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\test\test-member.ts" />
@@ -170,6 +185,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal-name.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod-member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\physical-level.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\training-system.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\PeriodizationList.ts" />

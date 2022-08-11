@@ -49,7 +49,6 @@ private reportService: ReportService  ) {
 
   ngOnInit() {
     this.requestingCash = true;
-    this.requestingRecordsCash = true;
     console.log(this.id);
     if (isNaN(this.id)) {
       console.log(this.date);
@@ -78,6 +77,7 @@ private reportService: ReportService  ) {
   getCashDate() {
     this.reportService.getCashDate(this.date).subscribe(
       result => {
+        this.requestingCash = false
         console.log(result.result);
         this.cash = result.result;
         this.calculateInflowsTotal();
@@ -85,6 +85,7 @@ private reportService: ReportService  ) {
         this.getCashDetailed(this.cash.opening, this.cash.closing);
       },
       error => {
+        this.requestingCash = false
         console.error(error);
         if (error.status == 400) {
           let cash = new Cash();
@@ -107,12 +108,10 @@ private reportService: ReportService  ) {
   getCashDetailed(opening, closing) {
     this.reportService.getCashDetailed(opening, closing).subscribe(
       result => {
-        this.requestingRecordsCash = false;
         console.log(result);
         this.recordsCash = result.result;
       },
-      error => this.requestingRecordsCash = false
-    )
+      error => console.error(error))
   }
 
   calculateInflowsTotal() {

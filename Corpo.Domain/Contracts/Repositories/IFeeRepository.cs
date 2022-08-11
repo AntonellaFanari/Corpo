@@ -1,4 +1,5 @@
 ﻿using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Corpo.Domain.Views;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace Corpo.Domain.Contracts.Repositories
     public interface IFeeRepository
     {
         int Add(Fee fee);
-        List<Fee> GetAll(DateTime from, DateTime? to);
-        Fee GetById(int id);
+        Task<List<SaleFeeIncomeDto>> GetAll(DateTime from, DateTime? to);
+        Task<Fee> GetById(int id);
         List<Fee> GetAllByIdMember(int id);
-        Fee GetLastPayment(int id);
+        Task<Fee> GetLastPayment(int id);
         Task<int> Delete(int id);
     }
 }

@@ -23,27 +23,25 @@ namespace Corpo.Web.Controllers
         {
             _feeService = feeService;
         }
-
         [HttpGet("getAll")]
-        public ActionResult GetAll(int id)
+        public async Task<ActionResult<SaleFeeIncomeDto>> GetAll(int id)
         {
-            var response = _feeService.GetAll(id);
-            var listFees = ((IEnumerable)response.Result).Cast<Fee>().ToList();
-            return Ok(listFees);
+            var response = await _feeService.GetAll(id);
+            return this.ToActionResult(response);
         }
 
         [HttpGet("getById")]
-        public ActionResult GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
-            var response = _feeService.GetById(id);
-            return Ok(response);
+            var response = await _feeService.GetById(id);
+            return this.ToActionResult(response);
         }
 
         [HttpPost("add")]
-        public ActionResult Add([FromBody] FeeDto feeDto)
+        public async Task<ActionResult> Add([FromBody] FeeDto feeDto)
         {
             var user = this.GetUser();
-            var response = _feeService.Add(user, feeDto);
+            var response = await _feeService.Add(user, feeDto);
             return this.ToActionResult(response);
         }
 

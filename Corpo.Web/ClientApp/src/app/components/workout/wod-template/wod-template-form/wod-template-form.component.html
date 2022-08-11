@@ -26,7 +26,7 @@
   </div>
   <div class="row">
     <div class="col-6  mt-3 mb-3 pe-3 btn-float-left">
-      <label class="col-12 control-label">Tipo de Intensidad:</label>
+      <label class="col-12 control-label">Tipo de Int.:</label>
       <div class="formValidators">
         <select class="form-control" [(ngModel)]="intensityType" (change)="selectIntensityType($event.target.value)">
           <option value="0" disabled>Seleccionar</option>
@@ -105,10 +105,13 @@
       </div>
     </div>
   </div>
-
-  <div class="button-box">
-    <button class="btn btn-secondary mr-2" (click)="addwodGroupModal()">Agregar grupo</button>
-    <button class="btn btn-success" (click)="addExercise()">Agregar ejercicio</button>
+  <div class="row">
+    <div class="button-box col-6 col-lg-3">
+      <button class="btn btn-secondary" (click)="addwodGroupModal()">Agregar grupo</button>
+      </div>
+    <div class="button-box col-6 col-lg-4">
+      <button class="btn btn-success" (click)="addExercise()">Agregar ejercicio</button>
+    </div>
   </div>
 
   <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="wod">
@@ -122,7 +125,13 @@
         <label>{{group.detail}} <i class="fa fa-edit"></i></label>
       </a>
 
-      <div class="">
+        <!--<div class="view-mobile">
+          <ng-select class="custom" [items]="group.exercises.name" [(ngModel)]="selectedExerciseView" (change)="selectExerciseView($event)" bindLabel="name" bindValue="id">
+          </ng-select>
+        </div>-->
+    
+
+      <div class="" id="no-more-tables">
         <table class="table table-bordered wod-table">
           <tbody>
             <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
@@ -141,7 +150,7 @@
                   <div class="up"> </div>
                 </div>
               </td>
-              <td class="col-10" colspan="2">
+              <td class="col-12 col-lg-10" colspan="2">
                 {{exerciseItem.exercise.name}}
               </td>
               <td class="exercise-units" *ngIf="exerciseItem">
@@ -161,7 +170,7 @@
                   <div class="up"> </div>
                 </div>
               </td>
-              <td class="col-10" *ngIf="exerciseItem">
+              <td class="col-12 col-lg-10" *ngIf="exerciseItem">
                 <select class="bg-success" [(ngModel)]="exerciseItem.mode">
                   <option value="None">Ninguno</option>
                   <option value="Kgs">kgs</option>
@@ -170,7 +179,7 @@
                   <option value="RPEs">RPEs</option>
                 </select>
               </td>
-              <td class="col-2 action-column">
+              <td class="col-12 col-lg-2 action-column">
                 <a (click)="deleteItem(i,ei)" class="delete-button">
                   <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>

@@ -46,9 +46,8 @@ export class BalanceService {
     return this.http.put(this.url + 'api/balance/update?id=' + id, balance, httpOptions);
   }
 
-  public cancelBalance(payCancelBalance: PayCancelBalance) {
-    console.log(payCancelBalance);
-    return this.http.put<any>(this.url + 'api/balance/cancelBalance', payCancelBalance, httpOptions);
+  public cancelBalance(memberId: number, pay: number) {
+    return this.http.put<any>(this.url + 'api/balance/cancelBalance?memberId=' + memberId + '&pay=' + pay, httpOptions);
   }
 
 

@@ -17,9 +17,12 @@ namespace Corpo.Domain.Services
         private readonly IShiftRepository _shiftRepository;
         private IMemberRepository _memberRepository;
         private ISettingsRepository _settingsRepository;
+        private IWodMemberRepository _wodMemberRepository;
+        private IPeriodizationRepository _periodizationRepository;
 
         public AttendanceService(IAttendanceRepository attendanceRepository, ICreditService creditService, IShiftService shiftService,
-            IShiftRepository shiftRepository, IMemberRepository memberRepository, ISettingsRepository settingsRepository)
+            IShiftRepository shiftRepository, IMemberRepository memberRepository, ISettingsRepository settingsRepository,
+            IWodMemberRepository wodMemberRepository, IPeriodizationRepository periodizationRepository)
         {
             _attendanceRepository = attendanceRepository;
             _creditService = creditService;
@@ -27,25 +30,32 @@ namespace Corpo.Domain.Services
             _shiftRepository = shiftRepository;
             _memberRepository = memberRepository;
             _settingsRepository = settingsRepository;
+            _wodMemberRepository = wodMemberRepository;
+            _periodizationRepository = periodizationRepository;
         }
 
         public async Task<DomainResponse> Add(Attendance attendance)
         {
             try
             {
-                var creditId = _memberRepository.GetById(attendance.MemberId).CreditId;
+                var creditId = _memberRepository.GetById(attendance.MemberId).Result.CreditId;
                 var credit = (Credit)_creditService.GetById(creditId).Result.Result;
                 var shift = await _shiftRepository.GetById(attendance.ShiftId);
-                if (credit.Expiration < DateTime.Now)
+                if (credit.Expiration < DateTime.Now || credit.InitialCredit == credit.CreditConsumption)
                 {
                     attendance.UsingNegative = true;
                 };
                 attendance.DateReservation = DateTime.Now;
                 attendance.DateCancellation = null;
                 attendance.DateShift = shift.Day.Date.Add(shift.Hour);
-                _attendanceRepository.Add(attendance);
-                _creditService.Update(credit);
+                await _attendanceRepository.Add(attendance);
+                await _creditService.Update(credit);
                 await _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
+                var weekPlanned = await _periodizationRepository.GetPeriodizationWeekPlannedByShiftDate(attendance.DateShift);
+                if (weekPlanned != null)
+                {
+                    await _wodMemberRepository.SetShiftDate(attendance.DateShift);
+                }
                 return new DomainResponse
                 {
                     Success = true
@@ -79,10 +89,11 @@ namespace Corpo.Domain.Services
             var differenceTime = (s.Day - DateTime.Now).TotalMinutes;
             try
             {
-                _attendanceRepository.CancelReservation(attendance);
                 await _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
                 if (differenceTime > int.Parse(timeCancellation.Value))
                 {
+                    attendance.ReturnCredit = true;
+                    _attendanceRepository.CancelReservation(attendance);
                     if (credit.Expiration < attendance.DateReservation)
                     {
                         credit.Negative--;
@@ -91,7 +102,7 @@ namespace Corpo.Domain.Services
                     {
                         credit.CreditConsumption--;
                     };
-                    _creditService.UpdateRecharge(credit);
+                    await _creditService.UpdateRecharge(credit);
                 };
 
                 return new DomainResponse
@@ -119,7 +130,28 @@ namespace Corpo.Domain.Services
 
         async public Task<DomainResponse> GetAllReservations(int id)
         {
-            var response = await _attendanceRepository.GetAllReservations(id);
+            var newFrom = DateTime.Now;
+            var newTo = DateTime.Now;
+
+            DateTime currentDate = newFrom;
+
+            DayOfWeek referenceDayOfWeek = currentDate.DayOfWeek;
+
+
+            int diffDaysFromMonday = DayOfWeek.Monday - referenceDayOfWeek;
+
+            if (diffDaysFromMonday > 0) { diffDaysFromMonday -= 7; }
+
+            newFrom = currentDate.AddDays(diffDaysFromMonday);
+
+
+
+            int diffDaysToSunday = (DayOfWeek.Sunday - referenceDayOfWeek);
+
+            if (diffDaysToSunday < 0) { diffDaysToSunday += 7; }
+
+            newTo = (currentDate.AddDays(diffDaysToSunday)).AddHours(23).AddMinutes(59).AddSeconds(59);
+            var response = await _attendanceRepository.GetAllReservations(id, newFrom, newTo);
             return new DomainResponse
             {
                 Success = true,
@@ -159,6 +191,49 @@ namespace Corpo.Domain.Services
         public async Task<DomainResponse> GetAllReservationsDetail(int id)
         {
             var response = await _attendanceRepository.GetAllReservationsDetail(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetAllByMonth(int id, int month)
+        {
+            var response = await _attendanceRepository.GetAllByMonth(id, month);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetByFromByToByClass(int id, DateTime from, DateTime to, int classId)
+        {
+            var newFrom = from;
+            var newTo = to;
+            if (from == to)
+            {
+                DateTime currentDate = from;
+
+                DayOfWeek referenceDayOfWeek = currentDate.DayOfWeek;
+
+
+                int diffDaysFromMonday = DayOfWeek.Monday - referenceDayOfWeek;
+
+                if (diffDaysFromMonday > 0) { diffDaysFromMonday -= 7; }
+
+                newFrom = currentDate.AddDays(diffDaysFromMonday);
+
+
+
+                int diffDaysToSunday = (DayOfWeek.Sunday - referenceDayOfWeek);
+
+                if (diffDaysToSunday < 0) { diffDaysToSunday += 7; }
+
+                newTo = (currentDate.AddDays(diffDaysToSunday)).AddHours(23).AddMinutes(59).AddSeconds(59);
+            }
+            var response = await _attendanceRepository.GetByFromByToByClass(id, newFrom, newTo, classId);
             return new DomainResponse
             {
                 Success = true,

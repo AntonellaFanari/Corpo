@@ -1,7 +1,7 @@
-<section class="wrapper" *ngIf="!requestingResult && testResults">
+<section class="wrapper" *ngIf="!requestingResult && testResults && member">
   <div class="container-fluid p-0">
     <div class="">
-      <h3>Test Nivel 0 - Resultados de Lopez Lucas</h3>
+      <h3>Test Nivel {{level}} - Resultados de {{member}}</h3>
     </div>
     <hr />
     <div class="card mt-3" *ngFor="let result of testResults">
@@ -24,9 +24,18 @@
           <div class="col-12 text-center mb-2">
             <h6 class="form-label"><strong>Resultados</strong></h6>
           </div>
+          <hr *ngIf="result.testVideoExercise" />
+          <div class="col-12 text-center mb-2" *ngIf="result.testVideoExercise">
+            <h6 class="form-label"><strong>Mi calificación:</strong> {{result.testVideoExercise.rate}}</h6>
+          </div>
           <hr />
           <div class="col-12 col-lg-4 mt-2" *ngIf="result.testType == 1">
-            <label class="form-label">Tiempo: <strong>{{result.testHeartRateExercise.time}}</strong></label>
+            <label class="form-label">
+              Tiempo: <strong>
+                {{ result.testHeartRateExercise.minutes }}min,
+                {{ result.testHeartRateExercise.seconds }}seg.
+              </strong>
+            </label>
           </div>
           <div class="col-12 col-lg-4 mt-2" *ngIf="result.testType == 2">
             <label class="form-label">Repeticiones: <strong>{{result.testRepetitionExercise.repetitions}}</strong></label>
@@ -45,18 +54,52 @@
               <strong *ngIf="result.testType == 2">{{result.testRepetitionExercise.finalHeartRate}}</strong>
             </label>
           </div>
-          <div class="col-12 mt-2" *ngIf="result.testType == 3">
+          <div class="col-12 col-lg-4 mt-2"
+               *ngIf="result.testHeartRateExercise && result.testHeartRateExercise.v02Maximum > 0 && result.testType == 1">
             <label class="form-label">
-              Video:
+              V02 Máximo:
+              <strong>
+                {{
+								result.testHeartRateExercise.v02Maximum
+                }}
+              </strong>
             </label>
+          </div>
+          <div class="col-12 col-lg-4 mt-2"
+               *ngIf="result.testHeartRateExercise && result.testHeartRateExercise.level && result.testType == 1">
+            <label class="form-label">
+              Nivel:
+              <strong>{{ result.testHeartRateExercise.level }}</strong>
+            </label>
+          </div>
+          <div class="row col-12 mt-2" *ngIf="result.testType == 3">
+            <div class="col-12 col-lg-6 pull-left">
               <div class="row mt-3 justify-content-center align-items-center">
                 <div class="row col-12 justify-content-center align-items-center text-center mt-1 mb-3">
-                  <video class="video" src="{{ urlBase }}{{ result.testVideoExercise.path }}"
-                         controls>
-                    Vídeo no es soportado...
-                  </video>
+                  <label class="form-label">
+                    <strong>Mi video:</strong>
+                  </label>
+                  <div class="card card-body">
+                    <video src="{{ urlBase }}{{ result.testVideoExercise.pathVideo }}"
+                           controls>
+                      Vídeo no es soportado...
+                    </video>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div class="col-12 col-lg-6 pull-right">
+              <div class="row mt-3 justify-content-center align-items-center">
+                <div class="row col-6 justify-content-center align-items-center text-center mt-1 mb-3">
+                  <label class="form-label">
+                    <strong>Mi imagen:</strong>
+                  </label>
+                  <div class="card card-body">
+                    <img src="{{ urlBase }}{{ result.testVideoExercise.pathImg }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

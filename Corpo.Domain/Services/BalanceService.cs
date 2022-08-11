@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace Corpo.Domain.Services
 {
-    public class BalanceService: IBalanceService
+    public class BalanceService : IBalanceService
     {
         private IBalanceRepository _balanceRepository;
+        private IBalancePaidRepository _balancePaidRepository;
 
-        public BalanceService(IBalanceRepository balanceRepository)
+        public BalanceService(IBalanceRepository balanceRepository, IBalancePaidRepository balancePaidRepository)
         {
             _balanceRepository = balanceRepository;
+            _balancePaidRepository = balancePaidRepository;
         }
 
         public DomainResponse Add(BalanceToPay balance)
@@ -102,42 +104,81 @@ namespace Corpo.Domain.Services
             }
         }
 
-        public DomainResponse CancelBalance(PayCancelBalanceDto payCancelBalance)
+        private decimal Cancel(int userId, int memberId, decimal pay)
         {
-            var payBalance = payCancelBalance.Pay + payCancelBalance.PositiveBalance;
-            var listBalances = _balanceRepository.GetAllNegativeBalanceByIdMember(payCancelBalance.Id);
-            var i = 0;
+            var listBalances = _balanceRepository.GetAllNegativeBalanceByIdMember(memberId);
+            foreach (var balance in listBalances)
+            {
+
+                decimal payCurrent = balance.Balance - balance.Pay;
+                var balancePaid = new BalancePaid();
+                balancePaid.Date = DateTime.Now;
+                balancePaid.MemberId = memberId;
+                balancePaid.UserId = userId;
+                balancePaid.Status = Status.Valid;
+                balancePaid.BalancesToPay = new List<BalanceToPay>();
+                balancePaid.IncomeType = (balance.Transaction == TransactionType.Sale) ? IncomeType.paySale : IncomeType.payFee;
+                balancePaid.Pay = payCurrent;
+
+                balance.Statement = Statement.Paid;
+                balance.Pay += payCurrent;
+                balancePaid.BalancesToPay.Add(balance);
+                _balanceRepository.Update(balance);
+                _balancePaidRepository.Add(balancePaid);
+                pay -= payCurrent;
+            }
+
+            //if (pay < 0)
+            //{
+            //    pay *= -1;
+            //};
+
+
+            //var listBalances = _balanceRepository.GetAllNegativeBalanceByIdMember(memberId);
+            //var i = 0;
+            //do
+            //{
+                
+
+            //    var idBalance = listBalances[i].Id;
+            //    if (listBalances[i].Balance <= pay)
+            //    {
+            //        listBalances[i].Statement = Statement.Paid;
+            //        listBalances[i].Pay = listBalances[i].Balance;
+            //        _balanceRepository.Update(listBalances[i]);
+            //        balancePaid.Pay = pay;
+            //        _balancePaidRepository.Add(balancePaid);
+            //        pay -= listBalances[i].Balance;
+            //    }
+            //    else
+            //    {
+            //        listBalances[i].Pay = pay;
+            //        _balanceRepository.Update(listBalances[i]);
+            //        balancePaid.Pay = pay;
+            //        pay -= pay;
+            //        _balancePaidRepository.Add(balancePaid);
+            //    }
+            //    balancePaid.BalancesToPay.Add(listBalances[i]);
+
+            //    i = i + 1;
+            //} while ((i < listBalances.Count) && (pay > 0));
+
+            
+            return pay;
+        }
+
+        public async Task<DomainResponse> CancelBalance(int userId, int memberId, decimal pay)
+        {
+           
+
             try
             {
-                do
-                {
+                var response = this.Cancel(userId, memberId, pay);
 
-                    var idBalance = listBalances[i].Id;
-                    if (listBalances[i].Balance <= payBalance)
-                    {
-                        listBalances[i].Statement = Statement.Paid;
-                        listBalances[i].Pay = listBalances[i].Balance;
-                        _balanceRepository.Update(listBalances[i]);
-                        payBalance -= listBalances[i].Balance;
-                    }
-                    else
-                    {
-                        listBalances[i].Pay = payBalance;
-                        _balanceRepository.Update(listBalances[i]);
-                        payBalance -= payBalance;
-                    }
-
-                    i = i + 1;
-                } while ((i < listBalances.Count) && (payBalance > 0));
-                if (payCancelBalance.PositiveBalance<0)
-                {
-                    var positiveBalance = _balanceRepository.GetPositiveBalanceByIdMember(payCancelBalance.Id);
-                    positiveBalance.Statement = Statement.Compensated;
-                    _balanceRepository.Update(positiveBalance);
-                };
                 return new DomainResponse
                 {
-                    Success = true
+                    Success = true,
+                    Result =  response
                 };
             }
             catch (Exception ex)
@@ -145,8 +186,8 @@ namespace Corpo.Domain.Services
 
                 return new DomainResponse(false, ex.Message, "No se pudo cancelar el saldo");
             }
-         
-            
+
+
         }
 
         public async Task<DomainResponse> GetByIdTransaction(int id, TransactionType transactionType)
@@ -157,6 +198,71 @@ namespace Corpo.Domain.Services
                 Success = true,
                 Result = response
             };
+        }
+
+        public Task BalanceAnalyse(int userId, BalanceToPay balance)
+        {
+            var balancePositive = _balanceRepository.GetPositiveBalanceByIdMember(balance.MemberId);
+
+            if (balance.Balance > 0)
+            {
+
+                if (balancePositive != null)
+                {
+                    if (balance.Balance > balancePositive.Balance * -1)
+                    {
+                        balancePositive.Statement = Statement.Compensated;
+                        _balanceRepository.Update(balancePositive);
+                        balance.Balance = balance.Balance + balancePositive.Balance;
+                        _balanceRepository.Add(balance);
+                    }
+                    else if (balance.Balance == balancePositive.Balance * -1)
+                    {
+                        balancePositive.Statement = Statement.Compensated;
+                        _balanceRepository.Update(balancePositive);
+                    }
+                    else
+                    {
+                        balancePositive.Balance = (balancePositive.Balance * -1) - balance.Balance;
+                        _balanceRepository.Update(balancePositive);
+                    }
+                }
+                else
+                {
+                    _balanceRepository.Add(balance);
+                }
+
+            }
+            else
+            {
+                if (balancePositive != null)
+                {
+                    balancePositive.Balance += balance.Balance;
+                    _balanceRepository.Update(balance);
+                }
+                else
+                {
+                    var listBalances = _balanceRepository.GetAllNegativeBalanceByIdMember(balance.MemberId);
+                    if (listBalances.Count > 0)
+                    {
+                        var positive = this.Cancel(userId, balance.MemberId, balance.Balance);
+                        if(positive != 0)
+                        {
+                            balance.Balance = positive * (-1);
+                            balance.Statement = Statement.UnCompensated;
+                            _balanceRepository.Add(balance);
+                        }
+                    }
+                    else
+                    {
+                        _balanceRepository.Add(balance);
+                    }
+
+                }
+
+
+            }
+            return Task.CompletedTask;
         }
     }
 }

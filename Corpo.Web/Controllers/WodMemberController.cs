@@ -115,7 +115,7 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("attendance-by-year")]
-        public async Task<ActionResult> GetAttendanceByYear(int year, int? memberId)
+        public async Task<ActionResult> GetAttendanceByYear(int? year, int? memberId)
         {
             int userId = 0;
             if (memberId == null)
@@ -126,8 +126,12 @@ namespace Corpo.Web.Controllers
             else
             {
                 userId = memberId.Value;
+            };
+            if (year == null)
+            {
+                year = DateTime.Now.Year;
             }
-            var response = await _wodMemberService.GetAttendanceByYear(year, userId);
+            var response = await _wodMemberService.GetAttendanceByYear(year.Value, userId);
             return this.ToActionResult(response);
         }
 

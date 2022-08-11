@@ -17,7 +17,7 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> GetCashCurrentMonth();
         Task<DomainResponse> GetCash(DateTime from, DateTime to);
         Task<DomainResponse> GetById(int id);
-        Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing);
+        Task<DomainResponse> GetDetailed(DateTime opening, DateTime? closing);
         Task<DomainResponse> GetByDate(DateTime date);
         Task<DomainResponse> GetAllMonthlyCash();
         Task<DomainResponse> GetRecordCashByMonth(int month);

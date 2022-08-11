@@ -18,7 +18,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MemberController : ControllerBase
+    public class MemberController : CorpoBaseController
     {
         private IMemberService _memberService;
 
@@ -37,9 +37,20 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getById")]
-        public ActionResult<ViewModels.MemberViewModel> GetById(int id)
+        public async Task<ActionResult<ViewModels.MemberViewModel>> GetById(int? id)
         {
-            var member = ViewModels.ViewModels.FromDomainMember(_memberService.GetById(id));
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            var response = await _memberService.GetById(userId);
+            var member = ViewModels.ViewModels.FromDomainMember(response.Result as Member);
             return Ok(member);
         }
 
@@ -51,9 +62,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("update")]
-        public ActionResult Update(int id, [FromBody] Member member)
+        public async Task<ActionResult> Update(int id, [FromBody] Member member)
         {
-            var response = _memberService.Update(id, member);
+            var response = await _memberService.Update(id, member);
             return this.ToActionResult(response);
         }
 
@@ -74,9 +85,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("updateDueDate")]
-        public ActionResult UpdateDueDate(CreditExpirationDto expiration)
+        public async Task<ActionResult> UpdateDueDate(CreditExpirationDto expiration)
         {
-            var response = _memberService.UpdateDueDate(expiration);
+            var response = await _memberService.UpdateDueDate(expiration);
             return this.ToActionResult(response);
         }
 
@@ -90,16 +101,36 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPost("addMedicalHistory")]
-        public ActionResult AddMedicalHistory(int memberId, [FromBody] MedicalHistory medicalHistory)
+        public ActionResult AddMedicalHistory(int? memberId, [FromBody] MedicalHistory medicalHistory)
         {
-            var response = _memberService.AddMedicalHistory(memberId, medicalHistory);
+            int userId = 0;
+            if (memberId == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = memberId.Value;
+            }
+            var response = _memberService.AddMedicalHistory(userId, medicalHistory);
             return this.ToActionResult(response);
         }
 
         [HttpGet("getMedicalHistoryByIdMember")]
-        public ActionResult GetMedicalHistoryByIdMember(int id)
+        public ActionResult GetMedicalHistoryByIdMember(int? id)
         {
-            var response = _memberService.GetMedicalHistoryByIdMember(id);
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            var response = _memberService.GetMedicalHistoryByIdMember(userId);
             return this.ToActionResult(response);
         }
 
@@ -118,9 +149,26 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAge")]
-        public ActionResult GetAge(int id)
+        public async Task<ActionResult> GetAge(int? id)
         {
-            var response = _memberService.GetAge(id);
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            var response = await _memberService.GetAge(userId);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("exists-medical-history")]
+        public async Task<ActionResult> GetExistsMedicalHistory(int id)
+        {
+            var response = await _memberService.GetExistsMedicalHistory(id);
             return this.ToActionResult(response);
         }
 
@@ -184,6 +232,40 @@ namespace Corpo.Web.Controllers
                 throw;
             }
             
+        }
+
+        [HttpGet("level")]
+        public async Task<ActionResult> GetLevel(int? id)
+        {
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            var response = await _memberService.GetLevel(userId);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("levels-history")]
+        public async Task<ActionResult> GetLevelsHistory(int? id)
+        {
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            var response = await _memberService.GetLevelsHistory(userId);
+            return this.ToActionResult(response);
         }
 
         private string GetContentType(string path)

@@ -71,15 +71,8 @@ namespace Corpo.Domain.Services
                     balance.Transaction = sale.Transaction;
                     balance.transactionId = idSale;
                     balance.Balance = sale.Balance;
-                    if (sale.Balance > 0)
-                    {
-                        balance.Statement = Statement.Unpaid;
-                    }
-                    else
-                    {
-                        balance.Statement = Statement.UnCompensated;
-                    }
-                    _balanceService.Add(balance);
+                    balance.Statement = (balance.Balance < 0)?  Statement.UnCompensated: Statement.Unpaid;
+                    _balanceService.BalanceAnalyse(sale.UserId, balance);
                     return new DomainResponse
                     {
                         Success = true
@@ -123,25 +116,25 @@ namespace Corpo.Domain.Services
                     }
                 }
             }
-            if (balance != null && balance.Statement == Statement.Unpaid)
-            {
-                var outflow = cancelSale.Total - balance.Balance + balance.Pay;
-                if (cash.Closing != null)
-                {
-                    await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
-                }
-                else
-                {
-                    if (sale.Date < cash.Opening)
-                    {
-                        await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
-                    }
-                }
-            }
-            else
-            {
+            //if (balance != null && balance.Statement == Statement.Unpaid)
+            //{
+            //    var outflow = cancelSale.Total - balance.Balance + balance.Pay;
+            //    if (cash.Closing != null)
+            //    {
+            //        await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
+            //    }
+            //    else
+            //    {
+            //        if (sale.Date < cash.Opening)
+            //        {
+            //            await _cashRepository.UpdateMonthlyCash(DateTime.Now, outflow, "outflow");
+            //        }
+            //    }
+            //}
+            //else
+            //{
 
-            }
+            //}
             return new DomainResponse
             {
                 Success = true

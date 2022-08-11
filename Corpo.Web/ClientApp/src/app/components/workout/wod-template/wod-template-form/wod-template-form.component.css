@@ -260,3 +260,12 @@ input[type="radio"] {
   margin-right: 10px;
 }
 
+.view-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 800px) {
+.view-mobile {
+    display: block;
+}
+}

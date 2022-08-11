@@ -7,6 +7,7 @@ import { MedicalHistory } from '../domain/medical-history';
 import { Member } from '../domain/member';
 import { MemberView } from '../domain/member-view';
 import { Plan } from '../domain/plan';
+import { PhysicalLevel } from '../domain/wod/physical-level';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -129,4 +130,12 @@ export class MemberService {
   //public getPlanExists(id, idPlan) {
   //  return this.http.get(this.url + 'api/member/getPlanExists?id=' + id, idPlan);
   //}
+
+  public getLevel(id: number) {
+    return this.http.get <DomainResponse<PhysicalLevel>>(this.url + 'api/member/level?id=' + id);
+  }
+
+  public getLevelsHistory(id: number) {
+    return this.http.get<DomainResponse<PhysicalLevel[]>>(this.url + 'api/member/levels-history?id=' + id);
+  }
 }

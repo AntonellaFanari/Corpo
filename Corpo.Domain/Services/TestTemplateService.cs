@@ -22,11 +22,20 @@ namespace Corpo.Domain.Services
         {
             try
             {
-                await _testTemplateRepository.Add(test);
-                return new DomainResponse
+                var existsTest = await _testTemplateRepository.GetByLevel(test.Level);
+                if(existsTest == null)
                 {
-                    Success = true
-                };
+                    await _testTemplateRepository.Add(test);
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new DomainResponse(false, "", $"Ya existe un test para el nivel {test.Level}.");
+                }
+               
             }
             catch (Exception ex)
             {
@@ -45,7 +54,26 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> GetAll()
         {
-            var response = await _testTemplateRepository.GetAll();
+            try
+            {
+
+                var response = await _testTemplateRepository.GetAll();
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = response
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<DomainResponse> GetAllExercisesFMS()
+        {
+            var response = await _testTemplateRepository.GetAllExercisesFMS();
             return new DomainResponse
             {
                 Success = true,
@@ -63,12 +91,23 @@ namespace Corpo.Domain.Services
             };
         }
 
+        public async Task<DomainResponse> GetDetailById(int id)
+        {
+
+            var response = await _testTemplateRepository.GetDetailById(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
         public async Task<DomainResponse> Update(TestTemplate test)
         {
             try
             {
                 var testQuery = await _testTemplateRepository.GetById(test.Id);
-                testQuery.Name = test.Name;
+                testQuery.Level = test.Level;
                 testQuery.TestExercises = test.TestExercises;
                 await _testTemplateRepository.Update(testQuery);
                 return new DomainResponse

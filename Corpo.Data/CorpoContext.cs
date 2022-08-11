@@ -12,6 +12,7 @@ namespace Corpo.Data
     {
         public CorpoContext(DbContextOptions<CorpoContext> options) : base(options)
         {
+
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -71,5 +72,11 @@ namespace Corpo.Data
         public DbSet<TestRepetitionExercise> TestRepetitionExercise { get; set; }
         public DbSet<TestVideoExercise> TestVideoExercise { get; set; }
         public DbSet<TestExerciseMember> TestExerciseMember { get; set; }
+        public DbSet<Anamnesis> Anamnesis { get; set; }
+        public DbSet<ExerciseFMS> ExerciseFMS { get; set; }
+        public DbSet<FileFMS> FileFMS { get; set; }
+        public DbSet<BalancePaid> BalancePaid { get; set; }
+        public DbSet<CancelBalancePaid> CancelBalancePaid { get; set; }
+        public DbSet<PhysicalLevel> PhysicalLevel { get; set; }
     }
 }

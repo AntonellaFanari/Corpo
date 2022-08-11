@@ -36,7 +36,15 @@ export class TestTemplateService {
     return this.http.get<DomainResponse<TestTemplate>>(this.url + 'api/test-template/' + id);
   }
 
+  public getDetailById(id: number) {
+    return this.http.get<DomainResponse<TestTemplate>>(this.url + 'api/test-template/detail-by-id?id=' + id);
+  }
+
   public update(test: TestTemplate) {
     return this.http.put<DomainResponse<any>>(this.url + 'api/test-template/', test, httpOptions);
+  }
+
+  public getAllExercisesFMS() {
+    return this.http.get<DomainResponse<any>>(this.url + 'api/test-template/all-exercises-fms');
   }
 }

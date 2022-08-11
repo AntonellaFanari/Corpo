@@ -25,19 +25,19 @@ namespace Corpo.Data.Repositories
             _context.SaveChanges();
         }
 
-        public List<Shift> GetAll(DateTime from, DateTime to, int classId)
+        public async Task<List<Shift>> GetAll(DateTime from, DateTime to, int classId)
         {
             if (classId == 0)
             {
-                return _context.Shift.Where(x => x.Day >= from && x.Day <= to).OrderBy(x=> x.Day).ThenBy(x=> x.Hour)
+                return await _context.Shift.Where(x => x.Day >= from && x.Day <= to).OrderBy(x=> x.Day).ThenBy(x=> x.Hour)
                                  .Include(x => x.Class)
-                                 .Include(x => x.User).ToList();
+                                 .Include(x => x.User).ToListAsync();
             }
             else
             {
-                return _context.Shift.Where(x => x.Day >= from && x.Day <= to && x.ClassId == classId)
+                return await _context.Shift.Where(x => x.Day >= from && x.Day <= to && x.ClassId == classId)
                                  .Include(x => x.Class)
-                                 .Include(x => x.User).ToList();
+                                 .Include(x => x.User).ToListAsync();
             }
             
         }

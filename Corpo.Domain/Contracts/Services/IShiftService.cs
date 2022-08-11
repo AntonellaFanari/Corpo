@@ -9,7 +9,7 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IShiftService
     {
-        DomainResponse GetAll(string from, string to, int classId);
+        Task<DomainResponse> GetAll(DateTime from, DateTime to, int classId);
         DomainResponse Add(List<Shift> shifts);
         Task<DomainResponse> Update(List<Shift> shifts);
         DomainResponse Delete(List<int> idShifts);

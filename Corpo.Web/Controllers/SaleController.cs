@@ -24,11 +24,10 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult<Sale> GetAll(int id)
+        public ActionResult<SaleFeeIncomeDto> GetAll(int id)
         {
             var response = _saleService.GetAll(id);
-            var listSales = ((IEnumerable)response.Result).Cast<Sale>().ToList();
-            return Ok(listSales);
+            return this.ToActionResult(response);
         }
 
         [HttpGet("getDetailsSale")]

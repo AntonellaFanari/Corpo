@@ -78,7 +78,7 @@ export class DebtEditComponent implements OnInit {
   getFee(id) {
     this.feeService.getById(id).subscribe(
       result => {
-        this.fee = result;
+        this.fee = result.result;
         this.total = this.fee.total;
         this.getUserRegister(this.fee.userId);
       },

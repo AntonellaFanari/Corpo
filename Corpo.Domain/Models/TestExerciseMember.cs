@@ -10,6 +10,7 @@ namespace Corpo.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Protocol { get; set; }
         public TestType TestType { get; set; }
         public int? Minutes { get; set; }
         public int? Seconds { get; set; }
@@ -17,6 +18,8 @@ namespace Corpo.Domain.Models
         public virtual TestMember TestMember { get; set; }
         public int TestMemberId { get; set; }
         public StatusTest Status { get; set; }
+        public virtual ExerciseFMS ExerciseFMS { get; set; }
+        public int? ExerciseFmsId { get; set; }
         public virtual TestHeartRateExercise TestHeartRateExercise { get; set; }
         public virtual TestRepetitionExercise TestRepetitionExercise { get; set; }
         public virtual TestVideoExercise TestVideoExercise { get; set; }

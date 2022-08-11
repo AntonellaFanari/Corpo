@@ -97,5 +97,15 @@ namespace Corpo.Web.Controllers
             var response = _accountService.UpdatePassword(account);
             return this.ToActionResult(response);
         }
+
+
+        [HttpGet("recover-password")]
+        public async Task<ActionResult> RecoverPassword(string email)
+        {
+            var response = await _accountService.RecoverPassword(email);
+            return this.ToActionResult(response);
+        }
     }
+
+
 }

@@ -7,6 +7,8 @@ using Corpo.Domain.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,6 +74,41 @@ namespace Corpo.Domain.Services
             {
                 return new FailedDomainResponse("error: " + ex.Message + " " + ((ex.InnerException != null) ? ex.InnerException : ""));
             }
+        }
+
+        public async Task<DomainResponse> RecoverPassword(string email)
+        
+        {
+            try
+            {
+                // Parte 1
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("antonellafanari94@gmail.com", "anto1994");
+                // Parte 2
+                MailMessage mm = new MailMessage();
+                mm.IsBodyHtml = true;
+                mm.Priority = MailPriority.Normal;
+                mm.From = new MailAddress("antonellafanari94@gmail.com");
+                mm.Subject = "Recuperación de contraseña";
+                mm.Body = "<h1>Recuperar contraseña</h1>";
+                mm.Body += "<p>Código de recuperación: 11111</p>";
+                mm.To.Add(new MailAddress(email));
+                smtp.Send(mm); // Enviar el mensaje
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+      
         }
 
         public DomainResponse UpdateEmail(Account account)

@@ -41,6 +41,7 @@ export class DebtDetailComponent implements OnInit {
       this.balanceService.getAllByIdMember(this.idMember).subscribe(
         result => {
           this.requestingListBalances = false;
+          console.log("saldos: ", result);
           this.balances = result;
           this.member = result[0].member;
         },
@@ -97,7 +98,7 @@ export class DebtDetailComponent implements OnInit {
     this.feeService.getById(id).subscribe(
       result => {
         this.requestingDetailFee = false;
-        this.fee = result;
+        this.fee = result.result;
         console.log("fee", this.fee);
       },
       error => this.requestingDetailFee = false

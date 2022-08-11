@@ -31,7 +31,7 @@ namespace Corpo.Domain.Services
                 var cashQuery = await _cashRepository.GetLastCash();
                 if (cashQuery != null)
                 {
-                    cash.StartingBalance = cashQuery.StartingBalance;
+                    cash.StartingBalance = cashQuery.EndingBalance;
                 }
                 else { cash.StartingBalance = 0; }
                 await _cashRepository.AddCash(cash);
@@ -106,7 +106,7 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public async Task<DomainResponse> GetDetailed(DateTime opening, DateTime closing)
+        public async Task<DomainResponse> GetDetailed(DateTime opening, DateTime? closing)
         {
             var response = await _cashRepository.GetDetailed(opening, closing);
             return new DomainResponse

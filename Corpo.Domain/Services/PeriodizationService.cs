@@ -30,6 +30,42 @@ namespace Corpo.Domain.Services
                 }
                 else
                 {
+                    DateTime startDate = DateTime.Today;
+                    DateTime stopDate = startDate.AddDays(1).AddTicks(-1);
+
+                    DayOfWeek referenceDayOfWeek = startDate.DayOfWeek;
+
+                    int diffDaysFromMonday = DayOfWeek.Monday - referenceDayOfWeek;
+                    if (diffDaysFromMonday > 0) { diffDaysFromMonday -= 7; }
+                    DateTime mondayOfTheWeek = startDate.AddDays(diffDaysFromMonday);
+
+                    int diffDaysToSunday = (DayOfWeek.Sunday - referenceDayOfWeek);
+                    if (diffDaysToSunday < 0) { diffDaysToSunday += 7; }
+                    DateTime sundayOfTheWeek = stopDate.AddDays(diffDaysToSunday);
+                    foreach (var week in periodization.PeriodizationWeeks)
+                    {
+                        switch (week.WeekNumber)
+                        {
+                            case 1:
+                                week.From = mondayOfTheWeek;
+                                week.To = sundayOfTheWeek;
+                                break;
+                            case 2:
+                                week.From = mondayOfTheWeek.AddDays(7);
+                                week.To = sundayOfTheWeek.AddDays(7);
+                                break;
+                            case 3:
+                                week.From = mondayOfTheWeek.AddDays(14);
+                                week.To = sundayOfTheWeek.AddDays(14);
+                                break;
+                            case 4:
+                                week.From = mondayOfTheWeek.AddDays(21);
+                                week.To = sundayOfTheWeek.AddDays(21);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     periodization.Valid = true;
                     await _periodizationRepository.Add(periodization);
                     if (validPeriodization != null)

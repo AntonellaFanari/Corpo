@@ -3,17 +3,17 @@
     <div class="col-md-12">
       <div class="task-panel ">
         <h4 class="table-title">Plantillas</h4>
-        <button type="button" class="btn btn-success btn-add" routerLink="/wod-template">Agregar</button>
+        <button type="button" class="btn btn-success col-4 col-lg-2 btn-add" routerLink="/wod-template">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requestingList && wodTemplates.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
-      <section *ngIf="!requestingList && wodTemplates.length > 0" id="no-more-tables" class="mt-3">
+      <section *ngIf="!requestingList && wodTemplates.length > 0" id="no-more-tables" class="">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let wod of wodTemplates | searchFilterName: filterName" class="scrollme span-margin" (click)="getById(wod.id)">
+            <tr *ngFor="let wod of wodTemplates | searchFilterName: filterName" class="scrollme span-margin" [routerLink]="['/plantilla-wod-editar']" [queryParams]="{id: wod.id}">
               <td class="td-title" data-title="Nombre"><span>{{wod.name}}</span></td>
             </tr>
           </tbody>
@@ -42,5 +42,5 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <app-wod-template-form [wod]="wod" *ngIf="wod" (goBackEvent)="cancelWod()"></app-wod-template-form>
+
 </section>

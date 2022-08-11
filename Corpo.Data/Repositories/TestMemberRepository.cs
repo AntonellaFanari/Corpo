@@ -19,17 +19,13 @@ namespace Corpo.Data.Repositories
             _context = context;
         }
 
-        public async Task Add(TestMember test)
+        public async Task<int> Add(TestMember test)
         {
-            try
-            {
-                _context.TestMember.Add(test);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
 
-            }
+            _context.TestMember.Add(test);
+            await _context.SaveChangesAsync();
+            return test.Id;
+
         }
 
         public async Task AddResultTestHeartRateExercise(TestHeartRateExercise result)
@@ -79,10 +75,22 @@ namespace Corpo.Data.Repositories
             return await _context.TestMember.Include(x => x.TestExercisesMember).FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<TestMember> GetDetailById(int id)
+        {
+            return await _context.TestMember.Include(x => x.TestExercisesMember).ThenInclude(y => y.ExerciseFMS.Files).FirstOrDefaultAsync(x => x.Id == id);
+
+        }
+
         public async Task<TestExerciseMember> GetExerciseById(int id)
         {
             return await _context.TestExerciseMember.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public Task<ExerciseFMS> GetExerciseFms(int id)
+        {
+            return _context.ExerciseFMS.Include(x => x.Files).FirstOrDefaultAsync(x => x.Id == id);
+        }
+
 
         public async Task<TestMember> GetPendingByMemberId(int id)
         {
@@ -104,15 +112,15 @@ namespace Corpo.Data.Repositories
 
         public Task<List<TestExerciseMember>> GetResult(int id)
         {
-           return _context.TestExerciseMember
-                .Where(x => x.TestMemberId == id)
-                .Include(x => x.TestHeartRateExercise)
-                .IgnoreAutoIncludes()
-                .Include(x => x.TestRepetitionExercise)
-                .IgnoreAutoIncludes()
-                .Include(x => x.TestVideoExercise)
-                .IgnoreAutoIncludes()
-                .ToListAsync();
+            return _context.TestExerciseMember
+                 .Where(x => x.TestMemberId == id)
+                 .Include(x => x.TestHeartRateExercise)
+                 .IgnoreAutoIncludes()
+                 .Include(x => x.TestRepetitionExercise)
+                 .IgnoreAutoIncludes()
+                 .Include(x => x.TestVideoExercise)
+                 .IgnoreAutoIncludes()
+                 .ToListAsync();
         }
 
         public async Task Update(TestMember test)
@@ -125,6 +133,17 @@ namespace Corpo.Data.Repositories
         {
             _context.TestExerciseMember.Update(exerciseMember);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task AddPhysicalLevel(PhysicalLevel physicalLevel)
+        {
+            _context.PhysicalLevel.Add(physicalLevel);
+            await _context.SaveChangesAsync();
+        }
+
+        public Task<TestMember> GetExistsTestPending(int id)
+        {
+            return _context.TestMember.FirstOrDefaultAsync(x => x.MemberId == id && x.Status == StatusTest.Pending);
         }
     }
 }

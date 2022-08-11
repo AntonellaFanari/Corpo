@@ -15,6 +15,59 @@
                 <div class="dropdown-menu form-control">
                   <a *ngFor="let member of members  | searchFilterMember: filterMember " class="dropdown-item" (click)="selectMember(member)">{{member.lastName}} {{member.name}}</a>
                 </div>
+                <div *ngIf="fees.length>0">
+                  <section id="no-more-tables">
+                    <table class="table table-bordered table-condensed cf scrollme user-table bg-danger text-white table-font">
+                      <thead>
+                        <tr>
+                          <th>Cantidad</th>
+                          <th>Fecha Alta</th>
+                          <th>Fecha Vcto.</th>
+                          <th>Plan</th>
+                          <th>Promoción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="scrollme" *ngFor="let fee of fees">
+                          <td class="td-title" data-title="Cantidad">{{fee.credits}}</td>
+                          <td class="td-title" data-title="Fecha Alta">{{fee.from | date: 'dd/MM/yyyy'}}</td>
+                          <td class="td-title" data-title="Fecha Vcto.">{{fee.to | date: 'dd/MM/yyyy'}}</td>
+                          <td class="td-title" data-title="Plan">{{fee.planName}}</td>
+                          <td class="td-title" data-title="Promoción"><span *ngIf="fee.promotionId==null">-</span><span *ngIf="fee.promotionId!=null">{{fee.promotion.name}}</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </section>
+                </div>
+                <div *ngIf="balances.length>0">
+                  <section id="no-more-tables">
+                    <table class="table table-bordered table-condensed cf scrollme user-table bg-warning text-white table-font">
+                      <thead>
+                        <tr>
+                          <th colspan="5" class="text-center">Saldos</th>
+                        </tr>
+                        <tr>
+                          <th>Fecha</th>
+                          <th>Concepto</th>
+                          <th>Detalle</th>
+                          <th>Saldo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="scrollme" *ngFor="let balance of balances">
+                          <td class="td-title" data-title="Fecha">{{balance.date | date: 'dd/MM/yyyy'}}</td>
+                          <td data-title="Concepto"><span *ngIf="balance.transaction == 1">Venta</span><span *ngIf="balance.transaction == 2">Cuota</span></td>
+                          <td data-title="Detalle">
+                            <span>
+                              <a class="a-link-detail" (click)="getTransaction(balance)">ver</a>
+                            </span>
+                          </td>
+                          <td data-title="Saldo"><span *ngIf="balance.balance>0">{{balance.balance}}</span><span *ngIf="balance.balance<0">{{balance.balance * -1}} (a favor)</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </section>
+                </div>
               </div>
             </div>
           </div>
@@ -108,6 +161,9 @@
     <button type="button" class="col-3 col-lg-2 btn btn-success btn-float-right btn-create" (click)="submit()">Aceptar</button>
   </div>
 </section>
+<div [ngClass]="{'view-debt-detail': viewDebts}">
+  <app-debt-detail *ngIf="selectedMember"></app-debt-detail>
+</div>
 
 
 

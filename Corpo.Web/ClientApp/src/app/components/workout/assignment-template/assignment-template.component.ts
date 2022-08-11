@@ -8,6 +8,7 @@ import { PeriodizationService } from 'src/app/services/wod/periodization.service
 import { MemberView } from '../../../domain/member-view';
 import { Wod, WodGroup, WodTemplate, wodTemplateResponse } from '../../../domain/wod';
 import { WodMember } from '../../../domain/wod-member';
+import { AnamnesisService } from '../../../services/anamnesis.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 import { WodMemberService } from '../../../wod/wod-member.service';
@@ -45,6 +46,7 @@ export class AssignmentTemplateComponent implements OnInit {
   wodTemplateId: number;
   requestingAssignment: boolean;
   @ViewChild('wod-template-table', { static: false }) wodsTable: ElementRef;
+  level: number;
 
   constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
     private memberService: MemberService,
@@ -52,9 +54,11 @@ export class AssignmentTemplateComponent implements OnInit {
     private wodMemberService: WodMemberService,
     private render2: Renderer2,
     private router: Router,
-    private customAlertService: CustomAlertService) {
+    private customAlertService: CustomAlertService,
+    private anamnesisService: AnamnesisService) {
 
   }
+
 
   ngOnInit() {
     this.requestingAssignment = true;
@@ -64,6 +68,7 @@ export class AssignmentTemplateComponent implements OnInit {
       console.log(this.memberId)
 
     });
+    this.getLevel();
     this.getPeriodization();
 
     this.wodTemplateService.getAll().subscribe((data) => {
@@ -74,6 +79,16 @@ export class AssignmentTemplateComponent implements OnInit {
     })
 
     console.log("length: ", this.newWods.length)
+  }
+
+  getLevel() {
+    this.memberService.getLevel(this.memberId).subscribe(
+      response => {
+        console.log("nivel fisico: ", response.result);
+        this.level = response.result.level
+      },
+      error => console.error(error)
+    )
   }
 
   getPeriodization() {

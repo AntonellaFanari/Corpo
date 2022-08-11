@@ -37,23 +37,42 @@ namespace Corpo.Domain.Services
             }
         }
 
-        public DomainResponse GetAll(string from, string to, int classId)
+        public async Task<DomainResponse> GetAll(DateTime from, DateTime to, int classId)
         {
-            var fromDate = Convert.ToDateTime(from);
-            var toDate = Convert.ToDateTime(to);
-            var response = _shiftRespository.GetAll(fromDate, toDate, classId);
-            if (response.Count > 0)
+
+            //DateTime fromDate = from.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
+            //DateTime toDate = to.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
+            var newFrom = from;
+            var newTo = to;
+            if (from == to)
             {
-                return new DomainResponse
-                {
-                    Success = true,
-                    Result = response
-                };
+                DateTime currentDate = from;
+
+                DayOfWeek referenceDayOfWeek = currentDate.DayOfWeek;
+
+
+                int diffDaysFromMonday = DayOfWeek.Monday - referenceDayOfWeek;
+
+                if (diffDaysFromMonday > 0) { diffDaysFromMonday -= 7; }
+
+                var monday = currentDate.AddDays(diffDaysFromMonday);
+
+
+
+                int diffDaysToSunday = (DayOfWeek.Sunday - referenceDayOfWeek);
+
+                if (diffDaysToSunday < 0) { diffDaysToSunday += 7; }
+
+                newTo = (currentDate.AddDays(diffDaysToSunday)).AddHours(23).AddMinutes(59).AddSeconds(59);
             }
-            else
+            var response = await _shiftRespository.GetAll(newFrom, newTo, classId);
+
+            return new DomainResponse
             {
-                return new DomainResponse(false, "no hay registros", "no hay turnos para estas fechas");
-            }
+                Success = true,
+                Result = response
+            };
+
 
         }
 
@@ -111,13 +130,13 @@ namespace Corpo.Domain.Services
         async public Task<DomainResponse> UpdateById(int id, StatusAttendance status)
         {
             var shift = await _shiftRespository.GetById(id);
-            if (status == StatusAttendance.Reserved )
+            if (status == StatusAttendance.Reserved)
             {
-                shift.Available --;
+                shift.Available--;
             }
             else
             {
-                shift.Available ++;
+                shift.Available++;
             };
             await _shiftRespository.Update(shift);
             return new DomainResponse

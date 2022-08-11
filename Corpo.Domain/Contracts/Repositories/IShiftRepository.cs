@@ -9,7 +9,7 @@ namespace Corpo.Domain.Contracts.Repositories
 {
     public interface IShiftRepository
     {
-        List<Shift> GetAll(DateTime from, DateTime to, int classId);
+        Task<List<Shift>> GetAll(DateTime from, DateTime to, int classId);
         void Add(Shift shift);
         Task<Shift> GetById(int id);
         Task Update(Shift shift);

@@ -50,6 +50,13 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpGet("detail-by-id")]
+        public async Task<ActionResult<TestTemplate>> GetDetailById(int id)
+        {
+            var response = await _testTemplateService.GetDetailById(id);
+            return this.ToActionResult(response);
+        }
+
         [HttpPut]
         public async Task<ActionResult> Update([FromBody]TestTemplate test)
         {
@@ -57,5 +64,12 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+
+        [HttpGet("all-exercises-fms")]
+        public async Task<ActionResult> GetAllExercisesFMS()
+        {
+            var response = await _testTemplateService.GetAllExercisesFMS();
+            return this.ToActionResult(response);
+        }
     }
 }

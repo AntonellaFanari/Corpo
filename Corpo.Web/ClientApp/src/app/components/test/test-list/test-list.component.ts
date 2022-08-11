@@ -36,14 +36,8 @@ export class TestListComponent implements OnInit {
     private testTemplateService: TestTemplateService,
     private testMemberService: TestMemberService,
     private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(
-      params => {
-         this.display = Boolean(params['display']);
-        console.log(this.display);
-        if (!this.display) {
-          this.display = false;
-          this.getTestAssignment(this.testMemberService.selectedMember);
-        }})
+    this.route.queryParams.subscribe(params => { this.memberId = parseInt(params['id']) });
+    this.getMember();
     this.dueDate = this.dp.transform(new Date(), 'yyyy-MM-dd');
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
     let date = new Date();
@@ -51,36 +45,10 @@ export class TestListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAll();
+    this.getAllTest();
   }
 
-  getAll() {
-    this.requestingList = true;
-    this.memberService.getAllActivePersonalized().subscribe(
-      (result) => {
-        this.requestingList = false;
-        console.log(result);
-        this.members = result;
-        this.getStatusMember();
-      },
-      error => {
-        this.requestingList = false;
-        console.error(error)
-      }
-    );
-  }
 
-  getStatusMember() {
-    this.currentDate = this.dp.transform(new Date(), 'yyy-MM-dd, hh:mm:ss a');
-    for (var i = 0; i < this.members.length; i++) {
-      let member = this.members[i];
-      if (member.expiration >= this.currentDate) {
-        member.status = "Activo"
-      } else {
-        member.status = "No Activo"
-      }
-    }
-  }
 
   getAllTest() {
     this.requestingList = true;
@@ -102,7 +70,7 @@ export class TestListComponent implements OnInit {
     tests.forEach(x => { 
         this.testTemplates.push({
           id: x.id,
-          name: x.name,
+          level: x.level,
           testExercises: x.testExercises
         } as TestTemplateList);
     });
@@ -111,13 +79,12 @@ export class TestListComponent implements OnInit {
     this.getAllByMemberId();
   }
 
-  getTestAssignment(id) {
-    this.testMemberService.selectedMember = id;
-    this.display = false;
-    this.getAllTest();
-    this.memberId = this.testMemberService.selectedMember;
-    this.member = this.members.find(x => x.id == this.memberId);
-
+  getMember() {
+    this.memberService.getById(this.memberId).subscribe(
+      response => {
+        console.log("socio: ", response);
+        this.member = response;
+      }, error => console.error(error)    )
   }
 
 
@@ -139,8 +106,5 @@ export class TestListComponent implements OnInit {
     )
   }
 
-  return() {
-    this.display = true;
-  }
 
 }

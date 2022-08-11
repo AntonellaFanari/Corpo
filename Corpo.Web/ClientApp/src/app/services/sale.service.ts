@@ -2,7 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { CancelSale } from '../domain/cancel-sale';
 import { DetailsSale } from '../domain/details-sale';
+import { DomainResponse } from '../domain/domain-response';
 import { Sale } from '../domain/sale';
+import { SaleFeeIncome } from '../domain/sale-fee-income';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,7 +26,7 @@ export class SaleService {
   }
 
   public getAll(id: number) {
-    return this.http.get<Sale[]>(this.url + 'api/sale/getAll?id='+ id);
+    return this.http.get<DomainResponse<SaleFeeIncome[]>>(this.url + 'api/sale/getAll?id='+ id);
   }
 
   public getDetailsSale(idSale) {

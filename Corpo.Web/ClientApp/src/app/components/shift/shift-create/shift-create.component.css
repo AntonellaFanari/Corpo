@@ -17,6 +17,17 @@ td.text-ajust {
   padding: 0rem;
 }
 
+.div-btn-create {
+  padding: 0px;
+  margin-top: 15px;
+}
+
+.btn-create {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+}
+
 @media only screen and (max-width: 800px) {
   #no-more-tables td {
     padding-left: 30%;

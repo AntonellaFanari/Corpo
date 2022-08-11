@@ -72,25 +72,62 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> GetAllWodMember(int id, DateTime from, DateTime to)
         {
-            var response = await _wodMemberRepository.GetAllWodMember(id, from, to);
-            return new DomainResponse
+            var periodization = _periodizationRepository.GetValidByMemberId(id);
+            if (periodization != null)
             {
-                Success = true,
-                Result = response
-            };
+                var response = await _wodMemberRepository.GetAllWodMember(id, periodization.Id);
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = response
+                };
+            }
+            else
+            {
+                return new DomainResponse(false, "no existe una periodización vigente.", "No existe periodización vigente.");
+            }
         }
 
         public async Task<DomainResponse> GetAllWodMemberWeek(int id)
         {
-
-            DateTime from = DateTime.Today.AddDays(-1 * ((int)(DateTime.Today.DayOfWeek)-1));
-            DateTime to = DateTime.Today.AddDays(-1 * ((int)(DateTime.Today.DayOfWeek) - 7));
-            var response = await _wodMemberRepository.GetAllWodMember(id, from, to);
-            return new DomainResponse
+            var periodization = await _periodizationRepository.GetValidByMemberId(id);
+            if (periodization != null)
             {
-                Success = true,
-                Result = response
-            };
+                DateTime startDate = DateTime.Today;
+                DateTime stopDate = startDate.AddDays(1).AddTicks(-1);
+
+                DayOfWeek referenceDayOfWeek = startDate.DayOfWeek;
+
+                int diffDaysFromMonday = DayOfWeek.Monday - referenceDayOfWeek;
+                if (diffDaysFromMonday > 0) { diffDaysFromMonday -= 7; }
+                DateTime from = startDate.AddDays(diffDaysFromMonday);
+
+                int diffDaysToSunday = (DayOfWeek.Sunday - referenceDayOfWeek);
+                if (diffDaysToSunday < 0) { diffDaysToSunday += 7; }
+                DateTime to = stopDate.AddDays(diffDaysToSunday);
+                var periodizationWeek = await _periodizationRepository.GetPeriodizationWeekByPeriodizationIdByFromTo(periodization.Id, from, to);
+                object response;
+                if (periodizationWeek != null)
+                {
+                    response = await _wodMemberRepository.GetByWeekNumber(periodizationWeek.WeekNumber, periodization.Id);
+                 
+                }
+                else
+                {
+                    response = null;
+                }
+                return new DomainResponse
+                {
+                    Success = true,
+                    Result = response
+                };
+
+
+            }
+            else
+            {
+                return new DomainResponse(false, "no existe una periodización vigente.", "No existe periodización vigente.");
+            }
         }
 
         public async Task<DomainResponse> Delete(int id)

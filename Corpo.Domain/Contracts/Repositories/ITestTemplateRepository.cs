@@ -14,5 +14,8 @@ namespace Corpo.Domain.Contracts.Repositories
         Task Delete(int id);
         Task<TestTemplate> GetById(int id);
         Task Update(TestTemplate test);
+        Task<List<ExerciseFMS>> GetAllExercisesFMS();
+        Task<TestTemplate> GetByLevel(int level);
+        Task<TestTemplate> GetDetailById(int id);
     }
 }

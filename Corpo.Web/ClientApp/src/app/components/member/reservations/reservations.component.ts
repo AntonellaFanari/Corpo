@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AttendanceReservation } from '../../../domain/attendance-reservation';
+import { MemberView } from '../../../domain/member-view';
 import { Reservation } from '../../../domain/reservation';
 import { AttendanceService } from '../../../services/attendance.service';
+import { MemberService } from '../../../services/member.service';
 
 @Component({
   selector: 'app-reservations',
@@ -12,19 +14,36 @@ import { AttendanceService } from '../../../services/attendance.service';
 export class ReservationsComponent implements OnInit {
   reservations: Reservation[] = [];
   id: number;
+  member: MemberView;
+  requesting: boolean;
 
-  constructor(private route: ActivatedRoute, private attendanceService: AttendanceService) {
+  constructor(private route: ActivatedRoute,
+    private attendanceService: AttendanceService,
+    private memberService: MemberService) {
     this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) })
   }
 
   ngOnInit() {
-    this.getAttendances();
+    this.getMember();
+
+  }
+
+  getMember() {
+    this.requesting = true;
+    this.memberService.getById(this.id).subscribe(
+      result => {
+        this.requesting = false;
+        this.member = result;
+        this.getAttendances();
+      },
+      error => this.requesting = false
+    );
   }
 
   getAttendances() {
     this.attendanceService.getAllReservationsDetail(this.id).subscribe(
       result => {
-        console.log(result.result);
+        console.log("reservaciones: ", result.result);
         this.reservations = result.result;
         this.getCovertReservationsDate(this.reservations);
       },

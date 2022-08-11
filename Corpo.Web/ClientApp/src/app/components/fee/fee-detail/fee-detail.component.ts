@@ -22,15 +22,17 @@ export class FeeDetailComponent implements OnInit {
 
   ngOnInit() {
   }
-  modalClick() {
+  modalClick(id) {
     document.getElementById('modal-fee-detail').click();
+    this.getFee(id);
   }
 
   getFee(id) {
     this.feeService.getById(id).subscribe(
       result => {
-        this.fee = result;
-        this.userRegister = result.userName;
+        this.fee = result.result;
+        console.log("fee: ", result.result);
+        this.userRegister = result.result.userName;
       },
       error => console.error(error)
     )
@@ -41,7 +43,7 @@ export class FeeDetailComponent implements OnInit {
     this.customAlertService.displayAlert("Gestión de Cuotas", ["¿Está seguro que desea eliminar esta cuota?"], () => {
       this.feeService.delete(this.fee.id).subscribe(
         result => {
-          this.modalClick();
+          this.modalClick(this.fee.id);
           this.updateFeeCash();
         },
         error => {

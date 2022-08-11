@@ -1,27 +1,14 @@
 <!-- Page Content -->
 <section class="wrapper"  >
   <div class="task-panel " *ngIf="!requestingAssignment && periodization">
-    <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD</h4>
+    <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel {{level}}</h4>
   </div>
   <hr *ngIf="!requestingAssignment && periodization" />
   <section class="wrapper" >
     <div class="row">
-      <div class="col-12 col-lg-8 " *ngIf="!requestingAssignment && periodization">
+      <div class=" col-12 col-lg-4 mb-4">
 
-        <mat-tab-group [class.d-none]="wods.length == 0">
-          <mat-tab label="Wod Nº {{newWod.wodNumber}}" *ngFor="let newWod of wods">
-            <app-wod-template-form [wod]="newWod.wod" [date]="newWod.date" [weekNumber]="weekNumber" [periodizationId]="periodization.id"
-                                   [wodNumber]="newWod.wodNumber" [memberId]="memberId"
-                                   (goBackEvent)="cancelWod()" (saveEvent)=deleteWod($event)></app-wod-template-form>
-          </mat-tab>
-        </mat-tab-group>
-
-
-      </div>
-      <div class=" col-12 col-lg-4">
-
-        <button  *ngIf="!requestingAssignment && periodization && wods.length > 0" class="btn btn-primary w-100 mt-3 " type="button" data-toggle="modal" href="#modal-wod"
-                >
+        <button *ngIf="!requestingAssignment && periodization && wods.length > 0" class="btn btn-primary w-100 mt-3 " type="button" data-toggle="modal" href="#modal-wod">
           Vista previa
         </button>
 
@@ -33,16 +20,15 @@
           Historia Médica
         </button>
 
-        <button *ngIf="!requestingAssignment && periodization" class="btn btn-danger w-100 mb-3" type="button" (click)="deleteWods()"
-                >
+        <button *ngIf="!requestingAssignment && periodization" class="btn btn-danger w-100 mb-3" type="button" (click)="deleteWods()">
           Eliminar Wods
         </button>
 
-        <button *ngIf="!requestingAssignment && periodization" class="btn btn-secondary w-100 mt-3" type="button" [routerLink]="['/asignacion-wod']">
+        <button *ngIf="!requestingAssignment && periodization" class="btn btn-secondary w-100 mt-3" type="button" [routerLink]="['/personalizados']">
           Volver
         </button>
 
-        <div [ngClass]="{'hide': display }" >
+        <div [ngClass]="{'hide': display }">
           <label class="control-label">Seleccionar Semana:</label>
           <div class="formValidators">
             <select id="select-week" class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)">
@@ -54,6 +40,20 @@
             </select>
           </div>
         </div>
+      </div>
+
+
+      <div class="col-12 col-lg-8 " *ngIf="!requestingAssignment && periodization">
+
+        <mat-tab-group [class.d-none]="wods.length == 0">
+          <mat-tab label="Wod Nº {{newWod.wodNumber}}" *ngFor="let newWod of wods">
+            <app-wod-template-form [wod]="newWod.wod" [date]="newWod.date" [weekNumber]="weekNumber" [periodizationId]="periodization.id"
+                                   [wodNumber]="newWod.wodNumber" [memberId]="memberId"
+                                   (goBackEvent)="cancelWod()" (saveEvent)=deleteWod($event)></app-wod-template-form>
+          </mat-tab>
+        </mat-tab-group>
+
+
       </div>
 
     </div>
@@ -82,10 +82,8 @@
         </div>
         <!-- pie del diálogo -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-success btn-float-left" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
-          <button type="button" class="btn btn-success btn-float-right" data-dismiss="modal">
-            Aceptar
-          </button>
+          <button type="button" class="btn btn-success col-4" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
+       
         </div>
       </div>
     </div>
@@ -109,11 +107,6 @@
           </div>
         </div>
         <!-- pie del diálogo -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">
-            Aceptar
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -131,11 +124,6 @@
           <app-member-view [id]="memberId" [hideGoBack]="true"></app-member-view>
         </div>
         <!-- pie del diálogo -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">
-            Aceptar
-          </button>
-        </div>
       </div>
     </div>
   </div>

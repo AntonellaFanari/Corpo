@@ -15,7 +15,7 @@ namespace Corpo.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BalanceController : ControllerBase
+    public class BalanceController : CorpoBaseController
     {
         private IBalanceService _balanceService;
 
@@ -69,9 +69,10 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("cancelBalance")]
-        public ActionResult CancelBalance(PayCancelBalanceDto payCancelBalance)
+        public async Task<ActionResult> CancelBalance(int memberId, decimal pay)
         {
-            var response = _balanceService.CancelBalance(payCancelBalance);
+            var user = GetUser();
+            var response = await _balanceService.CancelBalance(user.Id, memberId, pay);
             return this.ToActionResult(response);
         }
 

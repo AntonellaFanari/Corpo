@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExerciseFms } from '../../../../domain/test/exercise-fms';
 import { TestExercise, TestType } from '../../../../domain/test/test-exercise';
 import { TestTemplate } from '../../../../domain/test/test-template';
 import { CustomAlertService } from '../../../../services/custom-alert.service';
@@ -24,6 +25,8 @@ export class TestTemplateEditComponent implements OnInit {
   addMode = true;
   send: boolean;
   indexExercise: number;
+  exercisesFMS: ExerciseFms[] = [];
+  exerciseFmsId: number;
 
   constructor(private formBuilder: FormBuilder,
     private testTemplateService: TestTemplateService,
@@ -32,20 +35,31 @@ export class TestTemplateEditComponent implements OnInit {
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) });
     this.formTestName = this.formBuilder.group({
-      testName: ['', Validators.required],
+      level: ['', Validators.required],
     });
     this.formEdit = this.formBuilder.group({
       type: [0, Validators.required],
       name: ['', Validators.required],
+      protocol: ['', Validators.required],
       minutes: 0,
       seconds: 0,
-      video: ''
+      video: '',
+      exerciseFmsId: [0, Validators.required]
     });
     this.selectType(0);
   }
 
   ngOnInit() {
     this.getById();
+    this.getExercisesFMS();
+  }
+
+
+  getExercisesFMS() {
+    this.testTemplateService.getAllExercisesFMS().subscribe(
+      response => this.exercisesFMS = response.result,
+      error => console.error(error)
+    )
   }
 
   getById() {
@@ -54,9 +68,8 @@ export class TestTemplateEditComponent implements OnInit {
         console.log(response.result);
         this.testTemplate = response.result;
         this.testExercises = this.testTemplate.testExercises;
-        this.name = this.testTemplate.name;
         this.formTestName.patchValue({
-          testName: this.testTemplate.name
+          level: this.testTemplate.level
         })
       },
       error => console.error(error)
@@ -109,23 +122,34 @@ export class TestTemplateEditComponent implements OnInit {
     this.formEdit.patchValue({
       type: exercise.testType,
       name: exercise.name,
+      protocol: exercise.protocol,
       minutes: exercise.minutes,
       seconds: exercise.seconds,
-      video: exercise.video
+      video: exercise.video,
+      exerciseFmsId: exercise.exerciseFmsId
     });
     this.addMode = false;
     this.exerciseId = exercise.id;
     this.selectType(exercise.testType.toString());
   }
 
+  selectExerciseFms(id) {
+    let exercise = this.exercisesFMS.find(x => x.id == id);
+    console.log("exercise-fms: ", exercise);
+    this.formEdit.patchValue({ name: exercise.name });
+    this.exerciseFmsId = exercise.id;
+  }
+
   createExercise() {
     if (this.formEdit.valid && this.formEdit.value.type != 0) {
       let exercise = new TestExercise();
       exercise.name = this.formEdit.value.name;
+      exercise.protocol = this.formEdit.value.protocol;
       exercise.testType = this.selectedType;
       if (this.formEdit.value.minutes == undefined) { exercise.minutes = 0 } else { exercise.minutes = this.formEdit.value.minutes };
       if (this.formEdit.value.seconds == undefined) { exercise.seconds = 0 } else { exercise.seconds = this.formEdit.value.seconds };
       exercise.video = this.formEdit.value.video;
+      if (this.formEdit.value.type == TestType.video) { exercise.exerciseFmsId = this.exerciseFmsId };
       console.log("ejercicio: ", exercise);
       /* this.sendExercise = false;*/
       return exercise;
@@ -138,7 +162,7 @@ export class TestTemplateEditComponent implements OnInit {
   createTestTemplate() {
     let test = new TestTemplate();
     test.id = this.testTemplate.id;
-    test.name = this.formTestName.value.testName;
+    test.level = this.formTestName.value.level;
     test.testExercises = this.testExercises;
     return test;
   }
@@ -165,6 +189,7 @@ export class TestTemplateEditComponent implements OnInit {
       let exerciseRepeatedName = this.testExercises.find(x => x.name.toLowerCase() == exercise.name && x.testType == exercise.testType);
       if (!exerciseRepeatedName) {
         this.testExercises[this.indexExercise].name = exercise.name;
+        this.testExercises[this.indexExercise].protocol = exercise.protocol;
         this.testExercises[this.indexExercise].testType = exercise.testType;
         this.testExercises[this.indexExercise].minutes = exercise.minutes;
         this.testExercises[this.indexExercise].seconds = exercise.seconds;
@@ -180,6 +205,7 @@ export class TestTemplateEditComponent implements OnInit {
     this.formEdit.patchValue({
       type: 0,
       name: '',
+      protocol: '',
       minutes: 0,
       seconds: 0,
       video: ''

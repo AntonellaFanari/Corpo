@@ -85,7 +85,7 @@ export class MyDebtsComponent implements OnInit {
     this.feeService.getById(id).subscribe(
       result => {
         console.log(result);
-        this.fee = result;
+        this.fee = result.result;
         console.log("fee", this.fee);
       },
       error => console.error(error)

@@ -2,7 +2,7 @@ import { TestExercise } from "./test-exercise";
 
 export class TestTemplateList {
   id: number;
-  name: string;
+  level: number;
   testExercises: TestExercise[];
   assignment: boolean;
 }

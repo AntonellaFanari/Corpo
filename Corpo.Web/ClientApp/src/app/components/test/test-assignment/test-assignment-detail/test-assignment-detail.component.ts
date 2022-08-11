@@ -27,7 +27,7 @@ export class TestAssignmentDetailComponent implements OnInit {
   }
 
   getTest() {
-    this.testMemberService.getById(this.id).subscribe(
+    this.testMemberService.getDetailById(this.id).subscribe(
       response => {
         console.log(response.result);
         this.test = response.result;

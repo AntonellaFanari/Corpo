@@ -78,15 +78,15 @@
           </table>
           <div class="row card col-12 mx-0 justify-content-center align-items-center">
             <div class="col-lg-2 col-4 text-center m-2">
-              <button class="btn btn-success form-control" (click)="addRow()">Agregar</button>
+              <button class="btn btn-success form-control" (click)="addRow()">Nuevo turno</button>
             </div>
           </div>
       </section>
     </div>
   </div>
-  <div class="col-12">
-    <button class="btn btn-secondary pull-left mt-2" type="button" [routerLink]="['/turnos-list']">Cancelar</button>
-    <button class="btn btn-success btn-float-right mt-2" type="submit" (click)="submit()">Guardar</button>
+  <div class="col-12 div-btn-create">
+    <button class="btn btn-secondary col-4 col-lg-2 btn-create pull-left mt-2" type="button" [routerLink]="['/turnos-list']">Cancelar</button>
+    <button class="btn btn-success col-4 col-lg-2 btn-create btn-float-right mt-2" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 

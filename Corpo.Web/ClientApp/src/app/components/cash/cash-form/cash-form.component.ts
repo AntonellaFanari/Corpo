@@ -10,9 +10,11 @@ import { Income } from '../../../domain/income';
 import { Outflow } from '../../../domain/outflow';
 import { Product } from '../../../domain/product';
 import { Sale } from '../../../domain/sale';
+import { IncomeType, SaleFeeIncome } from '../../../domain/sale-fee-income';
 import { UserView } from '../../../domain/user-view';
 import { Withdrawal } from '../../../domain/withdrawal';
 import { AccountService } from '../../../services/account.service';
+import { BalancePaidService } from '../../../services/balance-paid.service';
 import { CashService } from '../../../services/cash.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { FeeService } from '../../../services/fee.service';
@@ -21,6 +23,7 @@ import { OutflowService } from '../../../services/outflow.service';
 import { SaleService } from '../../../services/sale.service';
 import { UserService } from '../../../services/user.service';
 import { WithdrawalService } from '../../../services/withdrawal.service';
+import { PaymentDetailsComponent } from '../../debt/payment-details/payment-details.component';
 import { FeeDetailComponent } from '../../fee/fee-detail/fee-detail.component';
 import { IncomeDetailComponent } from '../../income/income-detail/income-detail.component';
 import { OutflowDetailComponent } from '../../outflow/outflow-detail/outflow-detail.component';
@@ -34,11 +37,11 @@ import { WithdrawalDetailComponent } from '../../withdrawal/withdrawal-detail/wi
   styleUrls: ['./cash-form.component.css']
 })
 export class CashFormComponent implements OnInit {
-  sales: Sale[] = [];
+  salesIncomes: SaleFeeIncome[] = [];
   saleTotalPay = 0;
   outflows: Outflow[] = [];
   outflowTotalPay = 0;
-  fees: Fee[] = [];
+  feesIncomes: SaleFeeIncome[] = [];
   incomes: Income[] = [];
   feeTotalPay = 0;
   withdrawals: Withdrawal[] = [];
@@ -59,19 +62,23 @@ export class CashFormComponent implements OnInit {
   @ViewChild(FeeDetailComponent, { static: true }) feeDetailComponent: FeeDetailComponent;
   @ViewChild(WithdrawalDetailComponent, { static: true }) withdrawalDetailComponent: WithdrawalDetailComponent;
   @ViewChild(IncomeDetailComponent, { static: true }) incomeDetailComponent: IncomeDetailComponent;
-
-  constructor(private saleService: SaleService, private outflowService: OutflowService, private feeService: FeeService,
-    private withdrawalService: WithdrawalService, private incomeService: IncomeService, private cashService: CashService,
-    private customAlertService: CustomAlertService) { }
+  @ViewChild(PaymentDetailsComponent, { static: true }) payDetail: PaymentDetailsComponent;
+  constructor(private saleService: SaleService,
+    private outflowService: OutflowService,
+    private feeService: FeeService,
+    private withdrawalService: WithdrawalService,
+    private incomeService: IncomeService,
+    private cashService: CashService,
+    private customAlertService: CustomAlertService,
+    private balancePaidService: BalancePaidService) { }
 
   ngOnInit() {
-    this.requestingCash = true;
     this.getLastCash();
-    this.getMonthlyCash();
 
   }
 
   getTotals() {
+    this.requestingCash = false;
     this.getAllSale();
     this.getAllOutflow();
     this.getAllFee();
@@ -82,22 +89,22 @@ export class CashFormComponent implements OnInit {
 
   getMonthlyCash() {
     this.monthlyCash = 0;
-    this.openingView = false;
     this.cashService.getMonthlyCash().subscribe(
       result => {
-        this.requestingCash = false;
         if (result.result !== null) {
           this.monthlyCash = result.result.total;
         };
       },
-      error => this.requestingCash = false
+      error => console.error(error)
     );
   }
 
   getLastCash() {
+    this.requestingCash = true;
     this.cashService.getLastCash().subscribe(
       result => {
-        this.requestingCash = false;
+
+        this.getMonthlyCash();
         if (result.result !== null) {
           this.cash = result.result;
           this.id = this.cash.id;
@@ -107,6 +114,7 @@ export class CashFormComponent implements OnInit {
             this.getTotals();
             this.calculateCurrentCash();
           } else {
+            this.requestingCash = false;
             this.openingView = true;
           }
         } else {
@@ -118,6 +126,11 @@ export class CashFormComponent implements OnInit {
         this.openingView == true;
       }
     )
+  }
+
+  getAllSalesFees() {
+    this.getAllSale();
+    this.getAllFee();
   }
 
   getCash() {
@@ -132,19 +145,15 @@ export class CashFormComponent implements OnInit {
   getAllSale() {
     this.saleService.getAll(this.id).subscribe(
       result => {
-        for (var i = 0; i < result.length; i++) {
-          var sale = result[i];
-          if (sale.status == 2) {
-            sale.total = (-1) * sale.total;
-          }
-        }
-        this.sales = result;
+        console.log("ingresos por ventas: ", result.result);
+        this.salesIncomes = result.result;
         this.calculateTotalSales();
         this.calculateCurrentCash();
       },
       error => console.error(error)
     );
   }
+
 
   getAllOutflow() {
     this.outflowService.getAllOutflow(this.id).subscribe(
@@ -160,7 +169,8 @@ export class CashFormComponent implements OnInit {
   getAllFee() {
     this.feeService.getAll(this.id).subscribe(
       result => {
-        this.fees = result;
+        console.log("ingresos por cuotas: ", result.result);
+        this.feesIncomes = result.result;
         this.calculateTotalFee();
         this.calculateCurrentCash();
       },
@@ -199,10 +209,10 @@ export class CashFormComponent implements OnInit {
 
   calculateTotalSales() {
     this.saleTotalPay = 0;
-    if (this.sales.length > 0) {
-      for (var i = 0; i < this.sales.length; i++) {
-        if (this.sales[i].status == 1) {
-          this.saleTotalPay = this.saleTotalPay + this.sales[i].pay;
+    if (this.salesIncomes.length > 0) {
+      for (var i = 0; i < this.salesIncomes.length; i++) {
+        if (this.salesIncomes[i].pay > 0) {
+          this.saleTotalPay = this.saleTotalPay + this.salesIncomes[i].pay;
         }
       }
     }
@@ -220,9 +230,9 @@ export class CashFormComponent implements OnInit {
 
   calculateTotalFee() {
     this.feeTotalPay = 0
-    if (this.fees.length > 0) {
-      for (var i = 0; i < this.fees.length; i++) {
-        this.feeTotalPay = this.feeTotalPay + this.fees[i].pay;
+    if (this.feesIncomes.length > 0) {
+      for (var i = 0; i < this.feesIncomes.length; i++) {
+        this.feeTotalPay = this.feeTotalPay + this.feesIncomes[i].pay;
       }
     }
   }
@@ -245,9 +255,14 @@ export class CashFormComponent implements OnInit {
     }
   }
 
-  getDetailsSale(sale) {
-    this.saleDetailComponent.modalClick();
-    this.saleDetailComponent.getDetailsSale(sale);
+  getDetailsSaleIncome(sale) {
+    if (sale.incomeType == IncomeType.sale) {
+      this.saleDetailComponent.modalClick(sale.id);
+      /*this.saleDetailComponent.getSaleById(sale.id);*/
+    } else {
+      this.payDetail.modalClick(sale.id);
+    }
+   
   }
 
   getDetailOutflow(outflow) {
@@ -255,9 +270,13 @@ export class CashFormComponent implements OnInit {
     this.outflowDetailComponent.getOutflow(outflow.id);
   }
 
-  getDetailFee(fee) {
-    this.feeDetailComponent.modalClick();
-    this.feeDetailComponent.getFee(fee.id);
+  getDetailsFeeIncome(fee) {
+    if (fee.incomeType == IncomeType.fee) {
+      this.feeDetailComponent.modalClick(fee.id);
+      /*this.saleDetailComponent.getSaleById(sale.id);*/
+    } else {
+      this.payDetail.modalClick(fee.id);
+    }
   }
 
   getDetailWithdrawal(withdrawal) {

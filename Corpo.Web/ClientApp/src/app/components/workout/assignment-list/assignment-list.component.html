@@ -28,7 +28,11 @@
               <td class="td-title td-padding-action" data-title="Acción">
                 <div class="text-center">
                   <button class="btn btn-primary btn-action-list me-2" (click)="getAssignment(member.id)">WOD</button>
-                  <button class="btn btn-warning btn-action-list text-white" [routerLink]="['/reporte-anual']" [queryParams]="{id: member.id}">Estadisticas</button>
+                  <button class="btn btn-warning btn-action-list text-white me-2" [routerLink]="['/reporte-anual']" [queryParams]="{id: member.id}">Estadisticas</button>
+                  <button class="btn btn-primary btn-width me-2" [routerLink]="['/test-asignados-list']" [queryParams]="{id: member.id}">Test Asignados</button>
+                  <button class="btn btn-success btn-width  me-2" [routerLink]="['/test']" [queryParams]="{id: member.id}">Nuevo Test</button>
+                  <button class="btn btn-secondary btn-width  me-2" [routerLink]="['/anamnesis']" [queryParams]="{id: member.id}">Anamnesis</button>
+
                 </div>
               </td>
             </tr>

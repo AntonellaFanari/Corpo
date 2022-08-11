@@ -51,7 +51,7 @@ namespace Corpo.Web.ViewModels
                 CreditId = member.Credit.Id,
                 Credit = member.Credit.InitialCredit,
                 Negative = member.Credit.Negative,
-                Expiration = member.Credit.Expiration
+                Expiration = member.Credit.Expiration 
             };
         }
 

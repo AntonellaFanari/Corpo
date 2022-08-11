@@ -1,103 +1,50 @@
-<section class="wrapper" *ngIf="members.length > 0 && !requestingList">
-  <div class="row mt">
-    <div class="col-lg-12" [ngClass]="display ? 'display': 'hide'">
-      <div class="task-panel ">
-        <h4 class="table-title">Socios</h4>
-      </div>
-      <hr>
-      <div class="col-12 card">
-        <div class="row card-body">
-          <div class="col-12">
-            <input type="text" name="filterMember" placeholder="Buscar" class="form-control" [(ngModel)]="filterMember">
-          </div>
-        </div>
-      </div>
-      <section id="no-more-tables" class="mt-3">
-        <table class="table table-hover table-bordered table-condensed  cf scrollme user-table">
-          <thead class="cf">
-            <tr>
-              <th class="numeric">Estado</th>
-              <th class="numeric">Apellido y Nombre</th>
-              <th class="numeric">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let member of members | searchFilterMember: filterMember">
-              <td class="td-title" data-title="Estado"><span *ngIf="member.status =='Activo'" class="badge bg-success">Activo</span><span *ngIf="member.status == 'No Activo'" class="badge bg-danger">No Activo</span></td>
-              <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
-              <td class="td-title td-padding-action" data-title="Acción">
-                <div class="text-center">
-                  <button class="btn btn-primary btn-width me-2" [routerLink]="['/test-asignados-list']" [queryParams]="{id: member.id}">Test Asignados</button>
-                  <button class="btn btn-success btn-width  me-2" (click)="getTestAssignment(member.id)">Nuevo Test</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </div>
-    <div class="col-lg-12" [ngClass]="!display ? 'display': 'hide'">
-      <div *ngIf="testTemplates.length > 0 && !requestingListTestTemplates">
-        <div class="task-panel ">
-          <h4 class="table-title">Asignar Test - {{member.lastName}} {{member.name}}</h4>
-        </div>
-        <hr>
-        <div class="col-12 card">
-          <div class="row card-body">
-            <div class="col-12">
-              <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
-            </div>
-          </div>
-        </div>
-        <section id="no-more-tables" class="mt-3" *ngIf="testTemplates.length> 0">
-          <table class="table table-bordered table-condensed cf scrollme user-table">
-            <thead class="cf">
-              <tr>
-                <th class="numeric">Nombre</th>
-                <th class="numeric">Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let test of testTemplates | searchFilterName: filterName" class="scrollme span-margin">
-                <td class="td-title" data-title="Nombre"><span>{{test.name}}</span> <span *ngIf="test.assignment" class="badge bg-success ms-2">Asignado</span></td>
-                <td class="td-title col-12 col-lg-3" data-title="Acción">
-                  <span class="btn-action-container">
-                    <button class="btn btn-primary ms-2 col-4 col-lg-3 btn-action-list"  placement="top" ngbTooltip="detalle" [routerLink]="['/test-detalle']" [queryParams]="{id: test.id}"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                    <button *ngIf="!test.assignment"  class="btn btn-success ms-2 col-4 col-lg-3 btn-action-list" placement="top" ngbTooltip="asignar" [routerLink]="['/test-asignacion']" [queryParams]="{id: test.id, memberId: memberId }"><i class="fa fa-check-square" aria-hidden="true"></i></button>
-
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
-      <section class="wrapper">
-        <div class="w-100 text-center" *ngIf="requestingListTestTemplates && testTemplates.length == 0">
-          <div class="spinner-border text-success" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-        <h5 *ngIf="!requestingListTestTemplates && testTemplates.length == 0">No hay tests para mostrar</h5>
-      </section>
-
-      <div class="mt-3" *ngIf="!display">
-        <div class="button-box col-6 col-lg-3 pe-1 btn-float-left">
-          <button class="btn btn-secondary btn-return" (click)="return()">Volver</button>
-        </div>
-      </div>
-    </div>
-    <!-- /content-panel -->
+<section class="wrapper" *ngIf="!requestingList">
+  <div class="task-panel " *ngIf="member">
+    <h4 class="table-title">Asignar Test - {{member.lastName}} {{member.name}}</h4>
   </div>
-</section>
+  <hr>
+  <div class="col-12 card" *ngIf="testTemplates.length> 0">
+    <div class="row card-body">
+      <div class="col-12">
+        <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+      </div>
+    </div>
+  </div>
+  <section id="no-more-tables" *ngIf="testTemplates.length> 0">
+    <table class="table table-bordered table-condensed cf scrollme user-table">
+      <thead class="cf">
+        <tr>
+          <th class="numeric">Nombre</th>
+          <th class="numeric">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let test of testTemplates | searchFilterName: filterName" class="scrollme span-margin">
+          <td class="td-title" data-title="Nombre"><span>Nivel {{test.level}}</span> <span *ngIf="test.assignment" class="badge bg-success ms-2">Asignado</span></td>
+          <td class="td-title col-12 col-lg-3" data-title="Acción">
+            <span class="btn-action-container">
+              <button class="btn btn-primary ms-2 col-4 col-lg-3 btn-action-list" placement="top" ngbTooltip="detalle" [routerLink]="['/test-detalle']" [queryParams]="{id: test.id, memberId: memberId}"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              <button *ngIf="!test.assignment" class="btn btn-success ms-2 col-4 col-lg-3 btn-action-list" placement="top" ngbTooltip="asignar" [routerLink]="['/test-asignacion']" [queryParams]="{id: test.id, memberId: memberId }"><i class="fa fa-check-square" aria-hidden="true"></i></button>
 
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
 <section class="wrapper">
-  <div class="w-100 text-center" *ngIf="requestingList && members.length == 0">
+  <div class="w-100 text-center" *ngIf="requestingList && testTemplates.length == 0">
     <div class="spinner-border text-success" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <h5 *ngIf="!requestingList && members.length == 0">No hay tests para mostrar</h5>
+  <h5 *ngIf="!requestingList && testTemplates.length == 0">No hay tests para mostrar</h5>
+</section>
+<section class="wrapper" *ngIf="!requestingList">
+  <div class="button-box col-4 col-lg-2 pe-1 btn-float-left">
+    <button class="btn btn-secondary btn-return" [routerLink]="['/personalizados']">Volver</button>
+  </div>
 </section>
 
 

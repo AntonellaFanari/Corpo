@@ -49,6 +49,16 @@ namespace Corpo.Data.Repositories
             return _context.Periodization.FirstOrDefaultAsync(x => x.MemberId == memberId && x.Year == year && x.Month == month);
         }
 
+        public Task<PeriodizationWeek> GetPeriodizationWeekByPeriodizationIdByFromTo(int id, DateTime from, DateTime to)
+        {
+           return _context.PeriodizationWeek.FirstOrDefaultAsync(x => x.PeriodizationId == id && x.From <= from && x.To >= to);
+        }
+
+        public Task<PeriodizationWeek> GetPeriodizationWeekPlannedByShiftDate(DateTime shiftDate)
+        {
+           return _context.PeriodizationWeek.FirstOrDefaultAsync(x => x.From <= shiftDate && x.To >= shiftDate && x.Planned == "true");
+        }
+
         public async Task<Periodization> GetValidByMemberId(int id)
         {
             return await _context.Periodization.Include(x => x.PeriodizationWeeks).FirstOrDefaultAsync(x => x.MemberId == id && x.Valid);

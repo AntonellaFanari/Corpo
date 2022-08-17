@@ -71,12 +71,10 @@ namespace Corpo.Domain.Services
             {
                 newCredit.Expiration = DateTime.Now.AddHours(24);
                 newCredit.FirstDay = "true";
-                newMember.Status = StatusMember.FirstDay;
             }else 
             {
                 newCredit.Expiration = DateTime.Now;
                 newCredit.FirstDay = "false";
-                newMember.Status = StatusMember.NotActive;
             }
             try
             {
@@ -117,9 +115,9 @@ namespace Corpo.Domain.Services
             };
         }
 
-        public DomainResponse GetAll()
+        public async Task<DomainResponse> GetAll()
         {
-            var response = _memberRepository.GetAll();
+            var response = await _memberRepository.GetAll();
             return new DomainResponse
             {
                 Success = true,

@@ -29,7 +29,7 @@ export class MemberService {
   // member
 
   public getAll() {
-    return this.http.get<MemberView[]>(this.url + 'api/member/getAll');
+    return this.http.get<DomainResponse<any>>(this.url + 'api/member/getAll');
   }
 
   public getAllActivePersonalized() {
@@ -37,7 +37,7 @@ export class MemberService {
   }
 
   public getById(id: number) {
-    return this.http.get<MemberView>(this.url + 'api/member/getById?id=' + id);
+    return this.http.get<DomainResponse<any>>(this.url + 'api/member/getById?id=' + id);
   }
   public add(newMember: Member) {
     console.log(newMember);

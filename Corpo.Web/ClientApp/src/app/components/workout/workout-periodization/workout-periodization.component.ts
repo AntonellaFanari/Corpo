@@ -127,7 +127,7 @@ private customAlertService: CustomAlertService  ) {
     this.route.queryParams.subscribe(params => {
       this.memberId = parseInt(params['memberId'])
       memberService.getById(this.memberId).subscribe(data => {
-        this.member = data;
+        this.member = data.result;
       })
     });
     this.getPeriodization();

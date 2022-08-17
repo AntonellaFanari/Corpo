@@ -1,4 +1,5 @@
 ﻿using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Corpo.Domain.Contracts.Repositories
 {
     public interface IMemberRepository
     {
-        List<Member> GetAll();
+        Task<List<MemberListDto>> GetAll();
         Task<Member> GetById(int id);
         Member GetByAccountId(int id);
         Member GetByEmail(string email);

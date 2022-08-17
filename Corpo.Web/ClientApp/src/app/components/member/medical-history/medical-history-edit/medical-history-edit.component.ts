@@ -35,7 +35,7 @@ export class MedicalHistoryEditComponent implements OnInit {
     this.memberService.getById(this.id).subscribe(
       result => {
         console.log(result);
-        this.planType = result.planType;
+        this.planType = result.result.planType;
         console.log(this.planType);
       },
       error => console.error(error)

@@ -65,6 +65,8 @@ namespace Corpo.Domain.Services
 
                 newTo = (currentDate.AddDays(diffDaysToSunday)).AddHours(23).AddMinutes(59).AddSeconds(59);
             }
+
+            newFrom = DateTime.Now;
             var response = await _shiftRespository.GetAll(newFrom, newTo, classId);
 
             return new DomainResponse

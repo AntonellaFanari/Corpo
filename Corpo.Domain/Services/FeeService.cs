@@ -88,7 +88,6 @@ namespace Corpo.Domain.Services
             fee.Total = feeDto.Total;
             fee.Pay = feeDto.Pay;
             var idFee = _feeRepository.Add(fee);
-            await this.SetStatusMember(memberId);
             if (lastPayment != null && lastPayment.Date < date.AddDays(-31))
             {
                 var member = await _memberRepository.GetById(feeDto.MemberId);
@@ -112,13 +111,12 @@ namespace Corpo.Domain.Services
         }
 
 
-        private async Task SetStatusMember(int id)
-        {
-            var member = await _memberRepository.GetById(id);
-            member.Status = StatusMember.Active;
-            await _memberRepository.Update(member);
+        //private async Task SetStatusMember(int id)
+        //{
+        //    var member = await _memberRepository.GetById(id);
+        //    await _memberRepository.Update(member);
 
-        }
+        //}
 
         public async Task<DomainResponse> GetAll(int id)
         {

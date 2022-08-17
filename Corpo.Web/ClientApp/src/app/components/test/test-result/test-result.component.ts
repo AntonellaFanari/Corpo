@@ -39,7 +39,7 @@ export class TestResultComponent implements OnInit {
     this.memberService.getById(this.memberId).subscribe(
       response => {
         console.log("socio: ", response);
-        this.member = response.lastName + " " + response.name;
+        this.member = response.result.lastName + " " + response.result.name;
       },
       error => console.error)
   }

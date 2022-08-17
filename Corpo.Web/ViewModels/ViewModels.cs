@@ -1,4 +1,5 @@
 ﻿using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,8 @@ namespace Corpo.Web.ViewModels
                 CreditId = member.Credit.Id,
                 Credit = member.Credit.InitialCredit,
                 Negative = member.Credit.Negative,
-                Expiration = member.Credit.Expiration 
+                Expiration = member.Credit.Expiration,
+                Status = (member.Credit.Expiration < DateTime.Now) ? StatusMember.NotActive : (member.Credit.FirstDay == "true") ? StatusMember.FirstDay : StatusMember.Active
             };
         }
 

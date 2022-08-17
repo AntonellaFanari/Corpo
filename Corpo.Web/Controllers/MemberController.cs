@@ -28,12 +28,12 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getAll")]
-        public ActionResult<MemberListViewModel> GetAll()
+        public async Task<ActionResult<MemberListDto>> GetAll()
         {
-            var response = _memberService.GetAll();
-            var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
-            var listMembers = ViewModels.ViewModels.FromDomainMemberList(result);
-            return Ok(listMembers);
+            var response = await _memberService.GetAll();
+            //var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
+            //var listMembers = ViewModels.ViewModels.FromDomainMemberList(result);
+            return this.ToActionResult(response);
         }
 
         [HttpGet("getById")]
@@ -51,7 +51,8 @@ namespace Corpo.Web.Controllers
             }
             var response = await _memberService.GetById(userId);
             var member = ViewModels.ViewModels.FromDomainMember(response.Result as Member);
-            return Ok(member);
+            response.Result = member;
+            return this.ToActionResult(response);
         }
 
         [HttpPost("add")]

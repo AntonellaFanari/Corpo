@@ -67,7 +67,7 @@ export class SaleCreateComponent implements OnInit {
     this.memberService.getAll().subscribe(
       result => {
         console.log(result);
-        this.members = result;
+        this.members = result.result;
       },
       error => console.log(error)
     );

@@ -1,6 +1,7 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Exceptions;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -46,12 +47,28 @@ namespace Corpo.Data.Repositories
                     .FirstOrDefault(x => x.AccountId == id);
         }
 
-        public List<Member> GetAll()
+        public Task<List<MemberListDto>> GetAll()
         {
             var list = _context.Member
                     .Include(x => x.Plan)
                     .Include(x => x.Credit)
-                    .ToList();
+                    .Select( x => new MemberListDto
+                    {
+                        Id = x.Id,
+                        LastName = x.LastName,
+                        Name = x.Name,
+                        Phone = x.Phone,
+                        NamePlan = x.Plan.Name,
+                        PlanType = x.Plan.Type,
+                        PlanId = x.Plan.Id,
+                        CreditId = x.Credit.Id,
+                        Credit = x.Credit.InitialCredit - x.Credit.CreditConsumption,
+                        Expiration = x.Credit.Expiration,
+                        Negative = x.Credit.Negative,
+                        Status = (x.Credit.Expiration < DateTime.Now)? StatusMember.NotActive: (x.Credit.FirstDay == "true")? StatusMember.FirstDay: StatusMember.Active
+                    }).
+                    ToListAsync();
+
             return list;
         }
 

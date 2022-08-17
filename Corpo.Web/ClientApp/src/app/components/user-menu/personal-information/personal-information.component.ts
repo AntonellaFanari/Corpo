@@ -36,7 +36,7 @@ export class PersonalInformationComponent implements OnInit {
       this.memberService.getById(this.id).subscribe(
         result => {
           console.log(result);
-          this.user = result;
+          this.user = result.result;
         },
         error => console.error(error)
       );

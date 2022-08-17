@@ -41,7 +41,7 @@ export class MemberViewComponent implements OnInit {
     this.memberService.getById(this.id).subscribe(
       result => {
         this.requestingList = false;
-        this.member = result;
+        this.member = result.result;
         this.getMedicalHistory();
         this.getAge();
         this.getLevel();

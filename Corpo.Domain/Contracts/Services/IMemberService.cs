@@ -11,7 +11,7 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IMemberService
     {
-        DomainResponse GetAll();
+        Task<DomainResponse> GetAll();
         Task<DomainResponse> GetById(int id);
         DomainResponse Add(MemberDto member);
         Task<DomainResponse> Update(int id, Member member);

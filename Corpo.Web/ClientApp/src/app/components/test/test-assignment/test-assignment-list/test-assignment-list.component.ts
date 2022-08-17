@@ -39,7 +39,7 @@ export class TestAssignmentListComponent implements OnInit {
     this.memberService.getById(this.id).subscribe(
       response => {
         console.log("socio: ", response);
-        this.member = response
+        this.member = response.result;
       },
       error => console.error(error)
     )

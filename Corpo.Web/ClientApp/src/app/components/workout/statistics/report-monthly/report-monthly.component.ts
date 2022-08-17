@@ -43,7 +43,7 @@ export class ReportMonthlyComponent implements OnInit {
     this.memberService.getById(this.periodization.memberId).subscribe(
       response => {
         console.log("socio: ", response);
-        this.member = response
+        this.member = response.result
       },
       error => console.error(error)
     )

@@ -33,7 +33,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let member of members | searchFilterMember: filterMember">
-              <td class="td-title" data-title="Estado"><span *ngIf="member.status =='Activo'" class="badge bg-success">Activo</span><span *ngIf="member.status == 'No Activo'" class="badge bg-danger">No Activo</span></td>
+              <td class="td-title" data-title="Estado">
+                <span *ngIf="member.status == 1" class="badge bg-success">Activo</span>
+                <span *ngIf="member.status == 2" class="badge bg-danger">No Activo</span>
+                <span *ngIf="member.status == 3" class="badge bg-warning">Primer día</span>
+              </td>
               <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
               <td class="td-title" data-title="Teléfono"><span>{{member.phone}}</span></td>
               <td class="td-title" data-title="Plan"><span>{{member.namePlan}}</span></td>

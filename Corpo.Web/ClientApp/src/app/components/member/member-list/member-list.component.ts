@@ -43,26 +43,15 @@ export class MemberListComponent implements OnInit {
 
   getAll() {
     this.memberService.getAll().subscribe(
-      (result) => {
+      (response) => {
         this.requestingList = false;
-        this.members = result;
-        this.getStatusMember();
+        this.members = response.result;
+        console.log("socios: ", response.result)
       },
       error => this.requestingList = false
     );
   }
 
-  getStatusMember() {
-    this.currentDate = this.dp.transform(new Date(), 'yyy-MM-dd, hh:mm:ss a');
-    for (var i = 0; i < this.members.length; i++) {
-      let member = this.members[i];
-      if (member.expiration >= this.currentDate) {
-        member.status = "Activo"
-      } else {
-        member.status = "No Activo"
-      }
-    }
-  }
 
 
   viewChangeDueDate() {
@@ -116,7 +105,6 @@ export class MemberListComponent implements OnInit {
       result => {
         console.log(result);
         this.members = result;
-        this.getStatusMember();
       },
       error => console.error(error)
     )

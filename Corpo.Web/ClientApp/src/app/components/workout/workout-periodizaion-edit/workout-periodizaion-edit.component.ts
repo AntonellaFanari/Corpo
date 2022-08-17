@@ -174,7 +174,7 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
 
   getMember() {
     this.memberService.getById(this.periodization.memberId).subscribe(data => {
-      this.member = data;
+      this.member = data.result;
     });
   }
 

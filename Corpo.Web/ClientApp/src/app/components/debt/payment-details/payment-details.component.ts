@@ -77,8 +77,8 @@ export class PaymentDetailsComponent implements OnInit {
   getMember(id) {
     this.memberService.getById(id).subscribe(
       response => {
-        console.log("socio: ", response);
-        this.member = response.lastName + " " + response.name;
+        console.log("socio: ", response.result);
+        this.member = response.result.lastName + " " + response.result.name;
       },
       error => console.error(error)
     )

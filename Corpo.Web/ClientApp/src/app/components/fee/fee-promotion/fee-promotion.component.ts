@@ -56,7 +56,7 @@ export class FeePromotionComponent implements OnInit {
   ngOnInit() {
     this.memberService.getAll().subscribe(
       result => {
-        this.members = result;
+        this.members = result.result;
       },
       error => console.error(error));
     this.promotionService.getAll().subscribe(

@@ -125,8 +125,8 @@ export class MemberFormComponent implements OnInit {
   getMemberUpdate(id) {
     this.memberService.getById(id).subscribe(
       result => {
-        this.member = result;
-        console.log(this.member);
+        this.member = result.result;
+        console.log("socio: ", this.member);
         this.toCompleteForm();
       },
       error => console.error(error)

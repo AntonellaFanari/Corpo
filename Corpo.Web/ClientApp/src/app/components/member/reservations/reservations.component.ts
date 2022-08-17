@@ -33,7 +33,7 @@ export class ReservationsComponent implements OnInit {
     this.memberService.getById(this.id).subscribe(
       result => {
         this.requesting = false;
-        this.member = result;
+        this.member = result.result;
         this.getAttendances();
       },
       error => this.requesting = false

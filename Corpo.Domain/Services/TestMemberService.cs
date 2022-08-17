@@ -27,11 +27,19 @@ namespace Corpo.Domain.Services
         {
             try
             {
-                await this.AddTest(test);
-                return new DomainResponse
+                var existsPendingTest = await _testMemberRepository.GetExistsTestPending(test.MemberId);
+                if (existsPendingTest == null)
                 {
-                    Success = true
-                };
+                    await this.AddTest(test);
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new DomainResponse(false, "", "No se pudo asignar el test, el socio tiene un test pendiente."); ;
+                }
             }
             catch (Exception ex)
             {
@@ -115,7 +123,7 @@ namespace Corpo.Domain.Services
             var gender = (historyMedical.Gender == "man") ? 1 : 0;
             decimal v02Maximum = this.GetV02Maximum(time, historyMedical.Weight, age, gender, finalHeartRate);
             var level = this.GetResultTestRockport(gender, v02Maximum, age);
-            return new ResultTestRockportDto{ Level = level, v02Maximum = v02Maximum};
+            return new ResultTestRockportDto { Level = level, v02Maximum = v02Maximum };
         }
 
         private decimal GetV02Maximum(decimal minutes, decimal weight, int age, int gender, int finalHeartRate)
@@ -149,7 +157,7 @@ namespace Corpo.Domain.Services
             var queryTest = testRockport.FirstOrDefault(x => x.AgeLowerLimit <= ageMember && x.AgeUpperLimit >= ageMember);
             if (test != null)
             {
-               level = this.DetermineLevelTestRockport(queryTest, v02Maximum);
+                level = this.DetermineLevelTestRockport(queryTest, v02Maximum);
             }
 
             return level;
@@ -174,7 +182,7 @@ namespace Corpo.Domain.Services
             var queryTest = testRockport.FirstOrDefault(x => x.AgeLowerLimit <= ageMember && x.AgeUpperLimit >= ageMember);
             if (test != null)
             {
-               level = this.DetermineLevelTestRockport(queryTest, v02Maximum);
+                level = this.DetermineLevelTestRockport(queryTest, v02Maximum);
             }
 
             return level;
@@ -182,7 +190,7 @@ namespace Corpo.Domain.Services
 
         private Level DetermineLevelTestRockport(TestRockportDto test, decimal v02Maximum)
         {
-           
+
             if (v02Maximum >= test.NivelBajoLowerLimit && v02Maximum <= test.NivelBajoUpperLimit)
             {
                 return Level.Bajo;
@@ -385,11 +393,11 @@ namespace Corpo.Domain.Services
         public async Task<DomainResponse> GetExistsTestPending(int id)
         {
             var response = await _testMemberRepository.GetExistsTestPending(id);
-                return new DomainResponse
-                {
-                    Success = true,
-                    Result = new { response.Id, response.Level}
-                };
+            return new DomainResponse
+            {
+                Success = true,
+                Result = new { response.Id, response.Level }
+            };
         }
     }
 }

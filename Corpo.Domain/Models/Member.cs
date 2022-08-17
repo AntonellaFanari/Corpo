@@ -30,13 +30,5 @@ namespace Corpo.Domain.Models
         public Credit Credit { get; set; }
         public int CreditId { get; set; }
         public List<Attendance> Attendance { get; set; }
-        public StatusMember Status { get; set; }
-    }
-
-    public enum StatusMember
-    {
-        Active = 1,
-        NotActive = 2,
-        FirstDay = 3
     }
 }

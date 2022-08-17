@@ -139,7 +139,7 @@ export class AssignmentTemplateComponent implements OnInit {
   getMember() {
     this.memberService.getById(this.memberId).subscribe(
       result => {
-        this.member = result;
+        this.member = result.result;
       },
       error => console.error(error)
     )

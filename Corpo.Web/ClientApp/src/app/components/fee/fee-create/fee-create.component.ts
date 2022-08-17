@@ -75,7 +75,7 @@ export class FeeCreateComponent implements OnInit {
     this.memberService.getAll().subscribe(
       result => {
         console.log(result);
-        this.members = result;
+        this.members = result.result;
       },
       error => console.error(error));
     this.planService.getAll().subscribe(

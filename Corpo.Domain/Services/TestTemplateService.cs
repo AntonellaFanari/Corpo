@@ -106,14 +106,22 @@ namespace Corpo.Domain.Services
         {
             try
             {
-                var testQuery = await _testTemplateRepository.GetById(test.Id);
-                testQuery.Level = test.Level;
-                testQuery.TestExercises = test.TestExercises;
-                await _testTemplateRepository.Update(testQuery);
-                return new DomainResponse
+                var existsTest = await _testTemplateRepository.GetByLevel(test.Level);
+                if (existsTest == null)
                 {
-                    Success = true
-                };
+                    var testQuery = await _testTemplateRepository.GetById(test.Id);
+                    testQuery.Level = test.Level;
+                    testQuery.TestExercises = test.TestExercises;
+                    await _testTemplateRepository.Update(testQuery);
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new DomainResponse(false, "", $"Ya existe un test para el nivel {test.Level}.");
+                }
             }
             catch (Exception ex)
             {

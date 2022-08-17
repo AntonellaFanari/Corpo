@@ -126,7 +126,7 @@ export class AttendanceComponent implements OnInit {
   getAllMembers() {
     this.memberService.getAll().subscribe(
       result => {
-        this.members = result;
+        this.members = result.result;
       },
       error => console.error(error)
     )
@@ -183,31 +183,51 @@ export class AttendanceComponent implements OnInit {
   }
 
 
+  add() {
+    let attendance = this.createAttendance();
+    this.attendanceService.add(attendance).subscribe(
+      result => {
+        this.getAll(this.shiftId);
+        this.viewSelectAddMember = false;
+        this.viewBtnAddMember = true;
+        this.requestingList = false;
+        this.getAllShifts.emit();
+      },
+      error => {
+        this.requestingList = false;
+        console.error(error);
+        if (error.status === 400) {
+          this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
+        }
+        if (error.status === 500) {
+          this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al reservar el turno."]);
+        }
+      })
+  }
+
+
   addMember() {
-    if (this.credit.negative >= this.maxNegatives) {
-      this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio superó la cantidad de negativos permitidos."]);
+    if (this.member.status != '3') {
+      if (this.credit.negative >= this.maxNegatives) {
+        this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio superó la cantidad de negativos permitidos."]);
+      } else {
+        this.requestingList = true;
+        this.add();
+      }
     } else {
-      let attendance = this.createAttendance();
-      this.requestingList = true;
-      this.attendanceService.add(attendance).subscribe(
-        result => {
-          this.getAll(this.shiftId);
-          this.viewSelectAddMember = false;
-          this.viewBtnAddMember = true;
-          this.requestingList = false;
-          this.getAllShifts.emit();
+      this.attendanceService.getAllReservations(this.member.id).subscribe(
+        response => {
+          console.log("reservaciones: ", response.result);
+          if (response.result.length == 0) {
+            this.add();
+          } else {
+            this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio ya reservó con el beneficio del primer día."]);
+          }
         },
-        error => {
-          this.requestingList = false;
-          console.error(error);
-          if (error.status === 400) {
-            this.customAlertService.displayAlert("Gestión de Asistencias", error.error.errores);
-          }
-          if (error.status === 500) {
-            this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al reservar el turno."]);
-          }
-        })
+        error => console.error(error)
+      )
     }
+
 
   }
 

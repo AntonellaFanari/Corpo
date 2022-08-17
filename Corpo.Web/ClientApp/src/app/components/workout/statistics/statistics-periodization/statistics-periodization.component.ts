@@ -43,7 +43,7 @@ export class StatisticsPeriodizationComponent implements OnInit {
   }
   getMember() {
     this.memberService.getById(this.memberId).subscribe(
-      response => this.member = response,
+      response => this.member = response.result,
       error => console.error(error)
     )
   }

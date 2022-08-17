@@ -58,7 +58,7 @@ export class DebtEditComponent implements OnInit {
   getMember(id) {
     this.memberService.getById(id).subscribe(
       result => {
-        this.member = result;
+        this.member = result.result;
       },
       error => console.error(error)
     )

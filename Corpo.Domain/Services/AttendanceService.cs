@@ -41,7 +41,7 @@ namespace Corpo.Domain.Services
                 var creditId = _memberRepository.GetById(attendance.MemberId).Result.CreditId;
                 var credit = (Credit)_creditService.GetById(creditId).Result.Result;
                 var shift = await _shiftRepository.GetById(attendance.ShiftId);
-                if (credit.Expiration < DateTime.Now || credit.InitialCredit == credit.CreditConsumption)
+                if (credit.Expiration < DateTime.Now || (credit.InitialCredit == credit.CreditConsumption && credit.FirstDay == "false"))
                 {
                     attendance.UsingNegative = true;
                 };

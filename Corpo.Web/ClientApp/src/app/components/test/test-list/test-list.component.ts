@@ -54,7 +54,6 @@ export class TestListComponent implements OnInit {
     this.requestingList = true;
     this.testTemplateService.getAll().subscribe(
       response => {
-        this.requestingList = false;
         console.log(response.result);
         this.getTestTemplatesList(response.result);
       },
@@ -66,7 +65,7 @@ export class TestListComponent implements OnInit {
   }
 
   getTestTemplatesList(tests) {
-    this.testTemplates = [];
+    this.testTemplates = [] as TestTemplateList[];
     tests.forEach(x => { 
         this.testTemplates.push({
           id: x.id,
@@ -94,13 +93,16 @@ export class TestListComponent implements OnInit {
         console.log(response.result);
         this.testsMember = response.result;
         this.testTemplates.forEach(x => {
-          let assignment = this.testsMember.find(y => y.testTemplateId == x.id)
+          let assignment = this.testsMember.find(y => y.testTemplateId == x.id);
           if (assignment != null) {
+            x.status = assignment.status;
             x.assignment = true;
           } else {
             x.assignment = false
           }
-        })
+        });
+
+        this.requestingList = false;
         
       }, error => console.error(error)
     )

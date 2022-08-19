@@ -141,6 +141,10 @@ export class TestTemplateEditComponent implements OnInit {
   }
 
   createExercise() {
+    if (!this.formEdit.value.exerciseFmsId) {
+      this.formEdit.patchValue({ exerciseFmsId: 0 })
+    };
+    console.log("formulario: ", this.formEdit.controls);
     if (this.formEdit.valid && this.formEdit.value.type != 0) {
       let exercise = new TestExercise();
       exercise.name = this.formEdit.value.name;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { parse } from 'date-fns';
@@ -25,6 +25,7 @@ export class MedicalHistoryFormComponent implements OnInit {
   @Input()age: number;
   medicalHistory: MedicalHistory;
   sendForm: boolean = false;
+  @Output() requesting = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder, private memberService: MemberService) {
     this.formCreate = this.formBuilder.group({
@@ -106,8 +107,9 @@ export class MedicalHistoryFormComponent implements OnInit {
       result => {
         this.medicalHistory = result.result;
         this.toCompleteForm();
+        this.requesting.emit();
       },
-      error => console.error(error)
+      error => this.requesting.emit()
     )
   }
 

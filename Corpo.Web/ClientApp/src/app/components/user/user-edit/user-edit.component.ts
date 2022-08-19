@@ -18,6 +18,8 @@ export class UserEditComponent{
   id: number;
   modifyingPersonalInformation: boolean = false;
   @ViewChild(UserFormComponent, { static: true }) formUser: UserFormComponent;
+  requesting: boolean;
+
   constructor(private accountService: AccountService, private userService: UserService, private route: ActivatedRoute, private router: Router, private customAlertService: CustomAlertService) {
     this.user = this.accountService.getLoggedUser();
     if (this.user.userType == 1 && this.user.roleName == "Administrador") {
@@ -31,7 +33,16 @@ export class UserEditComponent{
   }
 
   ngOnInit() {
+    this.getFormEdit();
+  }
+
+  getFormEdit() {
+    this.requesting = true;
     this.formUser.getUserUpdate(this.id);
+  }
+
+  finishRequesting() {
+    this.requesting = false;
   }
 
   public submit(){

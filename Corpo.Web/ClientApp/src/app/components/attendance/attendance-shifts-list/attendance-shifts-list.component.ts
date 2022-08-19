@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Class } from '../../../domain/class';
 import { Shift } from '../../../domain/shift';
 import { ShiftList } from '../../../domain/shift-list';
+import { ClassService } from '../../../services/class.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { ShiftService } from '../../../services/shift.service';
 import { AttendanceComponent } from '../attendance/attendance.component';
@@ -17,8 +19,13 @@ export class AttendanceShiftsListComponent implements OnInit {
   to: string;
   @ViewChild(AttendanceComponent, { static: true }) attendancesComponent: AttendanceComponent;
   requestingList: boolean;
+  classes: Class[] = [];
+  selectedClass: number = 0;
 
-  constructor(private shiftService: ShiftService, private dp: DatePipe, private customAlertService: CustomAlertService) {
+  constructor(private shiftService: ShiftService,
+    private dp: DatePipe,
+    private customAlertService: CustomAlertService,
+    private classService: ClassService) {
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
     let to = new Date();
     this.to = this.dp.transform(to.setDate(to.getDate() + 7), 'yyyy-MM-dd');
@@ -27,13 +34,24 @@ export class AttendanceShiftsListComponent implements OnInit {
   ngOnInit() {
     this.requestingList = true;
     this.getAll()
+    this.getClass();
+  }
+
+  getClass() {
+    this.classService.getAll().subscribe(
+      result => {
+        console.log(result);
+        this.classes = result;
+      },
+      error => console.error(error)
+    );
   }
 
 
   getAll() {
     this.requestingList = true;
     this.shifts = [];
-    this.shiftService.getAll(this.from, this.to, 0).subscribe(
+    this.shiftService.getAll(this.from, this.to, this.selectedClass).subscribe(
       response => {
         this.requestingList = false;
         this.getShiftsList(response.result);
@@ -92,5 +110,9 @@ export class AttendanceShiftsListComponent implements OnInit {
     this.attendancesComponent.modalClick();
     this.attendancesComponent.getShift(id);
     this.attendancesComponent.viewSelectAddMember = false;
+  }
+
+  selectClass(event) {
+    this.selectedClass = event;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account } from '../../../domain/account';
 import { Role } from '../../../domain/role';
@@ -21,6 +21,8 @@ export class UserFormComponent implements OnInit {
   user: UserView;
   modeCreate: boolean = true;
   unamePattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,15}$";
+  @Output() requesting = new EventEmitter();
+
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.formCreate = this.formBuilder.group({
       lastName: ['', Validators.required],
@@ -93,8 +95,9 @@ export class UserFormComponent implements OnInit {
         this.user = result;
         console.log(this.user);
         this.toCompleteForm();
+        this.requesting.emit();
       },
-      error => console.error(error)
+      error => this.requesting.emit()
     )
   }
 

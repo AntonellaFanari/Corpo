@@ -20,11 +20,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let test of testTemplates | searchFilterName: filterName" class="scrollme span-margin">
-          <td class="td-title" data-title="Nombre"><span>Nivel {{test.level}}</span> <span *ngIf="test.assignment" class="badge bg-success ms-2">Asignado</span></td>
+          <td class="td-title" data-title="Nombre">
+            <span>Nivel {{test.level}}</span>
+            <span *ngIf="test.assignment && test.status == 2" class="badge bg-success ms-2">Asignado</span>
+            <span *ngIf="test.assignment && test.status == 1" class="badge bg-primary ms-2">Realizado</span>
+            <span *ngIf="test.assignment && test.status == 2" class="badge bg-secondary ms-2">Pendiente</span>
+          </td>
           <td class="td-title col-12 col-lg-3" data-title="Acción">
             <span class="btn-action-container">
               <button class="btn btn-primary ms-2 col-4 col-lg-3 btn-action-list" placement="top" ngbTooltip="detalle" [routerLink]="['/test-detalle']" [queryParams]="{id: test.id, memberId: memberId}"><i class="fa fa-eye" aria-hidden="true"></i></button>
-              <button *ngIf="!test.assignment" class="btn btn-success ms-2 col-4 col-lg-3 btn-action-list" placement="top" ngbTooltip="asignar" [routerLink]="['/test-asignacion']" [queryParams]="{id: test.id, memberId: memberId }"><i class="fa fa-check-square" aria-hidden="true"></i></button>
+              <button *ngIf="!test.assignment || (test.assignment && test.status == 1)" class="btn btn-success ms-2 col-4 col-lg-3 btn-action-list" placement="top" ngbTooltip="asignar" [routerLink]="['/test-asignacion']" [queryParams]="{id: test.id, memberId: memberId }"><i class="fa fa-check-square" aria-hidden="true"></i></button>
 
             </span>
           </td>

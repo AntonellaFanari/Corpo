@@ -21,7 +21,7 @@ export class MemberViewComponent implements OnInit {
   medicalHistoryId: number;
   @Input() id: number;
   @Input() hideGoBack: boolean;
-  requestingList: boolean;
+  requesting: boolean;
   level: number;
   displayLevelsHistory: boolean;
   physicalLevelsHistory: PhysicalLevel[] = [];
@@ -33,20 +33,17 @@ export class MemberViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.requestingList = true;
     this.getMember();
   }
 
   getMember() {
+    this.requesting = true;
     this.memberService.getById(this.id).subscribe(
       result => {
-        this.requestingList = false;
         this.member = result.result;
         this.getMedicalHistory();
-        this.getAge();
-        this.getLevel();
       },
-      error => this.requestingList = false
+      error => this.requesting = false
     );
   }
 
@@ -55,6 +52,7 @@ export class MemberViewComponent implements OnInit {
       response => {
         console.log("nivel fisico: ", response.result.level);
         this.level = response.result.level;
+        this.requesting = false;
       },
       error => console.error(error)
     )
@@ -90,6 +88,7 @@ export class MemberViewComponent implements OnInit {
             this.medicalHistory[property] = 'Mujer';
           }
         };
+        this.getAge();
         this.getAllInjuries(this.medicalHistoryId);
       },
       error => {
@@ -107,6 +106,7 @@ export class MemberViewComponent implements OnInit {
       result => {
         console.log(result.result.age);
         this.age = result.result.age;
+        this.getLevel();
       },
       error => console.error(error)
     );

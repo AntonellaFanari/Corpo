@@ -1,4 +1,4 @@
-<section class="wrapper" *ngIf="!requestingList && member">
+<section class="wrapper" *ngIf="!requesting && member">
   <section class="wrapper" *ngIf="!hideGoBack">
     <div class="row mt">
       <div class="col-md-12">
@@ -160,7 +160,7 @@
           <h4 class="table-title mt-2">Información de lesiones</h4>
         </div>
         <hr>
-        <div *ngIf="medicalHistory != null; else: elseBlock2">
+        <div *ngIf="medicalHistory != null && injuries.length>0; else: elseBlock2">
           <table class="table table-bordered table-condensed cf scrollme detail-table">
             <thead class="cf bg-success text-white">
               <tr>
@@ -199,13 +199,13 @@
     <button type="button" class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" routerLink="/member-list">Volver</button>
   </div>
 </section>
-<section class="wrapper">
-  <div class="w-100 text-center" *ngIf="requestingList">
+<section class="wrapper" *ngIf="requesting && !member">
+  <div class="w-100 text-center">
     <div class="spinner-border text-success" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <div *ngIf="!requestingList && !member">
+  <div *ngIf="!requesting && !member">
     <h5 class=" text-center">Problemas al intentar mostrar la información del socio.</h5>
   </div>
 </section>

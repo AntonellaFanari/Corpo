@@ -13,7 +13,10 @@ export class UserViewComponent implements OnInit {
   id: number;
   role: string;
   user: UserView;
-  constructor(private userService: UserService, private route: ActivatedRoute) {
+  requesting: boolean;
+
+  constructor(private userService: UserService,
+    private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.id = parseInt(params['id']),
         this.role = params['role'];
@@ -21,13 +24,15 @@ export class UserViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.userService.getById(this.id).subscribe(
       result => {
         console.log(result);
         this.user = result;
         console.log(this.user);
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     );
   }
 

@@ -1,4 +1,4 @@
-<section class="wrapper" *ngIf="!medicalHistoryCreate">
+<section class="wrapper" *ngIf="!requesting && !medicalHistoryCreate">
   <div class="container-fluid modal-lg">
     <header class="card-header col-12 bg-success"><h3 class="text-center text-white">Historia médica del socio</h3></header>
     <div class="card-body col-12 bg-light">
@@ -14,11 +14,18 @@
     </div>
   </div>
 </section>
-<section class="wrapper" *ngIf="medicalHistoryCreate">
-    <app-medical-history-form [age]="age"></app-medical-history-form>
+<section class="wrapper" *ngIf="!requesting && medicalHistoryCreate">
+  <app-medical-history-form [age]="age"></app-medical-history-form>
   <div class="container-fluid div-btn-create">
     <button class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" type="submit" [routerLink]="['/member-list']">Volver</button>
     <button *ngIf="planType == 1" class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Siguiente</button>
     <button *ngIf="planType == 2" class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
+  </div>
+</section>
+<section class="wrapper" *ngIf="requesting">
+  <div class="w-100 text-center">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </section>

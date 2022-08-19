@@ -19,6 +19,8 @@ export class MedicalHistoryEditComponent implements OnInit {
   planType: number;
   user: LoggedUser;
   @ViewChild(MedicalHistoryFormComponent, { static: true }) formMedicalHistory: MedicalHistoryFormComponent;
+  requesting: boolean;
+
   constructor(private router: Router, private route: ActivatedRoute, private customAlertService: CustomAlertService,
     private memberService: MemberService, private accountService: AccountService, private location: Location) {
     this.user = this.accountService.getLoggedUser();
@@ -32,23 +34,40 @@ export class MedicalHistoryEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getMember();
+    
+  }
+
+
+  getMember() {
+    this.age = null;
+    this.requesting = true;
     this.memberService.getById(this.id).subscribe(
       result => {
         console.log(result);
         this.planType = result.result.planType;
         console.log(this.planType);
+        this.getAge();
       },
       error => console.error(error)
-    );
+    )
+  }
+
+  getAge() {
     this.memberService.getAge(this.id).subscribe(
       result => {
         this.age = result.result.age;
-        console.log(this.age)
+        console.log(this.age);
+        this.formMedicalHistory.getMedicalHistoryUpdate(this.id);
       },
-      error => console.error(error)
-    );
-    this.formMedicalHistory.getMedicalHistoryUpdate(this.id);
+      error => this.requesting = false
+    )
   }
+
+  finishRequesting() {
+    this.requesting = false;
+  }
+
 
   submit() {
     var newMedicalHistory = this.formMedicalHistory.createMedicalHistory();

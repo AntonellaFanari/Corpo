@@ -17,8 +17,13 @@ export class MemberEditComponent implements OnInit {
   id: number;
   user: LoggedUser;
   @ViewChild(MemberFormComponent, { static: true }) formMember: MemberFormComponent;
+  requesting: boolean;
 
-  constructor(private memberService: MemberService, private route: ActivatedRoute, private router: Router, private customAlertService: CustomAlertService, private accountService: AccountService) {
+  constructor(private memberService: MemberService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private customAlertService: CustomAlertService,
+    private accountService: AccountService) {
     this.user = this.accountService.getLoggedUser();
     if (this.user.userType == 2) {
       this.id = this.user.id;
@@ -30,7 +35,16 @@ export class MemberEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getFormEdit();
+  }
+
+  getFormEdit() {
+    this.requesting = true;
     this.formMember.getMemberUpdate(this.id);
+  }
+
+  finishRequesting() {
+    this.requesting = false;
   }
 
   public submit() {

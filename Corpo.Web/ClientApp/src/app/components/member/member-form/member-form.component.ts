@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Account } from '../../../domain/account';
@@ -24,6 +24,7 @@ export class MemberFormComponent implements OnInit {
   planType: number;
   member: MemberView;
   modeCreate: boolean = true;
+  @Output() requesting = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder, private memberService: MemberService, private router: Router, private planService: PlanService) {
     this.formCreate = this.formBuilder.group({
@@ -128,8 +129,9 @@ export class MemberFormComponent implements OnInit {
         this.member = result.result;
         console.log("socio: ", this.member);
         this.toCompleteForm();
+        this.requesting.emit();
       },
-      error => console.error(error)
+      error => this.requesting.emit()
     )
   }
 

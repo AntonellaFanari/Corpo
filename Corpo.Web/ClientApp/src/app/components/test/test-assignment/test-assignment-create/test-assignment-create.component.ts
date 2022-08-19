@@ -200,6 +200,9 @@ export class TestAssignmentCreateComponent implements OnInit {
 
 
   createExercise() {
+    if (!this.formCreate.value.exerciseFmsId) {
+      this.formCreate.patchValue({ exerciseFmsId: 0 })
+    };
     if (this.formCreate.valid && this.formCreate.value.type != 0) {
       let exercise = new TestExerciseMember();
       exercise.name = this.formCreate.value.name;

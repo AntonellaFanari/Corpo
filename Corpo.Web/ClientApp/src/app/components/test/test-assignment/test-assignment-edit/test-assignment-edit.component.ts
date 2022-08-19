@@ -126,6 +126,9 @@ export class TestAssignmentEditComponent implements OnInit {
 
 
   createExercise() {
+    if (!this.formEdit.value.exerciseFmsId) {
+      this.formEdit.patchValue({ exerciseFmsId: 0 })
+    };
     if (this.formEdit.valid && this.formEdit.value.type != 0) {
       let exercise = new TestExerciseMember();
       exercise.name = this.formEdit.value.name;

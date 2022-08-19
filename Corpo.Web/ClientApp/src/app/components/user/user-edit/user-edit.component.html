@@ -1,7 +1,13 @@
 <section class="wrapper">
-  <app-user-form></app-user-form>
-  <div class="container-fluid modal-lg div-btn-create">
+  <app-user-form [class.d-none]="requesting" (requesting)="finishRequesting()"></app-user-form>
+  <div class="container-fluid modal-lg div-btn-create" *ngIf="!requesting">
     <button class="btn btn-secondary col-4 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/user-list']">Cancelar</button>
     <button class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
+  </div>
+
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </section>

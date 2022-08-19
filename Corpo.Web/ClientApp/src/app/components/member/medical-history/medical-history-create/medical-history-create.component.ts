@@ -18,6 +18,7 @@ export class MedicalHistoryCreateComponent implements OnInit {
   planType: number;
   basicMedicalHistory: boolean = true;
   medicalHistoryId: number;
+  requesting: boolean;
 
   @ViewChild(MedicalHistoryFormComponent, { static: false }) formMedicalHistory: MedicalHistoryFormComponent;
   constructor(private memberService: MemberService, private route: ActivatedRoute, private router: Router, private customAlertService: CustomAlertService) {
@@ -26,6 +27,7 @@ export class MedicalHistoryCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.memberService.getById(this.id).subscribe(
       result => {
         this.member = result.result;
@@ -39,10 +41,12 @@ export class MedicalHistoryCreateComponent implements OnInit {
     );
     this.memberService.getMedicalHistoryByIdMember(this.id).subscribe(
       result => {
+        this.requesting = false;
         this.medicalHistoryId = result.result.id;
         this.router.navigate(["/historia-médica-editar"], { queryParams: { id: this.id, medicalHistoryId: this.medicalHistoryId } });
       },
       error => {
+        this.requesting = false;
         if (error.status == 400)
           console.log("no existe")
       })

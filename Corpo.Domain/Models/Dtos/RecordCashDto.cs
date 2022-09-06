@@ -15,5 +15,6 @@ namespace Corpo.Domain.Models.Dtos
         public string Member { get; set; }
         public string User { get; set; }
         public string Transaction { get; set; }
+        public Status Status { get; set; }
     }
 }

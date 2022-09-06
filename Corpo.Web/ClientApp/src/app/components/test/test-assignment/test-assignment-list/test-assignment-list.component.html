@@ -1,18 +1,18 @@
 <section class="wrapper">
   <div class="row mt">
-    <div class="col-lg-12" *ngIf="testsMember.length > 0 && !requestingList && member">
-      <div class="task-panel ">
+    <div class="col-lg-12" *ngIf="!requestingList && member">
+      <div class="task-panel">
         <h4 class="table-title">Test Asignados - {{member.lastName}} {{member.name}}</h4>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="testsMember.length > 0 && !requestingList && member">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
-      <section id="no-more-tables" *ngIf="testsMember.length> 0">
+      <section id="no-more-tables" *ngIf="!requestingList && testsMember.length> 0">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -44,26 +44,24 @@
           </tbody>
         </table>
       </section>
+
+
+      <!-- /content-panel -->
+
     </div>
-    <h5 *ngIf="!requestingList && testsMember.length == 0">No hay tests asignados.</h5>
-    <div *ngIf="!requestingList">
-      <div class="button-box col-12 col-lg-2 pe-1 btn-float-left">
-        <button class="btn btn-secondary btn-width " [routerLink]="['/personalizados']">Volver</button>
+
+    <div class="w-100 text-center" *ngIf="requestingList">
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <section class="wrapper">
-      <div class="w-100 text-center" *ngIf="requestingList && testsMember.length == 0">
-        <div class="spinner-border text-success" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-
-    </section>
-    <!-- /content-panel -->
-
+    <div *ngIf="!requestingList && testsMember.length == 0">
+      <h5>No hay test asignados</h5>
+    </div>
+    <div class="button-box col-12 col-lg-2 pe-1 btn-float-left" *ngIf="!requestingList && member">
+      <button class="btn btn-secondary btn-width " [routerLink]="['/personalizados']">Volver</button>
+    </div>
   </div>
- 
-  
 </section>
 
 

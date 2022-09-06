@@ -111,6 +111,40 @@ namespace Corpo.Domain.Services
       
         }
 
+
+        //public async Task<DomainResponse> SendVerifiedEmail(string email)
+
+        //{
+        //    try
+        //    {
+        //        // Parte 1
+        //        SmtpClient smtp = new SmtpClient();
+        //        smtp.Host = "smtp.gmail.com";
+        //        smtp.Port = 587;
+        //        smtp.EnableSsl = true;
+        //        smtp.UseDefaultCredentials = false;
+        //        smtp.Credentials = new NetworkCredential("antonellafanari94@gmail.com", "anto1994");
+        //        // Parte 2
+        //        MailMessage mm = new MailMessage();
+        //        mm.IsBodyHtml = true;
+        //        mm.Priority = MailPriority.Normal;
+        //        mm.From = new MailAddress("antonellafanari94@gmail.com");
+        //        mm.Subject = "Verificación de Email";
+        //        mm.Body = "<h1>Registro de cuenta - verificar Email</h1>";
+        //        mm.Body += "<a [routerLink]='['/']'>Verificar Email</a>";
+        //        mm.To.Add(new MailAddress(email));
+        //        smtp.Send(mm); // Enviar el mensaje
+        //        return new DomainResponse { Success = true };
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw;
+        //    }
+
+        //}
+
+
         public DomainResponse UpdateEmail(Account account)
         {
             try
@@ -155,7 +189,7 @@ namespace Corpo.Domain.Services
                 }
                 else
                 {
-                    return new DomainResponse(false, "La contraseña actual no es correcta", "No se pudo modificar la contraseña.");
+                    return new DomainResponse(false, "La contraseña actual no es correcta", "No se pudo modificar la contraseña, la contraseña ingresada es incorrecta.");
                 }
             }
             catch (Exception ex)

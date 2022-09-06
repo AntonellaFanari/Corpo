@@ -15,6 +15,8 @@ export class MonthlyGoalEditComponent implements OnInit {
   sendForm: boolean;
   id: number;
   monthlyGoal: MonthlyGoal;
+  requesting: boolean;
+
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private monthlyGoalService: MonthlyGoalService, private customAlertService: CustomAlertService,
     private router: Router) {
     this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) });
@@ -31,13 +33,15 @@ export class MonthlyGoalEditComponent implements OnInit {
   }
 
   getMonthlyGoal() {
+    this.requesting = true;
     this.monthlyGoalService.getById(this.id).subscribe(
       response => {
         console.log(response.result);
         this.monthlyGoal = response.result;
         this.toCompleteForm();
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

@@ -29,7 +29,8 @@ namespace Corpo.Data.Repositories
                     Id = x.Id,
                     Date = x.Date,
                     Pay= x.Pay,
-                    IncomeType = IncomeType.sale
+                    IncomeType = IncomeType.sale,
+                    Status = x.Status
                 }).ToList();
             var listBalancePaid = _context.BalancePaid
                 .Where(to != null ? (x => x.Date >= from && x.Date <= to && x.IncomeType == IncomeType.paySale) : (x => x.Date >= from && x.IncomeType == IncomeType.paySale))
@@ -38,7 +39,8 @@ namespace Corpo.Data.Repositories
                     Id = x.Id,
                     Date = x.Date,
                     Pay = x.Pay,
-                    IncomeType = x.IncomeType
+                    IncomeType = x.IncomeType,
+                    Status = x.Status
                 }).ToList();
             foreach (var item in listSale)
             {
@@ -75,7 +77,6 @@ namespace Corpo.Data.Repositories
         {
             var sale = _context.Sale.Find(id);
             sale.Status = Status.Canceled;
-            sale.Pay *= -1;
             _context.Sale.Update(sale);
             _context.SaveChanges();
             _context.CancelSale.Add(cancelSale);

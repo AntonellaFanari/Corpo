@@ -2,7 +2,8 @@ export class SaleFeeIncome {
   id: number;
   date: string;
   incomeType: IncomeType;
-  pay: number
+  pay: number;
+  status: string;
 }
 
 export enum IncomeType {

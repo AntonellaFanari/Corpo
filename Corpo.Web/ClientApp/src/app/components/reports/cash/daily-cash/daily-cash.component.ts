@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cash } from '../../../../domain/cash';
 import { CashService } from '../../../../services/cash.service';
 import { ReportService } from '../../../../services/report.service';
@@ -21,40 +22,78 @@ export class DailyCashComponent implements OnInit {
   totalWithdrawals = 0;
   totalEndingBalance = 0;
   requestingList: boolean;
+  filter: boolean;
 
-  constructor(private cashService: CashService, private dp: DatePipe, private reportService: ReportService) {
-    this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
-    console.log(this.from);
-    let to = new Date();
-    this.to = this.dp.transform(to.setDate(to.getDate() + 30), 'yyyy-MM-dd');
-    console.log(this.to);
+  constructor(private cashService: CashService,
+    private dp: DatePipe,
+    private reportService: ReportService,
+    private router: Router,
+    private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => this.filter = params['filter'] as boolean);
+    console.log("filter: ", this.filter);
   }
 
   ngOnInit() {
-    this.getAllCashCurrentMonth();
-    this.requestingList = true;
+    this.getFromGetTo();
+
+  }
+
+  getFromGetTo() {
+    if (this.filter) {
+      this.from = localStorage.getItem('from');
+      this.to = localStorage.getItem('to');
+      console.log(this.from);
+      console.log(this.to);
+      this.getCashFromTo();
+    } else {
+      this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
+      console.log(this.from);
+      let to = new Date();
+      this.to = this.dp.transform(to.setDate(to.getDate() + 30), 'yyyy-MM-dd');
+      console.log(this.to);
+      this.getAllCashCurrentMonth();
+    }
+
   }
 
   getAllCashCurrentMonth() {
+    this.requestingList = true;
     this.reportService.getCashCurrentMonth().subscribe(
       result => {
-        console.log(result);
+        console.log("cajas del mes actual: ", result);
         this.requestingList = false;
         this.cashs = result.result;
-        for (var i = 0; i < this.cashs.length; i++) {
-          this.cashs[i].opening = this.cashs[i].opening.substr(5, 2) + " de " + this.getMonth(this.cashs[i].opening);
-          this.totalStartingBalance = this.totalStartingBalance + this.cashs[i].startingBalance;
-          this.totalFees = this.totalFees + this.cashs[i].totalFee;
-          this.totalSales = this.totalSales + this.cashs[i].totalSale;
-          this.totalIncomes = this.totalIncomes + this.cashs[i].totalIncome;
-          this.totalOutflows = this.totalOutflows + this.cashs[i].totalOutflow;
-          this.totalWithdrawals = this.totalWithdrawals + this.cashs[i].totalWithdrawal;
-          this.totalEndingBalance = this.totalEndingBalance + this.cashs[i].endingBalance;
-        
-        }
+        this.getTotalCash(this.cashs);
       },
       error => this.requestingList = false
     )
+  }
+
+
+  getTotalCash(cashs) {
+    this.clearTotal();
+    for (var i = 0; i < cashs.length; i++) {
+      cashs[i].opening = cashs[i].opening.substr(8, 2) + " de " + this.getMonth(cashs[i].opening);
+      this.totalStartingBalance = this.totalStartingBalance + cashs[i].startingBalance;
+      this.totalFees = this.totalFees + cashs[i].totalFee;
+      this.totalSales = this.totalSales + cashs[i].totalSale;
+      this.totalIncomes = this.totalIncomes + cashs[i].totalIncome;
+      this.totalOutflows = this.totalOutflows + cashs[i].totalOutflow;
+      this.totalWithdrawals = this.totalWithdrawals + cashs[i].totalWithdrawal;
+      this.totalEndingBalance = this.totalEndingBalance + cashs[i].endingBalance;
+
+    }
+  }
+
+  clearTotal() {
+    this.totalStartingBalance = 0;
+    this.totalFees = 0;
+    this.totalSales = 0;
+    this.totalIncomes = 0;
+    this.totalOutflows = 0;
+    this.totalWithdrawals = 0;
+    this.totalEndingBalance = 0;
+
   }
 
   getMonth(date) {
@@ -90,19 +129,18 @@ export class DailyCashComponent implements OnInit {
     return monthCash;
   }
 
-  getDetail(cash) {
-    console.log(cash)
+  getDetailedCash(cash) {
+    localStorage.setItem('from', this.from);
+    localStorage.setItem('to', this.to);
+    this.router.navigate(['/caja-detalle'], { queryParams: { id: cash.id } })
   }
 
   getCashFromTo() {
     this.reportService.getCash(this.from, this.to).subscribe(
       result => {
-        console.log(result.result);
+        console.log("caja filtro: ", result.result);
         this.cashs = result.result;
-        this.cashs = result.result;
-        for (var i = 0; i < this.cashs.length; i++) {
-          this.cashs[i].opening = this.cashs[i].opening.substr(5, 2) + " de " + this.getMonth(this.cashs[i].opening);
-        }
+        this.getTotalCash(this.cashs);
       },
       error => console.error(error)
     )

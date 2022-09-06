@@ -1,4 +1,4 @@
-<section class="wrapper">
+<section class="wrapper" *ngIf="!requesting">
   <div class="form-group mt-3">
     <label class="control-label">Nombre:</label>
     <div class="formValidators">
@@ -180,7 +180,13 @@
     </div>
   </div>
 </section>
-
+<section class="wrapper" *ngIf="requesting">
+  <div class="w-100 text-center">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</section>
 <button type="button" class="btn btn-primary d-none" id="group-name-modal" data-bs-toggle="modal"
         data-bs-target="#myModal"></button>
 

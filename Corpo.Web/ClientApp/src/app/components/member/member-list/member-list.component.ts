@@ -104,7 +104,7 @@ export class MemberListComponent implements OnInit {
     this.memberService.getByDateExpiration(this.from, this.to).subscribe(
       result => {
         console.log(result);
-        this.members = result;
+        this.members = result.result;
       },
       error => console.error(error)
     )

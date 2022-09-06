@@ -57,6 +57,7 @@ export class WodTemplateEditComponent implements OnInit {
   checkedRPE: boolean;
   checkedRPEs: boolean;
   checkedNone = true;
+  requesting: boolean;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -66,19 +67,18 @@ export class WodTemplateEditComponent implements OnInit {
     private customAlertService: CustomAlertService,
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) })
-    this.getWodTemplateById();
   }
 
   ngOnInit() {
     this.checkedNone = true;
     this.mode = "None";
-    this.getAll();
-    this.getModalities();
+    this.getWodTemplateById();
     //this.wod.addGroup(new WodGroup(this.createGuid()));
 
   }
 
   getWodTemplateById() {
+    this.requesting = true;
     this.wodTemplateService.getById(this.id).subscribe(
       response => {
         console.log("wod template: ", response.result);
@@ -95,8 +95,9 @@ export class WodTemplateEditComponent implements OnInit {
           searchPlaceholderText: "Buscar",
           noDataAvailablePlaceholderText: "No hay objetivos"
         };
+        this.getAllExercises();
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
@@ -119,7 +120,12 @@ export class WodTemplateEditComponent implements OnInit {
 
   getModalities() {
     this.modalityService.getAll().subscribe(
-      response => this.modalities = response.result)
+      response => {
+        this.modalities = response.result;
+        this.requesting = false;
+      },
+      error => console.error(error)
+    )
   }
 
   selectCategory(id) {
@@ -314,14 +320,20 @@ export class WodTemplateEditComponent implements OnInit {
 
   }
 
-  getAll() {
+  getAllExercises() {
     this.exerciseService.getAll().subscribe(
       result => {
         this.exercises = result;
         this.exercisesSelect = this.exercises;
+        this.getAllTags();
       },
       error => console.error(error)
     )
+
+
+  }
+
+  getAllTags() {
     this.exerciseService.getAllTags().subscribe(
       result => {
         this.tags = result;
@@ -331,19 +343,22 @@ export class WodTemplateEditComponent implements OnInit {
           tagCheck.checked = false;
           tagCheck.id = this.tags[i].id;
           this.checkboxToTags.push(tagCheck);
-        }
+        };
+        this.getAllCategories();
       },
       error => console.error(error)
     );
+  }
+
+  getAllCategories() {
     this.exerciseService.getAllCategories().subscribe(
       result => {
         this.categories = result;
+        this.getModalities();
       },
       error => console.error(error)
     );
-
   }
-
 
   createListTags() {
     let tags: Tag[] = [];

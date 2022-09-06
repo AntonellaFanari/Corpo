@@ -16,6 +16,7 @@ export class TrainingSystemEditComponent implements OnInit {
   formEdit: FormGroup;
   id: number;
   sendForm = false;
+  requesting: boolean;
 
   constructor(private trainingSystemService: TrainingSystemService,
     private route: ActivatedRoute,
@@ -30,13 +31,15 @@ export class TrainingSystemEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.trainingSystemService.getById(this.id).subscribe(
       response => {
         console.log(response);
         this.trainingSystem = response.result;
         this.toCompleteForm();
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     );
 
   }

@@ -15,6 +15,8 @@ export class ModalityEditComponent implements OnInit {
   sendForm: boolean = false;
   id: number;
   modality: Modality;
+  requesting: boolean;
+
   constructor(private formBuilder: FormBuilder, private modalityService: ModalityService,
     private router: Router, private customAlertService: CustomAlertService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) });
@@ -24,13 +26,15 @@ export class ModalityEditComponent implements OnInit {
     })
   }
   ngOnInit() {
+    this.requesting = true;
     this.modalityService.getById(this.id).subscribe(
       response => {
         console.log(response);
         this.modality = response.result;
         this.toCompleteForm();
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

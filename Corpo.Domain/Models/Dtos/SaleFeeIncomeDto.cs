@@ -12,6 +12,7 @@ namespace Corpo.Domain.Models.Dtos
         public DateTime Date { get; set; }
         public decimal Pay { get; set; }
         public IncomeType IncomeType { get; set; }
+        public Status Status { get; set; }
     }
 
     public enum IncomeType

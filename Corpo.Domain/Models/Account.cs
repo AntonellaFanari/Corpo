@@ -12,5 +12,9 @@ namespace Corpo.Domain.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public UserType UserType { get; set; }
+        public bool Verified { get; set; }
+        public Guid VerificationCode { get; set; }
+
     }
+   
 }

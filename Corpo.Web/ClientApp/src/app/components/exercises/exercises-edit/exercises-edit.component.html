@@ -1,5 +1,5 @@
 <section class="wrapper">
-  <div class="container-fluid modal-content modal-lg p-0">
+  <div class="container-fluid modal-content modal-lg p-0" *ngIf="!requesting && exercise">
     <header class="modal-header d-block bg-success"><h3 class="mb text-center text-white">Editar Ejercicio</h3></header>
     <div class="modal-body">
       <div class="container-fluid">
@@ -59,9 +59,14 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid modal-lg div-btn-create">
+  <div class="container-fluid modal-lg div-btn-create" *ngIf="!requesting && exercise">
     <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/ejercicios-list']">Cancelar</button>
     <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
+  </div>
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </section>
 <ng-template #elseBlock><h5>No hay tag registrados para este ejercicio</h5></ng-template>

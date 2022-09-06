@@ -46,7 +46,8 @@ namespace Corpo.Data.Repositories
                     Id = x.Id,
                     Date = x.Date,
                     Pay = x.Pay,
-                    IncomeType = IncomeType.fee
+                    IncomeType = IncomeType.fee,
+                    Status = Status.Valid
                 }).ToListAsync();
             var listBalancePaid = await _context.BalancePaid
                 .Where(to != null ? (x => x.Date >= from && x.Date <= to && x.IncomeType == IncomeType.payFee) : (x => x.Date >= from && x.IncomeType == IncomeType.payFee))
@@ -55,7 +56,8 @@ namespace Corpo.Data.Repositories
                     Id = x.Id,
                     Date = x.Date,
                     Pay = x.Pay,
-                    IncomeType = x.IncomeType
+                    IncomeType = x.IncomeType,
+                    Status = x.Status  
                 }).ToListAsync();
             foreach (var item in listFee)
             {

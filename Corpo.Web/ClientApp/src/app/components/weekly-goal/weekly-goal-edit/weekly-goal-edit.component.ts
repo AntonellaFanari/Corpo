@@ -15,6 +15,8 @@ export class WeeklyGoalEditComponent implements OnInit {
   sendForm: boolean;
   id: number;
   weeklyGoal: WeeklyGoal;
+  requesting: boolean;
+
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
     private weeklyGoalService: WeeklyGoalService, private customAlertService: CustomAlertService,
     private router: Router) {
@@ -33,13 +35,15 @@ export class WeeklyGoalEditComponent implements OnInit {
   }
 
   getWeeklyGoal() {
+    this.requesting = true;
     this.weeklyGoalService.getById(this.id).subscribe(
       response => {
         console.log(response.result);
         this.weeklyGoal = response.result;
         this.toCompleteForm();
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

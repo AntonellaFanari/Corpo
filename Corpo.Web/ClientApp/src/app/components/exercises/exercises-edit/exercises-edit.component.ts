@@ -20,6 +20,7 @@ export class ExercisesEditComponent implements OnInit {
   sendForm: boolean = false;
   id: number;
   exercise: Exercise;
+  requesting: boolean;
 
   constructor(private formBuilder: FormBuilder, private exerciseService: ExerciseService,
     private router: Router, private customAlertService: CustomAlertService, private route: ActivatedRoute) {
@@ -32,13 +33,14 @@ export class ExercisesEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.exerciseService.getExerciseById(this.id).subscribe(
       result => {
         this.exercise = result.result;
         this.getTags();
         this.toCompleteForm();
       },
-      error => console.error(error)
+      error => this.requesting = false
     );
     
     this.exerciseService.getAllCategories().subscribe(
@@ -80,6 +82,8 @@ export class ExercisesEditComponent implements OnInit {
       let checkbox = this.checkboxToTags.find(x => x.tag == this.exercise.tags[i].name);
       checkbox.checked = true;
     }
+
+    this.requesting = false;
   }
 
   get f() {

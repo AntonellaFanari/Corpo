@@ -15,6 +15,7 @@ export class TagEditComponent implements OnInit {
   formEdit: FormGroup;
   id: number;
   sendForm: boolean = false;
+  requesting: boolean;
 
   constructor(private exerciseService: ExerciseService, private route: ActivatedRoute, private formBuilder: FormBuilder,
     private router: Router, private customAlertService: CustomAlertService) {
@@ -25,13 +26,15 @@ export class TagEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.exerciseService.getTagById(this.id).subscribe(
       result => {
         console.log(result.result);
         this.tag = result.result;
         this.toCompleteForm();
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     );
 
   }

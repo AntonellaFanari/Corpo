@@ -3,10 +3,10 @@
     <div class="col-12">
       <div class="task-panel ">
         <h4 class="table-title">Tags</h4>
-        <button type="button" class="btn btn-success btn-float-right" routerLink="/tag-crear">Agregar</button>
+        <button type="button" class="btn btn-success col-xl-2 col-12 btn-float-right" routerLink="/tag-crear">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card"  *ngIf="!requestingList && tags.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
@@ -23,8 +23,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let tag of tags | searchFilterName: filterName">
-              <td data-title="Nombre"><span>{{tag.name}}</span></td>
-              <td data-title="Acción">
+              <td data-title="Nombre" class="col-lg-9"><span>{{tag.name}}</span></td>
+              <td data-title="Acción" class="col-lg-3">
                 <span class="btn-action-container">
                   <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/tag-editar']" [queryParams]="{id:tag.id}"><i class="fa fa-pencil-square"></i></button>
                   <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(tag.id)"><i class="fa fa-trash"></i></button>

@@ -232,7 +232,10 @@ export class CashFormComponent implements OnInit {
     this.feeTotalPay = 0
     if (this.feesIncomes.length > 0) {
       for (var i = 0; i < this.feesIncomes.length; i++) {
-        this.feeTotalPay = this.feeTotalPay + this.feesIncomes[i].pay;
+        if (this.feesIncomes[i].status != '2') {
+
+          this.feeTotalPay = this.feeTotalPay + this.feesIncomes[i].pay;
+        }
       }
     }
   }
@@ -260,7 +263,7 @@ export class CashFormComponent implements OnInit {
       this.saleDetailComponent.modalClick(sale.id);
       /*this.saleDetailComponent.getSaleById(sale.id);*/
     } else {
-      this.payDetail.modalClick(sale.id);
+      this.payDetail.modalClick(sale.id, "cash");
     }
    
   }
@@ -275,7 +278,7 @@ export class CashFormComponent implements OnInit {
       this.feeDetailComponent.modalClick(fee.id);
       /*this.saleDetailComponent.getSaleById(sale.id);*/
     } else {
-      this.payDetail.modalClick(fee.id);
+      this.payDetail.modalClick(fee.id, "cash");
     }
   }
 

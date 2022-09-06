@@ -28,8 +28,8 @@
       </div>
     </div>
   </div>
-  <div class="row mt-2">
-    <div class="col-12" *ngIf="!requestingList && cashs.length > 0">
+  <div class="row mt-2" *ngIf="!requestingList && cashs.length > 0">
+    <div class="col-12">
       <section id="no-more-tables">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
           <table *ngIf="cashs.length>0; else: elseBlock" class="table table-bordered table-condensed table-striped cf mb-0 user-table">
@@ -46,7 +46,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="scrollme span-margin" *ngFor="let cash of cashs" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
+              <tr class="scrollme span-margin cursor-pointer" *ngFor="let cash of cashs" (click)="getDetailedCash(cash)">
                 <td class="td-title" data-title="Dia"><span>{{cash.opening}}</span></td>
                 <td class="td-title" data-title="CI"><span>{{cash.startingBalance | currency}}</span></td>
                 <td class="td-title" data-title="Cuotas"><span>{{cash.totalFee | currency}}</span></td>
@@ -71,13 +71,13 @@
         </div>
       </section>
     </div>
-    <div class="w-100 text-center mt-3" *ngIf="requestingList">
-      <div class="spinner-border text-success" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
+  </div>
+  <div class="w-100 text-center mt-3" *ngIf="requestingList">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-    <div class="mt-3" *ngIf="!requestingList && cashs.length == 0">
-      <h5>No hay registros de caja</h5>
-    </div>
+  </div>
+  <div class="mt-3" *ngIf="!requestingList && cashs.length == 0">
+    <h5>No hay registros de caja</h5>
   </div>
 </section>

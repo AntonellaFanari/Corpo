@@ -18,6 +18,7 @@ export class NewsEditComponent implements OnInit {
   urls = [];
   file: File;
   send: boolean = false;
+  requesting: boolean;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private newsService: NewsService,
     private router: Router, private customAlertService: CustomAlertService) {
@@ -31,14 +32,20 @@ export class NewsEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getNewById();
+  }
+
+  getNewById() {
+    this.requesting = true;
     this.newsService.getById(this.id).subscribe(
       result => {
         console.log(result);
         this.news = result.result;
         this.toCompleteForm();
         this.urls.push(this.news.path);
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

@@ -39,6 +39,7 @@ export class PaymentDetailsComponent implements OnInit {
   userRegisterSale: UserView;
   displayDetail: boolean;
   fee: Fee;
+  displayCash: boolean;
 
   constructor(private customAlertService: CustomAlertService,
     private router: Router,
@@ -53,9 +54,11 @@ export class PaymentDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
-  modalClick(id) {
-    document.getElementById('modal-detail-pay').click();
-    console.log("boton: ", document.getElementById('modal-detail-pay'))
+  modalClick(id, display) {
+    this.displayCash = (display == "cash")? true: false;
+    const modalPay = 'modal-detail-pay';
+    document.getElementById(modalPay).click();
+    console.log("boton: ", document.getElementById(modalPay))
     this.getPayById(id);
   }
 
@@ -64,6 +67,7 @@ export class PaymentDetailsComponent implements OnInit {
       response => {
         console.log("pago: ", response.result);
         this.pay = response.result;
+        console.log("pago11: ", response.result);
         this.getUserRegister(this.pay.userId);
         this.date = this.pay.date;
         this.getMember(response.result.memberId);
@@ -134,7 +138,7 @@ export class PaymentDetailsComponent implements OnInit {
       var cancelPay = this.createCancelBalancePaid();
       this.balancePaidService.cancel(this.pay.id, cancelPay).subscribe(
         result => {
-          this.modalClick(cancelPay.balancePaidId);
+          this.modalClick(cancelPay.balancePaidId, "cash");
           this.updateSalesFeesCash();
         },
         error => {

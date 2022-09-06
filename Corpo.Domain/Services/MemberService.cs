@@ -42,8 +42,10 @@ namespace Corpo.Domain.Services
             {
                 Email = member.Email,
                 Password = GetHashString(member.Password),
-                UserType = UserType.Member
-            };
+                UserType = UserType.Member,
+                VerificationCode = Guid.NewGuid(),
+                Verified = false
+        };
 
             var newMember = new Member()
             {
@@ -80,6 +82,7 @@ namespace Corpo.Domain.Services
             {
                 var idAccount = _accountService.Add(newAccount);
                 newMember.AccountId = idAccount;
+                //_accountService.SendVerifiedEmail(newAccount.Email);
                 var idCredit = _creditService.Add(newCredit);
                 newMember.CreditId = idCredit;
 

@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <div class="task-panel ">
         <h4 class="table-title">Objetivos Mensuales</h4>
-        <button type="button" class="btn btn-success btn-float-right" routerLink="/objetivo-mensual-crear">Agregar</button>
+        <button type="button" class="btn btn-success col-xl-2 col-12 btn-float-right" routerLink="/objetivo-mensual-crear">Agregar</button>
       </div>
       <hr>
       <div class="col-12 card" *ngIf="!requestingList && monthlyGoals.length > 0">
@@ -23,8 +23,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let monthlyGoal of monthlyGoals | searchFilterName: filterName">
-              <td data-title="Nombre"><span>{{monthlyGoal.goal}}</span></td>
-              <td data-title="Acción">
+              <td data-title="Nombre" class="col-lg-9"><span>{{monthlyGoal.goal}}</span></td>
+              <td data-title="Acción" class="col-lg-3">
                 <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/objetivo-mensual-editar']" [queryParams]="{id:monthlyGoal.id}"><i class="fa fa-pencil-square"></i></button>
                 <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(monthlyGoal.id)"><i class="fa fa-trash "></i></button>
               </td>

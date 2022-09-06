@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ɵSWITCH_CHANGE_DETECTOR_REF_FACTORY__POST_R3__ } from '@angular/core';
+import { ViewChild, ɵSWITCH_CHANGE_DETECTOR_REF_FACTORY__POST_R3__ } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CancelSale } from '../../../../domain/cancel-sale';
@@ -15,6 +15,13 @@ import { OutflowService } from '../../../../services/outflow.service';
 import { ReportService } from '../../../../services/report.service';
 import { SaleService } from '../../../../services/sale.service';
 import { WithdrawalService } from '../../../../services/withdrawal.service';
+import { BalancePaidService } from '../../../../services/balance-paid.service';
+import { CancelBalancePaid } from '../../../../domain/cancel-balance-paid';
+import { UserService } from '../../../../services/user.service';
+import { UserView } from '../../../../domain/user-view';
+import { BalancePaid } from '../../../../domain/balance-paid';
+import { Status } from '../../../../domain/status';
+import { PaymentDetailsComponent } from '../../../debt/payment-details/payment-details.component';
 
 @Component({
   selector: 'app-cash-detail',
@@ -35,11 +42,26 @@ export class CashDetailComponent implements OnInit {
   viewBtnReturn: boolean = false;
   requestingCash: boolean;
   requestingRecordsCash: boolean;
+  balancePaidId: number;
+  pay: number;
+  userCancelSale: UserView;
+  idUserCancel: number;
+  cancelledSale: CancelSale;
+  detailPay: BalancePaid;
+  @ViewChild(PaymentDetailsComponent, { static: true }) payDetail: PaymentDetailsComponent;
 
-  constructor(private cashService: CashService, private route: ActivatedRoute, private saleService: SaleService,
-    private dp: DatePipe, private customAlertService: CustomAlertService, private feeService: FeeService,
-    private outflowService: OutflowService, private incomeService: IncomeService, private withdrawalService: WithdrawalService,
-private reportService: ReportService  ) {
+  constructor(private cashService: CashService,
+    private route: ActivatedRoute,
+    private saleService: SaleService,
+    private dp: DatePipe,
+    private customAlertService: CustomAlertService,
+    private feeService: FeeService,
+    private outflowService: OutflowService,
+    private incomeService: IncomeService,
+    private withdrawalService: WithdrawalService,
+    private reportService: ReportService,
+    private balancePaidService: BalancePaidService,
+    private userService: UserService) {
     this.route.queryParams.subscribe(params => {
       console.log(params['id']);
       this.id = parseInt(params['id']);
@@ -48,7 +70,6 @@ private reportService: ReportService  ) {
   }
 
   ngOnInit() {
-    this.requestingCash = true;
     console.log(this.id);
     if (isNaN(this.id)) {
       console.log(this.date);
@@ -61,13 +82,11 @@ private reportService: ReportService  ) {
   }
 
   getCash() {
+    this.requestingCash = true;
     this.cashService.getCashById(this.id).subscribe(
       result => {
-        this.requestingCash = false;
         console.log(result.result);
         this.cash = result.result;
-        this.calculateInflowsTotal();
-        this.calculateOutflowsTotal();
         this.getCashDetailed(this.cash.opening, this.cash.closing);
       },
       error => this.requestingCash = false
@@ -80,8 +99,6 @@ private reportService: ReportService  ) {
         this.requestingCash = false
         console.log(result.result);
         this.cash = result.result;
-        this.calculateInflowsTotal();
-        this.calculateOutflowsTotal();
         this.getCashDetailed(this.cash.opening, this.cash.closing);
       },
       error => {
@@ -108,8 +125,11 @@ private reportService: ReportService  ) {
   getCashDetailed(opening, closing) {
     this.reportService.getCashDetailed(opening, closing).subscribe(
       result => {
-        console.log(result);
+        console.log("operaciones: ", result);
         this.recordsCash = result.result;
+        this.calculateInflowsTotal();
+        this.calculateOutflowsTotal();
+        this.requestingCash = false;
       },
       error => console.error(error))
   }
@@ -122,12 +142,41 @@ private reportService: ReportService  ) {
     this.outflowsTotal = this.cash.totalOutflow + this.cash.totalWithdrawal;
   }
 
+  getDetail(id, transaction) {
+    if (transaction == "Venta") {
+      this.modalDetailClick("modal-detail-sale");
+      this.getDetailSale(id);
+    } else {
+
+      this.payDetail.modalClick(id, "report");
+    }
+  }
+
+  modalDetailClick(modal) {
+    document.getElementById(modal).click();
+
+  }
+
   getDetailSale(id) {
     this.saleService.getSaleById(id).subscribe(
       result => {
         console.log(result);
         this.sale = result.result;
         this.detailsSale = this.sale.detailsSale;
+        this.getCancelSale(id);
+      },
+      error => console.error(error)
+    )
+  }
+
+  getDetailPay(id) {
+    this.balancePaidService.getById(id).subscribe(
+      response => {
+        console.log("pago: ", response.result);
+        this.detailPay = response.result;
+        this.getUserCancel(this.detailPay.userId);
+        this.date = this.detailPay.date;
+        if (this.detailPay.pay < 0) { this.detailPay.pay *= (-1) }
       },
       error => console.error(error)
     )
@@ -137,7 +186,7 @@ private reportService: ReportService  ) {
     switch (record.transaction) {
       case "Venta":
         this.getDetailSale(record.id);
-        this.modalCancelClick();
+        this.modalCancelClick("btn-modal-cancel");
         break;
       case "Cuota":
         this.deleteFee(record.id);
@@ -150,6 +199,11 @@ private reportService: ReportService  ) {
         break;
       case "Retiro":
         this.deleteWithdrawal(record.id);
+        break;
+      case "Pago":
+        this.modalCancelClick("modal-cancel-pay");
+        this.balancePaidId = record.id;
+        this.pay = record.amount;
         break;
       default:
     }
@@ -164,8 +218,8 @@ private reportService: ReportService  ) {
     return cancelSale;
   }
 
-  modalCancelClick() {
-    document.getElementById("btn-modal-cancel").click();
+  modalCancelClick(modal) {
+    document.getElementById(modal).click();
   }
 
   cancelSale() {
@@ -173,7 +227,7 @@ private reportService: ReportService  ) {
       var cancelSale = this.createCancelSale(this.sale.id);
       this.saleService.cancel(this.sale.id, cancelSale).subscribe(
         result => {
-          this.modalCancelClick();
+          this.modalCancelClick("btn-modal-cancel");
           this.getCashDetailed(this.cash.opening, this.cash.closing);
         },
         error => {
@@ -181,6 +235,30 @@ private reportService: ReportService  ) {
           this.customAlertService.displayAlert("Anulación", ["Error al intentar anular la venta."]);
         })
     }, true);
+  }
+
+
+  getCancelSale(saleId) {
+    this.saleService.getCancelSale(saleId).subscribe(
+      result => {
+        console.log(result.result);
+        this.cancelledSale = result.result;
+        this.idUserCancel = result.result.userId;
+        this.getUserCancel(this.idUserCancel);
+      },
+      error => console.error(error)
+    )
+  }
+
+
+  getUserCancel(userId) {
+    this.userService.getById(userId).subscribe(
+      result => {
+        console.log(result);
+        this.userCancelSale = result;
+      },
+      error => console.error(error)
+    );
   }
 
   deleteFee(id) {
@@ -235,6 +313,30 @@ private reportService: ReportService  ) {
         error => {
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Retiros", ["Error al intentar eliminar el retiro."])
+        })
+    }, true)
+  }
+
+  createCancelBalancePaid() {
+    var cancelBalancePaid = new CancelBalancePaid();
+    cancelBalancePaid.reason = this.reasonCancel;
+    cancelBalancePaid.balancePaidId = this.balancePaidId;
+    cancelBalancePaid.pay = this.pay;
+    return cancelBalancePaid;
+  }
+
+  cancelPay() {
+    this.customAlertService.displayAlert("Gestión de Pagos", ["¿Está seguro que desea cancelar este pago?"], () => {
+      const cancelBalancePaid = this.createCancelBalancePaid();
+      this.balancePaidService.cancel(this.balancePaidId, cancelBalancePaid).subscribe(
+        result => {
+          console.log(result);
+          this.modalCancelClick("modal-cancel-pay");
+          this.getCashDetailed(this.cash.opening, this.cash.closing);
+        },
+        error => {
+          console.error(error);
+          this.customAlertService.displayAlert("Gestión de Retiros", ["Error al intentar cancelar el pago."])
         })
     }, true)
   }

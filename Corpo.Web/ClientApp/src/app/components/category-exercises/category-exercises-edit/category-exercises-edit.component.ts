@@ -15,6 +15,7 @@ export class CategoryExercisesEditComponent implements OnInit {
   formEdit: FormGroup;
   id: number;
   sendForm: boolean = false;
+  requesting: boolean;
 
   constructor(private exerciseService: ExerciseService, private route: ActivatedRoute, private formBuilder: FormBuilder,
     private router: Router, private customAlertService: CustomAlertService) {
@@ -25,12 +26,14 @@ export class CategoryExercisesEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.exerciseService.getCategoryById(this.id).subscribe(
       result => {
         this.category = result.result;
         this.toCompleteForm();
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     );
 
   }

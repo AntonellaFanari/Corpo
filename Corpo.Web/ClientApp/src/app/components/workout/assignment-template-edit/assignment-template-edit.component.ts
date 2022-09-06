@@ -45,19 +45,21 @@ export class AssignmentTemplateEditComponent implements OnInit {
       console.log(this.id);
       console.log(this.weekNumber);
       this.getMember(this.memberId);
-      this.getLevel();
 
     });
 
   }
 
   getMember(id) {
+    this.requestingAssignment = true;
     this.memberService.getById(id).subscribe(
       response => {
         console.log("socio: ", response);
         this.member = response.result;
+        this.getLevel();
+        this.getPeriodization();
       },
-      error => console.error(error)
+      error => this.requestingAssignment = false
     )
   }
 
@@ -70,11 +72,9 @@ export class AssignmentTemplateEditComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getPeriodization();
   }
 
   getPeriodization() {
-    this.requestingAssignment = true;
     this.periodizationService.getById(this.id).subscribe(
       response => {
         console.log("periodización: ", response.result);

@@ -102,7 +102,8 @@ namespace Corpo.Data.Repositories
                     Amount = x.Pay,
                     Member = x.Member.LastName + " " + x.Member.Name,
                     User = x.UserName,
-                    Transaction = "Cuota"
+                    Transaction = "Cuota",
+                    Status = Status.Valid
                 }).ToListAsync();
             foreach (var fee in fees)
             {
@@ -111,7 +112,7 @@ namespace Corpo.Data.Repositories
             var sales = await _context
                 .Sale
                 .Include(x => x.Member)
-                .Where(x => x.Date >= opening && x.Date <= closing && x.Status == Status.Valid).Select(x => new RecordCashDto
+                .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
                 {
                     Id = x.Id,
                     Date = x.Date,
@@ -119,7 +120,8 @@ namespace Corpo.Data.Repositories
                     Amount = x.Pay,
                     Member = x.Member.LastName + " " + x.Member.Name,
                     User = x.UserName,
-                    Transaction = "Venta"
+                    Transaction = "Venta",
+                    Status = x.Status
                 }).ToListAsync();
             foreach (var sale in sales)
             {
@@ -135,7 +137,8 @@ namespace Corpo.Data.Repositories
                     Detail = x.Detail,
                     Amount = x.Amount,
                     User = x.User.LastName + " " + x.User.Name,
-                    Transaction = "Ingreso"
+                    Transaction = "Ingreso",
+                    Status = Status.Valid
                 }).ToListAsync();
             foreach (var income in incomes)
             {
@@ -150,9 +153,10 @@ namespace Corpo.Data.Repositories
                     Id = x.Id,
                     Date = x.Date,
                     Detail = x.OutflowType.Name,
-                    Amount = x.Pay,
+                    Amount = -x.Pay,
                     User = x.User.LastName + " " + x.User.Name,
-                    Transaction = "Egreso"
+                    Transaction = "Egreso",
+                    Status = Status.Valid
                 }).ToListAsync();
             foreach (var outflow in outflows)
             {
@@ -167,14 +171,35 @@ namespace Corpo.Data.Repositories
                     Id = x.Id,
                     Date = x.Date,
                     Detail = x.WithdrawalName.Name,
-                    Amount = x.Amount,
+                    Amount = -x.Amount,
                     User = x.User.LastName + " " + x.User.Name,
-                    Transaction = "Retiro"
+                    Transaction = "Retiro",
+                    Status = Status.Valid
                 }).ToListAsync();
             foreach (var withdrawal in withdrawals)
             {
                 list.Add(withdrawal);
             };
+            var pays = await _context
+           .BalancePaid
+           .Include(x => x.User)
+           .Include(x => x.Member)
+           .Where(x => x.Date >= opening && x.Date <= closing).Select(x => new RecordCashDto
+           {
+               Id = x.Id,
+               Date = x.Date,
+               Detail = (x.IncomeType == IncomeType.payFee) ? "Pago saldo de cuota" : (x.IncomeType == IncomeType.paySale) ? "Pago saldo de venta" : "",
+               Amount = x.Pay,
+               User = x.User.LastName + " " + x.User.Name,
+               Member = x.Member.LastName + " " + x.Member.Name,
+               Transaction = "Pago",
+               Status = x.Status
+           }).ToListAsync();
+            foreach (var pay in pays)
+            {
+                list.Add(pay);
+            };
+
             return list.OrderBy(x => x.Date).ToList();
             }
 

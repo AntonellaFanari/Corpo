@@ -33,7 +33,6 @@ namespace Corpo.Data.Repositories
         {
             var balancePaid = await _context.BalancePaid.FindAsync(cancelBalancePaid.BalancePaidId);
             balancePaid.Status = Status.Canceled;
-            balancePaid.Pay *= -1;
             _context.BalancePaid.Update(balancePaid);
            await _context.SaveChangesAsync();
             _context.CancelBalancePaid.Add(cancelBalancePaid);

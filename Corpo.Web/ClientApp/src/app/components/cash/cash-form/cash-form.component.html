@@ -53,7 +53,7 @@
                           </td>
                         </tr>
                         <tr *ngFor="let fee of feesIncomes; index as i">
-                          <td [ngStyle]="{'color':fee.pay<0?'red':'#09b4f5'}" class="cursor" (click)="getDetailsFeeIncome(fee)">{{fee.pay | currency}}</td>
+                          <td [ngStyle]="{'color':fee.status == 2?'red':'#09b4f5'}" class="cursor" (click)="getDetailsFeeIncome(fee)">{{fee.pay | currency}}</td>
                         </tr>
                         <tr class="total-responsive table-td-total">
                           <td class="bg-info cursor">Total: {{feeTotalPay | currency}}</td>

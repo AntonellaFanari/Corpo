@@ -31,8 +31,6 @@ namespace Corpo.Web.Controllers
         public async Task<ActionResult<MemberListDto>> GetAll()
         {
             var response = await _memberService.GetAll();
-            //var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
-            //var listMembers = ViewModels.ViewModels.FromDomainMemberList(result);
             return this.ToActionResult(response);
         }
 
@@ -77,12 +75,10 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("by-date-expiration")]
-        public async Task<ActionResult<MemberListViewModel>> ByDateExpiration(DateTime from, DateTime to)
+        public async Task<ActionResult<MemberListDto>> ByDateExpiration(DateTime from, DateTime to)
         {
             var response = await _memberService.ByDateExpiration(from, to);
-            var result = ((IEnumerable)response.Result).Cast<Member>().ToList();
-            var listMembers = ViewModels.ViewModels.FromDomainMemberList(result);
-            return Ok(listMembers);
+            return this.ToActionResult(response);
         }
 
         [HttpPut("updateDueDate")]

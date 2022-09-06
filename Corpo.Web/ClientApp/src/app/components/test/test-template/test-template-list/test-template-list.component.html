@@ -1,19 +1,19 @@
 <section class="wrapper">
-  <div class="row mt" *ngIf="!requestingList && testTemplates">
+  <div class="row mt">
     <div class="col-md-12">
       <div class="task-panel ">
         <h4 class="table-title">Test</h4>
-        <button type="button" class="btn btn-success btn-add" routerLink="/test-template-crear">Agregar</button>
+        <button type="button" class="btn btn-success col-xl-2 col-12 btn-add" routerLink="/test-template-crear">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requestingList && testTemplates.length> 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
-      <section id="no-more-tables" *ngIf="testTemplates.length> 0">
+      <section id="no-more-tables" *ngIf="!requestingList && testTemplates.length> 0">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -23,8 +23,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let test of testTemplates | searchFilterName: filterName" class="scrollme span-margin">
-              <td class="td-title" data-title="Nombre"><span>Nivel {{test.level}}</span></td>
-              <td data-title="Acción">
+              <td class="td-title col-lg-9" data-title="Nombre"><span>Nivel {{test.level}}</span></td>
+              <td data-title="Acción" class="col-lg-3">
                 <span class="btn-action-container">
                   <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/test-template-editar']" [queryParams]="{id:test.id}"><i class="fa fa-pencil-square"></i></button>
                   <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(test.id)"><i class="fa fa-trash "></i></button>

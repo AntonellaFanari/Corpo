@@ -126,7 +126,7 @@
 
     <!-- pie del diálogo -->
     <div class="modal-footer p-1">
-      <button *ngIf="pay.status == 1" type="button" class="btn btn-danger col-3 col-lg-2" data-toggle="modal" href="#myModalCancelPay">Anular</button>
+      <button *ngIf="pay.status == 1 && displayCash" type="button" class="btn btn-danger col-3 col-lg-2" data-toggle="modal" href="#myModalCancelPay">Anular</button>
       <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal" (click)="hideDetail()">Aceptar</button>
     </div>
   </div>

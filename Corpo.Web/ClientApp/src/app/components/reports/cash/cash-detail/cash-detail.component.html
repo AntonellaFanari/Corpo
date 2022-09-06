@@ -1,10 +1,9 @@
 <section class="wrapper" *ngIf="!requestingCash && cash">
   <div class="task-panel ">
     <h4 class="table-title">Caja Diaria Detalle</h4>
-    <button *ngIf="viewBtnReturn" type="button" class="btn btn-secondary btn-float-right" routerLink="/caja-diaria">Volver</button>
+    <button *ngIf="viewBtnReturn" type="button" class="btn btn-secondary col-xl-2 col-12 btn-float-right" [routerLink]="['/caja-diaria']" [queryParams]="{filter:'true'}">Volver</button>
   </div>
   <hr>
-
   <div class="row">
     <div class="col-12">
       <section *ngIf="cash">
@@ -60,7 +59,7 @@
           </tr>
         </tbody>
       </table>
-      <section id="no-more-tables"  *ngIf="recordsCash.length > 0">
+      <section id="no-more-tables" *ngIf="recordsCash.length > 0">
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
           <table class="table table-bordered table-condensed table-striped cf mb-0 user-table">
             <thead class="cf">
@@ -74,14 +73,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="scrollme span-margin" *ngFor="let record of recordsCash" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
+              <tr class="scrollme span-margin cursor-pointer" [ngClass]="{'record-canceled': record.status == 2}" *ngFor="let record of recordsCash" [routerLink]="['/caja-detalle']" [queryParams]="{id: cash.id}">
                 <td class="td-title" data-title="Fecha"><span>{{record.date | date: 'dd/MM/yyyy - hh:mm a'}}</span></td>
-                <td class="td-title" data-title="Detalle"><span>{{record.transaction}} - {{record.detail}}<button *ngIf="record.transaction=='Venta'" class="btn btn-outline-success btn-xs btn-action-list" data-toggle="modal" href="#myModalSale" (click)="getDetailSale(record.id)">Detalle</button></span></td>
+                <td class="td-title" data-title="Detalle"><span>{{record.transaction}} - {{record.detail}}&nbsp;<button *ngIf="record.transaction == 'Venta' || record.transaction == 'Pago'" class="btn btn-outline-success btn-xs btn-action-list" (click)="getDetail(record.id, record.transaction)">Detalle</button></span></td>
                 <td class="td-title" data-title="Monto"><span>{{record.amount | currency}}</span></td>
                 <td class="td-title" data-title="Socio"><span *ngIf="record.member">{{record.member}}</span><span *ngIf="!record.member">-</span></td>
                 <td class="td-title" data-title="Cajero"><span>{{record.user}}</span></td>
                 <td data-title="Acción">
-                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(record)"><i class="fa fa-trash "></i></button>
+                  <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(record)" [class.d-none]="record.status == 2"><i class="fa fa-trash "></i></button>
                 </td>
               </tr>
             </tbody>
@@ -106,8 +105,11 @@
 
 <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
 
+<button id="modal-detail-sale" data-toggle="modal" href="#myModalSale" class="d-none"></button>
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
+
 <section class="modal mt-4" id="myModalSale">
-  <div class="container-fluid modal-content modal-lg p-0">
+  <div class="container-fluid modal-content modal-lg p-0" *ngIf="sale">
 
     <!-- cabecera del diálogo -->
     <div class="modal-header modal-title bg-success d-block">
@@ -118,11 +120,25 @@
 
     <!-- cuerpo del diálogo -->
     <div class="modal-body">
-      <table *ngIf="sale" class="table table-bordered table-condensed cf scrollme user-table">
+      <table class="table table-bordered table-condensed cf scrollme user-table">
         <thead class="cf">
           <tr>
-            <th colspan="2">Socio: {{sale.member.lastName}} {{sale.member.name}}</th>
-            <th colspan="2">Fecha: {{sale.date | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
+            <th *ngIf="userRegisterSale" class="modal-title" colspan="4"><span class="label-detail-title"> Registro:</span> {{userRegisterSale.lastName}} {{userRegisterSale.name}}</th>
+          </tr>
+          <tr>
+            <th colspan="2"><span class="label-detail-title">Fecha:</span> {{date | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
+            <th colspan="2">
+              <span class="label-detail-title">
+                Estado:
+              </span> <span *ngIf="sale.status == 1">Vigente</span><span *ngIf="sale.status == 2" class="detail-cancelled">Cancelada</span>
+            </th>
+          </tr>
+          <tr *ngIf="sale.status == 2 && cancelledSale">
+            <th colspan="2">
+              <span class="label-detail-title">Fecha de cancelación:</span> <span class="detail-cancelled"> {{cancelledSale.date | date: 'dd/MM/yyyy h:mm:ss a'}}</span>
+            </th>
+            <th colspan="1" *ngIf="userCancelSale"><span class="label-detail-title">Cancelado por:</span> <span class="detail-cancelled"> {{userCancelSale.lastName}} {{userCancelSale.name}}</span></th>
+            <th colspan="2"><span class="label-detail-title">Motivo:</span> <span class="detail-cancelled"> {{cancelledSale.reason}}</span></th>
           </tr>
           <tr>
             <th>Descripcion</th>
@@ -138,15 +154,22 @@
             <td class="td-title">{{detail.price | currency}}</td>
             <td class="td-title">{{detail.quantity*detail.price | currency}}</td>
           </tr>
+          <tr>
+            <th class="label-detail-title">Total</th>
+            <td class="td-title" data-title="Total">{{sale.total  | currency}}</td>
+            <th class="label-detail-title">Pago</th>
+            <td class="td-title" data-title="Pago">{{sale.pay  | currency}}</td>
+          </tr>
         </tbody>
       </table>
 
-      <!-- pie del diálogo -->
-      <div class="modal-footer p-0">
-        <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
-      </div>
-
     </div>
+    <!-- pie del diálogo -->
+    <div class="modal-footer p-1">
+      <button *ngIf="sale.status == 1" type="button" class="btn btn-danger col-3 col-lg-2" data-toggle="modal" href="#myModalCancelSale">Anular</button>
+      <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
+    </div>
+
   </div>
 </section>
 
@@ -178,4 +201,38 @@
     </div>
   </div>
 </div>
+
+
+<div class="container">
+  <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalCancelSale">Abrir ventana de diálogo</button>-->
+  <button id="modal-cancel-pay" data-toggle="modal" href="#myModalCancelPay" class="d-none"></button>
+  <div class="modal fade" id="myModalCancelPay">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title bg-success d-block">
+          <h4 class="modal-title text-white text-center">Anulación del pago</h4>
+          <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
+        </div>
+
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <input type="text" class="form-control" placeholder="Ingrese el motivo de la anulación" [(ngModel)]="reasonCancel" />
+        </div>
+        <!-- pie del diálogo -->
+        <div class="modal-footer p-1">
+          <button type="button" class="btn btn-danger col-3" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success col-3" (click)="cancelPay()" data-dismiss="modal">Anular</button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<app-payment-details></app-payment-details>
 

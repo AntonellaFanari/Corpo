@@ -58,7 +58,7 @@ export class MemberService {
   }
 
   public getByDateExpiration(from: string, to: string) {
-    return this.http.get<any>(this.url + 'api/member/by-date-expiration?from=' + from + '&to=' + to);
+    return this.http.get<DomainResponse<any>>(this.url + 'api/member/by-date-expiration?from=' + from + '&to=' + to);
   }
 
   //medicalHistory

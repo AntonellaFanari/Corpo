@@ -16,6 +16,7 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse UpdatePassword(AccountDto account);
         void Delete(int id);
         Task<DomainResponse> RecoverPassword(string email);
+        //Task<DomainResponse> SendVerifiedEmail(string email);
 
     }
 }

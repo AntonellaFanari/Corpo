@@ -1,0 +1,9 @@
+
+.cursor-pointer:hover {
+  cursor: pointer;
+  background-color: #6def6b;
+}
+
+.record-canceled {
+  background-color: #f39485;
+}

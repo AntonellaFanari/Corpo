@@ -3,10 +3,10 @@
     <div class="col-md-12">
       <div class="task-panel ">
         <h4 class="table-title">Sistemas de Entrenamiento</h4>
-        <button type="button" class="btn btn-success btn-float-right" routerLink="/sistema-entrenamiento-crear">Agregar</button>
+        <button type="button" class="btn btn-success col-xl-2 col-12 btn-float-right" routerLink="/sistema-entrenamiento-crear">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requestingList && trainingSystems.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterTrainingSystem">
@@ -24,9 +24,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let trainingSystem of trainingSystems | searchFilterTrainingSystem: filterTrainingSystem">
-              <td data-title="A"><span>{{trainingSystem.up}}</span></td>
-              <td data-title="B"><span>{{trainingSystem.down}}</span></td>
-              <td data-title="Acción">
+              <td data-title="A" class="col-lg-4"><span>{{trainingSystem.up}}</span></td>
+              <td data-title="B" class="col-lg-4"><span>{{trainingSystem.down}}</span></td>
+              <td data-title="Acción" class="col-lg-4">
                 <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/sistema-entrenamiento-editar']" [queryParams]="{id:trainingSystem.id}"><i class="fa fa-pencil-square"></i></button>
                 <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(trainingSystem.id)"><i class="fa fa-trash "></i></button>
               </td>

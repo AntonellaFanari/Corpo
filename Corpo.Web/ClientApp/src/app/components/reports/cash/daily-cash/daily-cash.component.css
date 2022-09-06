@@ -6,6 +6,11 @@
   display: block;
 }
 
+.cursor-pointer:hover {
+  cursor: pointer;
+  background-color: #6def6b;
+}
+
 @media only screen and (max-width: 800px) {
   #no-more-tables td {
     padding-left: 40%;

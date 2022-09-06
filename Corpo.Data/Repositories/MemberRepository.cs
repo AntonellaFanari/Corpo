@@ -86,13 +86,28 @@ namespace Corpo.Data.Repositories
             return member.AccountId;
         }
 
-        public async Task<List<Member>> ByDateExpiration(DateTime from, DateTime to)
+        public async Task<List<MemberListDto>> ByDateExpiration(DateTime from, DateTime to)
         {
             return await _context.Member.Include(x => x.Plan)
                     .Include(x => x.Account)
                     .Include(x => x.Credit)
                     .Where(x => x.Credit.Expiration >= from && x.Credit.Expiration <= to)
-                    .ToListAsync();
+                        .Select(x => new MemberListDto
+                        {
+                            Id = x.Id,
+                            LastName = x.LastName,
+                            Name = x.Name,
+                            Phone = x.Phone,
+                            NamePlan = x.Plan.Name,
+                            PlanType = x.Plan.Type,
+                            PlanId = x.Plan.Id,
+                            CreditId = x.Credit.Id,
+                            Credit = x.Credit.InitialCredit - x.Credit.CreditConsumption,
+                            Expiration = x.Credit.Expiration,
+                            Negative = x.Credit.Negative,
+                            Status = (x.Credit.Expiration < DateTime.Now) ? StatusMember.NotActive : (x.Credit.FirstDay == "true") ? StatusMember.FirstDay : StatusMember.Active
+                        }).
+                    ToListAsync();
 
         }
 

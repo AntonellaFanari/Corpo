@@ -27,6 +27,7 @@ export class TestTemplateEditComponent implements OnInit {
   indexExercise: number;
   exercisesFMS: ExerciseFms[] = [];
   exerciseFmsId: number;
+  requesting: boolean;
 
   constructor(private formBuilder: FormBuilder,
     private testTemplateService: TestTemplateService,
@@ -57,12 +58,16 @@ export class TestTemplateEditComponent implements OnInit {
 
   getExercisesFMS() {
     this.testTemplateService.getAllExercisesFMS().subscribe(
-      response => this.exercisesFMS = response.result,
+      response => {
+        this.exercisesFMS = response.result;
+        this.requesting = false;
+      },
       error => console.error(error)
     )
   }
 
   getById() {
+    this.requesting = true;
     this.testTemplateService.getById(this.id).subscribe(
       response => {
         console.log(response.result);
@@ -70,9 +75,10 @@ export class TestTemplateEditComponent implements OnInit {
         this.testExercises = this.testTemplate.testExercises;
         this.formTestName.patchValue({
           level: this.testTemplate.level
-        })
+        });
+        this.getExercisesFMS();
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

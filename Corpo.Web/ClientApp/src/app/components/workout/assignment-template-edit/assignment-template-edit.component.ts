@@ -65,7 +65,7 @@ export class AssignmentTemplateEditComponent implements OnInit {
 
   getLevel() {
     this.memberService.getLevel(this.memberId).subscribe(
-      response => this.level = response.result.level,
+      response => { (response.result != null) ? this.level = response.result.level : this.level = null },
       error => console.error(error)
     )
   }
@@ -82,7 +82,6 @@ export class AssignmentTemplateEditComponent implements OnInit {
         this.periodization = response.result;
         this.display = false;
         this.memberId = this.periodization.memberId;
-        this.getWeekPlanned();
         this.getWodMember();
       },
       error => this.requestingAssignment = false
@@ -99,6 +98,7 @@ export class AssignmentTemplateEditComponent implements OnInit {
 
 
   setClassSelect(weeks) {
+    console.log("display: ", this.display);
     console.log("select: ", document.getElementById("select-week"));
     let select = document.getElementsByClassName('week-option');
     console.log("options: ", select);
@@ -119,7 +119,8 @@ export class AssignmentTemplateEditComponent implements OnInit {
     this.wods = [];
     this.wodMemberService.getByPeriodizationId(this.id, this.weekNumber).subscribe(
       response => {
-        console.log("wods: ", response.result);
+
+        console.log("wods1: ", response.result);
         var wodMembers = response.result;
         wodMembers.forEach(w => {
           this.wods.push({
@@ -129,7 +130,11 @@ export class AssignmentTemplateEditComponent implements OnInit {
           });
           console.log("wodMember:", w)
         })
-
+        console.log("wods2: ", this.wods);
+        console.log("requesting: ", this.requestingAssignment);
+        console.log("display: ", this.display);
+        console.log("periodization: ", this.periodization);
+        this.getWeekPlanned();
         if (this.periodization.trainings < wodMembers.length) {
           this.customAlertService.displayAlert("Gestión de Wods", ["Debe eliminar un wod ya que modifico el nº de entrenamientos semanales."]);
         }

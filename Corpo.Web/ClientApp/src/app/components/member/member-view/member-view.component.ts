@@ -50,8 +50,8 @@ export class MemberViewComponent implements OnInit {
   getLevel() {
     this.memberService.getLevel(this.id).subscribe(
       response => {
-        console.log("nivel fisico: ", response.result.level);
-        this.level = response.result.level;
+        console.log("nivel fisico: ", response.result);
+        (response.result != null) ? this.level = response.result.level : this.level = null;
         this.requesting = false;
       },
       error => console.error(error)

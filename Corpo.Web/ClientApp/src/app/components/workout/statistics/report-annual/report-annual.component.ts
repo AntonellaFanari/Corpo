@@ -26,6 +26,7 @@ export class ReportAnnualComponent implements OnInit {
   attendances = [];
   months = [];
   @ViewChild('barCanvas1', { static: false }) barCanvas1;
+  requesting: boolean;
 
   constructor(private route: ActivatedRoute,
     private periodizationService: PeriodizationService,
@@ -37,16 +38,22 @@ export class ReportAnnualComponent implements OnInit {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
     this.getMember();
-    this.getAttendances();
-    this.getPeriodizations();
 
   }
   ngOnInit() {
   }
   getMember() {
+    this.requesting = true;
     this.memberService.getById(this.memberId).subscribe(
-      response => this.member = response.result,
-      error => console.error(error)
+      response => {
+        this.member = response.result;
+        this.getAttendances();
+        this.getPeriodizations();
+      },
+      error => {
+        this.requesting = false;
+        console.error(error);
+      }
     )
   }
 
@@ -83,7 +90,9 @@ export class ReportAnnualComponent implements OnInit {
         } else {
           this.customAlertService.displayAlert("Gestión de Estadisticas", ["No hay periodizaciones registradas para el año " + this.year]);
           this.periodization = undefined;
-        }
+        };
+
+        this.requesting = false;
       },
       error => console.error(error))
   }

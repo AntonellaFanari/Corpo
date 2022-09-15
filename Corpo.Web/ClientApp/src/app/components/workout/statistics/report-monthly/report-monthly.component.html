@@ -1,4 +1,4 @@
-<section class="wrapper" *ngIf="periodization">
+<section class="wrapper" *ngIf="!requesting && periodization">
   <div class="task-panel " *ngIf="member">
     <h4 class="table-title text-center">{{member.lastName}} {{member.name}} - {{getMonth(periodization.month)}}</h4>
   </div>
@@ -21,7 +21,15 @@
     <canvas #barCanvas1 style="position: relative; height:20vh; width:40vw"></canvas>
   </section>
   <div class="container">
-    <button type="button" class="btn btn-secondary col-3 col-lg-2 btn-float-left btn-create" [routerLink]="['/reporte-anual']" [queryParams]="{id: periodization.memberId}">Volver</button>
+    <button type="button" class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" [routerLink]="['/reporte-anual']" [queryParams]="{id: periodization.memberId}">Volver</button>
   </div>
 
+</section>
+
+<section class="wrapper">
+  <div class="w-100 text-center mt-3" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </section>

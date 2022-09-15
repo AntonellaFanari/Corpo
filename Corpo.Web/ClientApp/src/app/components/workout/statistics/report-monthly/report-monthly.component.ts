@@ -25,6 +25,7 @@ export class ReportMonthlyComponent implements OnInit {
   selectedMonth: number;
   attendances = [];
   months = [];
+  requesting: boolean;
   @ViewChild('barCanvas1', { static: false }) barCanvas1;
 
   constructor(private route: ActivatedRoute,
@@ -50,15 +51,22 @@ export class ReportMonthlyComponent implements OnInit {
   }
 
   getPeriodization() {
+    this.requesting = true;
     this.periodizationService.getById(this.periodizationId).subscribe(
       response => {
+
+        this.requesting = false;
         console.log("periodizacion: ", response.result);
         this.periodization = response.result;
    /*     this.resetClassWeek(this.periodization);*/
         this.getMember();
         this.getAttendances();
       },
-      error => console.error(error))
+      error => {
+        console.error(error);
+        this.requesting = false;
+      }
+    )
   }
 
   //resetClassWeek(periodization) {

@@ -2,7 +2,7 @@
 <div *ngIf="!requestingAssignment && member">
   <section class="wrapper">
     <div class="task-panel ">
-      <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel {{level}}</h4>
+      <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel <span *ngIf="level">{{level}}</span><span *ngIf="!level">no asignado</span></h4>
     </div>
     <hr>
     <div class="row">

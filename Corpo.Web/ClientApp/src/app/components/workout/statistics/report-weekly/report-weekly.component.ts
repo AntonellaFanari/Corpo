@@ -24,7 +24,7 @@ export class ReportWeeklyComponent implements OnInit {
   labels = [];
   dataRate = [];
   dataIntensity = [];
-
+  requesting: boolean;
   @ViewChild('barCanvas1', { static: false }) barCanvas1;
 
   constructor(private route: ActivatedRoute,
@@ -36,28 +36,40 @@ export class ReportWeeklyComponent implements OnInit {
       this.id = parseInt(params['id']),
       this.memberId = parseInt(params['memberId'])
     });
-    this.getPeriodizationWeek();
-    this.getMember();
+  
+    this.getPeriodizationWeek() 
 
   }
   ngOnInit() {
+    this.getPeriodizationWeek() 
   }
 
   getPeriodizationWeek() {
+    this.requesting = true;
     this.periodizationService.getByPeriodizationWeek(this.id).subscribe(
       response => {
+        this.requesting = false;
         console.log("periodizationWeek: ", response.result);
         this.periodizationWeek = response.result;
+        this.getMember();
         this.getWods();
+
       },
-      error => console.error(error)
+      error => {
+        this.requesting = false;
+        console.error(error);
+      }
     )
   }
 
   getMember() {
     this.memberService.getById(this.memberId).subscribe(
-      response => this.member = response.result,
-      error => console.error(error)
+      response => {
+        this.member = response.result;
+      },
+      error => {
+        console.error(error);
+      }
     )
   }
 

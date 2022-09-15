@@ -1,10 +1,10 @@
 <!-- Page Content -->
-<section class="wrapper"  >
+<section class="wrapper">
   <div class="task-panel " *ngIf="!requestingAssignment && periodization">
-    <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel {{level}}</h4>
+    <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel <span *ngIf="level">{{level}}</span><span *ngIf="!level"> no asignado</span></h4>
   </div>
   <hr *ngIf="!requestingAssignment && periodization" />
-  <section class="wrapper"*ngIf="!requestingAssignment && periodization && wods.length > 0">
+  <section class="wrapper" *ngIf="!requestingAssignment && periodization">
     <div class="row">
       <div class=" col-12 col-lg-4 mb-4">
 
@@ -20,7 +20,7 @@
           Historia Médica
         </button>
 
-        <button *ngIf="!requestingAssignment && periodization" class="btn btn-danger w-100 mb-3" type="button" (click)="deleteWods()">
+        <button *ngIf="!requestingAssignment && periodization && wods.length > 0" class="btn btn-danger w-100 mb-3" type="button" (click)="deleteWods()">
           Eliminar Wods
         </button>
 
@@ -28,7 +28,7 @@
           Volver
         </button>
 
-        <div [ngClass]="{'hide': display }">
+        <div [class.d-none]="display">
           <label class="control-label">Seleccionar Semana:</label>
           <div class="formValidators">
             <select id="select-week" class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)">
@@ -58,72 +58,70 @@
 
     </div>
   </section>
-  </section>
+</section>
 
-
-
-  <div class="w-100 text-center" *ngIf="requestingAssignment">
-    <div class="spinner-border text-success" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
+<div class="w-100 text-center" *ngIf="requestingAssignment">
+  <div class="spinner-border text-success" role="status">
+    <span class="sr-only">Loading...</span>
   </div>
+</div>
 
-  <div class="modal fade" id="modal" *ngIf="periodization">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <!-- cabecera del diálogo -->
-        <div class="modal-header modal-title">
-          <h4 class="modal-title">Periodización {{periodization.month}}/{{periodization.year}}</h4>
-          <button type="button" class="close" data-dismiss="modal">X</button>
-        </div>
-        <!-- cuerpo del diálogo -->
-        <div class="modal-body">
-          <app-workout-periodizaion-detail [memberId]="memberId"></app-workout-periodizaion-detail>
-        </div>
-        <!-- pie del diálogo -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success col-4" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
-       
-        </div>
+<div class="modal fade" id="modal" *ngIf="periodization">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Periodización {{periodization.month}}/{{periodization.year}}</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+      </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <app-workout-periodizaion-detail [memberId]="memberId"></app-workout-periodizaion-detail>
+      </div>
+      <!-- pie del diálogo -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success col-4" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
+
       </div>
     </div>
   </div>
+</div>
 
 
-  <div class="modal fade" id="modal-wod">
-    <div class="modal-dialog modal-dialog-full modal-fullscreen-xl-down">
-      <div class="modal-content modal-content-full">
-        <!-- cabecera del diálogo -->
-        <div class="modal-header modal-title">
-          <h4 class="modal-title">Planificación Semanal</h4>
-          <button type="button" class="close" data-dismiss="modal">X</button>
-        </div>
-        <!-- cuerpo del diálogo -->
-        <div class="modal-body">
-          <div class="row">
-            <div *ngFor="let newWod of wods" class="col">
-              <app-wod-detail [wod]="newWod.wod" [wodNumber]="newWod.wodNumber"></app-wod-detail>
-            </div>
+<div class="modal fade" id="modal-wod">
+  <div class="modal-dialog modal-dialog-full modal-fullscreen-xl-down">
+    <div class="modal-content modal-content-full">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Planificación Semanal</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
+      </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <div class="row">
+          <div *ngFor="let newWod of wods" class="col">
+            <app-wod-detail [wod]="newWod.wod" [wodNumber]="newWod.wodNumber"></app-wod-detail>
           </div>
         </div>
-        <!-- pie del diálogo -->
       </div>
+      <!-- pie del diálogo -->
     </div>
   </div>
+</div>
 
-  <div class="modal fade" id="modalMedicalHistory">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <!-- cabecera del diálogo -->
-        <div class="modal-header modal-title">
-          <h4 class="modal-title">Historia Médica</h4>
-          <button type="button" class="close" data-dismiss="modal">X</button>
-        </div>
-        <!-- cuerpo del diálogo -->
-        <div class="modal-body">
-          <app-member-view [id]="memberId" [hideGoBack]="true"></app-member-view>
-        </div>
-        <!-- pie del diálogo -->
+<div class="modal fade" id="modalMedicalHistory">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <!-- cabecera del diálogo -->
+      <div class="modal-header modal-title">
+        <h4 class="modal-title">Historia Médica</h4>
+        <button type="button" class="close" data-dismiss="modal">X</button>
       </div>
+      <!-- cuerpo del diálogo -->
+      <div class="modal-body">
+        <app-member-view [id]="memberId" [hideGoBack]="true"></app-member-view>
+      </div>
+      <!-- pie del diálogo -->
     </div>
   </div>
+</div>

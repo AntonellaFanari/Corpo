@@ -85,7 +85,7 @@ export class AssignmentTemplateComponent implements OnInit {
     this.memberService.getLevel(this.memberId).subscribe(
       response => {
         console.log("nivel fisico: ", response.result);
-        this.level = response.result.level
+        (response.result != null) ? this.level = response.result.level : this.level = null;
       },
       error => console.error(error)
     )

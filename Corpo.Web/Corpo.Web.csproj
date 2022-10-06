@@ -103,6 +103,7 @@
     <None Remove="ClientApp\src\app\domain\withdrawal-name.ts" />
     <None Remove="ClientApp\src\app\domain\withdrawal.ts" />
     <None Remove="ClientApp\src\app\domain\wod-member.ts" />
+    <None Remove="ClientApp\src\app\domain\wod\modality-helpers.ts" />
     <None Remove="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <None Remove="ClientApp\src\app\domain\wod\PeriodizationList.ts" />
     <None Remove="ClientApp\src\app\domain\wod\physical-level.ts" />
@@ -185,6 +186,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal-name.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\withdrawal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod-member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\modality-helpers.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\physical-level.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\training-system.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\monthly-goal.ts" />

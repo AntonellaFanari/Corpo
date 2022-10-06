@@ -225,9 +225,10 @@ export class AssignmentTemplateComponent implements OnInit {
 
           exercise: e.exercise,
           modality: e.modality,
+          unitType: e.unitType,
           units: e.units,
-          mode: e.mode,
-          value: e.value
+          intensityType: e.intensityType,
+          intensityValue: e.intensityValue
         }
       });
       wodGroup.exercises = exercises;

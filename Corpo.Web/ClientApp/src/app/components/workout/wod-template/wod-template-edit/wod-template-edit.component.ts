@@ -209,12 +209,12 @@ export class WodTemplateEditComponent implements OnInit {
       exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
       exerciseItem.units = this.units;
       if (this.mode == null) {
-        exerciseItem.mode = "None";
+        exerciseItem.intensityType = "None";
       } else {
-        exerciseItem.mode = this.mode;
+        exerciseItem.intensityType = this.mode;
       }
 
-      exerciseItem.value = this.value;
+      exerciseItem.intensityValue = this.value;
 
       this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
 
@@ -470,7 +470,10 @@ export class WodTemplateEditComponent implements OnInit {
 
           exercise: e.exercise,
           modality: e.modality,
-          units: e.units
+          unitType: e.unitType,
+          units: e.units,
+          intensityType: e.intensityType,
+          intensityValue: e.intensityValue
         }
       });
       wodGroup.exercises = exercises;

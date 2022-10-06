@@ -60,7 +60,10 @@ export class WodTemplateListComponent implements OnInit {
 
           exercise: e.exercise,
           modality: e.modality,
-          units: e.units
+          unitType: e.unitType,
+          units: e.units,
+          intensityType: e.intensityType,
+          intensityValue: e.intensityValue
         }
       });
       wodGroup.exercises = exercises;

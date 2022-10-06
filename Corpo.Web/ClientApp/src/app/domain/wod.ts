@@ -6,12 +6,31 @@ export class WodGroup {
   groupIndex: string;
   exercises: ExerciseItem[] = [];
   detail: string;
-  mode?: string;
-  value?: number
+  rounds?: number;
+  series?: number;
+  modality: string;
+  modalityId: number;
+  time?: number;
+  staggeredType: string;
+  staggeredValue?: number;
+  pauseBetweenRounds?: number;
+  pauseBetweenExercises?: number;
 
-  constructor(index = null, detail: string = null) {
+  constructor(index = null, detail: string = null, modality: string = null,
+    modalityId: number = null, rounds: number = null, series: number = null, time: number = null,
+    staggeredType: string = null, staggeredValue: number = null,
+    pauseBetweenRounds: number = null, pauseBetweenExercises: number = null) {
     this.groupIndex = index ? index : this.createGuid();
     this.detail = detail;
+    this.modality = modality;
+    this.modalityId = modalityId,
+    this.rounds = rounds;
+    this.series = series;
+    this.time = time;
+    this.staggeredType = staggeredType;
+    this.staggeredValue = staggeredValue;
+    this.pauseBetweenRounds = pauseBetweenRounds;
+    this.pauseBetweenExercises = pauseBetweenExercises;
   }
 
   addExercise(exercise: ExerciseItem) {
@@ -29,9 +48,12 @@ export class WodGroup {
 export class ExerciseItem {
   exercise: Exercise;
   modality: Modality;
+  unitType: string;
   units: string;
-  mode?: string;
-  value?: number;
+  intensityType: string;
+  intensityValue?: number;
+  timeWork?: number;
+  timeRest?: number;
 }
 
 export class Wod {
@@ -45,7 +67,7 @@ export class Wod {
 
   addGroup(wodGroup: WodGroup) {
 
-    this.wodGroups.push(wodGroup);
+    this.wodGroups.unshift(wodGroup);
   }
 }
 
@@ -68,12 +90,22 @@ export class WodTemplate {
       g.exercises.forEach(e => {
         this.wodGroups.push({
           detail: g.detail,
+          rounds: g.rounds,
+          series: g.series,
+          time: g.time,
           groupIndex: g.groupIndex,
           exerciseId: e.exercise.id,
-          modalityId: e.modality.id,
+          modalityId: g.modalityId,
+          unitType: e.unitType,
           units: e.units,
-          mode: e.mode,
-          value: e.value
+          intensityType: e.intensityType,
+          intensityValue: e.intensityValue,
+          staggeredType: g.staggeredType,
+          staggeredValue: g.staggeredValue,
+          pauseBetweenRounds: g.pauseBetweenRounds,
+          pauseBetweenExercises: g.pauseBetweenRounds,
+          timeWork: e.timeWork,
+          timeRest: e.timeRest
         })
       })
     })
@@ -100,9 +132,12 @@ export class wodTemplateResponse {
         return {
           exercise: e.exercise,
           modality: e.modality,
+          unitType: e.unitType,
           units: e.units,
-          mode: e.mode,
-          value: e.value
+          intensityType: e.intensityType,
+          intensityValue: e.intensityValue,
+          timeWork: e.timeWork,
+          timeRest: e.timeRest
         }
       });
       wodGroup.exercises = exercises;
@@ -120,20 +155,40 @@ export class wodTemplateResponse {
 export class wodTemplateGroup {
   exerciseId: number;
   modalityId: number;
+  unitType: string;
   units: string;
   groupIndex: string;
   detail: string;
-  mode?: string;
-  value?: number
+  rounds?: number;
+  series?: number;
+  time?: number;
+  intensityType?: string;
+  intensityValue?: number;
+  staggeredType?: string;
+  staggeredValue?: number;
+  pauseBetweenRounds?: number;
+  pauseBetweenExercises?: number;
+  timeWork?: number;
+  timeRest?: number;
 }
 
 export class wodTemplateGroupResponse {
   exercise: Exercise;
   modality: Modality;
+  rounds?: number;
+  series?: number;
+  time?: number;
+  unitType: string;
   units: string;
   groupIndex: string;
   detail: string;
-  mode?: string;
-  value?: number
+  intensityType?: string;
+  intensityValue?: number;
+  staggeredType?: string;
+  staggeredValue?: number;
+  pauseBetweenRounds?: number;
+  pauseBetweenExercises?: number;
+  timeWork?: number;
+  timeRest?: number;
 }
 

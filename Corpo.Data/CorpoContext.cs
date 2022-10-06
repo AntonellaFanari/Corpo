@@ -78,5 +78,7 @@ namespace Corpo.Data
         public DbSet<BalancePaid> BalancePaid { get; set; }
         public DbSet<CancelBalancePaid> CancelBalancePaid { get; set; }
         public DbSet<PhysicalLevel> PhysicalLevel { get; set; }
+        public DbSet<ResultsWodGroupMemberExercise> ResultsWodGroupMemberExercise { get; set; }
+        public DbSet<ResultsWodGroupMember> ResultsWodGroupMember { get; set; }
     }
 }

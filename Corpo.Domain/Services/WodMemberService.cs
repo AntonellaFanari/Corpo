@@ -1,6 +1,7 @@
 ﻿using Corpo.Domain.Contracts.Repositories;
 using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,10 +47,20 @@ namespace Corpo.Domain.Services
                         wodGroupMember.ExerciseId = wodGroup.ExerciseId;
                         wodGroupMember.ModalityId = wodGroup.ModalityId;
                         wodGroupMember.Detail = wodGroup.Detail;
+                        wodGroupMember.Rounds = wodGroup.Rounds;
+                        wodGroupMember.Series = wodGroup.Series;
+                        wodGroupMember.Time = wodGroup.Time;
+                        wodGroupMember.UnitType = wodGroup.UnitType;
                         wodGroupMember.Units = wodGroup.Units;
                         wodGroupMember.GroupIndex = wodGroup.GroupIndex;
-                        wodGroupMember.Mode = wodGroup.Mode;
-                        wodGroupMember.Value = wodGroup.Value;
+                        wodGroupMember.IntensityType = wodGroup.IntensityType;
+                        wodGroupMember.IntensityValue = wodGroup.IntensityValue;
+                        wodGroupMember.StaggeredType = wodGroup.StaggeredType;
+                        wodGroupMember.StaggeredValue = wodGroup.StaggeredValue;
+                        wodGroupMember.TimeWork = wodGroup.TimeWork;
+                        wodGroupMember.TimeRest = wodGroup.TimeRest;
+                        wodGroupMember.PauseBetweenRounds = wodGroup.PauseBetweenRounds;
+                        wodGroupMember.PauseBetweenExercises = wodGroup.PauseBetweenExercises;
                         wodMember.WodGroupsMember.Add(wodGroupMember);
                     }
                     await _wodMemberRepository.Add(wodMember);
@@ -270,5 +281,10 @@ namespace Corpo.Domain.Services
                 return new DomainResponse(false, ex.Message, "No se pudo modificar el descanso.");
             }
         }
+
+    
+
+
+
     }
 }

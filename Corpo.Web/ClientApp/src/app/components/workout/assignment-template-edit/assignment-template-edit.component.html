@@ -6,7 +6,7 @@
   <hr *ngIf="!requestingAssignment && periodization" />
   <section class="wrapper" *ngIf="!requestingAssignment && periodization">
     <div class="row">
-      <div class=" col-12 col-lg-4 mb-4">
+      <div class=" col-12 col-lg-3 mb-4">
 
         <button *ngIf="!requestingAssignment && periodization && wods.length > 0" class="btn btn-primary w-100 mt-3 " type="button" data-toggle="modal" href="#modal-wod">
           Vista previa
@@ -43,12 +43,12 @@
       </div>
 
 
-      <div class="col-12 col-lg-8 " *ngIf="!requestingAssignment && periodization">
+      <div class="col-12 col-lg-9 " *ngIf="!requestingAssignment && periodization">
 
         <mat-tab-group [class.d-none]="requestingAssignment && wods.length == 0">
           <mat-tab label="Wod Nº {{newWod.wodNumber}}" *ngFor="let newWod of wods">
             <app-wod-template-form [wod]="newWod.wod" [date]="newWod.date" [weekNumber]="weekNumber" [periodizationId]="periodization.id"
-                                   [wodNumber]="newWod.wodNumber" [memberId]="memberId"
+                                   [wodNumber]="newWod.wodNumber" [memberId]="memberId" [modeWodMember]="modeWodMember"
                                    (goBackEvent)="cancelWod()" (saveEvent)=deleteWod($event)></app-wod-template-form>
           </mat-tab>
         </mat-tab-group>

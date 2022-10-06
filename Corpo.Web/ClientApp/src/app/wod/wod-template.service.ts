@@ -26,6 +26,7 @@ export class WodTemplateService {
   }
 
   public add(wodTemplate) {
+    console.log("wodTemplate servicio: ", wodTemplate);
     return this.http.post(this.url + 'api/wodTemplate', wodTemplate, httpOptions);
   }
 

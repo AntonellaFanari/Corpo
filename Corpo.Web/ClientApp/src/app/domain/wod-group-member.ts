@@ -6,19 +6,39 @@ export class WodGroupMember {
   exerciseId: number;
   modalityId: number;
   detail: string;
-  units: string;
+  rounds?: number;
+  series?: number;
+  time?: number;
+  unitType?: string;
+  units?: string;
   groupIndex: number;
-  mode?: string;
-  value?: number;
+  intensityType?: string;
+  intensityValue?: number;
+  staggeredType?: string;
+  staggeredValue?: number;
+  pauseBetweenRounds?: number;
+  pauseBetweenExercises?: number;
+  timeWork?: number;
+  timeRest?: number;
+
 /*  wodMemberId: number*/
 }
 
 export class WodGroupMemberResponse {
   exercise: Exercise;
   modality: Modality;
-  units: string;
-  groupIndex: string;
-  detail: string;
-  mode?: string;
-  value?: number
+  rounds?: number;
+  series?: number;
+  time?: number;
+  unitType?: string;
+  units?: string;
+  groupIndex: number;
+  intensityType?: string;
+  intensityValue?: number;
+  staggeredType?: string;
+  staggeredValue?: number;
+  pauseBetweenRounds?: number;
+  pauseBetweenExercises?: number;
+  timeWork?: number;
+  timeRest?: number;
 }

@@ -1,5 +1,6 @@
 ﻿using Corpo.Domain.Contracts.Services;
 using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using Corpo.Web.Controllers.ExtensionMethods;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -141,5 +142,6 @@ namespace Corpo.Web.Controllers
             var response = await _wodMemberService.UpdateRest(id, rest);
             return this.ToActionResult(response);
         }
+
     }
 }

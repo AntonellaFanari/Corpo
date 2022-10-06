@@ -24,95 +24,30 @@
       <strong>No se asignaron objetivos</strong>
     </div>
   </div>
-  <div class="row">
-    <div class="col-6  mt-3 mb-3 pe-3 btn-float-left">
-      <label class="col-12 control-label">Tipo de Int.:</label>
-      <div class="formValidators">
-        <select class="form-control" [(ngModel)]="intensityType" (change)="selectIntensityType($event.target.value)">
-          <option value="0" disabled>Seleccionar</option>
-          <option value="1">PSE</option>
-          <option value="2">PFM</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-6  mt-3 mb-3 pe-3 btn-float-left">
-      <label class="col-12 control-label">Intensidad :</label>
-      <div class="input-group">
-        <input type="number" class="form-control" [(ngModel)]="intensity" (blur)="validate()" />
-        <div [ngClass]="{'hide-percentage': hidePercentageIntensity }" class="input-group-append"><span class="input-group-text">%</span></div>
-      </div>
-      <p [ngClass]="validatorsIntensityNumber ? 'validators': 'hide-validators'">*Ingrese un número entre 0 y 10</p><p [ngClass]="validatorsIntensityPercentage ? 'validators': 'hide-validators'">*Ingrese un número entre 0 y 100</p>
-    </div>
-  </div>
+ 
 
-  <div class="form-group mt-2">
-    <label class="control-label">Ejercicio:</label>
-    <div class="">
-      <ng-select class="custom" [items]="exercises" [(ngModel)]="selectedExercise" (change)="selectExercise()" bindLabel="name" bindValue="id">
-      </ng-select>
-    </div>
-    <p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>
-  </div>
-
-  <div class="form-group mt-2 col-12">
-    <label class="control-label"></label>
+  <div class="form-group mt-3">
+    <label class="control-label">Modalidad:</label>
     <div class="formValidators">
-      <div class="row">
-
-        <div class="col-8">
-          <fieldset class="radio-group">
-            <label>
-              <input type="radio" class="radio-mode" name="numero" value="Kgs" (change)="selectMode($event.target.value)" [checked]="checkedKgs" class="cb-label"> Kgs
-            </label>
-            <label>
-              <input type="radio" class="radio-mode" name="numero" value="%" (change)="selectMode($event.target.value)" [checked]="checkedPercentage" class="cb-label"> %
-            </label>
-            <label>
-              <input type="radio" class="radio-mode" name="numero" value="RPE" (change)="selectMode($event.target.value)" [checked]="checkedRPE" class="cb-label"> RPE
-            </label>
-            <label>
-              <input type="radio" class="radio-mode" name="numero" value="RPEs" (change)="selectMode($event.target.value)" [checked]="checkedRPEs" class="cb-label">
-              RPEs
-            </label>
-            <label>
-              <input type="radio" class="radio-mode" name="numero" value="None" (change)="selectMode($event.target.value)" [checked]="checkedNone" class="cb-label">
-              Ninguno
-            </label>
-          </fieldset>
-        </div>
-        <div class="col-4">
-          <input type="text" class="form-control" [(ngModel)]="value">
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <div class="row">
-
-    <div class="form-group mt-2 col-6">
-      <label class="control-label">Modalidad:</label>
-      <div class="">
-        <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" (change)="selectModality()" bindLabel="name" bindValue="id">
-        </ng-select>
-      </div>
+      <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"
+                 selectOnTab="true" placeholder="Seleccionar" notFoundText="No hay modalidades" (change)="selectModality()">
+      </ng-select>
       <p [ngClass]="validatorsRequiredModality ? 'validators': 'hide-validators'">*Debe seleccionar una modalidad.</p>
     </div>
+  </div>
 
-    <div class="form-group mt-2 col-6">
-      <label class="control-label">Unidades:</label>
-      <div class="formValidators">
-        <input type="text" class="form-control" [(ngModel)]="units">
-      </div>
-    </div>
+
+  <div class="button-box">
+    <button class="btn btn-secondary mr-2" (click)="addwodGroup()">Agregar bloque</button>
+    <!--<button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>-->
   </div>
-  <div class="row">
-    <div class="button-box col-6 col-lg-3">
-      <button class="btn btn-secondary" (click)="addwodGroupModal()">Agregar grupo</button>
-      </div>
-    <div class="button-box col-6 col-lg-4">
-      <button class="btn btn-success" (click)="addExercise()">Agregar ejercicio</button>
-    </div>
-  </div>
+  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
+  <app-amrap [class.d-none]="modality != 'AMRAP'" (getTime)="getTime($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-amrap>
+  <app-emom [class.d-none]="modality != 'EMOM'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-emom>
+  <app-staggered [class.d-none]="modality != 'Escalera'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-staggered>
+  <app-timers [class.d-none]="modality != 'Timers'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-timers>
+  <app-rest-time [class.d-none]="modality != 'Rest Time'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-rest-time>
+
 
   <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="wod">
     <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i"
@@ -121,68 +56,36 @@
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
 
-      <a [routerLink]="" (click)="editGroupDetail(group.detail)" class="group-detail">
-        <label>{{group.detail}} <i class="fa fa-edit"></i></label>
-      </a>
+      <p  class="group-detail">
+        <label>{{group.detail}}</label>
+      </p>
 
-        <!--<div class="view-mobile">
-          <ng-select class="custom" [items]="group.exercises.name" [(ngModel)]="selectedExerciseView" (change)="selectExerciseView($event)" bindLabel="name" bindValue="id">
-          </ng-select>
-        </div>-->
-    
+      <!--<div class="view-mobile">
+        <ng-select class="custom" [items]="group.exercises.name" [(ngModel)]="selectedExerciseView" (change)="selectExerciseView($event)" bindLabel="name" bindValue="id">
+        </ng-select>
+      </div>-->
 
-      <div class="" id="no-more-tables">
-        <table class="table table-bordered wod-table">
+
+      <div class="">
+        <table class="table table-bordered">
           <tbody>
             <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
-              <td class="exercise-units">
-                <div class="arrow-button" (click)="increaseUnit(i, ei)">
-                  <div class="down"> </div>
-                </div>
 
+              <td class="col-9" [attr.colspan]="exerciseItem.value ? '1' : '2'">
+                {{exerciseItem.exercise.name}} - <span *ngIf="exerciseItem.modality !='Timers'">{{ exerciseItem.units }} {{exerciseItem.unitType}}</span>
+                <span *ngIf="exerciseItem.modality == 'Timers'"> Tiempo de ejercicio: {{ exerciseItem.timeWork }} - Tiempo de descanso: {{exerciseItem.timeRest}}</span>
               </td>
-              <td (blur)="updateUnits(i, ei, $event)" contenteditable="true" (mousedown)="$event.stopPropagation()">
-                {{exerciseItem.units}}
+              <td class="col-2">
+                {{exerciseItem.intensityValue}} {{exerciseItem.intensityType}}
               </td>
-              <td class="exercise-units">
-
-                <div class="arrow-button" (click)="dencreaseUnit(i, ei)">
-                  <div class="up"> </div>
-                </div>
-              </td>
-              <td class="col-12 col-lg-10" colspan="2">
-                {{exerciseItem.exercise.name}}
-              </td>
-              <td class="exercise-units" *ngIf="exerciseItem">
-                <div class="arrow-button" (click)="increaseValue(i, ei)">
-                  <div class="down"> </div>
-                </div>
-
-              </td>
-              <td class="" *ngIf="exerciseItem" (blur)="updateValue(i, ei, $event)" contenteditable="true"
-                  (mousedown)="$event.stopPropagation()">
-                <span *ngIf="exerciseItem.value != null">{{exerciseItem.value}}</span>
-                <span *ngIf="exerciseItem.value == null">0</span>
-              </td>
-              <td class="exercise-units" *ngIf="exerciseItem">
-
-                <div class="arrow-button" (click)="dencreaseValue(i, ei)">
-                  <div class="up"> </div>
-                </div>
-              </td>
-              <td class="col-12 col-lg-10" *ngIf="exerciseItem">
-                <select class="bg-success" [(ngModel)]="exerciseItem.mode">
-                  <option value="None">Ninguno</option>
-                  <option value="Kgs">kgs</option>
-                  <option value="%">%</option>
-                  <option value="RPE">RPE</option>
-                  <option value="RPEs">RPEs</option>
-                </select>
-              </td>
-              <td class="col-12 col-lg-2 action-column">
+              <td class="col-2 action-column">
+                <!--<a (click)="editExerciseItem(exerciseItem, ei)" class="delete-button me-2">
+                  <i class="fa fa-edit"></i>
+                </a>-->
                 <a (click)="deleteItem(i,ei)" class="delete-button">
                   <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>
+
               </td>
             </tr>
 

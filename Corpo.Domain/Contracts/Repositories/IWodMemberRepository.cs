@@ -20,6 +20,8 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<List<WodMember>> GetByWeekNumber(int weekNumber, int periodizationId);
         Task<List<AttendanceMonthlyDto>> GetAttendanceByYear(int year, int memberId);
         Task SetShiftDate(DateTime shiftDate);
+   
+        
 
 
     }

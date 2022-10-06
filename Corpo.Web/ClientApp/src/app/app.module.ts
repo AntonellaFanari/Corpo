@@ -163,6 +163,12 @@ import { TestDetailComponent } from './components/test/test-detail/test-detail.c
 import { WodTemplateEditComponent } from './components/workout/wod-template/wod-template-edit/wod-template-edit.component';
 import { AnamnesisResultComponent } from './components/phisical-condition/anamnesis-result/anamnesis-result.component';
 import { PaymentDetailsComponent } from './components/debt/payment-details/payment-details.component';
+import { ShortestPossibleTimeComponent } from './components/workout/wod-modality/shortest-possible-time/shortest-possible-time.component';
+import { AmrapComponent } from './components/workout/wod-modality/amrap/amrap.component';
+import { EmomComponent } from './components/workout/wod-modality/emom/emom.component';
+import { StaggeredComponent } from './components/workout/wod-modality/staggered/staggered.component';
+import { TimersComponent } from './components/workout/wod-modality/timers/timers.component';
+import { RestTimeComponent } from './components/workout/wod-modality/rest-time/rest-time.component';
 
 
 @NgModule({
@@ -315,7 +321,13 @@ import { PaymentDetailsComponent } from './components/debt/payment-details/payme
     TestDetailComponent,
     WodTemplateEditComponent,
     AnamnesisResultComponent,
-    PaymentDetailsComponent
+    PaymentDetailsComponent,
+    ShortestPossibleTimeComponent,
+    AmrapComponent,
+    EmomComponent,
+    StaggeredComponent,
+    TimersComponent,
+    RestTimeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -1142,6 +1142,57 @@ namespace Corpo.Data.Migrations
                     b.ToTable("Purchase");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.ResultsWodGroupMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("GroupIndex")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Repetitions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rounds")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Time")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResultsWodGroupMember");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.ResultsWodGroupMemberExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Repetitions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rounds")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Time")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WodGroupMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WodGroupMemberId")
+                        .IsUnique();
+
+                    b.ToTable("ResultsWodGroupMemberExercise");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -1623,17 +1674,47 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("GroupIndex")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IntensityType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IntensityValue")
+                        .HasColumnType("int");
+
                     b.Property<int>("ModalityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Mode")
+                    b.Property<int?>("PauseBetweenExercises")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PauseBetweenRounds")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Rounds")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Series")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StaggeredType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StaggeredValue")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Time")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TimeRest")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TimeWork")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Units")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Value")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("WodTemplateId")
                         .HasColumnType("int");
@@ -1665,17 +1746,47 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("GroupIndex")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IntensityType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IntensityValue")
+                        .HasColumnType("int");
+
                     b.Property<int>("ModalityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Mode")
+                    b.Property<int?>("PauseBetweenExercises")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PauseBetweenRounds")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Rounds")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Series")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StaggeredType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StaggeredValue")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Time")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TimeRest")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TimeWork")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Units")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Value")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("WodMemberId")
                         .HasColumnType("int");
@@ -2076,6 +2187,17 @@ namespace Corpo.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Corpo.Domain.Models.ResultsWodGroupMemberExercise", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.WodGroupMember", "WodGroupMember")
+                        .WithOne("ResultsWodGroupMemberExercise")
+                        .HasForeignKey("Corpo.Domain.Models.ResultsWodGroupMemberExercise", "WodGroupMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WodGroupMember");
+                });
+
             modelBuilder.Entity("Corpo.Domain.Models.RoleAccess", b =>
                 {
                     b.HasOne("Corpo.Domain.Models.Role", "Role")
@@ -2346,6 +2468,11 @@ namespace Corpo.Data.Migrations
             modelBuilder.Entity("Corpo.Domain.Models.TestTemplate", b =>
                 {
                     b.Navigation("TestExercises");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.WodGroupMember", b =>
+                {
+                    b.Navigation("ResultsWodGroupMemberExercise");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.WodMember", b =>

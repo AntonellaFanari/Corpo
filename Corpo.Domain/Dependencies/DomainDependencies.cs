@@ -46,6 +46,7 @@ namespace Corpo.Domain.Dependencies
             services.AddTransient<ITestMemberService, TestMemberService>();
             services.AddTransient<IAnamnesisService, AnamnesisService>();
             services.AddTransient<IBalancePaidService, BalancePaidService>();
+            services.AddTransient<IResultsWodGroupMemberService, ResultsWodGroupMemberService>();
         }
     }
 }

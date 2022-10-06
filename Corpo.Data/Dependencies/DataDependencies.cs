@@ -48,6 +48,7 @@ namespace Corpo.Data.Dependencies
             services.AddTransient<ITestMemberRepository, TestMemberRepository>();
             services.AddTransient<IAnamnesisRepository, AnamnesisRepository>();
             services.AddTransient<IBalancePaidRepository, BalancePaidRepository>();
+            services.AddTransient<IResultsWodGroupMemberRepository, ResultsWodGroupMemberRepository>();
             services.AddDbContext<CorpoContext>(options => options.UseSqlServer(connection));
         }
     }

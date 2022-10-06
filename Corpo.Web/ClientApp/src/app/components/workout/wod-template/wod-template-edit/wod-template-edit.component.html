@@ -60,7 +60,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!--<div class="row">
     <div class="form-group mt-3 col-12">
       <label class="control-label">Ejercicio:</label>
       <div class="formValidators">
@@ -102,9 +102,8 @@
 
       </div>
     </div>
-  </div>
-
-  <div class="form-group mt-3">
+  </div>-->
+  <!--<div class="form-group mt-3">
     <label class="control-label">Modalidad:</label>
     <div class="formValidators">
       <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"
@@ -127,7 +126,29 @@
   <div class="button-box">
     <button class="btn btn-secondary mr-2" (click)="addwodGroupModal()">Agregar grupo</button>
     <button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>
+  </div>-->
+
+  <div class="form-group mt-3">
+    <label class="control-label">Modalidad:</label>
+    <div class="formValidators">
+      <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"
+                 selectOnTab="true" placeholder="Seleccionar" notFoundText="No hay modalidades" (change)="selectModality()">
+      </ng-select>
+      <p [ngClass]="validatorsRequiredModality ? 'validators': 'hide-validators'">*Debe seleccionar una modalidad.</p>
+    </div>
   </div>
+
+
+  <div class="button-box">
+    <button class="btn btn-secondary mr-2" (click)="addwodGroup()">Agregar bloque</button>
+    <!--<button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>-->
+  </div>
+  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)"></app-shortest-possible-time>
+  <app-amrap [class.d-none]="modality != 'AMRAP'" (getTime)="getTime($event)" (getExercise)="getExercise($event)"></app-amrap>
+  <app-emom [class.d-none]="modality != 'EMOM'" (getExercise)="getExercise($event)"></app-emom>
+  <app-staggered [class.d-none]="modality != 'Escalera'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)"></app-staggered>
+  <app-timers [class.d-none]="modality != 'Timers'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)"></app-timers>
+  <app-rest-time [class.d-none]="modality != 'Rest Time'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)"></app-rest-time>
 
   <div cdkDropList (cdkDropListDropped)="drop($event)">
     <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i"

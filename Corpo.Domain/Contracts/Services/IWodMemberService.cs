@@ -1,4 +1,5 @@
 ﻿using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

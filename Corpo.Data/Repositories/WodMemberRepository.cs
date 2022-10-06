@@ -110,5 +110,6 @@ namespace Corpo.Data.Repositories
             wodMember.ShiftDate = shiftDate;
             await Update(wodMember);
         }
+
     }
 }

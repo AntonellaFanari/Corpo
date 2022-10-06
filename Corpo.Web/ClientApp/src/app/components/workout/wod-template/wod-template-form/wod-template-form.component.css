@@ -43,6 +43,7 @@ div.active-group {
 
 .wod-group {
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .button-box {
@@ -102,8 +103,11 @@ table td.action-column {
 
 a.delete-button {
   width: 100%;
+  color: black;
 }
-
+a.delete-button :hover{
+  color: red;
+}
 .example-list {
   max-width: 100%;
   border: solid 1px #ccc;
@@ -155,12 +159,15 @@ a.delete-button {
   display: block;
   width: fit-content;
 }
-.group-detail label {
-  margin-bottom: 10px;
-}
-.group-detail label:hover {
+  .group-detail label {
+    margin-bottom: 10px;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+  }
+/*.group-detail label:hover {
   cursor: pointer;
-}
+}*/
 
 section.saved {
   background-color: #bcd0c1;

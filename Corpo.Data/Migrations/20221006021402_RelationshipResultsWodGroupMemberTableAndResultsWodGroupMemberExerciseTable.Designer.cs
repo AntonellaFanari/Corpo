@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20221006021402_RelationshipResultsWodGroupMemberTableAndResultsWodGroupMemberExerciseTable")]
+    partial class RelationshipResultsWodGroupMemberTableAndResultsWodGroupMemberExerciseTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1152,9 +1154,6 @@ namespace Corpo.Data.Migrations
                     b.Property<string>("GroupIndex")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Modality")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Repetitions")
                         .HasColumnType("int");
 
@@ -1162,9 +1161,6 @@ namespace Corpo.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Time")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WodMemberId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1188,8 +1184,8 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("Rounds")
                         .HasColumnType("int");
 
-                    b.Property<string>("Times")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Time")
+                        .HasColumnType("int");
 
                     b.Property<int>("WodGroupMemberId")
                         .HasColumnType("int");

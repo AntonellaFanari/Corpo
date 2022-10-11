@@ -10,6 +10,7 @@ namespace Corpo.Domain.Contracts.Services
 {
     public interface IWodMemberService
     {
+        Task<DomainResponse> GetById(int id);
         Task<DomainResponse> Add(int id, int weekNumber, Periodization periodization);
         Task<DomainResponse> Update(WodMember wodMember);
         Task<DomainResponse> Delete(int id);

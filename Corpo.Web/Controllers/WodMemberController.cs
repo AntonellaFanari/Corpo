@@ -22,6 +22,13 @@ namespace Corpo.Web.Controllers
             _wodMemberService = wodMemberService;
         }
 
+        [HttpGet("by-id")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            var response = await _wodMemberService.GetById(id);
+            return this.ToActionResult(response);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Add(int id, int weekNumber, [FromBody] Periodization periodization)
         {
@@ -47,6 +54,14 @@ namespace Corpo.Web.Controllers
         public async Task<ActionResult<List<WodMember>>> GetAllWodMember(int id, DateTime from, DateTime to)
         {
             var response = await _wodMemberService.GetAllWodMember(id, from, to);
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("by-week-valid")]
+        public async Task<ActionResult<List<WodMember>>> GetAllByWeekValid(int id)
+        {
+            
+            var response = await _wodMemberService.GetAllWodMemberWeek(id);
             return this.ToActionResult(response);
         }
 

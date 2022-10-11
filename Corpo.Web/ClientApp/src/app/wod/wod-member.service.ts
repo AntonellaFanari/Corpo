@@ -24,8 +24,8 @@ export class WodMemberService {
     this.url = url;
   }
 
-  public getAll() {
-    return this.http.get<any>(this.url + 'api/wod-member/');
+  public getAll(id: number) {
+    return this.http.get<any>(this.url + 'api/wod-member/by-week-valid?id='+ id);
   }
 
   public add(id, weekNumber, periodization: Periodization) {

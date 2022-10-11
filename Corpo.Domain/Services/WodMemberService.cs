@@ -24,6 +24,16 @@ namespace Corpo.Domain.Services
             _wodTemplateRepository = wodTemplateRepository;
         }
 
+        public async Task<DomainResponse> GetById(int id)
+        {
+            var response = await _wodMemberRepository.GetById(id);
+            return new DomainResponse()
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
         public async Task<DomainResponse> Add(int id, int weekNumber, Periodization periodization)
         {
             try
@@ -282,9 +292,6 @@ namespace Corpo.Domain.Services
             }
         }
 
-    
-
-
-
+      
     }
 }

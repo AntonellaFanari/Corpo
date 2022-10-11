@@ -79,7 +79,6 @@ export class AssignmentTemplateEditComponent implements OnInit {
     this.periodizationService.getById(this.id).subscribe(
       response => {
         console.log("periodización: ", response.result);
-        this.requestingAssignment = false;
         this.periodization = response.result;
         this.display = false;
         this.memberId = this.periodization.memberId;
@@ -142,6 +141,7 @@ export class AssignmentTemplateEditComponent implements OnInit {
 
         console.log("wods:", this.wods)
 
+        this.requestingAssignment = false;
       },
       error => console.error(error)
     )

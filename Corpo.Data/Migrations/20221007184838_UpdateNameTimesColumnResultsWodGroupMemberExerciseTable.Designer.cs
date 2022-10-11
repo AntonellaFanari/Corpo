@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20221007184838_UpdateNameTimesColumnResultsWodGroupMemberExerciseTable")]
+    partial class UpdateNameTimesColumnResultsWodGroupMemberExerciseTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1188,8 +1190,8 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("Rounds")
                         .HasColumnType("int");
 
-                    b.Property<string>("Times")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Times")
+                        .HasColumnType("int");
 
                     b.Property<int>("WodGroupMemberId")
                         .HasColumnType("int");

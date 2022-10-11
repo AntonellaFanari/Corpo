@@ -47,6 +47,7 @@ export class AssignmentTemplateComponent implements OnInit {
   requestingAssignment: boolean;
   @ViewChild('wod-template-table', { static: false }) wodsTable: ElementRef;
   level: number;
+  weekValid = true;
 
   constructor(private wodTemplateService: WodTemplateService, private route: ActivatedRoute,
     private memberService: MemberService,
@@ -97,11 +98,12 @@ export class AssignmentTemplateComponent implements OnInit {
       console.log("periodization", data.result);
       if (data.result != null) {
         this.periodization = data.result;
+        this.getPeriodizationWeekValid();
         //this.weekNumber = parseInt(this.periodization.periodizationWeeks.find(x => x.planned == "false").weekNumber);
-        this.getWeekPlanned();
+
       }
 
-      this.requestingAssignment = false;
+      
 
     }, error => {
 
@@ -109,16 +111,30 @@ export class AssignmentTemplateComponent implements OnInit {
     })
   }
 
+  getPeriodizationWeekValid() {
+    this.wodMemberService.getAll(this.memberId).subscribe(
+      response => {
+        console.log("wods vigentes: ", response.result);
+        if (response.result.length == 0) this.weekValid = false;
+        this.getWeekPlanned();
+        this.requestingAssignment = false;
+      },
+      error => console.error(error)
+    )
+  }
+
   getWeekPlanned() {
-      let weeksPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true");
-      if (weeksPlanned.length > 0 ) {
-        this.setClassSelect(weeksPlanned);
-        if (this.weekNumber !=0) {
-          this.selectWeekNumber(this.weekNumber);
-        } else {
+    let weeksPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true");
+    if (weeksPlanned.length > 0) {
+      this.setClassSelect(weeksPlanned);
+      if (this.weekNumber != 0) {
+        this.selectWeekNumber(this.weekNumber);
+      } else {
+        if (this.weekValid) {
           this.selectWeekNumber(weeksPlanned[weeksPlanned.length - 1].weekNumber);
         }
       }
+    }
 
   }
 
@@ -163,7 +179,7 @@ export class AssignmentTemplateComponent implements OnInit {
 
   getById(id: number) {
     console.log(this.weekNumber);
-    if (this.periodization && this.weekNumber>0) {
+    if (this.periodization && this.weekNumber > 0) {
       this.requestingAssignment = true;
       this.wodMemberService.add(id, this.weekNumber, this.periodization).subscribe(
         response => {
@@ -179,9 +195,9 @@ export class AssignmentTemplateComponent implements OnInit {
       } else {
         this.customAlertService.displayAlert("Gestion de Periodizacioness", ["Debe seleccionar una semana."]);
       }
-     
+
     }
-   
+
 
   }
 

@@ -49,29 +49,19 @@ namespace Corpo.Data.Repositories
 
         public async Task<List<ResultsWodGroupMemberDto>> GetByWodId(int id)
         {
-            //var listWodGroup = await _context.WodGroupMember.Include(x => x.ResultsWodGroupMemberExercise).Where(x => x.WodMemberId == id).ToListAsync();
-            //var listIndex = new List<string>();
-            //foreach (var wodGroup in listWodGroup)
-            //{
-            //    listIndex.Add(wodGroup.GroupIndex);
-            //};
-            //listIndex.Distinct().ToList();
-            //var listResultWodGroup = new List<ResultsWodGroupMemberDto>();
-            //foreach (var index in listIndex)
-            //{
-            //    var resultsGroup = await _context.ResultsWodGroupMember.FirstOrDefaultAsync(x => x.GroupIndex == index);
-            //    var result = new ResultsWodGroupMemberDto {
-            //    Id = resultsGroup.Id,
-            //    Rounds = resultsGroup.Rounds,
-            //    Time = resultsGroup.Time,
-            //    Repetitions = resultsGroup.Repetitions,
-            //    ResultsWodGroupMemberExercise = listWodGroup.Where(x => x.GroupIndex == index)}
-
-            //}
+          return await _context.ResultsWodGroupMember.Include(x => x.ResultsWodGroupMemberExercise).Where(x => x.WodMemberId == id).Select(
+              x => new ResultsWodGroupMemberDto
+              {
+                  Id = x.Id,
+                  WodMemberId = x.WodMemberId,
+                  GroupIndex = x.GroupIndex,
+                  Modality = x.Modality,
+                  Rounds = x.Rounds,
+                  Repetitions = x.Repetitions,  
+                  Time = x.Time,
+                  ResultsWodGroupMemberExercise = new List<ResultsWodGroupMemberExerciseDto>()
+              }).ToListAsync();
             
-
-            var list = new List<ResultsWodGroupMemberDto>();
-            return list;
         }
     }
 }

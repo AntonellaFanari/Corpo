@@ -1,5 +1,5 @@
 <!-- Page Content -->
-<section class="wrapper">
+<section class="wrapper" *ngIf="!requestingAssignment && periodization">
   <div class="task-panel " *ngIf="!requestingAssignment && periodization">
     <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel <span *ngIf="level">{{level}}</span><span *ngIf="!level"> no asignado</span></h4>
   </div>

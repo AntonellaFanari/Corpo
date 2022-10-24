@@ -1,20 +1,26 @@
 <!-- Page Content -->
-<div *ngIf="!requestingAssignment && member">
+<div *ngIf="!requestingAssignment && member && level">
   <section class="wrapper">
-    <div class="task-panel ">
-      <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel <span *ngIf="level">{{level}}</span><span *ngIf="!level">no asignado</span></h4>
+    <div class="row">
+      <div class="task-panel col-12 col-lg-6">
+        <h4 class="table-title text-center">{{member.lastName}} {{member.name}} WOD - Nivel <span *ngIf="level">{{level}}</span><span *ngIf="!level">no asignado</span></h4>
+      </div>
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add btn-float-right" [routerLink]="['/menu-wod']" [queryParams]="{filter:'results', id: member.id}">Resultados</button>
+        <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add btn-float-right me-2" [routerLink]="['/menu-wod']" [queryParams]="{filter:'wods', id: member.id}">Wods</button>
+      </div>
     </div>
     <hr>
     <div class="row">
       <div class="col-12 col-lg-8 ">
-        <div class="col-12 card">
+        <div class="col-12 card" *ngIf="wodTemplates.length > 0">
           <div class="row card-body">
             <div class="col-12">
               <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
             </div>
           </div>
         </div>
-        <section class="col-12" id="no-more-tables">
+        <section class="col-12" id="no-more-tables" *ngIf="wodTemplates.length > 0">
           <table id="wod-template-table" class="table table-bordered table-condensed cf scrollme user-table">
             <thead class="cf">
               <tr>
@@ -22,16 +28,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let wod of wodTemplates | searchFilterName: filterName" class="tr-click scrollme span-margin"
-                  (click)="getById(wod.id)">
+              <tr *ngFor="let wod of wodTemplates | searchFilterName: filterName" class="scrollme span-margin" [ngClass]="{'tr-click': selectedWodTemplateId == wod.id}"
+                  (click)="selectWodTemplate(wod.id)">
                 <td class="td-title" data-title="Nombre"><span>{{wod.name}}</span></td>
               </tr>
             </tbody>
           </table>
         </section>
 
-        <div class="mt-3" *ngIf="wodTemplates.length == 0">
-          <h5>No hay plantillas</h5>
+        <div class="card card-body mt-3" *ngIf="wodTemplates.length == 0">
+          <div class="text-center"> <h6>No hay plantillas</h6></div>
         </div>
 
       </div>
@@ -61,6 +67,11 @@
             <option class="week-option week-not-planned" value="4">4</option>
           </select>
         </div>
+
+        <button class="btn btn-success w-100 mt-3" type="button"
+                *ngIf="periodization" (click)="goToPlanning()">
+          Ir a planificación
+        </button>
 
         <button class="btn btn-secondary w-100 mt-3" type="button" [routerLink]="['/personalizados']">
           Volver

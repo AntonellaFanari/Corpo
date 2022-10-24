@@ -52,4 +52,8 @@ export class PeriodizationService {
   public getByPeriodizationWeek(periodizationWeekId: number) {
     return this.http.get<DomainResponse<PeriodizationWeek>>(this.url + 'api/periodization/by-periodization-week?id=' + periodizationWeekId);
   }
+
+  public getYears(id: number) {
+    return this.http.get<DomainResponse<any>>(this.url + 'api/periodization/years?id=' + id);
+  }
 }

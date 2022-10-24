@@ -1,0 +1,79 @@
+<section class="wrapper" *ngIf="!requesting && member">
+  <div class="task-panel ">
+    <div class="task-panel">
+      <h4 class="table-title">{{member.lastName}} {{member.name}}<span [class.d-none]="filter == 'results'"> - Wods</span> <span [class.d-none]="filter == 'wods'"> - Resultados</span></h4>
+    </div>
+  </div>
+  <hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 card bg-light" [class.d-none]="(resultsWods.length > 0 || wods.length > 0)">
+        <div class="card-body row">
+          <div class="col-lg-4 col-md-6 col-xs-12 btn-float-right">
+            <label class="form-label">Año:</label>
+            <select class="form-control col-12" (change)="selectYear($event.target.value)">
+              <option class="form-control col-12" value="null" [disabled]>Seleccionar</option>
+              <option *ngFor="let year of years" class="form-control col-12" value={{year}}>{{year}}</option>
+            </select>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12 btn-float-right">
+            <label class="form-label">Periodización:</label>
+            <select class="form-control col-12" (change)="selectPeriodization($event.target.value)" [disabled]="!selectedYear">
+              <option class="form-control col-12" value="null" [disabled]>Seleccionar</option>
+              <option *ngFor="let periodization of periodizations" class="form-control col-12" value={{periodization.id}}>{{getMonth(periodization.month)}}</option>
+            </select>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12 btn-float-right">
+            <label class="form-label">Semana:</label>
+            <select class="form-control col-12" (change)="selectWeek($event.target.value)" [disabled]="!(selectedYear && selectedPeriodization)">
+              <option class="form-control col-12" value="null" [disabled]>Seleccionar</option>
+              <option *ngFor="let periodizationWeek of periodizationsWeek" [class.d-none]="periodizationWeek.planned == 'false'" class="form-control col-12" value={{periodizationWeek.weekNumber}}>{{periodizationWeek.weekNumber}}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="card-body row mb-1 justify-content-center align-items-center">
+          <div class="text-center col-lg-4">
+            <button type="button" class="btn btn-primary form-control col-6 btn-float-right" [disabled]="!selectedWeek" (click)="search()">Buscar</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-12 card bg-light" [class.d-none]="wods.length == 0">
+
+        <mat-tab-group>
+          <mat-tab label="Wod Nº {{wod.wodNumber}}" *ngFor="let wod of wods">
+            <app-preview-wod [wod]="wod.wod"></app-preview-wod>
+          </mat-tab>
+        </mat-tab-group>
+
+
+      </div>
+
+      <div class="col-lg-12 card bg-light" [class.d-none]="resultsWods.length == 0">
+
+        <mat-tab-group>
+          <mat-tab label="Wod Nº {{result.wodNumber}}" *ngFor="let result of resultsWods">
+            <app-result-wod [wodId]="result.wodId" [results]="result.results"></app-result-wod>
+          </mat-tab>
+        </mat-tab-group>
+
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="button-box col-6 col-lg-3 btn-float-left mt-3">
+    <button class="btn btn-secondary btn-width " (click)="goBack()">Volver</button>
+  </div>
+
+</section>
+<section class="wrapper">
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</section>

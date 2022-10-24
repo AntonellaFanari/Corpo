@@ -163,5 +163,15 @@ namespace Corpo.Domain.Services
                 return new DomainResponse(false, ex.Message, "No se pudo modificar la periodización.");
             }
         }
+
+        public async Task<DomainResponse> GetYears(int id)
+        {
+            var response = await _periodizationRepository.GetYears(id);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
     }
 }

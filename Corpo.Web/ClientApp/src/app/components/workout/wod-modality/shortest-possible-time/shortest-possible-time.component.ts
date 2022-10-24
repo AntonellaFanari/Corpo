@@ -136,5 +136,9 @@ export class ShortestPossibleTimeComponent implements OnInit {
     this.selectedIntensityType = undefined;
   }
 
+  setRounds() {
+    this.getRounds.emit(this.rounds);
+  }
+
 
 }

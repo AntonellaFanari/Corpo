@@ -127,4 +127,8 @@ export class AmrapComponent implements OnInit {
     this.selectedIntensityType = undefined;
   }
 
+  setTime() {
+    this.getTime.emit(this.time);
+  }
+
 }

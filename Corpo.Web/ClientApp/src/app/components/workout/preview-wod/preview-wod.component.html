@@ -1,0 +1,41 @@
+<section>
+  <!--<h6 class="w-100 text-center p-3"><strong>Planificación semana {{wod.weekNumber}}</strong></h6>-->
+  <div class="form-group mt-2">
+    <label class="control-label">Objetivos:</label>
+    <ul class="goal">
+      <li *ngFor="let goal of getGoals(wod.goal)">{{ goal }}</li>
+    </ul>
+  </div>
+
+  <div >
+    <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i"
+          [class.active-group]="i == activeWodGroup" cdkDrag>
+
+      <p class="group-detail">
+        <label>{{group.detail}}</label>
+      </p>
+
+      <div class="">
+        <table class="table table-bordered">
+          <tbody>
+            <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
+
+              <td class="col-9" [attr.colspan]="exerciseItem.value ? '1' : '2'">
+                {{exerciseItem.exercise.name}} - <span *ngIf="exerciseItem.modality !='Timers'">{{ exerciseItem.units }} {{exerciseItem.unitType}}</span>
+                <span *ngIf="exerciseItem.modality == 'Timers'"> Tiempo de ejercicio: {{ exerciseItem.timeWork }} - Tiempo de descanso: {{exerciseItem.timeRest}}</span>
+              </td>
+              <td class="col-2">
+                {{exerciseItem.intensityValue}} {{exerciseItem.intensityType}}
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+

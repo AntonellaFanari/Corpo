@@ -12,6 +12,6 @@ namespace Corpo.Domain.Models.Dtos
         public int WodGroupMemberId { get; set; }
         public List<int> Times { get; set; }
         public int Rounds { get; set; }
-        public int Repetitions { get; set; }
+        public int Amount { get; set; }
     }
 }

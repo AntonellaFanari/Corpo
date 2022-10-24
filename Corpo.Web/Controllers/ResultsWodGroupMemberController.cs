@@ -34,5 +34,12 @@ namespace Corpo.Web.Controllers
             var response = await _resultsWodGroupMemberService.GetByWodId(wodId);
             return this.ToActionResult(response);
         }
+
+        [HttpGet("results")]
+        public async Task<ActionResult> GetResults(int id, int weekNumber)
+        {
+            var response = await _resultsWodGroupMemberService.GetResults(id, weekNumber);
+            return this.ToActionResult(response);
+        }
     }
 }

@@ -47,6 +47,10 @@ div.mat-tab-body-content {
   background: #f3990b91;
 }
 
+.tr-click{
+    background-color: lightgreen;
+}
+
 @media only screen and (max-width: 800px) {
 
 

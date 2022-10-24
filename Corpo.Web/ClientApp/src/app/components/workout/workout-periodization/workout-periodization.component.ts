@@ -915,7 +915,7 @@ private customAlertService: CustomAlertService  ) {
     console.log(periodization)
     this.periodizacionService.add(periodization).subscribe(() => {
       console.log("success")
-      this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId } });
+      this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId, week: '0' } });
     },
       error => {
         if (error.status == 400) {

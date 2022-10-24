@@ -13,10 +13,12 @@ namespace Corpo.Domain.Services
     public class ResultsWodGroupMemberService: IResultsWodGroupMemberService
     {
         private IResultsWodGroupMemberRepository _resultsWodGroupMemberRepository;
+        private IWodMemberRepository _wodMemberRepository;
 
-        public ResultsWodGroupMemberService(IResultsWodGroupMemberRepository resultsWodGroupMemberRepository)
+        public ResultsWodGroupMemberService(IResultsWodGroupMemberRepository resultsWodGroupMemberRepository, IWodMemberRepository wodMemberRepository)
         {
             _resultsWodGroupMemberRepository = resultsWodGroupMemberRepository;
+            _wodMemberRepository = wodMemberRepository;
         }
 
         public async Task<DomainResponse> Add(List<ResultsWodGroupMemberDto> results)
@@ -60,8 +62,9 @@ namespace Corpo.Domain.Services
                 var resultsWodGroupExercise = new ResultsWodGroupMemberExercise
                 {
                  Rounds = result.Rounds,
-                 Repetitions = result.Repetitions,
-                 Times = String.Join("-", result.Times)
+                 Amount = result.Amount,
+                 Times = String.Join("-", result.Times),
+                 WodGroupMemberId = result.WodGroupMemberId
                 };
 
                 listResultsWodGroupExercise.Add(resultsWodGroupExercise);
@@ -74,6 +77,23 @@ namespace Corpo.Domain.Services
         {
             var response = await _resultsWodGroupMemberRepository.GetByWodId(wodId);
             return new DomainResponse { Success = true, Result = response };
+        }
+
+        public async Task<DomainResponse> GetResults(int id, int weekNumber)
+        {
+            var wods = await _wodMemberRepository.GetByWeekNumber(weekNumber, id);
+            var results = new List<object>();
+            foreach (var wod in wods)
+            {
+                var resultsWods = await _resultsWodGroupMemberRepository.GetByWodId(wod.Id);
+                var resultWod = new { wod.Id, wod.WodNumber, resultsWods };
+                results.Add(resultWod);
+            }
+            return new DomainResponse
+            {
+                Success = true,
+                Result = results
+            };
         }
     }
 }

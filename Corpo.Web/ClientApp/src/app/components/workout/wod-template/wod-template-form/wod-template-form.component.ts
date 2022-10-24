@@ -1,6 +1,6 @@
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { fi } from 'date-fns/locale';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -107,6 +107,8 @@ export class WodTemplateFormComponent implements OnInit {
   @Output() saveEvent = new EventEmitter();
   @Output() updateWeek = new EventEmitter();
   @Input() modeWodMember: boolean;
+  @Input() modeQuery = false;
+  @Input() planned: string;
 
 
   ngOnInit() {
@@ -125,9 +127,8 @@ export class WodTemplateFormComponent implements OnInit {
 
   }
 
-  ngOnChanges() {
-    /**********THIS FUNCTION WILL TRIGGER WHEN PARENT COMPONENT UPDATES 'someInput'**************/
-    //Write your code here  
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("realizado:", this.planned);
   }
 
   getAllModalities() {
@@ -262,8 +263,9 @@ export class WodTemplateFormComponent implements OnInit {
       this.detail = "Modalidad: " + this.modality;
       this.rounds = 0;
       this.resetInputs();
+      let staggeredModality = this.modalities.find(x => x.name == "Escalera").id;
       this.wod.addGroup(new WodGroup(this.createGuid(),
-        ((this.selectedModality == 5) ? "Modalidad: " + this.modality + " - " + "3 Series - Ascendente en 3" : this.detail),
+        ((this.selectedModality == staggeredModality) ? "Modalidad: " + this.modality + " - " + "3 Series - Ascendente en 3" : this.detail),
         this.modality, this.selectedModality, this.rounds, this.series, this.time, this.staggeredType, this.staggeredValue, this.pauseBetweenRounds, this.pauseBetweenExercises));
       this.activeWodGroup = 0;
       this.detail = "";
@@ -620,6 +622,11 @@ export class WodTemplateFormComponent implements OnInit {
 
     this.wod.wodGroups[this.activeWodGroup].exercises.splice(index, 1);
   }
+
+  deleteClassSaved() {
+    this.saved = false;
+  }
+
   
 }
 

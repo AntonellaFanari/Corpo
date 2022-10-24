@@ -7,7 +7,7 @@
         <div class="down"> </div>
       </div>
       <div class="formValidators col-3 ps-0 pe-0">
-        <input type="text" class="form-control" [(ngModel)]="time">
+        <input type="text" class="form-control" [(ngModel)]="time" (change)="setTime()">
         <!--<p *ngIf="validationError && !time">* el campo es requerido.</p>-->
       </div>
       <div class="arrow-button col-3" (click)="increaseUnit('time')">

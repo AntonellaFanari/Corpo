@@ -15,5 +15,6 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> GetById(int id);
         Task<DomainResponse> GetByYear(int year, int id);
         Task<DomainResponse> GetPeriodizationWeek(int id);
+        Task<DomainResponse> GetYears(int id);
     }
 }

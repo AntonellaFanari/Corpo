@@ -3,6 +3,7 @@ import { Modality } from "./wod/modality";
 import { IntensityType } from "./wod/periodization";
 
 export class WodGroup {
+  id: number;
   groupIndex: string;
   exercises: ExerciseItem[] = [];
   detail: string;
@@ -64,6 +65,11 @@ export class Wod {
   mode: string;
   intensityType: IntensityType;
   intensity: number;
+  rate?: number;
+  weekNumber?: number;
+  wodNumber?: number;
+  rest?: number;
+  attended: string;
 
   addGroup(wodGroup: WodGroup) {
 

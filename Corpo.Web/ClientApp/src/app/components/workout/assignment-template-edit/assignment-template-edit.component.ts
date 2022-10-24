@@ -23,7 +23,7 @@ export class AssignmentTemplateEditComponent implements OnInit {
   wods: any[] = [];
   periodization: Periodization;
   requestingPeriodization: boolean;
-  selectedWeekNumber: number;
+  selectedWeekNumber = 0;
   wodTemplate: wodTemplateResponse;
   requestingAssignment: boolean;
   member: MemberView;
@@ -120,13 +120,15 @@ export class AssignmentTemplateEditComponent implements OnInit {
     this.wodMemberService.getByPeriodizationId(this.id, this.weekNumber).subscribe(
       response => {
 
+        this.requestingAssignment = false;
         console.log("wods1: ", response.result);
         var wodMembers = response.result;
         wodMembers.forEach(w => {
           this.wods.push({
             wod: this.getWod(w),
             date: "",
-            wodNumber: w.wodNumber
+            wodNumber: w.wodNumber,
+            attended: w.attended
           });
           console.log("wodMember:", w)
         })
@@ -141,7 +143,6 @@ export class AssignmentTemplateEditComponent implements OnInit {
 
         console.log("wods:", this.wods)
 
-        this.requestingAssignment = false;
       },
       error => console.error(error)
     )
@@ -192,17 +193,21 @@ export class AssignmentTemplateEditComponent implements OnInit {
     return wod;
   }
 
+
+  goToPlanning() {
+    this.weekNumber = this.selectedWeekNumber;
+    let weekPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true" && x.weekNumber == this.weekNumber.toString());
+    if (weekPlanned.length > 0) {
+      this.getWodMember();
+    } else {
+      this.router.navigate(['/asignacion-plantilla'], {
+        queryParams: { memberId: this.member.id, week: '0' }
+      })
+    }
+  }
+
   selectWeekNumber(weekNumber) {
     this.selectedWeekNumber = weekNumber;
-    this.weekNumber = weekNumber;
-    let weeksPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true" && x.weekNumber == weekNumber);
-    if (weeksPlanned.length > 0) {
-      this.getWodMember();
-      //this.ngOnInit();
-    } else {
-      this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId, week: this.selectedWeekNumber } });
-
-    }
 
   }
 

@@ -13,7 +13,7 @@ namespace Corpo.Domain.Models
         public int WodGroupMemberId { get; set; }
         public string Times { get; set; }
         public int Rounds { get; set; }
-        public int Repetitions { get; set; }
+        public int Amount { get; set; }
         public virtual ResultsWodGroupMember ResultsWodGroupMember { get; set; }
         public int ResultsWodGroupMemberId { get; set; }
 

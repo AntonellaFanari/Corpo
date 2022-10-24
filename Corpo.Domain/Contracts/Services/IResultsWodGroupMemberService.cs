@@ -12,5 +12,6 @@ namespace Corpo.Domain.Contracts.Services
     {
         Task<DomainResponse> Add(List<ResultsWodGroupMemberDto> results);
         Task<DomainResponse> GetByWodId(int wodId);
+        Task<DomainResponse> GetResults(int id, int weekNumber);
     }
 }

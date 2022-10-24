@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Data.Repositories
 {
-    public class PeriodizationRepository: IPeriodizationRepository
+    public class PeriodizationRepository : IPeriodizationRepository
     {
         private CorpoContext _context;
 
@@ -51,17 +51,29 @@ namespace Corpo.Data.Repositories
 
         public Task<PeriodizationWeek> GetPeriodizationWeekByPeriodizationIdByFromTo(int id, DateTime from, DateTime to)
         {
-           return _context.PeriodizationWeek.FirstOrDefaultAsync(x => x.PeriodizationId == id && x.From <= from && x.To >= to);
+            return _context.PeriodizationWeek.FirstOrDefaultAsync(x => x.PeriodizationId == id && x.From <= from && x.To >= to);
         }
 
         public Task<PeriodizationWeek> GetPeriodizationWeekPlannedByShiftDate(DateTime shiftDate)
         {
-           return _context.PeriodizationWeek.FirstOrDefaultAsync(x => x.From <= shiftDate && x.To >= shiftDate && x.Planned == "true");
+            return _context.PeriodizationWeek.FirstOrDefaultAsync(x => x.From <= shiftDate && x.To >= shiftDate && x.Planned == "true");
         }
 
         public async Task<Periodization> GetValidByMemberId(int id)
         {
             return await _context.Periodization.Include(x => x.PeriodizationWeeks).FirstOrDefaultAsync(x => x.MemberId == id && x.Valid);
+        }
+
+        public async Task<List<int>> GetYears(int id)
+        {
+            var years = new List<int>();  
+            var list = await _context.Periodization.Where(x => x.MemberId == id).Select(x => new { x.Year }).ToListAsync();
+            foreach (var item in list)
+            {
+                years.Add(item.Year);
+            }
+
+            return years;
         }
 
         public async Task Update(Periodization periodization)

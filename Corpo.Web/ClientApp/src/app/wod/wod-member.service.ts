@@ -42,7 +42,7 @@ export class WodMemberService {
   }
 
   public getById(id: number) {
-    return this.http.get<any>(this.url + 'api/wod-member/' + id);
+    return this.http.get<any>(this.url + 'api/wod-member/by-id?id=' + id);
   }
 
   public getByPeriodizationId(id: number, weekNumber: number) {
@@ -60,4 +60,9 @@ export class WodMemberService {
   public getAttendancesByYear(year: number, memberId: number) {
     return this.http.get<DomainResponse<any>>(this.url + 'api/wod-member/attendance-by-year?year=' + year + '&memberId=' + memberId);
   }
+
+  public getResults(id: number, weekumber: number) {
+    return this.http.get<DomainResponse<any>>(this.url + 'api/results-wod-group-member/results?id=' + id + '&weekNumber=' + weekumber);
+  }
+
 }

@@ -23,6 +23,7 @@ export class TimersComponent implements OnInit {
   @Output() getRounds: EventEmitter<number> = new EventEmitter<number>();
   @Output() getExercise: EventEmitter<ExerciseItem> = new EventEmitter<ExerciseItem>();
   validatorsRequiredExercise: boolean;
+  selectedUnitType: any;
 
 
   constructor(private exerciseService: ExerciseService) { }
@@ -91,6 +92,7 @@ export class TimersComponent implements OnInit {
       exerciseItem.exercise = exercise;
       exerciseItem.timeWork = this.timeWork;
       exerciseItem.timeRest = this.timeRest;
+      exerciseItem.unitType = this.selectedUnitType.type;
       if (this.selectedIntensityType == null) {
         exerciseItem.intensityType = "None";
       } else {
@@ -105,6 +107,7 @@ export class TimersComponent implements OnInit {
 
       this.selectedExercise = undefined;
       this.selectedIntensityType = undefined;
+      this.selectedUnitType = undefined;
       this.units = 0;
       this.intensity = 0;
       this.timeWork = 0;
@@ -134,6 +137,10 @@ export class TimersComponent implements OnInit {
     this.selectedIntensityType = undefined;
     this.timeWork = 0;
     this.timeRest = 0;
+  }
+
+  setRounds() {
+    this.getRounds.emit(this.rounds);
   }
 
 }

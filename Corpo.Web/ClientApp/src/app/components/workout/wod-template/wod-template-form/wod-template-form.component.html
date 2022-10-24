@@ -1,4 +1,4 @@
-<section [class.saved]="saved">
+<section [class.saved]="saved" (click)="deleteClassSaved()">
   <h6 class="status-tittle w-100 text-center p-3" [class.d-none]="!saved">Guardado</h6>
   <h6 class="w-100 text-center p-3"><strong>Planificación semana {{weekNumber}}</strong></h6>
   <div class="form-group mt-2">
@@ -93,7 +93,7 @@
         </table>
       </div>
     </div>
-    <div class="mt-3">
+    <div class="mt-3"  [class.d-none]="planned == 'true'">
       <button class="btn btn-success col-12 btn-create" type="submit"
               (click)="save()">
         Guardar

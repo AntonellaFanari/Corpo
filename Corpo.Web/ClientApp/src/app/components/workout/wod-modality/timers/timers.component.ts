@@ -123,6 +123,7 @@ export class TimersComponent implements OnInit {
 
   getEditExercise(exercise) {
     this.selectedExercise = exercise.exercise.id;
+    this.selectedUnitType = this.unitsTypes.find(x => x.type == exercise.unitType);
     console.log("ejercicio seleccionado para la edición: ", this.selectedExercise);
     this.intensity = exercise.intensityValue;
     this.selectedIntensityType = this.intensityTypes.find(x => x.type == exercise.intensityType);

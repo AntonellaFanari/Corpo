@@ -79,6 +79,7 @@ export class WodTemplateFormComponent implements OnInit {
   staggeredType: string;
   staggeredValue: number;
   previousActiveWodGroup: number;
+  modeEditStaggered = false;
 
   @ViewChild(ShortestPossibleTimeComponent, { static: false }) modalityShortesPossibleTime: ShortestPossibleTimeComponent;
   @ViewChild(AmrapComponent, { static: false }) modalityAmrap: AmrapComponent;
@@ -217,6 +218,7 @@ export class WodTemplateFormComponent implements OnInit {
     this.validatorsRequiredModality = false;
     console.log("modalidad: ", this.selectedModality);
     this.modality = this.modalities.find(x => x.id == this.selectedModality).name;
+    this.modeEditStaggered = false; 
     this.clearModality();
     this.addwodGroup();
 
@@ -257,6 +259,7 @@ export class WodTemplateFormComponent implements OnInit {
 
   addwodGroup() {
     this.clearModality();
+    this.modeEditStaggered = false;
     console.log("modalidad seleccionada: ", this.selectedModality);
     if (this.selectedModality) {
       this.validatorsRequiredModality = false;
@@ -315,6 +318,7 @@ export class WodTemplateFormComponent implements OnInit {
     this.modality = this.wod.wodGroups[index].modality;
     this.getInformationWodGroupActive(index);
     this.selectedModality = this.modalities.find(x => x.name == this.modality).id;
+    if (this.modality == 'Escalera') this.modeEditStaggered = true;
     //this.modalityShortesPossibleTime.rounds = activeWodGroup.rounds;
   }
 
@@ -597,8 +601,9 @@ export class WodTemplateFormComponent implements OnInit {
     }
   }
 
-  editExerciseItem(exerciseItem, index) {
-    console.log("ejercicio para modificación: ", exerciseItem);
+  editExerciseItem(exerciseItem, exerciseIndex, groupIndex) {
+    this.setActiveWodGroup(groupIndex);
+
     switch (this.modality) {
       case 'Tiempo':
         this.modalityShortesPossibleTime.getEditExercise(exerciseItem);
@@ -620,7 +625,7 @@ export class WodTemplateFormComponent implements OnInit {
       default:
     }
 
-    this.wod.wodGroups[this.activeWodGroup].exercises.splice(index, 1);
+    this.wod.wodGroups[this.activeWodGroup].exercises.splice(exerciseIndex, 1);
   }
 
   deleteClassSaved() {

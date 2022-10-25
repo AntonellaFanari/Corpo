@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Exercise } from '../../../../domain/exercise';
 import { ExerciseItem } from '../../../../domain/wod';
 import { ExerciseService } from '../../../../services/exercise.service';
@@ -17,7 +17,7 @@ export class StaggeredComponent implements OnInit {
   selectedExercise: any;
   staggeredValue = 3;
   selectedStaggeredType = 1;
-  baseUnit = 0;
+  baseUnit: number = 0;
   unitsTypes = [{ id: 1, type: 'metros' }, { id: 2, type: 'repeticiones' }];
   intensityTypes = [{ id: 1, type: 'kgs' }, { id: 2, type: '%' }, { id: 3, type: 'RPE' }, { id: 4, type: 'RPEs' }];
   staggeredTypes = [{ id: 1, type: "Ascendente" }, { id: 2, type: "Descendente" }, { id: 3, type: "Igual" }];
@@ -26,13 +26,18 @@ export class StaggeredComponent implements OnInit {
   selectedIntensityType: any;
   @Output() getDetail: EventEmitter<{}> = new EventEmitter<{}>();
   @Output() getExercise: EventEmitter<ExerciseItem> = new EventEmitter<ExerciseItem>();
-
+  
   constructor(private exerciseService: ExerciseService) { }
 
   @Input() modeWodMember: boolean;
+  @Input() modeEdit = false;
 
   ngOnInit() {
     this.getAllExercises();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("modo edición:", this.modeEdit);
   }
 
   getAllExercises() {
@@ -48,19 +53,28 @@ export class StaggeredComponent implements OnInit {
 
 
   increaseUnit(i) {
+    
     switch (i) {
       case 'series':
-        this.nSeries++;
-        this.getDetailGroup();
-        this.units = [];
-        for (var j = 0; j < this.nSeries-1; j++) {
-          this.units.push(0);
-        };
+        if (!this.modeEdit) {
+          this.nSeries++;
+          this.getDetailGroup();
+          this.units = [];
+          for (var j = 0; j < this.nSeries - 1; j++) {
+            this.units.push(0);
+          };
+          this.calculateUnits();
+        }
+     
         break;
       case 'staggered':
-        if (this.selectedStaggeredType != 3)
-        this.staggeredValue++;
-        this.getDetailGroup();
+        if (!this.modeEdit) {
+          if (this.selectedStaggeredType != 3)
+            this.staggeredValue++;
+          this.calculateUnits();
+          this.getDetailGroup();
+        }
+      
         break;
       case 'intensity':
         this.intensity++;
@@ -72,17 +86,27 @@ export class StaggeredComponent implements OnInit {
   dencreaseUnit(i) {
     switch (i) {
       case 'series':
-        this.nSeries--;
-        this.getDetailGroup();
-        this.units = [];
-        for (var j = 0; j < this.nSeries-2; j++) {
-          this.units.push(0);
-        };
+        if (!this.modeEdit) {
+          if (this.nSeries != 1) {
+            this.nSeries--;
+            this.getDetailGroup();
+            this.units = [];
+            for (var j = 0; j < this.nSeries - 1; j++) {
+              this.units.push(0);
+            };
+            this.calculateUnits();
+          }
+        }
         break;
       case 'staggered':
-        if(this.selectedStaggeredType != 3)
-        this.staggeredValue++;
-        this.getDetailGroup();
+        if (!this.modeEdit) {
+          if (this.staggeredValue != 1 && this.staggeredValue > 0) {
+            if (this.selectedStaggeredType != 3)
+              this.staggeredValue--;
+            this.getDetailGroup();
+            this.calculateUnits();
+          }
+        }    
         break;
       case 'intensity':
         this.intensity--;
@@ -94,7 +118,7 @@ export class StaggeredComponent implements OnInit {
   getEditExercise(exercise) {
     this.selectedExercise = exercise.exercise.id;
     console.log("ejercicio seleccionado para la edición: ", this.selectedExercise);
-    this.units = exercise.units.split('-');
+    this.units = exercise.units.split('-').map(x => Number(x));
     this.baseUnit = this.units[0];
     this.units.splice(0, 1);
     this.selectedUnitType = this.unitsTypes.find(x => x.type == exercise.unitType);
@@ -128,7 +152,32 @@ export class StaggeredComponent implements OnInit {
   }
 
   selectStaggeredType() {
-    if (this.selectedStaggeredType == 3) this.staggeredValue = 0;
+    if (this.selectedStaggeredType == 3) {
+      this.staggeredValue = 0;
+      this.units = this.units.map(x => this.baseUnit);
+    } else if (this.selectedStaggeredType == 1) {
+      if (this.staggeredValue != 0) {
+        for (var i = 0; i < this.units.length; i++) {
+          this.units[i] = this.baseUnit + this.staggeredValue * (i + 1);
+        }
+      } else {
+        for (var i = 0; i < this.units.length; i++) {
+          this.units[i] = 0;
+        }
+      }      
+    } else {
+      if (this.staggeredValue != 0) {
+        for (var i = 0; i < this.units.length; i++) {
+          let unit = this.baseUnit - this.staggeredValue * (i + 1)
+          this.units[i] = (unit < 0) ? 0 : unit;
+        }
+      } else {
+        for (var i = 0; i < this.units.length; i++) {
+          this.units[i] = 0;
+        }
+      }
+      
+    };
     this.getDetailGroup();
   }
 
@@ -157,7 +206,7 @@ export class StaggeredComponent implements OnInit {
       this.selectedExercise = undefined;
       this.selectedUnitType = undefined;
       this.units = [];
-      for (var i = 0; i < this.nSeries-1; i++) {
+      for (var i = 0; i < this.nSeries - 1; i++) {
         this.units.push(0)
       };
       this.selectedIntensityType = undefined;

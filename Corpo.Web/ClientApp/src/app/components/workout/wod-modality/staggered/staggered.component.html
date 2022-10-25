@@ -7,7 +7,7 @@
           <div class="down"> </div>
         </div>
         <div class="formValidators col-4 ps-0 pe-0">
-          <input type="text" class="form-control" [(ngModel)]="nSeries">
+          <input type="text" class="form-control" [disabled]="modeEdit" [(ngModel)]="nSeries">
           <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
         </div>
         <div class="arrow-button col-3" (click)="increaseUnit('series')">
@@ -19,7 +19,7 @@
     <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12': 'col-7'">
       <label class="control-label col-3">Tipo de escalera:</label>
       <div class="formValidators col-4">
-        <ng-select class="custom" #select [items]="staggeredTypes" [(ngModel)]="selectedStaggeredType" bindLabel="type"
+        <ng-select class="custom" #select [disabled]="modeEdit" [items]="staggeredTypes" [(ngModel)]="selectedStaggeredType" bindLabel="type"
                    bindValue="id" selectOnTab="true" id="select-units" placeholder="Seleccionar" notFoundText="No hay tipos de unidades" (change)="selectStaggeredType()">
         </ng-select>
         <!--<p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>-->
@@ -28,7 +28,7 @@
         <div class="down"> </div>
       </div>
       <div class="formValidators col-2 ps-0 pe-0">
-        <input type="text" class="form-control" [disabled]="selectedStaggeredType == 3" [(ngModel)]="staggeredValue">
+        <input type="text" class="form-control" [disabled]="selectedStaggeredType == 3 || modeEdit" [(ngModel)]="staggeredValue">
         <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
       </div>
       <div class="arrow-button col-3" (click)="increaseUnit('staggered')">

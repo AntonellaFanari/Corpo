@@ -76,6 +76,7 @@ export class WodTemplateComponent implements OnInit {
   staggeredValue: number;
   previousActiveWodGroup: number;
   modeWodMember = false;
+  modeEditStaggered = false;
 
   @ViewChild(ShortestPossibleTimeComponent, { static: false }) modalityShortesPossibleTime: ShortestPossibleTimeComponent;
   @ViewChild(AmrapComponent, { static: false }) modalityAmrap: AmrapComponent;
@@ -142,8 +143,9 @@ export class WodTemplateComponent implements OnInit {
     this.validatorsRequiredModality = false;
     console.log("modalidad: ", this.selectedModality);
     this.modality = this.modalities.find(x => x.id == this.selectedModality).name;
+    this.modeEditStaggered = false;
     this.clearModality();
-    this.addwodGroup();
+    this.addWodGroup();
 
   }
 
@@ -280,8 +282,9 @@ export class WodTemplateComponent implements OnInit {
     document.getElementById("group-name-modal").click();
   }
 
-  addwodGroup() {
+  addWodGroup() {
     this.clearModality();
+    this.modeEditStaggered = false;
     console.log("modalidad seleccionada: ", this.selectedModality);
     if (this.selectedModality) {
       this.validatorsRequiredModality = false;
@@ -356,6 +359,7 @@ export class WodTemplateComponent implements OnInit {
     let activeWodGroup = this.wod.wodGroups[index];
     this.modality = this.wod.wodGroups[index].modality;
     this.selectedModality = this.modalities.find(x => x.name == this.modality).id;
+    if (this.modality == "Escalera") this.modeEditStaggered = true;
     //this.modalityShortesPossibleTime.rounds = activeWodGroup.rounds;
   }
 
@@ -398,6 +402,7 @@ export class WodTemplateComponent implements OnInit {
   }
 
   save() {
+    console.log("plantilla a enviar: ", this.wod);
     if (this.name !== "" || this.name !== undefined || this.goal !== "" || this.goal !== undefined) {
       this.requesting = true;
       var wodTemplate = new WodTemplate(this.wod);
@@ -559,13 +564,19 @@ export class WodTemplateComponent implements OnInit {
     this.wod.wodGroups[this.activeWodGroup].modalityId = modalityId;
     this.wod.wodGroups[this.activeWodGroup].modality = this.modality;
     this.wod.wodGroups[this.activeWodGroup].detail = "Modalidad: " + this.modality + " - " + this.rounds.toString() + " " + "Rondas";
+   
   }
 
   getExercise(exercise) {
     console.log("ejercicio recibido: ", exercise);
     exercise.modality = this.modality;
     console.log("ejercicio recibido: ", exercise);
+    if (this.modality != 'Timers') {
+      exercise.timeWork = null;
+      exercise.timeRest = null;
+    }
     this.wod.wodGroups[this.activeWodGroup].addExercise(exercise);
+
   }
 
   getTime(time) {
@@ -606,7 +617,9 @@ export class WodTemplateComponent implements OnInit {
   }
 
 
-  editExerciseItem(exerciseItem, index) {
+  editExerciseItem(exerciseItem, exerciseIndex, groupIndex) {
+    this.setActiveWodGroup(groupIndex);
+
     switch (this.modality) {
       case 'Tiempo':
         this.modalityShortesPossibleTime.getEditExercise(exerciseItem);
@@ -628,7 +641,7 @@ export class WodTemplateComponent implements OnInit {
       default:
     }
 
-    this.wod.wodGroups[this.activeWodGroup].exercises.splice(index, 1);
+    this.wod.wodGroups[this.activeWodGroup].exercises.splice(exerciseIndex, 1);
   }
 
 }

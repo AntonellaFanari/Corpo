@@ -44,7 +44,7 @@
   <app-shortest-possible-time [class.d-none]="modality != 'Tiempo'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
   <app-amrap [class.d-none]="modality != 'AMRAP'" (getTime)="getTime($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-amrap>
   <app-emom [class.d-none]="modality != 'EMOM'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-emom>
-  <app-staggered [class.d-none]="modality != 'Escalera'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-staggered>
+  <app-staggered [class.d-none]="modality != 'Escalera'" [modeEdit]="modeEditStaggered" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-staggered>
   <app-timers [class.d-none]="modality != 'Timers'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-timers>
   <app-rest-time [class.d-none]="modality != 'Rest Time'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-rest-time>
 
@@ -79,9 +79,9 @@
                 {{exerciseItem.intensityValue}} {{exerciseItem.intensityType}}
               </td>
               <td class="col-2 action-column">
-                <!--<a (click)="editExerciseItem(exerciseItem, ei)" class="delete-button me-2">
+                <a (click)="editExerciseItem(exerciseItem, ei, i)" class="delete-button me-2">
                   <i class="fa fa-edit"></i>
-                </a>-->
+                </a>
                 <a (click)="deleteItem(i,ei)" class="delete-button">
                   <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>

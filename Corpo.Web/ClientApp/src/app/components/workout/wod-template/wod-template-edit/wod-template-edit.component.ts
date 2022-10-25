@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { log } from 'console';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -14,6 +14,12 @@ import { ExerciseService } from '../../../../services/exercise.service';
 import { ModalityService } from '../../../../services/modality.service';
 import { WeeklyGoalService } from '../../../../services/weekly-goal.service';
 import { WodTemplateService } from '../../../../wod/wod-template.service';
+import { AmrapComponent } from '../../wod-modality/amrap/amrap.component';
+import { EmomComponent } from '../../wod-modality/emom/emom.component';
+import { RestTimeComponent } from '../../wod-modality/rest-time/rest-time.component';
+import { ShortestPossibleTimeComponent } from '../../wod-modality/shortest-possible-time/shortest-possible-time.component';
+import { StaggeredComponent } from '../../wod-modality/staggered/staggered.component';
+import { TimersComponent } from '../../wod-modality/timers/timers.component';
 
 @Component({
   selector: 'app-wod-template-edit',
@@ -58,6 +64,17 @@ export class WodTemplateEditComponent implements OnInit {
   checkedRPEs: boolean;
   checkedNone = true;
   requesting: boolean;
+  modality: string;
+  rounds: number;
+  time: number;
+  series: number;
+  pauseBetweenRounds: number;
+  pauseBetweenExercises: number;
+  staggeredType: string;
+  staggeredValue: number;
+  previousActiveWodGroup: number;
+  modeWodMember = false;
+  modeEditStaggered = false;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -68,6 +85,14 @@ export class WodTemplateEditComponent implements OnInit {
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) })
   }
+
+  @ViewChild(ShortestPossibleTimeComponent, { static: false }) modalityShortesPossibleTime: ShortestPossibleTimeComponent;
+  @ViewChild(AmrapComponent, { static: false }) modalityAmrap: AmrapComponent;
+  @ViewChild(EmomComponent, { static: false }) modalityEmom: EmomComponent;
+  @ViewChild(StaggeredComponent, { static: false }) modalityStaggered: StaggeredComponent;
+  @ViewChild(TimersComponent, { static: false }) modalityTimers: TimersComponent;
+  @ViewChild(RestTimeComponent, { static: false }) modalityRestTime: RestTimeComponent;
+
 
   ngOnInit() {
     this.checkedNone = true;
@@ -139,6 +164,36 @@ export class WodTemplateEditComponent implements OnInit {
 
   selectModality() {
     this.validatorsRequiredModality = false;
+    console.log("modalidad: ", this.selectedModality);
+    this.modality = this.modalities.find(x => x.id == this.selectedModality).name;
+    this.modeEditStaggered = false;
+    this.clearModality();
+    this.addWodGroup();
+  }
+
+
+  clearModality() {
+    switch (this.modality) {
+      case 'Tiempo':
+        this.modalityShortesPossibleTime.clearData();
+        break;
+      case 'AMRAP':
+        this.modalityAmrap.clearData();
+        break;
+      case 'EMOM':
+        this.modalityEmom.clearData();
+        break;
+      case 'Escalera':
+        this.modalityStaggered.clearData();
+        break;
+      case 'Timers':
+        this.modalityTimers.clearData();
+        break;
+      case 'Rest Time':
+        this.modalityRestTime.clearData();
+        break;
+      default:
+    }
   }
 
 
@@ -196,41 +251,6 @@ export class WodTemplateEditComponent implements OnInit {
     });
   }
 
-  addExercise() {
-
-    if (this.wod.wodGroups.length == 0) {
-      this.addwodGroup();
-    }
-
-    if (this.selectedExercise !== null && this.selectedExercise != undefined && this.selectedExercise !== "" && this.selectedModality !== null) {
-      var exercise = this.exercises.find(x => x.id == this.selectedExercise);
-      var exerciseItem = new ExerciseItem();
-      exerciseItem.exercise = exercise;
-      exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
-      exerciseItem.units = this.units;
-      if (this.mode == null) {
-        exerciseItem.intensityType = "None";
-      } else {
-        exerciseItem.intensityType = this.mode;
-      }
-
-      exerciseItem.intensityValue = this.value;
-
-      this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
-
-      this.selectedModality = null;
-      this.selectedExercise = "";
-      this.units = null;
-      this.selectMode("None");
-      this.value = 0;
-    } else {
-      if (this.selectedExercise == null || this.selectedExercise == "") {
-        this.validatorsRequiredExercise = true;
-      } if (this.selectedModality == null) {
-        this.validatorsRequiredModality = true;
-      }
-    }
-  }
 
   selectMode(mode) {
     console.log(mode);
@@ -260,11 +280,55 @@ export class WodTemplateEditComponent implements OnInit {
     document.getElementById("group-name-modal").click();
   }
 
-  addwodGroup() {
-    this.wod.addGroup(new WodGroup(this.createGuid(), this.detail))
-    this.activeWodGroup = this.wod.wodGroups.length - 1;
-    this.detail = "";
+  addWodGroup() {
+    this.clearModality();
+    this.modeEditStaggered = false;
+    console.log("modalidad seleccionada: ", this.selectedModality);
+    if (this.selectedModality) {
+      this.validatorsRequiredModality = false;
+      this.detail = "Modalidad: " + this.modality;
+      this.rounds = 0;
+      this.resetInputs();
+      this.wod.addGroup(new WodGroup(this.createGuid(),
+        ((this.selectedModality == 5) ? "Modalidad: " + this.modality + " - " + "3 Series - Ascendente en 3" : this.detail),
+        this.modality, this.selectedModality, this.rounds, this.series, this.time, this.staggeredType, this.staggeredValue, this.pauseBetweenRounds, this.pauseBetweenExercises));
+      this.activeWodGroup = 0;
+      this.detail = "";
+    } else {
+      this.validatorsRequiredModality = true;
+    }
+
   }
+
+  resetInputs() {
+    this.rounds = 0;
+    if (this.modality != "Escalera") {
+
+      this.series = null;
+      this.staggeredType = null;
+      this.staggeredValue = null;
+      this.time = null;
+    }
+    if (this.modality != "Rest Time") {
+      this.pauseBetweenRounds = null;
+      this.pauseBetweenExercises = null;
+    }
+
+
+    //if (this.modality != "Escalera") {
+    //  this.series = null;
+    //  this.staggeredType = null;
+    //  this.staggeredValue = null;
+    //  if (this.modality != "AMRAP") {
+    //    this.time = null;
+    //  } else if (this.modality != "Rest Time") {
+    //    this.time
+    //  }
+    //}
+
+    //}
+  }
+
 
   editwodGroup() {
     this.wod.wodGroups[this.activeWodGroup].detail = this.detail;
@@ -282,8 +346,50 @@ export class WodTemplateEditComponent implements OnInit {
   }
 
   setActiveWodGroup(index: number) {
+    //if (this.wod.wodGroups.length == 1) this.activeWodGroup = 1;
+    //this.previousActiveWodGroup = this.activeWodGroup;
     this.activeWodGroup = index;
-    console.log(index)
+    console.log(index);
+    console.log("bloque activo: ", this.wod.wodGroups[index]);
+    this.modality = this.wod.wodGroups[index].modality;
+    this.getInformationWodGroupActive(index);
+    let activeWodGroup = this.wod.wodGroups[index];
+    this.modality = this.wod.wodGroups[index].modality;
+    this.selectedModality = this.modalities.find(x => x.name == this.modality).id;
+    if (this.modality == "Escalera") this.modeEditStaggered = true;
+    //this.modalityShortesPossibleTime.rounds = activeWodGroup.rounds;
+  }
+
+  getInformationWodGroupActive(index) {
+    switch (this.modality) {
+      case 'Tiempo':
+        this.modalityShortesPossibleTime.getRounds.emit(this.wod.wodGroups[index].rounds);
+        this.modalityShortesPossibleTime.rounds = this.wod.wodGroups[index].rounds;
+        break;
+      case 'AMRAP':
+        this.modalityAmrap.getTime.emit(this.wod.wodGroups[index].time);
+        this.modalityAmrap.time = this.wod.wodGroups[index].time;
+        break;
+      case 'Escalera':
+        let wodGroupStaggered = this.wod.wodGroups[index];
+        let detailStaggered = { nSeries: wodGroupStaggered.series, staggeredType: wodGroupStaggered.staggeredType, staggeredValue: wodGroupStaggered.staggeredValue };
+        this.modalityStaggered.getDetail.emit(detailStaggered);
+        this.modalityStaggered.nSeries = this.wod.wodGroups[index].series;
+        let staggeredType = this.modalityStaggered.staggeredTypes.find(x => x.type == this.wod.wodGroups[index].staggeredType).id;
+        this.modalityStaggered.selectedStaggeredType = staggeredType;
+        break;
+      case 'Timers':
+        this.modalityTimers.getRounds.emit(this.wod.wodGroups[index].rounds);
+        this.modalityTimers.rounds = this.wod.wodGroups[index].rounds;
+        break;
+      case 'Rest Time':
+        let wodGroupRestTime = this.wod.wodGroups[index];
+        let detail = { rounds: wodGroupRestTime.rounds, pauseBetweenRounds: wodGroupRestTime.pauseBetweenRounds, pauseBetweenExercises: wodGroupRestTime.pauseBetweenExercises }; this.modalityStaggered.getDetail.emit(detail);
+        this.modalityRestTime.pauseBetweenRounds = this.wod.wodGroups[index].pauseBetweenRounds;
+        this.modalityRestTime.pauseBetweenExercises = this.wod.wodGroups[index].pauseBetweenExercises;
+        break;
+      default:
+    }
   }
 
   deleteGroup(index) {
@@ -293,6 +399,7 @@ export class WodTemplateEditComponent implements OnInit {
   }
 
   save() {
+    console.log("plantilla a enviar: ", this.wod);
     if (this.name !== "" || this.name !== undefined || this.goal !== "" || this.goal !== undefined) {
       var wodTemplate = new WodTemplate(this.wod);
       wodTemplate.name = this.name;
@@ -473,15 +580,111 @@ export class WodTemplateEditComponent implements OnInit {
           unitType: e.unitType,
           units: e.units,
           intensityType: e.intensityType,
-          intensityValue: e.intensityValue
+          intensityValue: e.intensityValue,
+          timeWork: e.timeWork,
+          timeRest: e.timeRest
         }
       });
       wodGroup.exercises = exercises;
       wodGroup.detail = wodTemplate.wodGroups.find(x => x.groupIndex == i).detail;
-      wod.addGroup(wodGroup)
-
+      wodGroup.modality = wodTemplate.wodGroups.find(x => x.groupIndex == i).modality.name;
+      wodGroup.modalityId = wodTemplate.wodGroups.find(x => x.groupIndex == i).modality.id;
+      wodGroup.pauseBetweenExercises = wodTemplate.wodGroups.find(x => x.groupIndex == i).pauseBetweenExercises;
+      wodGroup.pauseBetweenRounds = wodTemplate.wodGroups.find(x => x.groupIndex == i).pauseBetweenRounds;
+      wodGroup.rounds = wodTemplate.wodGroups.find(x => x.groupIndex == i).rounds;
+      wodGroup.time = wodTemplate.wodGroups.find(x => x.groupIndex == i).time;
+      wodGroup.series = wodTemplate.wodGroups.find(x => x.groupIndex == i).series;
+      wodGroup.staggeredType = wodTemplate.wodGroups.find(x => x.groupIndex == i).staggeredType;
+      wodGroup.staggeredValue = wodTemplate.wodGroups.find(x => x.groupIndex == i).staggeredValue;
+      wodGroup.groupIndex = wodTemplate.wodGroups.find(x => x.groupIndex == i).groupIndex;
+      wod.addGroup(wodGroup);
     })
     return wod;
+  }
+
+  getRounds(rounds) {
+    console.log("rondas: ", rounds);
+    this.rounds = rounds;
+    this.wod.wodGroups[this.activeWodGroup].rounds = this.rounds;
+    let modalityId = this.modalities.find(x => x.name == this.modality).id;
+    this.wod.wodGroups[this.activeWodGroup].modalityId = modalityId;
+    this.wod.wodGroups[this.activeWodGroup].modality = this.modality;
+    this.wod.wodGroups[this.activeWodGroup].detail = "Modalidad: " + this.modality + " - " + this.rounds.toString() + " " + "Rondas";
+  }
+
+  getExercise(exercise) {
+    console.log("ejercicio recibido: ", exercise);
+    exercise.modality = this.modality;
+    console.log("ejercicio recibido: ", exercise);
+    if (this.modality != 'Timers') {
+      exercise.timeWork = null;
+      exercise.timeRest = null;
+    };
+    this.wod.wodGroups[this.activeWodGroup].addExercise(exercise);
+  }
+
+  getTime(time) {
+    this.time = time;
+    this.wod.wodGroups[this.activeWodGroup].time = this.time;
+    let modalityId = this.modalities.find(x => x.name == this.modality).id;
+    this.wod.wodGroups[this.activeWodGroup].modalityId = modalityId;
+    this.wod.wodGroups[this.activeWodGroup].modality = this.modality;
+    this.wod.wodGroups[this.activeWodGroup].detail = "Modalidad: " + this.modality + " - " + this.time.toString() + " " + "Minutos";
+  }
+
+  getDetail(detail) {
+    if (this.modality == "Escalera") {
+      this.series = detail.nSeries;
+      this.staggeredType = detail.staggeredType;
+      this.staggeredValue = detail.staggeredValue;
+      this.wod.wodGroups[this.activeWodGroup].series = this.series;
+      this.wod.wodGroups[this.activeWodGroup].staggeredType = this.staggeredType;
+      this.wod.wodGroups[this.activeWodGroup].staggeredValue = this.staggeredValue;
+      let modalityId = this.modalities.find(x => x.name == this.modality).id;
+      this.wod.wodGroups[this.activeWodGroup].modalityId = modalityId;
+      this.wod.wodGroups[this.activeWodGroup].modality = this.modality;
+      this.wod.wodGroups[this.activeWodGroup].detail = "Modalidad: " + this.modality + " - " + this.series.toString() + " Series - " + detail.staggeredType + ((detail.staggeredValue != 0) ? " en " + detail.staggeredValue : "");
+
+    } else if (this.modality == "Rest Time") {
+      this.rounds = detail.rounds;
+      this.pauseBetweenRounds = detail.pauseBetweenRounds;
+      this.pauseBetweenExercises = detail.pauseBetweenExercises;
+      this.wod.wodGroups[this.activeWodGroup].rounds = this.rounds;
+      this.wod.wodGroups[this.activeWodGroup].pauseBetweenRounds = this.pauseBetweenRounds;
+      this.wod.wodGroups[this.activeWodGroup].pauseBetweenExercises = this.pauseBetweenExercises;
+      let modalityId = this.modalities.find(x => x.name == this.modality).id;
+      this.wod.wodGroups[this.activeWodGroup].modalityId = modalityId;
+      this.wod.wodGroups[this.activeWodGroup].modality = this.modality;
+      this.wod.wodGroups[this.activeWodGroup].detail = "Modalidad: " + this.modality + " - " + this.rounds.toString() + " Rondas - " + " Pausa entre rondas: " + detail.pauseBetweenRounds + "min. - Pausa entre ejercicios: " + detail.pauseBetweenExercises + "min.";
+
+    }
+  }
+
+  editExerciseItem(exerciseItem, exerciseIndex, groupIndex) {
+    this.setActiveWodGroup(groupIndex);
+
+    switch (this.modality) {
+      case 'Tiempo':
+        this.modalityShortesPossibleTime.getEditExercise(exerciseItem);
+        break;
+      case 'AMRAP':
+        this.modalityAmrap.getEditExercise(exerciseItem);
+        break;
+      case 'EMOM':
+        this.modalityEmom.getEditExercise(exerciseItem);
+        break;
+      case 'Escalera':
+        this.modalityStaggered.getEditExercise(exerciseItem);
+        break;
+      case 'Timers':
+        this.modalityTimers.getEditExercise(exerciseItem);
+        break;
+      case 'Rest Time':
+        this.modalityRestTime.getEditExercise(exerciseItem);
+      default:
+    }
+
+    this.wod.wodGroups[this.activeWodGroup].exercises.splice(exerciseIndex, 1);
   }
 
 }

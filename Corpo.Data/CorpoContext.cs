@@ -80,5 +80,7 @@ namespace Corpo.Data
         public DbSet<PhysicalLevel> PhysicalLevel { get; set; }
         public DbSet<ResultsWodGroupMemberExercise> ResultsWodGroupMemberExercise { get; set; }
         public DbSet<ResultsWodGroupMember> ResultsWodGroupMember { get; set; }
+        public DbSet<WeeklyTemplate> WeeklyTemplate { get; set; }
+        public DbSet<WeeklyWodTemplate> WeeklyWodTemplate { get; set; }
     }
 }

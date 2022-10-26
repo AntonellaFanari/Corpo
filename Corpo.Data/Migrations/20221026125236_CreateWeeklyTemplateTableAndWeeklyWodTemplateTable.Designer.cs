@@ -4,14 +4,16 @@ using Corpo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Corpo.Data.Migrations
 {
     [DbContext(typeof(CorpoContext))]
-    partial class CorpoContextModelSnapshot : ModelSnapshot
+    [Migration("20221026125236_CreateWeeklyTemplateTableAndWeeklyWodTemplateTable")]
+    partial class CreateWeeklyTemplateTableAndWeeklyWodTemplateTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2378,13 +2380,11 @@ namespace Corpo.Data.Migrations
 
             modelBuilder.Entity("Corpo.Domain.Models.WeeklyWodTemplate", b =>
                 {
-                    b.HasOne("Corpo.Domain.Models.WeeklyTemplate", "WeeklyTemplate")
+                    b.HasOne("Corpo.Domain.Models.WeeklyTemplate", null)
                         .WithMany("WeeklyWodTemplates")
                         .HasForeignKey("WeeklyTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("WeeklyTemplate");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Withdrawal", b =>

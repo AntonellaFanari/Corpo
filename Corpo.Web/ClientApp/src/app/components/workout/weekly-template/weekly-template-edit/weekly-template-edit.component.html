@@ -1,0 +1,77 @@
+<section class="wrapper" *ngIf="!requesting && weeklyTemplate">
+  <div class="form-group mt-3">
+    <label class="control-label">Nombre:</label>
+    <div class="formValidators">
+      <input type="text" class="form-control" [(ngModel)]="name">
+      <!--<p [ngClass]="validatorsRequiredName ? 'validators': 'hide-validators'">*Debe ingresar un nombre.</p>-->
+    </div>
+  </div>
+  <div class="form-group mt-3">
+    <label class="col-12 control-label">Asignar Objetivo:</label>
+    <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
+                             [data]="weeklyGoals"
+                             [(ngModel)]="selectedGoals"
+                             [placeholder]="'Seleccionar...'"
+                             (onSelect)="onItemSelect($event)"
+                             (onSelectAll)="onSelectAll($event)"
+                             (onDeSelect)="onItemDeSelect($event)"
+                             (onDeSelectAll)="onDeSelectAll()">
+    </ng-multiselect-dropdown>
+  </div>
+  <!--<p [ngClass]="validatorsRequiredGoal ? 'validators': 'hide-validators'">*Debe seleccionar uno o más objetivos.</p>-->
+  <div class="form-group mt-3 mb-3">
+    <label class="control-label">Objetivos:</label>
+    <div class="formValidators">
+      <ul>
+        <li *ngFor="let weeklyGoal of weeklyGoalsList">{{weeklyGoal.goal}}</li>
+      </ul>
+    </div>
+    <div class="formValidators" *ngIf="weeklyGoalsList.length == 0">
+      <strong>No se asignaron objetivos</strong>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <label class="col-12 control-label">Plantillas Wods:</label>
+    <ng-multiselect-dropdown [settings]="wodTemplatesDropdownSettings"
+                             [data]="templates"
+                              [(ngModel)]="selectedWodTemplate"
+                             [placeholder]="'Seleccionar...'"
+                             (onSelect)="onItemSelectWodTemplate($event)"
+                             (onSelectAll)="onSelectAllWodTemplates($event)"
+                             (onDeSelect)="onItemDeSelectWodTemplate($event)"
+                             (onDeSelectAll)="onDeSelectAllWodTemplates()">
+    </ng-multiselect-dropdown>
+  </div>
+
+  <div class="col-lg-12 card bg-light" [class.d-none]="weeklyTemplate.weeklyWodTemplates.length == 0">
+
+    <!--<mat-tab-group>
+      <mat-tab label="Plantilla: {{wod.detail}}" *ngFor="let wod of weeklyTemplate.weeklyWodTemplates">
+        <app-preview-wod [wod]="wod.wod"></app-preview-wod>
+      </mat-tab>
+    </mat-tab-group>-->
+
+
+  </div>
+
+  <div class="div-btn-create mt-3">
+    <button class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" type="button"
+            routerLink="/plantillas-semanales">
+      Cancelar
+    </button>
+    <button class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit"
+            (click)="save()">
+      Guardar
+    </button>
+  </div>
+
+</section>
+
+<section class="wrapper">
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</section>

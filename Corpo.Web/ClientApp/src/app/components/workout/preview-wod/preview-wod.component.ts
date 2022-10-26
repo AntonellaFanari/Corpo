@@ -17,6 +17,7 @@ export class PreviewWodComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log("wod recibido vista previa: ", this.wod);
   }
 
   getGoals(goals) {

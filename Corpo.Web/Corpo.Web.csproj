@@ -111,6 +111,8 @@
     <None Remove="ClientApp\src\app\domain\wod\results-wod-group-member.ts" />
     <None Remove="ClientApp\src\app\domain\wod\training-system.ts" />
     <None Remove="ClientApp\src\app\domain\wod\weekly-goal.ts" />
+    <None Remove="ClientApp\src\app\domain\wod\weekly-template.ts" />
+    <None Remove="ClientApp\src\app\domain\wod\weekly-wod-template.ts" />
     <None Remove="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 
@@ -196,6 +198,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\monthly-goal.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\PeriodizationList.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\domain\wod\weekly-goal.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\weekly-template.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\domain\wod\weekly-wod-template.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\authentication-interceptor.ts" />
   </ItemGroup>
 

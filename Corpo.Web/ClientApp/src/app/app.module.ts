@@ -172,6 +172,10 @@ import { RestTimeComponent } from './components/workout/wod-modality/rest-time/r
 import { MenuWodComponent } from './components/workout/menu-wod/menu-wod.component';
 import { ResultWodComponent } from './components/workout/result-wod/result-wod.component';
 import { PreviewWodComponent } from './components/workout/preview-wod/preview-wod.component';
+import { WeeklyTemplateCreateComponent } from './components/workout/weekly-template/weekly-template-create/weekly-template-create.component';
+import { WeeklyTemplateEditComponent } from './components/workout/weekly-template/weekly-template-edit/weekly-template-edit.component';
+import { WeeklyTemplateListComponent } from './components/workout/weekly-template/weekly-template-list/weekly-template-list.component';
+import { FilterNameGoalPipe } from './pipes/filter-name-goal.pipe';
 
 
 @NgModule({
@@ -333,7 +337,11 @@ import { PreviewWodComponent } from './components/workout/preview-wod/preview-wo
     RestTimeComponent,
     MenuWodComponent,
     ResultWodComponent,
-    PreviewWodComponent
+    PreviewWodComponent,
+    WeeklyTemplateCreateComponent,
+    WeeklyTemplateEditComponent,
+    WeeklyTemplateListComponent,
+    FilterNameGoalPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -445,6 +453,9 @@ import { PreviewWodComponent } from './components/workout/preview-wod/preview-wo
       { path: 'sistema-entrenamiento-crear', component: TrainingSystemCreateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'sistema-entrenamiento-editar', component: TrainingSystemEditComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'wod-template', component: WodTemplateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'crear-plantilla-semanal', component: WeeklyTemplateCreateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'editar-plantilla-semanal', component: WeeklyTemplateEditComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'plantillas-semanales', component: WeeklyTemplateListComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'plantillas-wod', component: WodTemplateListComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'asignacion-plantilla', component: AssignmentTemplateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'plantilla-wod-editar', component: WodTemplateEditComponent, canActivate: [AuthGuard], data: { name: 'wod' } },

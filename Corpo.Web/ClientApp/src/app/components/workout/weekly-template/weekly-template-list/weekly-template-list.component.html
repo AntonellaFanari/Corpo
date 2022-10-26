@@ -1,0 +1,54 @@
+<section class="wrapper" *ngIf="!requesting && weeklyTemplates.length > 0">
+  <div class="row mt">
+    <div class="col-md-12">
+      <div class="task-panel ">
+        <h4 class="table-title">Plantillas Semanales</h4>
+        <button type="button" class="btn btn-success col-4 col-lg-2 btn-add" routerLink="/crear-plantilla-semanal">Agregar</button>
+      </div>
+      <hr>
+      <div class="col-12 card">
+        <div class="row card-body">
+          <div class="col-12">
+            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+          </div>
+        </div>
+      </div>
+      <section id="no-more-tables" class="">
+        <table class="table table-bordered table-condensed cf scrollme user-table">
+          <thead class="cf">
+            <tr>
+              <th class="numeric">Nombre</th>
+              <th class="numeric">Objetivos</th>
+              <th class="numeric">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let template of weeklyTemplates | filterNameGoal: filterName" class="scrollme span-margin">
+              <td class="td-title" data-title="Nombre"><span>{{template.name}}</span></td>
+              <td class="td-title" data-title="Objetivos"><span>{{template.goal}}</span></td>
+              <td class="td-title col-12 col-lg-3" data-title="Acción">
+                <span class="btn-action-container">
+                  <button class="btn btn-warning ms-2 col-4 col-lg-3 btn-action-list" [routerLink]="['/editar-plantilla-semanal']" [queryParams]="{id: template.id}"><i class="fa fa-pencil-square"></i></button>
+                  <button class="btn btn-danger ms-2 col-4 col-lg-3 btn-action-list" (click)="delete(template.id)"><i class="fa fa-trash"></i></button>
+
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+    
+  </div>
+ </section>
+<section>
+  <div class="w-100 text-center mt-3" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!requesting && weeklyTemplates.length == 0">
+    <h5>No hay plantillas semanales</h5>
+  </div>
+</section>

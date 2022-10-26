@@ -218,65 +218,6 @@ export class WodTemplateComponent implements OnInit {
     });
   }
 
-  //addExercise() {
-
-  //  if (this.wod.wodGroups.length == 0) {
-  //    this.addwodGroup();
-  //  }
-
-  //  if (this.selectedExercise !== null && this.selectedExercise != undefined && this.selectedExercise !== "" && this.selectedModality !== null) {
-  //    var exercise = this.exercises.find(x => x.id == this.selectedExercise);
-  //    var exerciseItem = new ExerciseItem();
-  //    exerciseItem.exercise = exercise;
-  //    exerciseItem.modality = this.modalities.find(x => x.id == this.selectedModality);
-  //    exerciseItem.units = this.units;
-  //    if (this.mode == null) {
-  //      exerciseItem.mode = "None";
-  //    } else {
-  //      exerciseItem.mode = this.mode;
-  //    }
-
-  //    exerciseItem.value = this.value;
-
-  //    this.wod.wodGroups[this.activeWodGroup].addExercise(exerciseItem);
-
-  //    this.selectedModality = null;
-  //    this.selectedExercise = "";
-  //    this.units = null;
-  //    this.selectMode("None");
-  //    this.value = 0;
-  //  } else {
-  //    if (this.selectedExercise == null || this.selectedExercise == "") {
-  //      this.validatorsRequiredExercise = true;
-  //    } if (this.selectedModality == null) {
-  //      this.validatorsRequiredModality = true;
-  //    }
-  //  }
-  //}
-
-  //selectMode(mode) {
-  //  console.log(mode);
-  //  this.mode = mode;
-  //  switch (mode) {
-  //    case "Kgs":
-  //      this.checkedKgs = true;
-  //      break;
-  //    case "%":
-  //      this.checkedPercentage = true;
-  //      break;
-  //    case "RPE":
-  //      this.checkedRPE = true;
-  //      break;
-  //    case "RPEs":
-  //      this.checkedRPEs = true;
-  //      break;
-  //    case "None":
-  //      this.checkedKgs = false;
-  //      this.checkedNone = true;
-  //      break;
-  //    default:
-  //  }
-  //}
 
   addwodGroupModal() {
     document.getElementById("group-name-modal").click();
@@ -315,21 +256,6 @@ export class WodTemplateComponent implements OnInit {
       this.pauseBetweenRounds = null;
       this.pauseBetweenExercises = null;
     }
-
-    
-
-    //if (this.modality != "Escalera") {
-    //  this.series = null;
-    //  this.staggeredType = null;
-    //  this.staggeredValue = null;
-    //  if (this.modality != "AMRAP") {
-    //    this.time = null;
-    //  } else if (this.modality != "Rest Time") {
-    //    this.time
-    //  }
-    //}
-
-    //}
   }
 
 

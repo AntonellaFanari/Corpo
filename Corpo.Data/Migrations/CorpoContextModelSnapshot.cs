@@ -1661,6 +1661,8 @@ namespace Corpo.Data.Migrations
 
                     b.HasIndex("WeeklyTemplateId");
 
+                    b.HasIndex("WodTemplateId");
+
                     b.ToTable("WeeklyWodTemplate");
                 });
 
@@ -1891,10 +1893,15 @@ namespace Corpo.Data.Migrations
                     b.Property<int>("WeekNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("WeeklyTemplateId")
+                        .HasColumnType("int");
+
                     b.Property<int>("WodNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("WeeklyTemplateId");
 
                     b.ToTable("WodMember");
                 });
@@ -2384,7 +2391,15 @@ namespace Corpo.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Corpo.Domain.Models.WodTemplate", "WodTemplate")
+                        .WithMany()
+                        .HasForeignKey("WodTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("WeeklyTemplate");
+
+                    b.Navigation("WodTemplate");
                 });
 
             modelBuilder.Entity("Corpo.Domain.Models.Withdrawal", b =>
@@ -2458,6 +2473,17 @@ namespace Corpo.Data.Migrations
                     b.Navigation("Modality");
 
                     b.Navigation("WodMember");
+                });
+
+            modelBuilder.Entity("Corpo.Domain.Models.WodMember", b =>
+                {
+                    b.HasOne("Corpo.Domain.Models.WeeklyTemplate", "WeeklyTemplate")
+                        .WithMany()
+                        .HasForeignKey("WeeklyTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WeeklyTemplate");
                 });
 
             modelBuilder.Entity("ExerciseTag", b =>

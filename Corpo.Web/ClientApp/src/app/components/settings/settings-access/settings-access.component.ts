@@ -19,6 +19,7 @@ export class SettingsAccessComponent implements OnInit {
   checkboxToAccessAdmin = this.getAccessModel();
   checkboxToAccessCoach = this.getAccessModel();
   checkboxToAccessMarketing = this.getAccessModel();
+  requesting = false;
 
   constructor(private userService: UserService, private settingService: SettingsService, private router: Router, private customAlertService: CustomAlertService) {
   }
@@ -65,6 +66,7 @@ export class SettingsAccessComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.userService.getRoles().subscribe(
       response => {
         this.roles = response.result;
@@ -84,8 +86,9 @@ export class SettingsAccessComponent implements OnInit {
         if (this.roleAccess.length > 0) {
           this.getAccess(this.roleAccess);
         }
+        this.requesting = false;
       },
-      error => console.log(error)
+      error => this.requesting = false
     );
   }
 
@@ -112,11 +115,13 @@ export class SettingsAccessComponent implements OnInit {
     this.createRoleAccess(this.checkboxToAccessAdmin, this.roles[0].id);
     this.createRoleAccess(this.checkboxToAccessCoach, this.roles[1].id);
     this.createRoleAccess(this.checkboxToAccessMarketing, this.roles[2].id);
+    this.requesting = true;
     this.settingService.saveAccess(this.roleAccess)
       .then(() => {
         this.router.navigate(["/configuraciones"])
       })
       .catch((response) => {
+        this.requesting = false;
         if (response.status === 400) {
           this.customAlertService.displayAlert("Gestión de Configuraciones", response.error.errores);
         }

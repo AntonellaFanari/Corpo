@@ -1,10 +1,10 @@
-<section class="wrapper" *ngIf="member && !requesting">
-  <div class="task-panel ">
+<section class="wrapper">
+  <div class="task-panel " *ngIf="member && !requesting">
     <h4 class="table-title">Reservas - {{member.lastName}} {{member.name}}</h4>
     <button type="button" class="btn btn-secondary col-4 col-lg-2 btn-float-right" routerLink="/member-list">Volver</button>
   </div>
-  <hr>
-  <div class="col-12 pt-3" *ngIf="reservations.length>0">
+  <hr *ngIf="member && !requesting">
+  <div class="col-12 pt-3" *ngIf="!requesting && reservations.length>0">
     <section id="no-more-tables">
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-bordered table-condensed table-hover table-striped cf mb-0 user-table">
@@ -46,17 +46,15 @@
     </section>
   </div>
 
-  <div *ngIf="!requesting && reservations.length == 0">
-    <h5 class=" text-center">El socio no tiene historial de cuotas pagadas.</h5>
-  </div>
-
-</section>
-<section class="wrapper">
   <div class="w-100 text-center" *ngIf="requesting">
     <div class="spinner-border text-success" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-</section>
 
+  <div *ngIf="!requesting && reservations.length == 0">
+    <h5 class=" text-center">El socio no tiene historial de cuotas pagadas.</h5>
+  </div>
+
+</section>
 

@@ -1,5 +1,5 @@
-<section class="wrapper" *ngIf="test">
-  <div class="container-fluid p-0">
+<section class="wrapper">
+  <div class="container-fluid p-0" *ngIf="!requesting && test">
     <div class="">
       <h3>Test Nivel {{test.level}}</h3>
     </div>
@@ -38,6 +38,12 @@
 
     <div class="button-box col-12 col-lg-2 btn-float-left">
       <button class="btn btn-secondary btn-width " routerLink="/test-asignados-list" [queryParams]="{id: test.memberId}">Volver</button>
+    </div>
+  </div>
+
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
 </section>

@@ -3,7 +3,7 @@
     <h4 class="table-title text-center">{{member.lastName}} {{member.name}} - Semana {{periodizationWeek.weekNumber}}</h4>
   </div>
   <hr />
-  <div class="card-body">
+  <div class="">
     <div class="month text-center">
       <div class="">Semana {{periodizationWeek.weekNumber}}</div>
       <div>Objetivo: {{periodizationWeek.goal}}</div>
@@ -21,10 +21,10 @@
       </div>
     </div>
   </div>
-  <section class="wrapper">
+  <section class="">
     <canvas #barCanvas1 style="position: relative; height:20vh; width:40vw"></canvas>
   </section>
-  <div class="container">
+  <div class="">
     <button type="button" class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" [routerLink]="['/reporte-mensual']" [queryParams]="{id: periodizationWeek.periodizationId}">Volver</button>
   </div>
 </section>

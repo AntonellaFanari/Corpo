@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="toList && shifts.length>0" class="col-12 card">
+      <div *ngIf="!requestingList && toList && shifts.length>0" class="col-12 card">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterShift" placeholder="Buscar" class="form-control" [(ngModel)]="filterShift">
@@ -67,7 +67,7 @@
                 <td class="td-title text-ajust" data-title="Profesor"><span>{{shift.userName}}</span></td>
                 <td class="td-title" data-title="Acción">
                   <span class="btn-action-container">
-                    <button class="btn btn-success btn-xs btn-action-list" (click)="goToAttendances(shift.id)">ver asistencias</button>
+                    <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/asistencias']" [queryParams]="{id: shift.id}">ver asistencias</button>
                   </span>
                 </td>
               </tr>
@@ -158,7 +158,6 @@
         </div>
       </div>
     </div>
-    <app-attendance ></app-attendance>
 
 
 

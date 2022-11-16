@@ -16,11 +16,11 @@ export class MonthlyGoalListComponent implements OnInit {
   constructor(private monthlyGoalService: MonthlyGoalService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
-    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
+    this.requestingList = true;
     this.monthlyGoalService.getAll().subscribe(
       response => {
         this.requestingList = false;
@@ -36,11 +36,13 @@ export class MonthlyGoalListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Objetivos Mensuales", ["¿Está seguro que desea eliminar este objetivo?"], () => {
+      this.requestingList = true;
       this.monthlyGoalService.delete(id).subscribe(
         result => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Objetivos Mensuales", ["Error al intentar eliminar el objetivo."])
         })

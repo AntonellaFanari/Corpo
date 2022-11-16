@@ -13,9 +13,13 @@ export class MemberReportListComponent implements OnInit {
   members: MemberView[] = [];
   filterName = "";
   title = "";
+  requesting = false;
 
   constructor(private route: ActivatedRoute, private reportService: ReportService) {
-    this.route.queryParams.subscribe(params => (this.reportType = (params['reportType'])));
+    this.route.queryParams.subscribe(params => {
+      this.reportType = (params['reportType']);
+      this.getTitle();
+    });
   }
 
   ngOnInit() {
@@ -23,13 +27,14 @@ export class MemberReportListComponent implements OnInit {
   }
 
   getDetail() {
+    this.requesting = true;
     this.reportService.getDetail(this.reportType).subscribe(
       result => {
         console.log(result.result);
-        this.members = result.result;
-        this.getTitle();
+        this.members = result.result;      
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

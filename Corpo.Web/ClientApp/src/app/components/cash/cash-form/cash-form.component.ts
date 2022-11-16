@@ -54,8 +54,9 @@ export class CashFormComponent implements OnInit {
   cash: Cash;
   openingView = true;
   monthlyCash = 0;
-  requestingCash: boolean;
-  requestingOpeningCash: boolean;
+  requesting: boolean;
+  displayList = null;
+
 
   @ViewChild(SaleEditComponent, { static: true }) saleDetailComponent: SaleEditComponent;
   @ViewChild(OutflowDetailComponent, { static: true }) outflowDetailComponent: OutflowDetailComponent;
@@ -70,73 +71,72 @@ export class CashFormComponent implements OnInit {
     private incomeService: IncomeService,
     private cashService: CashService,
     private customAlertService: CustomAlertService,
-    private balancePaidService: BalancePaidService) { }
+    private balancePaidService: BalancePaidService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.requesting = true;
     this.getLastCash();
 
   }
 
-  getTotals() {
-    this.requestingCash = false;
-    this.getAllSale();
-    this.getAllOutflow();
-    this.getAllFee();
-    this.getAllWithdrawal();
-    this.getAllIncome();
-
-  }
-
-  getMonthlyCash() {
-    this.monthlyCash = 0;
-    this.cashService.getMonthlyCash().subscribe(
-      result => {
-        if (result.result !== null) {
-          this.monthlyCash = result.result.total;
-        };
-      },
-      error => console.error(error)
-    );
-  }
-
   getLastCash() {
-    this.requestingCash = true;
+    this.requesting = true;
     this.cashService.getLastCash().subscribe(
       result => {
-
-        this.getMonthlyCash();
         if (result.result !== null) {
           this.cash = result.result;
           this.id = this.cash.id;
           if (this.cash.closing == null) {
-            this.openingView = false;
             this.startingBalance = this.cash.startingBalance;
             this.getTotals();
             this.calculateCurrentCash();
           } else {
-            this.requestingCash = false;
-            this.openingView = true;
+            this.router.navigate(['/apertura-caja']);
           }
         } else {
-          this.openingView = true;
+          this.router.navigate(['/apertura-caja']);
         }
+        this.getMonthlyCash();
       },
       error => {
-        this.requestingCash = false;
-        this.openingView == true;
       }
     )
   }
 
-  getAllSalesFees() {
-    this.getAllSale();
+  getTotals() {
+    this.getAllFee();
+
+  }
+
+  getMonthlyCash() {
+    this.cashService.getMonthlyCash().subscribe(
+      result => {
+        if (result.result !== null) {
+          this.monthlyCash = result.result.total;
+        }
+      },
+      error => { }
+    );
+  }
+
+  updateTotal() {
+    this.requesting = true;
     this.getAllFee();
   }
 
-  getCash() {
-    this.cashService.getCashById(this.id).subscribe(
+
+
+  getAllFee() {
+    this.feeService.getAll(this.id).subscribe(
       result => {
-        this.startingBalance = result.startingBalance;
+        console.log("ingresos por cuotas: ", result.result);
+
+        this.feesIncomes = result.result;
+        this.calculateTotalFee();
+        this.calculateCurrentCash();
+
+        this.getAllSale();
       },
       error => console.error(error)
     )
@@ -146,61 +146,65 @@ export class CashFormComponent implements OnInit {
     this.saleService.getAll(this.id).subscribe(
       result => {
         console.log("ingresos por ventas: ", result.result);
-        this.salesIncomes = result.result;
-        this.calculateTotalSales();
-        this.calculateCurrentCash();
+        
+          this.salesIncomes = result.result;
+          this.calculateTotalSales();
+          this.calculateCurrentCash();
+  
+        this.getAllIncome();
       },
       error => console.error(error)
     );
+  }
+
+  getAllIncome() {
+    this.incomeService.getAll(this.id).subscribe(
+      result => {
+        console.log("ingresos: ", result);
+
+        this.incomes = result;
+        this.calculateTotalIncome();
+        this.calculateCurrentCash();
+
+        this.getAllOutflow();
+      },
+      error => console.error(error)
+    )
   }
 
 
   getAllOutflow() {
     this.outflowService.getAllOutflow(this.id).subscribe(
       result => {
-        this.outflows = result;
-        this.calculateTotalOutflow();
-        this.calculateCurrentCash();
+        console.log("egresos: ", result);
+ 
+          this.outflows = result;
+          this.calculateTotalOutflow();
+          this.calculateCurrentCash();
+
+        this.getAllWithdrawal();
       },
       error => console.error(error)
     )
   }
 
-  getAllFee() {
-    this.feeService.getAll(this.id).subscribe(
-      result => {
-        console.log("ingresos por cuotas: ", result.result);
-        this.feesIncomes = result.result;
-        this.calculateTotalFee();
-        this.calculateCurrentCash();
-      },
-      error => console.error(error)
-    )
-  }
 
   getAllWithdrawal() {
     this.withdrawalService.getAllWithdrawal(this.id).subscribe(
       result => {
-        this.withdrawals = result;
-        this.calculateTotalWithdrawal();
-        this.calculateCurrentCash();
-        this.getMonthlyCash();
+        console.log("retiros: ", result);
+     
+          this.withdrawals = result;
+          this.calculateTotalWithdrawal();
+          this.calculateCurrentCash();
+          this.getMonthlyCash();
+  
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
-  getAllIncome() {
-    this.incomeService.getAll(this.id).subscribe(
-      result => {
-        this.incomes = result;
-        this.calculateTotalIncome();
-        this.calculateCurrentCash();
-        this.getMonthlyCash();
-      },
-      error => console.error(error)
-    )
-  }
 
   calculateCurrentCash() {
     this.currentCash = (this.cash.startingBalance + this.feeTotalPay + this.saleTotalPay + this.incomeTotal)
@@ -294,51 +298,57 @@ export class CashFormComponent implements OnInit {
 
 
   toClose() {
-    var cash = new Cash();
-    cash.startingBalance = this.cash.startingBalance;
-    cash.totalFee = this.feeTotalPay;
-    cash.totalSale = this.saleTotalPay;
-    cash.totalOutflow = this.outflowTotalPay;
-    cash.totalWithdrawal = this.withdrawalTotal;
-    cash.totalIncome = this.incomeTotal;
-    this.cashService.toClose(this.cash.id, cash).subscribe(
-      result => {
-        this.openingView = true;
-        this.getLastCash();
-        this.getMonthlyCash();
-      },
-      error => {
-        console.error(error);
-        if (error.status === 400) {
-          this.customAlertService.displayAlert("Gestión de Caja", error.error.errores);
-        }
-        if (error.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Caja", ["Hubo un problema al intentar cerrar la caja."]);
-        }
-      })
+    this.customAlertService.displayAlert("Gestión de Caja", ["¿Está seguro que quiere cerrar la caja?"], () => {
+      var cash = new Cash();
+      cash.startingBalance = this.cash.startingBalance;
+      cash.totalFee = this.feeTotalPay;
+      cash.totalSale = this.saleTotalPay;
+      cash.totalOutflow = this.outflowTotalPay;
+      cash.totalWithdrawal = this.withdrawalTotal;
+      cash.totalIncome = this.incomeTotal;
+      this.requesting = true;
+      this.cashService.toClose(this.cash.id, cash).subscribe(
+        result => {
+          this.router.navigate(['/apertura-caja'])
+        },
+        error => {
+          this.requesting = false;
+          console.error(error);
+          if (error.status === 400) {
+            this.customAlertService.displayAlert("Gestión de Caja", error.error.errores);
+          }
+          if (error.status === 500) {
+            this.customAlertService.displayAlert("Gestión de Caja", ["Hubo un problema al intentar cerrar la caja."]);
+          }
+        })
+    }, true)
+
   }
 
-  openingCash() {
-    this.cashService.toOpen().subscribe(
-      result => {
-        this.id = result.id;
-        this.getCash();
-        this.openingView = false;
-        this.getLastCash();
-        this.getMonthlyCash();
-      },
-      error => {
-        console.error(error);
-        if (error.status === 400) {
-          this.customAlertService.displayAlert("Gestión de Caja", error.error.errores);
-        }
-        if (error.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Caja", ["Hubo un problema al intentar abrir la caja."]);
-        }
-      }
-    )
-  }
 
+
+
+  getList(operation) {
+    console.log("operación: ", operation);
+    switch (operation) {
+      case 'fee':
+        this.displayList = (this.displayList == operation) ? null : operation;
+        break;
+      case 'sale':
+        this.displayList = (this.displayList == operation) ? null : operation;
+        break;
+      case 'income':
+        this.displayList = (this.displayList == operation) ? null : operation;
+        break;
+      case 'outflow':
+        this.displayList = (this.displayList == operation) ? null : operation;
+        break;
+      case 'withdrawal':
+        this.displayList = (this.displayList == operation) ? null : operation;
+        break;
+      default:
+    }
+  }
 
 
 }

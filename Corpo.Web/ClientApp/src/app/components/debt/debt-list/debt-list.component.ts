@@ -60,12 +60,14 @@ export class DebtListComponent implements OnInit {
     //  pay = this.partialPay;
     //};
     let pay = this.totalBalance;
+    this.requestingList = true;
     this.balanceService.cancelBalance(this.memberId, pay).subscribe(
       result => {
         this.getAll();
         this.totalPayment = "true";
       },
       error => {
+        this.requestingList = false;
         console.error(error);
         if (error.status === 400) {
           this.customAlertService.displayAlert("Gestión de Deudas", error.error.errores);

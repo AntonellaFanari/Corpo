@@ -1,18 +1,18 @@
-<section class="wrapper" *ngIf="members.length > 0 && !requestingList">
+<section class="wrapper">
   <div class="row mt">
     <div class="col-lg-12">
       <div class="task-panel ">
         <h4 class="table-title">Socios</h4>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="members.length > 0 && !requestingList">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterMember" placeholder="Buscar" class="form-control" [(ngModel)]="filterMember">
           </div>
         </div>
       </div>
-      <section id="no-more-tables">
+      <section id="no-more-tables" *ngIf="members.length > 0 && !requestingList">
         <table class="table table-hover table-bordered table-condensed  cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -26,13 +26,12 @@
               <td class="td-title" data-title="Estado"><span *ngIf="member.status =='Activo'" class="badge bg-success">Activo</span><span *ngIf="member.status == 'No Activo'" class="badge bg-danger">No Activo</span></td>
               <td class="td-title" data-title="Nombre"><span>{{member.lastName}} {{member.name}}</span></td>
               <td class="td-title td-padding-action" data-title="Acción">
-                <div class="text-center">
+                <div class="">
                   <!--<button class="btn btn-primary btn-action-list me-2" (click)="getAssignment(member.id)">WOD</button>-->
-                  <button class="btn btn-primary btn-action-list me-2" [routerLink]="['/asignacion-plantilla']" [queryParams]="{memberId: member.id, week: '0'}">WOD</button>
-                  <button class="btn btn-warning btn-action-list text-white me-2" [routerLink]="['/reporte-anual']" [queryParams]="{id: member.id}">Estadisticas</button>
-                  <button class="btn btn-primary btn-width me-2" [routerLink]="['/test-asignados-list']" [queryParams]="{id: member.id}">Test Asignados</button>
-                  <button class="btn btn-success btn-width  me-2" [routerLink]="['/test']" [queryParams]="{id: member.id}">Nuevo Test</button>
-                  <button class="btn btn-secondary btn-width  me-2" [routerLink]="['/anamnesis']" [queryParams]="{id: member.id}">Anamnesis</button>
+                  <button class="btn btn-primary btn-action-list me-2 col-12 col-lg-2" [routerLink]="['/asignacion-plantilla']" [queryParams]="{memberId: member.id, week: '0'}">WOD</button>
+                  <button class="btn btn-warning btn-action-list text-white me-2 col-12 col-lg-2" [routerLink]="['/reporte-anual']" [queryParams]="{id: member.id}">Estadisticas</button>
+                  <button class="btn btn-success btn-action-list me-2 col-12 col-lg-2" [routerLink]="['/test-asignados-list']" [queryParams]="{id: member.id}">Test</button>
+                  <button class="btn btn-secondary btn-action-list me-2 col-12 col-lg-2" [routerLink]="['/anamnesis']" [queryParams]="{id: member.id}">Anamnesis</button>
 
                 </div>
               </td>

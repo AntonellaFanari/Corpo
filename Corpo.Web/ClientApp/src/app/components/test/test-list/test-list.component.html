@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let test of testTemplates | searchFilterName: filterName" class="scrollme span-margin">
+        <tr *ngFor="let test of testTemplates | filterLevel: filterName" class="scrollme span-margin">
           <td class="td-title" data-title="Nombre">
             <span>Nivel {{test.level}}</span>
             <span *ngIf="test.assignment && test.status == 2" class="badge bg-success ms-2">Asignado</span>
@@ -47,7 +47,7 @@
   <h5 *ngIf="!requestingList && testTemplates.length == 0">No hay tests para mostrar</h5>
 </section>
 <section class="wrapper" *ngIf="!requestingList">
-  <div class="button-box col-4 col-lg-2 pe-1 btn-float-left">
+  <div class="button-box col-12 col-lg-2 pe-1 btn-float-left">
     <button class="btn btn-secondary btn-return" [routerLink]="['/personalizados']">Volver</button>
   </div>
 </section>

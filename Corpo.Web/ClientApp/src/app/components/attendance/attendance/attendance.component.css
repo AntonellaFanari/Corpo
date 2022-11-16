@@ -19,7 +19,16 @@ a {
   cursor: pointer;
 }
 
+
 @media only screen and (max-width: 800px) {
+  #no-more-tables td {
+    padding-left: 30%;
+  }
+
+  .user-table {
+    font-size: 13px;
+  }
+
   .btn-action-list {
     height: 35px;
     width: 35px;

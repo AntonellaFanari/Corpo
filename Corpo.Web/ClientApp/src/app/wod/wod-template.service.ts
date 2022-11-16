@@ -36,7 +36,7 @@ export class WodTemplateService {
   }
 
   public delete(id) {
-    return this.http.delete(this.url + 'api/sale/wodtemplate/' + id);
+    return this.http.delete(this.url + 'api/wodtemplate/' + id);
   }
 
   public getById(id: number) {

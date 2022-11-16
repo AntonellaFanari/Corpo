@@ -1,0 +1,54 @@
+div.spinner-border {
+  margin-top: 20px;
+}
+
+div.mat-tab-body-content {
+  padding: 10px !important;
+}
+
+.modal-dialog-full {
+  width: 100%;
+  padding: 0;
+  margin: 20;
+  max-width: 100%;
+}
+
+.modal-content-full {
+  height: 100%;
+}
+
+.diplay-btn-assignment-wod {
+  display: none;
+}
+
+.diplay-calendar-assignment-wod {
+  display: block;
+}
+
+.not-active {
+  cursor: not-allowed;
+}
+
+.disable-tr {
+  background-color: #efefef;
+  cursor: not-allowed;
+}
+
+.week-planned {
+  background: #00ff90;
+}
+
+.week-not-planned {
+  background: #fa4263a6;
+}
+
+.week-planned-incomplete {
+  background: #f3990b91;
+}
+
+.tr-click {
+  background-color: lightgreen;
+}
+
+@media only screen and (max-width: 800px) {
+}

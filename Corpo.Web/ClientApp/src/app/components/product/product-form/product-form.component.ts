@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../../../domain/product';
 import { ProductService } from '../../../services/product.service';
@@ -13,6 +13,7 @@ export class ProductFormComponent implements OnInit {
   sent: boolean = false;
   product: Product;
   @Input() title: string = "Modificación de Producto";
+  @Output() getRequesting = new EventEmitter<string>();
 
   constructor(private formBuilder: FormBuilder, private productService: ProductService) {
     this.formProduct = this.formBuilder.group({
@@ -49,7 +50,7 @@ export class ProductFormComponent implements OnInit {
         console.log(this.product);
         this.toCompleteForm();
       },
-      error => console.error(error)
+      error => this.getRequesting.emit()
     )
   }
 
@@ -58,7 +59,8 @@ export class ProductFormComponent implements OnInit {
       description: this.product.description,
       stock: this.product.stock,
       price: this.product.price
-    })
+    });
+    this.getRequesting.emit();
   }
 
 }

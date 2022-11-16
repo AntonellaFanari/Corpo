@@ -17,7 +17,7 @@
 }
 
 .table-td td {
-    color: #09b4f5;
+    color: black;
     text-align: right;
 }
 
@@ -31,7 +31,7 @@
   background: #38c172;
   padding-left: 0px !important;
   text-align: center !important;
-  height: 50px;
+  height: auto;
   color: white;
   font-weight:bold;
   font-size: 18px;
@@ -41,7 +41,7 @@
   background: red;
   padding-left: 0px !important;
   text-align: center !important;
-  height: 50px;
+  height: auto;
   color: wheat;
   font-weight: bold;
   font-size: 18px;
@@ -66,6 +66,8 @@
     cursor: pointer;
 }
 
+
+
 .total-non-responsive {
   display: normal;
 }
@@ -86,6 +88,14 @@
   width: 50%;
 }
 
+.display-btns-menu {
+  display: none;
+}
+
+.display-table-menu{
+    display: inline-table;
+}
+
 @media only screen and (max-width: 800px) {
   #no-more-tables {
      /* padding-right: 2rem;*/
@@ -98,7 +108,7 @@
 
   .header-cash-positve {
     background: #38c172;
-    height: 70px;
+    height: auto;
     color: white;
     font-weight: bold;
     font-size: 15px;
@@ -106,7 +116,7 @@
 
   .header-cash-negative {
     background: red;
-    height: 70px;
+    height: auto;
     color: white;
     font-weight: bold;
     font-size: 15px;
@@ -116,5 +126,14 @@
     display: block;
     text-align: center;
   }
+
+  .display-btns-menu{
+      display: block;
+  }
+
+  .display-table-menu {
+    display: none;
+  }
+
 
 }

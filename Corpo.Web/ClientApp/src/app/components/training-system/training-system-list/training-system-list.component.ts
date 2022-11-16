@@ -16,11 +16,11 @@ export class TrainingSystemListComponent implements OnInit {
   constructor(private trainingSystemService: TrainingSystemService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
-    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
+    this.requestingList = true;
     this.trainingSystemService.getAll().subscribe(
       response => {
         this.requestingList = false;
@@ -33,11 +33,13 @@ export class TrainingSystemListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Sistemas de Entrenamiento", ["¿Está seguro que desea eliminar este sistema de entrenamiento?"], () => {
+      this.requestingList = true;
       this.trainingSystemService.delete(id).subscribe(
         response => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Sistemas de Entrenamiento", ["Error al intentar eliminar el sistema de entrenamiento."])
         })

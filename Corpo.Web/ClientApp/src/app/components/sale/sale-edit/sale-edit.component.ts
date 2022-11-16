@@ -37,6 +37,7 @@ export class SaleEditComponent implements OnInit {
   cancelStatus: boolean = false;
   cancelSale: CancelSale;
   @Output() updateSales = new EventEmitter<string>();
+  requesting = false;
 
 
   constructor(private saleService: SaleService,
@@ -57,6 +58,7 @@ export class SaleEditComponent implements OnInit {
   }
 
   getSaleById(id) {
+    this.requesting = true;
     this.saleService.getSaleById(id).subscribe(
       response => {
         console.log("venta: ", response.result);
@@ -68,7 +70,7 @@ export class SaleEditComponent implements OnInit {
         this.getDetailsSale();
         if (this.sale.status == Status.canceled) { this.getCancelSale(this.sale.id) }
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
@@ -79,8 +81,9 @@ export class SaleEditComponent implements OnInit {
       result => {
         console.log(result);
         this.detailsSale = result;
+        this.requesting = false
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
@@ -136,9 +139,9 @@ export class SaleEditComponent implements OnInit {
   cancel() {
     this.customAlertService.displayAlert("Gestión de Ventas", ["¿Está seguro que desea anular esta venta?"], () => {
       var cancelSale = this.createCancelSale();
+      this.modalClick(cancelSale.saleId);
       this.saleService.cancel(this.sale.id, cancelSale).subscribe(
         result => {
-          this.modalClick(cancelSale.saleId);
           this.updateSalesCash();
         },
         error => {

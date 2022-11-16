@@ -177,16 +177,22 @@ export class MenuWodComponent implements OnInit {
       response => {
         this.requesting = false;
         console.log("wods1: ", response.result);
-        var wodMembers = response.result;
-        wodMembers.forEach(w => {
-          this.wods.push({
-            wod: this.getWod(w),
-            date: "",
-            wodNumber: w.wodNumber,
-            attended: w.attended
-          });
-          console.log("wodMember:", w)
-        })
+     
+        var wodsMember = response.result;
+        if (wodsMember.length > 0) {
+          wodsMember.forEach(w => {
+            this.wods.push({
+              wod: this.getWod(w),
+              date: "",
+              wodNumber: w.wodNumber,
+              attended: w.attended
+            });
+            console.log("wodMember:", w)
+          })
+        } else {
+          this.customAlertService.displayAlert("Gestion de Wods", ["La semana seleccionada no tiene wods asignados."]);
+        }
+      
         console.log("wods2: ", this.wods);
     
 

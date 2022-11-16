@@ -12,5 +12,7 @@ namespace Corpo.Domain.Contracts.Services
         Task<DomainResponse> Add(WeeklyTemplate weeklyTemplate);
         Task<DomainResponse> GetAll();
         Task<DomainResponse> GetById(int id);
+        Task<DomainResponse> Update(WeeklyTemplate weeklyTemplate, int id);
+        Task<DomainResponse> Delete(int id);
     }
 }

@@ -37,3 +37,21 @@
   border-bottom: 7px solid white;
   margin: auto;
 }
+
+.float-left-M {
+  float: left
+}
+
+.float-rigth-m {
+  float: right;
+}
+
+@media only screen and (max-width: 801px) {
+  .float-left-M {
+    float: none
+  }
+
+  .float-rigth-m {
+      float: none;
+  }
+}

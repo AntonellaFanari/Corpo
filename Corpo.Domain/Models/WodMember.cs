@@ -11,6 +11,8 @@ namespace Corpo.Domain.Models
         public int Id { get; set; }
         public string Goal { get; set; }
         public virtual List<WodGroupMember> WodGroupsMember { get; set; }
+        public virtual WeeklyTemplate WeeklyTemplate { get; set; }
+        public int WeeklyTemplateId { get; set; }
         public int MemberId { get; set; }
         public int WodNumber { get; set; }
         public int PeriodizationId { get; set; }

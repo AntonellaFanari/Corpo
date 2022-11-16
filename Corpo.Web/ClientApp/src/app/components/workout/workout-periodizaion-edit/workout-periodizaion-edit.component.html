@@ -40,7 +40,7 @@
   </div>
 </section>
 
-<section class="modal-content wrapper">
+<section class="wrapper">
   <header class="modal-header bg-success">
     <h3 class="mb text-center text-white">
       Periodización <span *ngIf="member">
@@ -65,19 +65,19 @@
           </select>
         </div>
       </div>
-      <div class="col-4  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Número de entrenamientos por semana:</label>
         <div class="formValidators">
           <input type="number" class="form-control" [(ngModel)]="trainings">
         </div>
       </div>
-      <div class="col-4  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4 mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Volumen:</label>
         <div class="formValidators">
           <input type="number" class="form-control" [(ngModel)]="volumeMonthly">
         </div>
       </div>
-      <div class="col-4  mt-3 mb-3 btn-float-right">
+      <div class="col-12 col-lg-4  mt-3 mb-3 btn-float-right">
         <label class="col-12 control-label">Sistema de Entrenamiento:</label>
         <select class="form-control" [(ngModel)]="selectedTrainingSystemMonthly" (change)="selectTrainingSystem($event.target.value, 0)">
           <option value="0" disabled>Seleccionar...</option>
@@ -93,7 +93,8 @@
                                  (onSelect)="onItemSelect($event, 0)"
                                  (onSelectAll)="onSelectAll($event, 0)"
                                  (onDeSelect)="onItemDeSelect($event, 0)"
-                                 (onDeSelectAll)="onDeSelectAll(0)">
+                                 (onDeSelectAll)="onDeSelectAll(0)"
+                                 >
         </ng-multiselect-dropdown>
       </div>
       <div class="form-group mt-3 mb-3">
@@ -132,13 +133,13 @@
           <strong>No se asignaron objetivos para la semana 1</strong>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Volumen:</label>
         <div class="formValidators">
           <input type="number" class="form-control" [(ngModel)]="week1.volume">
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4 mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Tipo de Intensidad:</label>
         <div class="formValidators">
           <select class="form-control" [(ngModel)]="week1.intensityType" (change)="selectIntensityType($event.target.value, 1)">
@@ -148,7 +149,7 @@
           </select>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Intensidad :</label>
         <div class="input-group">
           <input type="number" class="form-control" [(ngModel)]="week1.intensity" (blur)="validate(1)" />
@@ -156,7 +157,7 @@
         </div>
         <p class="validators-week1 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week1 hide-validators">*Ingrese un número entre 0 y 100</p>
       </div>
-      <div class="col-3  mt-3 mb-3 btn-float-right">
+      <div class="col-12 col-lg-4  mt-3 mb-3 btn-float-right">
         <label class="col-12 control-label">Sistema de Entrenamiento:</label>
         <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek1" (change)="selectTrainingSystem($event.target.value, 1)">
           <option value="0" disabled>Seleccionar...</option>
@@ -164,7 +165,7 @@
         </select>
       </div>
       <div class="row col-12 pe-0">
-        <section id="no-more-tables" class="tab-pane fade show active col-4">
+        <section id="no-more-tables" class="tab-pane fade show active col-5">
           <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
                  week="week2">
             <thead class="cf">
@@ -184,7 +185,7 @@
             <!--<canvas id="week2-chart"></canvas>-->
           </div>
         </section>
-        <section id="no-more-tables" class="tab-pane fade show active col-8 pe-0">
+        <section id="no-more-tables" class="tab-pane fade show active col-7 pe-0">
           <table class="table table-bordered table-condensed cf scrollme periodization" id="week1"
                  week="week1">
             <thead class="cf">
@@ -240,13 +241,13 @@
           <strong>No se asignaron objetivos para la semana 2</strong>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Volumen:</label>
         <div class="formValidators">
           <input type="number" class="form-control" [(ngModel)]="week2.volume">
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Tipo de Intensidad:</label>
         <div class="formValidators">
           <select class="form-control" [(ngModel)]="week2.intensityType" (change)="selectIntensityType($event.target.value, 2)">
@@ -256,7 +257,7 @@
           </select>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Intensidad :</label>
         <div class="input-group">
           <input type="number" class="form-control" [(ngModel)]="week2.intensity" (blur)="validate(2)" />
@@ -264,7 +265,7 @@
         </div>
         <p class="validators-week2 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week2 hide-validators">*Ingrese un número entre 0 y 100</p>
       </div>
-      <div class="col-3  mt-3 mb-3 btn-float-right">
+      <div class="col-12 col-lg-4  mt-3 mb-3 btn-float-right">
         <label class="col-12 control-label">Sistema de Entrenamiento:</label>
         <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek2" (change)="selectTrainingSystem($event.target.value, 2)">
           <option value="0" disabled>Seleccionar...</option>
@@ -272,7 +273,7 @@
         </select>
       </div>
       <div class="row col-12 pe-0">
-        <section id="no-more-tables" class="tab-pane fade show active col-4">
+        <section id="no-more-tables" class="tab-pane fade show active col-5">
           <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
                  week="week1">
             <thead class="cf">
@@ -289,7 +290,7 @@
             </tbody>
           </table>
         </section>
-        <section id="no-more-tables" class="tab-pane fade show active col-8 pe-0">
+        <section id="no-more-tables" class="tab-pane fade show active col-7 pe-0">
           <table class="table table-bordered table-condensed cf scrollme periodization" id="week2"
                  week="week2">
             <thead class="cf">
@@ -348,13 +349,13 @@
           <strong>No se asignaron objetivos para la semana 3</strong>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Volumen:</label>
         <div class="formValidators">
           <input type="number" class="form-control" [(ngModel)]="week3.volume">
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Tipo de Intensidad:</label>
         <div class="formValidators">
           <select class="form-control" [(ngModel)]="week3.intensityType" (change)="selectIntensityType($event.target.value, 3)">
@@ -364,7 +365,7 @@
           </select>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Intensidad :</label>
         <div class="input-group">
           <input type="number" class="form-control" [(ngModel)]="week3.intensity" (blur)="validate(3)" />
@@ -372,7 +373,7 @@
         </div>
         <p class="validators-week3 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week3 hide-validators">*Ingrese un número entre 0 y 100</p>
       </div>
-      <div class="col-3  mt-3 mb-3 btn-float-right">
+      <div class="col-12 col-lg-4  mt-3 mb-3 btn-float-right">
         <label class="col-12 control-label">Sistema de Entrenamiento:</label>
         <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek3" (change)="selectTrainingSystem($event.target.value, 3)">
           <option value="0" disabled>Seleccionar...</option>
@@ -380,7 +381,7 @@
         </select>
       </div>
       <div class="row col-12 pe-0">
-        <section id="no-more-tables" class="tab-pane fade show active col-4">
+        <section id="no-more-tables" class="tab-pane fade show active col-5">
           <table class="table table-bordered table-condensed cf scrollme predominance" id="week3"
                  week="week2">
             <thead class="cf">
@@ -401,7 +402,7 @@
           </div>
         </section>
 
-        <section id="no-more-tables" class="tab-pane fade show active col-8 pe-0">
+        <section id="no-more-tables" class="tab-pane fade show active col-7 pe-0">
           <table class="table table-bordered table-condensed cf scrollme periodization" id="week3"
                  week="week3">
             <thead class="cf">
@@ -456,13 +457,13 @@
           <strong>No se asignaron objetivos para la semana 4</strong>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4 mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Volumen:</label>
         <div class="formValidators">
           <input type="number" class="form-control" [(ngModel)]="week4.volume">
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4 mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Tipo de Intensidad:</label>
         <div class="formValidators">
           <select class="form-control" [(ngModel)]="week4.intensityType" (change)="selectIntensityType($event.target.value, 4)">
@@ -472,7 +473,7 @@
           </select>
         </div>
       </div>
-      <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+      <div class="col-12 col-lg-4 mt-3 mb-3 pe-3 btn-float-left">
         <label class="col-12 control-label">Intensidad :</label>
         <div class="input-group">
           <input type="number" class="form-control" [(ngModel)]="week4.intensity" (blur)="validate(4)" />
@@ -480,7 +481,7 @@
         </div>
         <p class="validators-week4 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week4 hide-validators">*Ingrese un número entre 0 y 100</p>
       </div>
-      <div class="col-3  mt-3 mb-3 btn-float-right">
+      <div class="col-12 col-lg-4 mt-3 mb-3 btn-float-right">
         <label class="col-12 control-label">Sistema de Entrenamiento:</label>
         <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek4" (change)="selectTrainingSystem($event.target.value, 4)">
           <option value="0" disabled>Seleccionar...</option>
@@ -488,7 +489,7 @@
         </select>
       </div>
       <div class="row col-12 pe-0">
-        <section id="no-more-tables" class="tab-pane fade show active col-4">
+        <section id="no-more-tables" class="tab-pane fade show active col-5">
           <table class="table table-bordered table-condensed cf scrollme predominance" id="week4"
                  week="week2">
             <thead class="cf">
@@ -508,7 +509,7 @@
             <!--<canvas id="week2-chart"></canvas>-->
           </div>
         </section>
-        <section id="no-more-tables" class="tab-pane fade show active col-8 pe-0">
+        <section id="no-more-tables" class="tab-pane fade show active col-7 pe-0">
           <table class="table table-bordered table-condensed cf scrollme periodization" id="week4"
                  week="week4">
             <thead class="cf">
@@ -555,11 +556,11 @@
     <!--<canvas id="week4-chart"></canvas>-->
   </div>
   <div class="container-fluid mb-2">
-    <button class="btn btn-secondary btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
-            [queryParams]="{memberId: memberId, week: '0'}">
+    <button class="btn btn-secondary col-12 col-lg-2 btn-float-left mt-2" type="button" [routerLink]="['/asignacion-plantilla']"
+            [queryParams]="{memberId: periodization.memberId, week: '0'}">
       Cancelar
     </button>
-    <button class="btn btn-success btn-float-right mt-2" type="submit" (click)="save()">
+    <button class="btn btn-success col-12 col-lg-2 btn-float-right mt-2" type="submit" (click)="save()">
       Guardar
     </button>
   </div>

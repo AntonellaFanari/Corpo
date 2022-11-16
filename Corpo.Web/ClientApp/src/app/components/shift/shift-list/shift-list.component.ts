@@ -30,7 +30,6 @@ export class ShiftListComponent implements OnInit {
   quota: number;
   disabled: boolean = true;
   checkedAllShifts: boolean = false;
-  @ViewChild(AttendanceComponent, { static: true }) attendancesComponent: AttendanceComponent;
   requestingList: boolean;
 
   constructor(private shiftService: ShiftService, private dp: DatePipe, private classService: ClassService,
@@ -235,19 +234,17 @@ export class ShiftListComponent implements OnInit {
     let idShiftsDelete = this.getShiftsDelete();
     console.log("delete");
     this.customAlertService.displayAlert("Gestión de Turnos", ["¿Está seguro que desea eliminar los turnos seleccionados?"], () => {
+      this.requestingList = true;
       this.shiftService.delete(idShiftsDelete).subscribe(
         result => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar turnos."]);
         })
     }, true);
   }
 
-  goToAttendances(id) {
-    this.attendancesComponent.modalClick();
-    this.attendancesComponent.getShift(id);
-  }
 }

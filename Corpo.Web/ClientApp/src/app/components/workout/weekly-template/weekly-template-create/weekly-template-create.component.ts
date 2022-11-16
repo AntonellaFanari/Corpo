@@ -64,6 +64,7 @@ export class WeeklyTemplateCreateComponent implements OnInit {
 
 
   getWeeklyGoals() {
+    this.requesting = true;
     this.weeklyGoalService.getAll().subscribe(
       response => {
         this.weeklyGoals = response.result;
@@ -74,7 +75,6 @@ export class WeeklyTemplateCreateComponent implements OnInit {
   }
 
   getWods() {
-    this.requesting = true;
     this.wodTemplateService.getAll().subscribe(
       response => {
         this.requesting = false;
@@ -139,6 +139,7 @@ export class WeeklyTemplateCreateComponent implements OnInit {
       this.goal = this.goal + "-" + goal.goal;
     }
     this.weeklyGoalsList.push(goal);
+    this.getGoal();
   }
 
   onSelectAllGoals(goals) {
@@ -152,19 +153,32 @@ export class WeeklyTemplateCreateComponent implements OnInit {
         this.goal = this.goal + "-" + this.weeklyGoalsList[i].goal;
       }
     };
+    this.getGoal();
     console.log(this.weeklyGoalsList);
   }
 
   onItemDeSelectGoal(goal) {
     let index1 = this.weeklyGoalsList.findIndex(x => x.id == goal.id);
     this.weeklyGoalsList.splice(index1, 1);
+    this.getGoal();
   }
 
   onDeSelectAllGoals() {
     this.weeklyGoalsList = [];
     this.goal = "";
+    this.getGoal();
   }
 
+  getGoal() {
+    this.goal = "";
+    for (var i = 0; i < this.weeklyGoalsList.length; i++) {
+      if (i == 0) {
+        this.goal = this.weeklyGoalsList[i].goal;
+      } else {
+        this.goal = this.goal + "-" + this.weeklyGoalsList[i].goal;
+      }
+    }
+  }
 
   onItemSelectWodTemplate(template) {
     console.log("wod: ", template);

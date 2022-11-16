@@ -4,7 +4,7 @@
     <h4 class="table-title text-center" *ngIf="member">{{member.lastName}} {{member.name}} WOD - Nivel <span *ngIf="level">{{level}}</span><span *ngIf="!level"> no asignado</span></h4>
   </div>
   <hr *ngIf="!requestingAssignment && periodization" />
-  <section class="wrapper">
+  <section class="">
     <div class="row">
       <div class=" col-12 col-lg-3 mb-4">
 
@@ -47,10 +47,36 @@
       </div>
 
 
-      <div class="col-12 col-lg-9 " *ngIf="!requestingAssignment && periodization">
+      <div class="col-12 col-lg-9" *ngIf="!requestingAssignment && periodization && weeklyTemplate">
+
+        <h6 class="w-100 text-center p-3"><strong>Planificación semana {{weekNumber}}</strong></h6>
+        <div class="form-group mt-3">
+          <label class="control-label">Plantilla semanal: {{weeklyTemplate.name}}</label>
+        </div>
+
+        <!--<p [ngClass]="validatorsRequiredGoal ? 'validators': 'hide-validators'">*Debe seleccionar uno o más objetivos.</p>-->
+        <div class="form-group mt-3 mb-3">
+          <label class="control-label">Objetivos:</label>
+          <div class="formValidators">
+            <ul>
+              <li *ngFor="let goal of getGoals(weeklyTemplate.goal)">{{ goal }}</li>
+            </ul>
+          </div>
+
+          <!--<div class="formValidators" *ngIf="weeklyGoalsList.length == 0">
+      <strong>No se asignaron objetivos</strong>
+    </div>-->
+        </div>
 
         <mat-tab-group [class.d-none]="requestingAssignment && wods.length == 0">
-          <mat-tab label="Wod Nº {{newWod.wodNumber}}" *ngFor="let newWod of wods">
+
+         
+          <mat-tab *ngFor="let newWod of wods">
+            <ng-template mat-tab-label>
+              Wod Nº {{newWod.wodNumber}}
+
+              <mat-icon class="example-tab-icon" [class.d-none]="!displayIconWodRemoving" (click)="deleteWod(newWod.wod.id)"><i class="fa fa-trash"></i></mat-icon>
+            </ng-template>
             <app-wod-template-form [wod]="newWod.wod" [date]="newWod.date" [weekNumber]="weekNumber" [periodizationId]="periodization.id"
                                    [wodNumber]="newWod.wodNumber" [memberId]="memberId" [modeWodMember]="modeWodMember" [planned]="newWod.attended"
                                    (goBackEvent)="cancelWod()" (saveEvent)=deleteWod($event)></app-wod-template-form>
@@ -78,15 +104,16 @@
         <h4 class="modal-title">Periodización {{periodization.month}}/{{periodization.year}}</h4>
         <button type="button" class="close" data-dismiss="modal">X</button>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success col-12 col-lg-4" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
+
+      </div>
       <!-- cuerpo del diálogo -->
       <div class="modal-body">
         <app-workout-periodizaion-detail [memberId]="memberId"></app-workout-periodizaion-detail>
       </div>
       <!-- pie del diálogo -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success col-4" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
 
-      </div>
     </div>
   </div>
 </div>
@@ -103,7 +130,7 @@
       <!-- cuerpo del diálogo -->
       <div class="modal-body">
         <div class="row">
-          <div *ngFor="let newWod of wods" class="col">
+          <div *ngFor="let newWod of wods" class="col-12 col-lg-4">
             <app-wod-detail [wod]="newWod.wod" [wodNumber]="newWod.wodNumber"></app-wod-detail>
           </div>
         </div>

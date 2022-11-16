@@ -59,7 +59,8 @@ namespace Corpo.Data.Repositories
                               ShiftId = p.ShiftId,
                               Shift = c,
                               Status = p.Status,
-                              Class = e
+                              Class = e,
+                              DateCancellation = p.DateCancellation
                           })).ToListAsync();
         }
 
@@ -162,6 +163,11 @@ namespace Corpo.Data.Repositories
             }
             return list.ToList();
 
+        }
+
+        public Task<Attendance> GetByMemberIdByShiftId(int memberId, int shiftId)
+        {
+            return _context.Attendance.FirstOrDefaultAsync(x => x.MemberId == memberId && x.ShiftId == shiftId);
         }
     }
 }

@@ -1,7 +1,7 @@
 <section class="wrapper">
   <div class="modal-content">
     <header class="modal-header d-block bg-success"><h3 class="mb text-center text-white">Ficha de antecedentes de lesiones</h3></header>
-    <div class="modal-body">
+    <div class="modal-body" *ngIf="!requesting">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -18,7 +18,7 @@
               </div>
               <div class="col-lg-3 form-group">
                 <input class="mt-2" id="lowerLimbs" type="radio" name="limbs" value="2" (change)="checkedLimbs($event.target.value)">
-                <label  for="lowerLimbs" class="col-sm-9 control-label labelFormStyle marginLabel">Miembro inferior:</label>
+                <label for="lowerLimbs" class="col-sm-9 control-label labelFormStyle marginLabel">Miembro inferior:</label>
                 <div class="mt-2">
                   <select id="LowerLimb" class="form-control" (change)="selectLimb($event.target.value)" [disabled]="optionsLimbs">
                     <option value="" disabled>Seleccionar...</option>
@@ -35,18 +35,18 @@
                   </a>
                   <input type="file" id="file-button" (change)="onFileSelection($event)" style="display: none;"
                          multiple />
-                  </div>
-                </div>
-                <div class="col-lg-3 form-group">
-                  <button type="button" class="btn btn-success form-control text-center btn-action-add" (click)="addInjury()">Agregar Lesión</button>
                 </div>
               </div>
+              <div class="col-lg-3 form-group">
+                <button type="button" class="btn btn-success form-control text-center btn-action-add" (click)="addInjury()" [disabled]="!selectedFile">Agregar Lesión</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="injuries.length>0" class="col-12 mt-2">
+  <div *ngIf="!requesting && injuries.length>0" class="col-12 mt-2">
     <table class="table table-bordered table-condensed cf scrollme detail-table">
       <thead class="cf">
         <tr>
@@ -70,7 +70,7 @@
       <tbody>
         <tr *ngFor="let file of injuryFiles; index as i">
           <td class="fw-bold">
-            <a (click)="download(i)"  download="{{file.path}}"><p class="overflow-clip">{{file.name}}&nbsp;<i class="fa fa-download download-icon"></i></p></a>
+            <a (click)="download(i)" download="{{file.path}}"><p class="overflow-clip">{{file.name}}&nbsp;<i class="fa fa-download download-icon"></i></p></a>
           </td>
           <td class="td-title">
             <div class="row justify-content-center aling-items-center">
@@ -83,9 +83,14 @@
       </tbody>
     </table>
   </div>
-  <div class="mt-3 col-lg-12">
-    <button class="btn btn-secondary col-4 col-lg-2 pull-left " type="submit" (click)="return()">Volver</button>
-    <button class="btn btn-success col-4 col-lg-2 btn-float-right" type="submit" (click)="submit()">Guardar</button>
+  <div class="mt-3 col-lg-12" *ngIf="!requesting">
+    <button class="btn btn-secondary col-12 col-lg-2 pull-left " type="submit" (click)="return()">Volver</button>
+    <button class="btn btn-success col-12 col-lg-2 btn-float-right" type="submit" (click)="submit()">Guardar</button>
+  </div>
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </section>
 

@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let weeklyGoal of weeklyGoals | searchFilterName: filterName">
+            <tr *ngFor="let weeklyGoal of weeklyGoals | filterGoal: filterName">
               <td data-title="Nombre" class="col-lg-9"><span>{{weeklyGoal.goal}}</span></td>
               <td data-title="Acción" class="col-lg-3">
                 <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/objetivo-semanal-editar']" [queryParams]="{id:weeklyGoal.id}"><i class="fa fa-pencil-square"></i></button>

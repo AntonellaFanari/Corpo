@@ -95,6 +95,7 @@ export class MemberViewComponent implements OnInit {
         if (error.status == 400) {
           console.log(this.medicalHistory);
           this.medicalHistory = null;
+          this.getAge();
           console.log(this.medicalHistory);
         }
       }

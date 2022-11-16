@@ -104,11 +104,19 @@ namespace Corpo.Data.Repositories
             return attendances;
         }
 
-        public async Task SetShiftDate(DateTime shiftDate)
+        public async Task<WodMember> GetNextAvailable(int memberId)
         {
-            var wodMember = await _context.WodMember.OrderBy(x => x.WodNumber).FirstOrDefaultAsync(x => x.ShiftDate != null);
+            return await _context.WodMember.Where(x => x.MemberId == memberId).OrderBy(x => x.WodNumber).FirstOrDefaultAsync(x => x.ShiftDate == null);
+
+        }
+
+        public async Task SetShiftDate(int id, DateTime shiftDate)
+        {
+            var wodMember = await _context.WodMember.FindAsync(id);
             wodMember.ShiftDate = shiftDate;
             await Update(wodMember);
+
+
         }
 
     }

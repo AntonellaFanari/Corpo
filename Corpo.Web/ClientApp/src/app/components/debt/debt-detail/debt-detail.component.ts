@@ -74,7 +74,6 @@ export class DebtDetailComponent implements OnInit {
     this.requestingDetailSale = true;
     this.saleService.getSaleById(id).subscribe(
       result => {
-        this.requestingDetailSale = false;
         this.sale = result.result;
         this.getDetailsSale(id);
         this.status = this.sale.status;
@@ -87,8 +86,10 @@ export class DebtDetailComponent implements OnInit {
     this.saleService.getDetailsSale(id).subscribe(
       result => {
         this.detailsSale = result;
+        this.requestingDetailSale = false;
       },
-      error => console.error(error)
+      error =>
+        this.requestingDetailSale = false
     );
   }
 

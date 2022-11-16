@@ -1027,7 +1027,7 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
     console.log(periodization)
     this.periodizacionService.update(periodization, this.id).subscribe(() => {
       console.log("success")
-      this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId, week: '0' } });
+      this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.periodization.memberId, week: '0' } });
     },
       error => {
         if (error.status == 400) {

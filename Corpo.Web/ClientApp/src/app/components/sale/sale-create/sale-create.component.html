@@ -1,4 +1,4 @@
-<section class="wrapper">
+<section class="wrapper ms-0 me-0">
   <div class="container-fluid modal-content modal-lg p-0">
     <header class="modal-header d-block bg-success"><h3 class="text-center text-white">Ventas</h3></header>
     <div class="modal-body">
@@ -30,10 +30,10 @@
                       <tbody>
                         <tr class="scrollme" *ngFor="let fee of fees">
                           <td class="td-title" data-title="Cantidad">{{fee.credits}}</td>
-                          <td class="td-title" data-title="Fecha Alta">{{fee.from | date: 'dd/MM/yyyy'}}</td>
-                          <td class="td-title" data-title="Fecha Vcto.">{{fee.to | date: 'dd/MM/yyyy'}}</td>
+                          <td class="td-title" data-title="Alta">{{fee.from | date: 'dd/MM/yyyy'}}</td>
+                          <td class="td-title" data-title="Vcto.">{{fee.to | date: 'dd/MM/yyyy'}}</td>
                           <td class="td-title" data-title="Plan">{{fee.planName}}</td>
-                          <td class="td-title" data-title="Promoción"><span *ngIf="fee.promotionId==null">-</span><span *ngIf="fee.promotionId!=null">{{fee.promotion.name}}</span></td>
+                          <td class="td-title" data-title="Promoc."><span *ngIf="fee.promotionId==null">-</span><span *ngIf="fee.promotionId!=null">{{fee.promotion.name}}</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -136,7 +136,7 @@
             <div class="row card-body p-0">
               <div class="col-6 p-0">
                 <div class="card-body col-12 col-lg-6 btn-float-left">
-                  <label class="form-label">Total a cobrar $</label>
+                  <label class="form-label">Total $</label>
                 </div>
                 <div class="card-body col-12 col-lg-6 btn-float-left padding-input-total">
                   <input type="number" class="form-control col-6" [(ngModel)]="total" />
@@ -157,8 +157,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button type="button" class="col-3 col-lg-2 btn btn-secondary btn-float-left btn-create" [routerLink]="['/caja']">Volver</button>
-    <button type="button" class="col-3 col-lg-2 btn btn-success btn-float-right btn-create" (click)="submit()">Aceptar</button>
+    <button type="button" class="col-12 col-lg-2 btn btn-secondary btn-float-left btn-create" [routerLink]="['/caja']">Cancelar</button>
+    <button type="button" class="col-12 col-lg-2 btn btn-success btn-float-right btn-create" (click)="submit()">Aceptar</button>
   </div>
 </section>
 <div [ngClass]="{'view-debt-detail': viewDebts}">

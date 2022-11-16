@@ -98,7 +98,8 @@ namespace Corpo.Domain.Services
             }
             else
             {
-                return new DomainResponse(false, "no hay archivos para guardar", "No se archivos .");
+                _newsRepository.Update(newsQuery);
+                return new DomainResponse { Success = true};
             }
         }
     }

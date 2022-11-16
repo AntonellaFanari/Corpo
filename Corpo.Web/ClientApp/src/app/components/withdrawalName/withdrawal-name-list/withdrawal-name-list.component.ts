@@ -17,11 +17,12 @@ export class WithdrawalNameListComponent implements OnInit {
   constructor(private withdrawalService: WithdrawalService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
-    this.requestingList = true;
+    
     this.getAll();
   }
 
   getAll() {
+    this.requestingList = true;
     this.withdrawalService.getAllWithdrawalName().subscribe(
       result => {
         this.requestingList = false;
@@ -33,12 +34,14 @@ export class WithdrawalNameListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Retiros", ["¿Está seguro que desea eliminar este retiro?"], () => {
+      this.requestingList = true;
       this.withdrawalService.deleteWithdrawalName(id).subscribe(
         result => {
           console.log(result);
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Retiros", ["Error al intentar eliminar el retiro."])
         })

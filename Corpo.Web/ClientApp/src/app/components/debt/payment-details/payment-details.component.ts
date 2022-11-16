@@ -40,6 +40,7 @@ export class PaymentDetailsComponent implements OnInit {
   displayDetail: boolean;
   fee: Fee;
   displayCash: boolean;
+  requesting = false;
 
   constructor(private customAlertService: CustomAlertService,
     private router: Router,
@@ -63,12 +64,12 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   getPayById(id) {
+    this.requesting = true;
     this.balancePaidService.getById(id).subscribe(
       response => {
         console.log("pago: ", response.result);
         this.pay = response.result;
         console.log("pago11: ", response.result);
-        this.getUserRegister(this.pay.userId);
         this.date = this.pay.date;
         this.getMember(response.result.memberId);
         if (this.pay.pay < 0) { this.pay.pay *= (-1) }
@@ -83,6 +84,7 @@ export class PaymentDetailsComponent implements OnInit {
       response => {
         console.log("socio: ", response.result);
         this.member = response.result.lastName + " " + response.result.name;
+        this.getUserRegister(this.pay.userId);
       },
       error => console.error(error)
     )
@@ -93,8 +95,9 @@ export class PaymentDetailsComponent implements OnInit {
       result => {
         console.log(result);
         this.userRegister = result;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     );
   }
 
@@ -136,9 +139,9 @@ export class PaymentDetailsComponent implements OnInit {
   cancel() {
     this.customAlertService.displayAlert("Gestión de Pagos", ["¿Está seguro que desea anular este pago?"], () => {
       var cancelPay = this.createCancelBalancePaid();
+      this.modalClick(cancelPay.balancePaidId, "cash");
       this.balancePaidService.cancel(this.pay.id, cancelPay).subscribe(
         result => {
-          this.modalClick(cancelPay.balancePaidId, "cash");
           this.updateSalesFeesCash();
         },
         error => {

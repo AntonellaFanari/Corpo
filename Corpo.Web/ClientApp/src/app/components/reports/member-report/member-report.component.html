@@ -1,148 +1,158 @@
-<section class="wrapper" *ngIf="reports">
+<section class="wrapper">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row" style="text-align: center">
-                        <h3 style="margin-left: auto; margin-right: auto">Estadísticas de usuarios</h3>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-success text-white">
-                                    <div class="card-header text-center">
-                                        <h3 data-toggle="tooltip" data-placement="top"
-                                            title="Usuarios con vencimiento menor a un mes">Usuarios activos</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.active}}</h1>
-                                    <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'active'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-primary text-white" id="card_ovalo">
-                                    <div class="card-header text-center">
-                                        <h3>Próximos inactivos</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.closeToInactive}}</h1>
-
-                                    <button id="buttonModalusuarios" style="display:none">
-                                    </button>
-
-                                    <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'closeToInactive'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-dark text-white">
-                                    <div class="card-header text-center">
-                                        <h3>Usuarios inactivos</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.inactiveMembers}}</h1>
-                                    <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'inactiveMembers'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-navy-blue text-white" id="card_ovalo">
-                                    <div class="card-header text-center">
-                                        <h3>Usuarios nuevos</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.news}}</h1>
-
-                                    <button class="btn "  [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'news'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-warning text-white">
-                                    <div class="card-header text-center">
-                                        <h3>1 mes de ausencia</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.fistMonthInactive}}</h1>
-
-                                    <button class="btn "  [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'fistMonthInactive'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-orange text-white" id="card_ovalo_recibida">
-                                    <div class="card-header text-center">
-                                        <h3>2 meses de ausencia</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.secondMonthInactive}}</h1>
-
-                                    <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'secondMonthInactive'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-danger text-white">
-                                    <div class="card-header text-center">
-                                        <h3>Mayor a 3 meses ausencia</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.thirdMonthInactive}}</h1>
-
-                                    <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'thirdMonthInactive'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card bg-info text-white" id="card_admgestoria">
-                                    <div class="card-header text-center">
-                                        <h3>Usuarios Reingresantes</h3>
-                                    </div>
-                                    <div class="card-body pt-1"></div>
-                                    <h1 class="text-center">{{reports.reEntrants}}</h1>
-
-                                    <button class="btn " [routerLink] ="['/listado-informe-socios']" [queryParams]="{reportType:'reEntrants'}">
-                                        <div class="card-footer text-white text-right">
-                                            <h5>Ver Detalles</h5>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row" style="text-align: center">
+            <h3 style="margin-left: auto; margin-right: auto">Estadísticas de usuarios</h3>
+          </div>
         </div>
+
+        <div class="card-body" *ngIf="!requesting && reports">
+          <div class="">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-success text-white">
+                  <div class="card-header text-center">
+                    <h3 data-toggle="tooltip" data-placement="top"
+                        title="Usuarios con vencimiento menor a un mes">
+                      Usuarios activos
+                    </h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.active}}</h1>
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'active'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-primary text-white" id="card_ovalo">
+                  <div class="card-header text-center">
+                    <h3>Próximos inactivos</h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.closeToInactive}}</h1>
+
+                  <button id="buttonModalusuarios" style="display:none">
+                  </button>
+
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'closeToInactive'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-dark text-white">
+                  <div class="card-header text-center">
+                    <h3>Usuarios inactivos</h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.inactiveMembers}}</h1>
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'inactiveMembers'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-navy-blue text-white" id="card_ovalo">
+                  <div class="card-header text-center">
+                    <h3>Usuarios nuevos</h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.news}}</h1>
+
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'news'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-warning text-white">
+                  <div class="card-header text-center">
+                    <h3>1 mes de ausencia</h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.fistMonthInactive}}</h1>
+
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'fistMonthInactive'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-orange text-white" id="card_ovalo_recibida">
+                  <div class="card-header text-center">
+                    <h3>2 meses de ausencia</h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.secondMonthInactive}}</h1>
+
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'secondMonthInactive'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-danger text-white">
+                  <div class="card-header text-center">
+                    <h3>Mayor a 3 meses ausencia</h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.thirdMonthInactive}}</h1>
+
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'thirdMonthInactive'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 mb-4">
+                <div class="card bg-info text-white" id="card_admgestoria">
+                  <div class="card-header text-center">
+                    <h3>Usuarios Reingresantes</h3>
+                  </div>
+                  <div class="card-body pt-1"></div>
+                  <h1 class="text-center">{{reports.reEntrants}}</h1>
+
+                  <button class="btn " [routerLink]="['/listado-informe-socios']" [queryParams]="{reportType:'reEntrants'}">
+                    <div class="card-footer text-white text-right">
+                      <h5>Ver Detalles</h5>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-100 text-center mt-3" *ngIf="requesting">
+          <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+
 </section>

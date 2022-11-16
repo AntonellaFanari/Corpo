@@ -15,6 +15,7 @@ export class OutflowTypeEditComponent implements OnInit {
   sendForm: boolean = false;
   id: number;
   outflowType: OutflowType;
+  requesting = false;
 
   constructor(private outflowService: OutflowService, private formBuilder: FormBuilder,
     private router: Router, private customAlertService: CustomAlertService, private route: ActivatedRoute) {
@@ -27,20 +28,26 @@ export class OutflowTypeEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getOutflow();
+  }
+
+  getOutflow() {
+    this.requesting = true;
     this.outflowService.getOutflowTypeById(this.id).subscribe(
       result => {
         console.log(result);
         this.outflowType = result;
         this.toCompleteForm();
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
   toCompleteForm() {
     this.formCreate.patchValue({
       name: this.outflowType.name
-    })
+    });
+    this.requesting = false;
   }
 
   get f() {

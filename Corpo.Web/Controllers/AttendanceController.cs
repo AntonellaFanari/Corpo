@@ -125,5 +125,14 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+
+        [HttpGet("by-day")]
+        public async Task<ActionResult> GetByDay(DateTime day, int classId)
+        {
+            var id = GetUser().Id;
+            var response = await _attendanceService.GetByDay(id, day, classId);
+            return this.ToActionResult(response);
+        }
+
     }
 }

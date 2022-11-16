@@ -37,6 +37,7 @@ export class UserListComponent implements OnInit {
     this.customAlertService.displayAlert("Gestión de usuarios", ["¿Está seguro que desea eliminar este usuario?"], () => {
       this.userService.delete(id, email).subscribe(
         result => {
+          this.requestingList = true;
           this.getAll();
         },
         error => {

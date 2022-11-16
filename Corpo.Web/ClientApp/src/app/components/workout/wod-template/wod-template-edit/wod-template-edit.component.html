@@ -31,95 +31,6 @@
     </div>
   </div>
 
-  <!--<div class="form-group mt-3">
-    <label class="control-label">Categoría:</label>
-    <div class="">
-      <select class="form-control" (change)="selectCategory($event.target.value)">
-        <option value="" disabled>Seleccionar...</option>
-        <option value="0">Todos</option>
-        <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
-      </select>
-    </div>
-  </div>-->
-  <!--<div class="col-12 card mt-3">
-    <div class="row card-body justify-content-center align-items-center">
-      <div class="row">
-        <div class="col-12">
-          <label class="col-12 control-label">Tags:</label>
-          <div *ngIf="checkboxToTags.length>0" class="row">
-            <div *ngFor="let checkToTag of checkboxToTags; index as i" class="col-md-4">
-              <input class="checkbox-tags" type="checkbox" [id]="checkToTag.id" [checked]="checkToTag.checked"
-                     (change)="checkTag(i)">
-              <label [for]="checkToTag.id">{{checkToTag.tag}}</label>
-            </div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>-->
-  <!--<div class="row">
-    <div class="form-group mt-3 col-12">
-      <label class="control-label">Ejercicio:</label>
-      <div class="formValidators">
-        <ng-select class="custom" #select [items]="exercisesSelect" [(ngModel)]="selectedExercise" bindLabel="name"
-                   bindValue="id" selectOnTab="true" id="select-exercise" notFoundText="No hay ejercicios" (change)="selectExercise()">
-        </ng-select>
-        <p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>
-      </div>
-    </div>
-
-    <div class="form-group mt-3 col-12">
-      <label class="control-label"></label>
-      <div class="formValidators">
-        <div class="row">
-
-          <div class="col-8">
-            <fieldset class="radio-group">
-              <label>
-                <input type="radio" class="radio-mode" name="numero" value="Kgs" [(ngModel)]="mode" class="cb-label"> Kgs
-              </label>
-              <label>
-                <input type="radio" class="radio-mode" name="numero" value="%" [(ngModel)]="mode" class="cb-label"> %
-              </label>
-              <label>
-                <input type="radio" class="radio-mode" name="numero" value="RPE" [(ngModel)]="mode" class="cb-label"> RPE
-              </label>
-              <label>
-                <input type="radio" class="radio-mode" name="numero" value="RPEs" [(ngModel)]="mode" class="cb-label"> RPEs
-              </label>
-              <label>
-                <input type="radio" class="radio-mode" name="numero" value="None" [(ngModel)]="mode" class="cb-label"> Ninguno
-              </label>
-            </fieldset>
-          </div>
-          <div class="col-4">
-            <input type="text" class="form-control" [(ngModel)]="value">
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>-->
-  <!--<div class="form-group mt-3">
-    <label class="control-label">Modalidad:</label>
-    <div class="formValidators">
-      <ng-select class="custom" [items]="modalities" [(ngModel)]="selectedModality" bindLabel="name" bindValue="id"
-                 selectOnTab="true" notFoundText="No hay modalidades" (change)="selectModality()">
-        >
-      </ng-select>
-      <p [ngClass]="validatorsRequiredModality ? 'validators': 'hide-validators'">*Debe seleccionar una modalidad.</p>
-    </div>
-  </div>
-
-  <div class="form-group mt-3">
-    <label class="control-label">Unidades:</label>
-    <div class="formValidators">
-      <input type="text" class="form-control" [(ngModel)]="units">
-      <p *ngIf="validationError && !units">* el campo es requerido.</p>
-    </div>
-  </div>
-
 
   <div class="button-box">
     <button class="btn btn-secondary mr-2" (click)="addwodGroupModal()">Agregar grupo</button>
@@ -190,11 +101,11 @@
     </div>
 
     <div class="div-btn-create">
-      <button class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" type="button"
+      <button class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" type="button"
               routerLink="/plantillas-wod">
         Cancelar
       </button>
-      <button class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit"
+      <button class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit"
               (click)="save()">
         Guardar
       </button>

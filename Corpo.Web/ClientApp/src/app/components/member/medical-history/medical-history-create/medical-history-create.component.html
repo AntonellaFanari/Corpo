@@ -1,25 +1,26 @@
 <section class="wrapper" *ngIf="!requesting && !medicalHistoryCreate">
-  <div class="container-fluid modal-lg">
+  <div class="container-fluid">
     <header class="card-header col-12 bg-success"><h3 class="text-center text-white">Historia médica del socio</h3></header>
     <div class="card-body col-12 bg-light">
       <h5 class="text-center">El socio no tiene historia médica registrada.</h5>
     </div>
-    <div class="card-footer col-12">
-      <div class="row">
-        <div class="col-12 p-0">
-          <button class="btn btn-secondary col-4 col-lg-2 btn-float-left" type="submit" [routerLink]="['/member-list']">Volver</button>
-          <button class="btn btn-success col-4 col-lg-2 btn-float-right" type="submit" (click)="create()">Agregar</button>
+    <div class="card-footer bg-light">
+      <div class="row justify-content-center align-content-center">
+        <div class="col-4 text-center">
+          <button class="btn btn-success col-12" type="submit" (click)="create()">Agregar</button>
         </div>
       </div>
     </div>
+    <button class="btn btn-secondary col-4 col-lg-2 btn-float-left mt-2" type="submit" [routerLink]="['/member-list']">Volver</button>
   </div>
+
 </section>
 <section class="wrapper" *ngIf="!requesting && medicalHistoryCreate">
   <app-medical-history-form [age]="age"></app-medical-history-form>
   <div class="container-fluid div-btn-create">
-    <button class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" type="submit" [routerLink]="['/member-list']">Volver</button>
-    <button *ngIf="planType == 1" class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Siguiente</button>
-    <button *ngIf="planType == 2" class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" type="submit" [routerLink]="['/member-list']">Volver</button>
+    <button *ngIf="planType == 1" class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Siguiente</button>
+    <button *ngIf="planType == 2" class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 <section class="wrapper" *ngIf="requesting">

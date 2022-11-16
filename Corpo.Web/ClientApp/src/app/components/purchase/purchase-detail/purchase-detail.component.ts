@@ -11,6 +11,7 @@ import { PurchaseService } from '../../../services/purchase.service';
 export class PurchaseDetailComponent implements OnInit {
   detailPurchase: DetailPurchase[] = [];
   id: number;
+  requesting = false;
 
   constructor(private purchaseService: PurchaseService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -19,12 +20,18 @@ export class PurchaseDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPurchase();
+  }
+
+  getPurchase() {
+    this.requesting = true;
     this.purchaseService.getDetailPurchase(this.id).subscribe(
       result => {
         console.log(result);
         this.detailPurchase = result;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

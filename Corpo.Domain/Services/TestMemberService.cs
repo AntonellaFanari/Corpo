@@ -396,7 +396,7 @@ namespace Corpo.Domain.Services
             return new DomainResponse
             {
                 Success = true,
-                Result = new { response.Id, response.Level }
+                Result = (response != null)? new { response.Id, response.Level }: null
             };
         }
     }

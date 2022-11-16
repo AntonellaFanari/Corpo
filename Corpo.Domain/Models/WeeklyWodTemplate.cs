@@ -11,6 +11,7 @@ namespace Corpo.Domain.Models
         public int Id { get; set; }
         public virtual WeeklyTemplate WeeklyTemplate { get; set; }
         public int WeeklyTemplateId { get; set; }
+        public virtual WodTemplate WodTemplate { get; set; }
         public int WodTemplateId { get; set; }
 
     }

@@ -134,20 +134,23 @@ export class StaggeredComponent implements OnInit {
   }
 
   calculateUnits() {
-    if (this.selectedStaggeredType == 1) {
+    if (this.baseUnit != 0) {
+      if (this.selectedStaggeredType == 1) {
 
-      for (var i = 0; i < this.units.length; i++) {
-        this.units[i] = this.baseUnit + (this.staggeredValue * (i + 1));
-      }
-    } else if (this.selectedStaggeredType == 2) {
-      for (var i = 0; i < this.units.length; i++) {
-        this.units[i] = this.baseUnit - (this.staggeredValue * (i + 1));
-      }
-    } else if (this.selectedStaggeredType == 3) {
-      for (var i = 0; i < this.units.length; i++) {
-        this.units[i] = this.baseUnit;
+        for (var i = 0; i < this.units.length; i++) {
+          this.units[i] = this.baseUnit + (this.staggeredValue * (i + 1));
+        }
+      } else if (this.selectedStaggeredType == 2) {
+        for (var i = 0; i < this.units.length; i++) {
+          this.units[i] = this.baseUnit - (this.staggeredValue * (i + 1));
+        }
+      } else if (this.selectedStaggeredType == 3) {
+        for (var i = 0; i < this.units.length; i++) {
+          this.units[i] = this.baseUnit;
+        }
       }
     }
+ 
 
   }
 

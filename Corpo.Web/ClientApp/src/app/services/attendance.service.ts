@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Attendance } from '../domain/attendance';
 import { AttendanceRegister } from '../domain/attendance-register';
 import { Credit } from '../domain/credit';
+import { DomainResponse } from '../domain/domain-response';
 import { MemberAttendance } from '../domain/member-attendance';
 
 const httpOptions = {
@@ -27,7 +28,7 @@ export class AttendanceService {
   }
 
   public add(attendance: Attendance) {
-    return this.http.post<any>(this.url + 'api/attendance/add', attendance, httpOptions);
+    return this.http.post<DomainResponse<any>>(this.url + 'api/attendance/add', attendance, httpOptions);
   }
 
   public cancelReservation(id: number, credit: Credit) {
@@ -39,7 +40,7 @@ export class AttendanceService {
   }
 
   public update(attendances: MemberAttendance[], shiftId: number) {
-    return this.http.put(this.url + 'api/attendance/update-attended?id=' + shiftId, attendances, httpOptions);
+    return this.http.put<DomainResponse<any>>(this.url + 'api/attendance/update-attended?id=' + shiftId, attendances, httpOptions);
   }
 
   public getAllReservationsDetail(id: number) {

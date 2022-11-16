@@ -16,6 +16,7 @@ export class ClassEditComponent implements OnInit {
   formEdit: FormGroup;
   id: number;
   sendForm: boolean = false;
+  requesting = false;
 
   constructor(private classService: ClassService, private route: ActivatedRoute, private formBuilder: FormBuilder,
     private router: Router, private customAlertService: CustomAlertService) {
@@ -27,14 +28,19 @@ export class ClassEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getClass();
+   
+  }
+
+  getClass() {
+    this.requesting = true;
     this.classService.getById(this.id).subscribe(
       result => {
         this.class = result.result;
         this.toCompleteForm();
       },
-      error => console.error(error)
-    );
-   
+      error => this.requesting = false
+    )
   }
 
   get f() {
@@ -48,7 +54,8 @@ export class ClassEditComponent implements OnInit {
     this.formEdit.patchValue({
       name: this.class.name,
       personalized: this.class.personalized
-    })
+    });
+    this.requesting = false;
   }
 
   createClassEdit() {

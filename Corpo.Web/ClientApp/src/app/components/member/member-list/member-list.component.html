@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <div class="task-panel ">
         <h4 class="table-title">Socios</h4>
-        <button type="button" class="btn btn-success col-4 col-lg-2 btn-float-right" routerLink="/member-create">Agregar</button>
+        <button type="button" class="btn btn-success col-12 col-lg-2 btn-float-right" routerLink="/member-create">Agregar</button>
       </div>
       <hr>
       <div class="col-12 card" *ngIf="!requestingList && members.length > 0">
@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <section *ngIf="!requestingList && members.length > 0" id="no-more-tables">
+      <section *ngIf="(!requestingList && members.length > 0)  || (!requestingList && filterExpiration)" id="no-more-tables">
         <table class="table table-hover table-bordered table-condensed  cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -46,7 +46,7 @@
               <td class="td-title" data-title="Negativos"><span>{{member.negative}}</span></td>
               <td class="td-title td-padding-action" data-title="Acción">
                 <div class="text-center">
-                  <button class="btn btn-success btn-action-list" data-toggle="modal" href="#myModalFee" (click)="getDetailsFee(member.id)"><i class="fa fa-usd"></i></button>
+                  <button class="btn btn-success btn-action-list" (click)="getDetailsFee(member.id)"><i class="fa fa-usd"></i></button>
                   <button class="btn btn-primary btn-action-list" [routerLink]="['/reservas']" [queryParams]="{id:member.id}"><i class="fa fa-check"></i></button>
                   <button class="btn btn-info btn-action-list" [routerLink]="['/historia-médica-crear']" [queryParams]="{id:member.id}"><i class="fa fa-stethoscope "></i></button>
                 </div>
@@ -57,6 +57,7 @@
                 </div>
               </td>
             </tr>
+            <tr *ngIf="!requesting && filterExpiration && members.length == 0"><td colspan="8" class="text-center"><strong> No hay socios para las fechas seleccionadas.</strong></td></tr>
           </tbody>
         </table>
       </section>
@@ -65,13 +66,15 @@
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <div *ngIf="!requestingList && members.length == 0">
+      <div *ngIf="!requestingList && members.length == 0 && !filterExpiration">
         <h5>No hay socios registrados</h5>
       </div>
     </div>
     <!-- /content-panel -->
   </div>
 </section>
+
+<button id="modal-fee" data-toggle="modal" href="#myModalFee" class="d-none"></button>
 
 <section class="modal mt-4" id="myModalFee">
   <div class="container-fluid modal-content modal-lg p-0">

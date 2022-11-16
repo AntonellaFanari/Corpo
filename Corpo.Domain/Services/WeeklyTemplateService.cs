@@ -32,7 +32,7 @@ namespace Corpo.Domain.Services
             catch (Exception ex)
             {
 
-                throw;
+                return new DomainResponse(false, ex.Message, "No se pudo agregar la plantilla semanal.");
             }
         }
 
@@ -55,5 +55,43 @@ namespace Corpo.Domain.Services
                 Result = response
             };
         }
+
+        public async Task<DomainResponse> Update(WeeklyTemplate weeklyTemplate, int id)
+        {
+            try
+            {
+                var weeklyTemplateQuery = await _weeklyTemplateRepository.GetById(id);
+                weeklyTemplateQuery.Name = weeklyTemplate.Name;
+                weeklyTemplateQuery.Goal = weeklyTemplate.Goal;
+                weeklyTemplateQuery.WeeklyWodTemplates = weeklyTemplate.WeeklyWodTemplates;
+                await _weeklyTemplateRepository.Update(weeklyTemplateQuery);
+                return new DomainResponse
+                {
+                    Success = true,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo modificar la plantilla semanal.");
+            }
+
+        }
+        public async Task<DomainResponse> Delete(int id)
+        {
+            try
+            {
+
+                await _weeklyTemplateRepository.Delete(id);
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DomainResponse(false, ex.Message, "No se pudo eliminar la plantilla.");
+            }
+        }
+
     }
 }

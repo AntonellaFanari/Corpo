@@ -29,6 +29,13 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpGet("by-day")]
+        public async Task<ActionResult> GetByDay(DateTime day, int classId)
+        {
+            var response = await _shiftService.GetByDay(day, classId);
+            return this.ToActionResult(response);
+        }
+
         [HttpPost("add")]
         public ActionResult Add(List<Shift> shifts)
         {

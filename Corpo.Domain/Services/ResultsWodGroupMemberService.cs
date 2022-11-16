@@ -86,7 +86,7 @@ namespace Corpo.Domain.Services
             foreach (var wod in wods)
             {
                 var resultsWods = await _resultsWodGroupMemberRepository.GetByWodId(wod.Id);
-                var resultWod = new { wod.Id, wod.WodNumber, resultsWods };
+                var resultWod = new { wod.Id, wod.WodNumber, resultsWods, wod.Rest };
                 results.Add(resultWod);
             }
             return new DomainResponse

@@ -15,6 +15,7 @@ export class WithdrawalNameEditComponent implements OnInit {
   sendForm: boolean = false;
   id: number;
   withdrawalName: WithdrawalName;
+  requesting = false;
 
   constructor(private withdrawalService: WithdrawalService, private formBuilder: FormBuilder,
     private router: Router, private customAlertService: CustomAlertService, private route: ActivatedRoute) {
@@ -25,19 +26,25 @@ export class WithdrawalNameEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getWithdrawalName();
+
+  }
+
+  getWithdrawalName() {
+    this.requesting = true;
     this.withdrawalService.getWithdrawalNameById(this.id).subscribe(
       result => {
         console.log(result);
         this.withdrawalName = result.result;
         this.toCompleteForm();
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
-
   }
 
   toCompleteForm() {
     this.formEdit.patchValue({ name: this.withdrawalName.name });
+    this.requesting = false;
   }
 
   get f() {

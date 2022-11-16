@@ -7,3 +7,31 @@
   padding: 0px;
   padding-left: 2rem;
 }
+
+.div-question {
+  background-color: #0c6b24;
+}
+
+.div-level {
+  background-color: #0c6b66eb;
+  font-weight: bold;
+  height: 50px;
+}
+
+.div-response {
+  background-color: #7bd87b;
+  font-weight: bolder;
+}
+
+.div-header {
+  background-color: #008b24;
+}
+
+.button-box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.btn-width {
+  width: 100%;
+}

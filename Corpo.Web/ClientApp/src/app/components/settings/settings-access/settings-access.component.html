@@ -5,7 +5,7 @@
         <h4 class="table-title">Acceso para Usuarios</h4>
       </div>
       <hr>
-      <section id="no-more-tables">
+      <section id="no-more-tables" *ngIf="!requesting && roleAccess.length > 0">
         <table class="table table-bordered table-condensed cf scrollme">
           <thead class="cf">
             <tr>
@@ -40,9 +40,15 @@
           </tbody>
         </table>
       </section>
-      <div>
-        <button class="btn btn-secondary pull-left" type="button" [routerLink]="['/configuraciones']">Cancelar</button>
-        <button class="btn btn-success btn-float-right" type="submit" (click)="submit()">Guardar</button>
+      <div *ngIf="!requesting && roleAccess.length > 0">
+        <button class="btn btn-secondary pull-left col-12 col-lg-2" type="button" [routerLink]="['/configuraciones']">Cancelar</button>
+        <button class="btn btn-success btn-float-right col-12 col-lg-2" type="submit" (click)="submit()">Guardar</button>
+      </div>
+
+      <div class="w-100 text-center" *ngIf="requesting">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
     <!-- /content-panel -->

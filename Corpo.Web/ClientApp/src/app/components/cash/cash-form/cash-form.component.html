@@ -1,9 +1,9 @@
 <section class="wrapper">
-  <div *ngIf="!requestingCash">
-    <section class="wrapper" *ngIf="!openingView">
-      <div class="row mt" *ngIf="cash">
+  <div *ngIf="!requesting && cash">
+    <section class="">
+      <div class="row mt">
         <div class="col-md-12">
-          <section id="no-more-tables">
+          <section>
             <table class="table table-bordered">
               <tbody>
                 <tr [ngClass]="{'header-cash-positve': currentCash>=0, 'header-cash-negative': currentCash<0 }">
@@ -19,7 +19,7 @@
                 </tr>
               </tbody>
             </table>
-            <table class="table table-bordered table-condensed cf">
+            <table class="display-table-menu table table-bordered table-condensed cf">
               <thead class="cf">
 
                 <tr class="scrollme">
@@ -53,7 +53,7 @@
                           </td>
                         </tr>
                         <tr *ngFor="let fee of feesIncomes; index as i">
-                          <td [ngStyle]="{'color':fee.status == 2?'red':'#09b4f5'}" class="cursor" (click)="getDetailsFeeIncome(fee)">{{fee.pay | currency}}</td>
+                          <td [ngStyle]="{'color':fee.status == 2?'red':'black'}" class="cursor" (click)="getDetailsFeeIncome(fee)">{{fee.pay | currency}}</td>
                         </tr>
                         <tr class="total-responsive table-td-total">
                           <td class="bg-info cursor">Total: {{feeTotalPay | currency}}</td>
@@ -72,7 +72,7 @@
                           </td>
                         </tr>
                         <tr *ngFor="let sale of salesIncomes; index as i">
-                          <td [ngStyle]="{'color':sale.pay<0?'red':'#09b4f5'}" class="cursor" (click)="getDetailsSaleIncome(sale)">{{sale.pay | currency}}</td>
+                          <td [ngStyle]="{'color':sale.pay<0?'red':'black'}" class="cursor" (click)="getDetailsSaleIncome(sale)">{{sale.pay | currency}}</td>
                         </tr>
                         <tr class="total-responsive table-td-total">
                           <td class="bg-success cursor">Total: {{saleTotalPay | currency}}</td>
@@ -149,52 +149,99 @@
                 </tr>
               </tfoot>
             </table>
-            <div><button class="btn btn-outline-dark btn-block form-control" (click)="toClose()">Cerrar Caja</button></div>
+
+            <div class="display-btns-menu">
+              <button class="btn btn-info col-8 text-white" [routerLink]="['/cuota-agregar']">Cuotas <i class="fa fa-plus-circle ms-2"></i></button>
+              <button class="btn btn-info col-4 text-white" (click)="getList('fee')"><i class="fa-solid fa-list"></i></button>
+              <div [class.d-none]="displayList != 'fee'">
+                <table class="table table-bordered">
+                  <tr *ngFor="let fee of feesIncomes; index as i" class="text-center text-black">
+                    <td [ngStyle]="{'color':fee.status == 2?'red':'black'}" class="cursor col-12" (click)="getDetailsFeeIncome(fee)">{{fee.pay | currency}}</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td class="bg-info cursor">Total: {{feeTotalPay | currency}}</td>
+                  </tr>
+                </table>
+
+              </div>
+
+              <button class="btn btn-success col-8" [routerLink]="['/venta-agregar']">Ventas <i class="fa fa-plus-circle ms-2"></i></button>
+              <button class="btn btn-success col-4" (click)="getList('sale')"><i class="fa-solid fa-list"></i></button>
+              <div [class.d-none]="displayList != 'sale'">
+                <table class="table table-bordered">
+                  <tr *ngFor="let sale of salesIncomes; index as i" class="text-center text-black">
+                    <td [ngStyle]="{'color':sale.pay<0?'red':'black'}" class="cursor" (click)="getDetailsSaleIncome(sale)">{{sale.pay | currency}}</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td class="bg-success cursor">Total: {{saleTotalPay | currency}}</td>
+                  </tr>
+                </table>
+
+              </div>
+
+              <button class="btn btn-warning col-8 text-white" [routerLink]="['/ingreso']">Ingresos <i class="fa fa-plus-circle ms-2"></i></button>
+              <button class="btn btn-warning col-4 text-white" (click)="getList('income')"><i class="fa-solid fa-list"></i></button>
+              <div [class.d-none]="displayList != 'income'">
+                <table class="table table-bordered">
+                  <tr *ngFor="let income of incomes; index as i" class="text-center text-black">
+                    <td class="cursor" (click)="getDetailIncome(income)">{{income.amount | currency}}</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td class="bg-warning cursor">Total: {{incomeTotal | currency}}</td>
+                  </tr>
+                </table>
+
+              </div>
+
+              <button class="btn btn-danger col-8" [routerLink]="['/egreso']" [queryParams]="{currentCash: currentCash}">Egresos <i class="fa fa-plus-circle ms-2"></i></button>
+              <button class="btn btn-danger col-4" (click)="getList('outflow')"><i class="fa-solid fa-list"></i></button>
+              <div [class.d-none]="displayList != 'outflow'">
+                <table class="table table-bordered">
+                  <tr *ngFor="let outflow of outflows; index as i" class="text-center text-black">
+                    <td class="cursor" (click)="getDetailOutflow(outflow)">{{outflow.pay | currency}}</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td class="bg-danger cursor">Total: {{outflowTotalPay | currency}}</td>
+                  </tr>
+                </table>
+
+              </div>
+
+              <button class="btn btn-secondary col-8" [routerLink]="['/retiro']" [queryParams]="{currentCash: currentCash}">Retiros <i class="fa fa-plus-circle ms-2"></i></button>
+              <button class="btn btn-secondary col-4" (click)="getList('withdrawal')"><i class="fa-solid fa-list"></i></button>
+              <div [class.d-none]="displayList != 'withdrawal'">
+                <table class="table table-bordered">
+                  <tr *ngFor="let withdrawal of withdrawals; index as i" class="text-center text-black">
+                    <td class="cursor" (click)="getDetailWithdrawal(withdrawal)">{{withdrawal.amount | currency}}</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td class="bg-secondary cursor">Total: {{withdrawalTotal | currency}}</td>
+                  </tr>
+                </table>
+
+              </div>
+
+            </div>
+            <div class="mt-3">
+            <button class="btn btn-outline-dark btn-block form-control" (click)="toClose()">Cerrar Caja</button>
+            </div>
           </section>
         </div>
         <!-- /content-panel -->
       </div>
     </section>
 
-    <section class="wrapper" *ngIf="openingView">
-      <section id="no-more-tables" *ngIf="cash">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <th colspan="6" [ngClass]="{'header-cash-positve': currentCash>=0, 'header-cash-negative': currentCash<0 }">
-                <span *ngIf="cash">FECHA DE CIRRE DE CAJA: {{cash.closing | date: 'dd/MM/yyyy'}}<br /> CAJA ACTUAL: {{currentCash | currency}}</span>
-                <span *ngIf="!cash">No hay registro de cajas anteriores.</span>
-              </th>
-            </tr>
-            <tr class="td-height row m-0">
-              <th colspan="3" data-title="CI" class="text-center col-12 col-lg-6"><strong>CI: <span *ngIf="cash">{{cash.startingBalance | currency}}</span></strong></th>
-              <th colspan="3" data-title="CF" class="text-center col-12 col-lg-6"><strong>CF: <span *ngIf="cash">{{cash.endingBalance | currency}}</span></strong></th>
-            </tr>
-            <tr class="td-height">
-              <th colspan="6" data-title="CAJA MENSUAL" class="text-center"><strong>CAJA MENSUAL <br /> Saldo Final: <span *ngIf="cash">{{monthlyCash | currency}}</span></strong></th>
-            </tr>
-            <tr class="td-button-opening">
-              <th colspan="6" class="text-center td-button text-white"><button class="btn btn-success col-4 col-lg-2 btn-opening" type="submit" (click)="openingCash()">Abrir Caja</button></th>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <div class="w-100 text-center" *ngIf="requestingOpeningCash && !cash">
-        <div class="spinner-border text-success" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-    </section>
+
   </div>
-  <div class="w-100 text-center" *ngIf="requestingCash">
+  <div class="w-100 text-center" *ngIf="requesting">
     <div class="spinner-border text-success" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
 </section>
-<app-sale-edit (updateSales)="getAllSale()"></app-sale-edit>
-<app-payment-details (updateSalesFees)="getAllSalesFees()"></app-payment-details>
-<app-outflow-detail (updateOutflows)="getAllOutflow()"></app-outflow-detail>
-<app-fee-detail (updateFee)="getAllFee()"></app-fee-detail>
-<app-withdrawal-detail (updateWithdrawal)="getAllWithdrawal()"></app-withdrawal-detail>
-<app-income-detail (updateIncome)="getAllIncome()"></app-income-detail>
+<app-sale-edit (updateSales)="updateTotal()"></app-sale-edit>
+<app-payment-details (updateSalesFees)="updateTotal()"></app-payment-details>
+<app-outflow-detail (updateOutflows)="updateTotal()"></app-outflow-detail>
+<app-fee-detail (updateFee)="updateTotal()"></app-fee-detail>
+<app-withdrawal-detail (updateWithdrawal)="updateTotal()"></app-withdrawal-detail>
+<app-income-detail (updateIncome)="updateTotal()"></app-income-detail>

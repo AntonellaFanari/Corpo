@@ -12,6 +12,7 @@ import { ProductFormComponent } from '../product-form/product-form.component';
 export class ProductEditComponent implements OnInit {
   id: number;
   @ViewChild(ProductFormComponent, { static: true }) formProduct: ProductFormComponent;
+  requesting = false;
 /*  title = "Modificación de Producto";*/
 
   constructor(private productService: ProductService, private customAlertService: CustomAlertService, private router: Router, private route: ActivatedRoute) {
@@ -21,7 +22,12 @@ export class ProductEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.requesting = true;
     this.formProduct.getProductUpdate(this.id);
+  }
+
+  getRequesting() {
+    this.requesting = false;
   }
 
   submit() {

@@ -96,6 +96,7 @@ export class NewsEditComponent implements OnInit {
     this.send = true;
     if (this.formEdit.valid) {
       let news = this.editNews();
+      console.log("noticia editada: ", news);
       this.newsService.update(this.id, news).subscribe(
         result => {
           console.log(result);

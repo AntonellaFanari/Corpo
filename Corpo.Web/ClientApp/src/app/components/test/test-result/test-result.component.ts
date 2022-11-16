@@ -27,7 +27,7 @@ export class TestResultComponent implements OnInit {
         this.memberId = parseInt(params['memberId']);
         this.level = parseInt(params['level']);
         this.getMember();
-        this.getResult();
+
       });
     this.urlBase = this.testMemberService.url;
   }
@@ -36,10 +36,12 @@ export class TestResultComponent implements OnInit {
   }
 
   getMember() {
+    this.requestingResult = true;
     this.memberService.getById(this.memberId).subscribe(
       response => {
         console.log("socio: ", response);
         this.member = response.result.lastName + " " + response.result.name;
+        this.getResult();
       },
       error => console.error)
   }
@@ -52,7 +54,7 @@ export class TestResultComponent implements OnInit {
         console.log("resultados: ", response.result);
         this.testResults = response.result;
       },
-      error => console.error(error)
+      error => this.requestingResult = false
     )
   }
 }

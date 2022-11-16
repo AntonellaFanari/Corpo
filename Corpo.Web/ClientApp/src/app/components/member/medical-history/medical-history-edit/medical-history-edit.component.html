@@ -1,9 +1,9 @@
 <section class="wrapper">
   <app-medical-history-form [class.d-none]="requesting" [age]="age" (requesting)="finishRequesting()"></app-medical-history-form>
   <div class="container-fluid div-btn-create"  *ngIf="!requesting">
-    <button class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" type="submit" [routerLink]="['/member-list']">Volver</button>
-    <button *ngIf="planType == 1" class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Siguiente</button>
-    <button *ngIf="planType == 2" class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" type="submit" [routerLink]="['/member-list']">Volver</button>
+    <button *ngIf="planType == 1" class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Siguiente</button>
+    <button *ngIf="planType == 2" class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
   </div>
 </section>
 <section class="wrapper" *ngIf="requesting">

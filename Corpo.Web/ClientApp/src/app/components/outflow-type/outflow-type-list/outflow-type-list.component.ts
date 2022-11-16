@@ -32,12 +32,14 @@ export class OutflowTypeListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Egresos", ["¿Está seguro que desea eliminar este egreso?"], () => {
+      this.requestingList = true;
       this.outflowService.deleteOutflowType(id).subscribe(
         result => {
           console.log(result);
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Egresos", ["Error al intentar eliminar el egreso."])
         })

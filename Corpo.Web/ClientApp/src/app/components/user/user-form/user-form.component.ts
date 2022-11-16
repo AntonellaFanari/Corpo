@@ -95,7 +95,6 @@ export class UserFormComponent implements OnInit {
         this.user = result;
         console.log(this.user);
         this.toCompleteForm();
-        this.requesting.emit();
       },
       error => this.requesting.emit()
     )
@@ -113,5 +112,7 @@ export class UserFormComponent implements OnInit {
         address: this.user.address,
         roleId: this.user.roleId,
       })
+
+    this.requesting.emit();
     }
  }

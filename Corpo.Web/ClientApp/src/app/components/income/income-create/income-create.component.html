@@ -15,11 +15,11 @@
           <div class="col-12 card bg-light">
             <form [formGroup]="formCreate">
               <div class="row card-body">
-                <div class="col-8 col-lg-9 formValidators">
+                <div class="col-12 col-lg-9 formValidators">
                   <label class="form-label">Detalle:</label>
                   <input type="text" class="form-control" formControlName="detail" />
                 </div>
-                <div class="col-4 col-lg-3 formValidators">
+                <div class="col-12 col-lg-3 formValidators">
                   <label class="form-label">Monto:</label>
                   <input type="number" class="form-control" formControlName="amount" />
                   <p *ngIf="send && f.amount.errors?.min">*Debe ingresar un monto mayor a 0.</p>
@@ -33,8 +33,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create">
-    <button class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
-    <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Aceptar</button>
+    <button class="btn btn-secondary col-12 col-lg-2 pull-left btn-create" type="button" [routerLink]="['/caja']">Cancelar</button>
+    <button class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Aceptar</button>
   </div>
 </section>
 

@@ -9,6 +9,7 @@ import { ReportService } from '../../../services/report.service';
 })
 export class MemberReportComponent implements OnInit {
   reports: MemberReport;
+  requesting = false;
 
   constructor(private reportService: ReportService) { }
 
@@ -17,12 +18,14 @@ export class MemberReportComponent implements OnInit {
   }
 
   getReports() {
+    this.requesting = true;
     this.reportService.getReports().subscribe(
       result => {
         console.log(result);
         this.reports = result.result;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
 
     )
   }

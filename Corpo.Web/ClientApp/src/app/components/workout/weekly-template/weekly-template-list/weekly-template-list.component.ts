@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WeeklyTemplate } from '../../../../domain/wod/weekly-template';
+import { CustomAlertService } from '../../../../services/custom-alert.service';
 import { WeeklyTemplateService } from '../../../../services/wod/weekly-template.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class WeeklyTemplateListComponent implements OnInit {
   weeklyTemplates: WeeklyTemplate[] = [];
   filterName = "";
 
-  constructor(private weeklyTemplateService: WeeklyTemplateService) { }
+  constructor(private weeklyTemplateService: WeeklyTemplateService,
+    private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
     this.getAll();
@@ -30,6 +32,20 @@ export class WeeklyTemplateListComponent implements OnInit {
         console.error(error);
         this.requesting = false;
       }    )
+  }
+
+  delete(id) {
+    this.customAlertService.displayAlert("Gestión de plantillas semanales", ["¿Está seguro que desea eliminar esta plantilla?"], () => {
+      this.weeklyTemplateService.delete(id).subscribe(
+        result => {
+          console.log(result);
+          this.getAll();
+        },
+        error => {
+          console.error(error);
+          this.customAlertService.displayAlert("Gestión de plantillas semanales", ["Error al intentar eliminar la plantilla."])
+        })
+    }, true)
   }
 
 }

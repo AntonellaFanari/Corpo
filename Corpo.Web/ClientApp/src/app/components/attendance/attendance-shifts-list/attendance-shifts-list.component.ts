@@ -17,7 +17,6 @@ export class AttendanceShiftsListComponent implements OnInit {
   shifts: ShiftList[] = [];
   from: string;
   to: string;
-  @ViewChild(AttendanceComponent, { static: true }) attendancesComponent: AttendanceComponent;
   requestingList: boolean;
   classes: Class[] = [];
   selectedClass: number = 0;
@@ -105,12 +104,6 @@ export class AttendanceShiftsListComponent implements OnInit {
     return dayShift;
   }
 
-
-  goToAttendances(id) {
-    this.attendancesComponent.modalClick();
-    this.attendancesComponent.getShift(id);
-    this.attendancesComponent.viewSelectAddMember = false;
-  }
 
   selectClass(event) {
     this.selectedClass = event;

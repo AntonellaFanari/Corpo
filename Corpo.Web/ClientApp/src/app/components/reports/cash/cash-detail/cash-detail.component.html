@@ -1,10 +1,10 @@
-<section class="wrapper" *ngIf="!requestingCash && cash">
+<section class="wrapper ms-0 me-0">
   <div class="task-panel ">
     <h4 class="table-title">Caja Diaria Detalle</h4>
     <button *ngIf="viewBtnReturn" type="button" class="btn btn-secondary col-xl-2 col-12 btn-float-right" [routerLink]="['/caja-diaria']" [queryParams]="{filter:'true'}">Volver</button>
   </div>
   <hr>
-  <div class="row">
+  <div class="row"  *ngIf="!requestingCash && cash">
     <div class="col-12">
       <section *ngIf="cash">
         <div>
@@ -39,7 +39,7 @@
       </section>
     </div>
   </div>
-  <div class="row mt-2">
+  <div class="row mt-2" *ngIf="!requestingCash && cash">
     <div class="col-12">
       <table class="table table-bordered">
         <thead>
@@ -92,15 +92,16 @@
       </div>
     </div>
   </div>
-</section>
-<div class="w-100 text-center mt-3" *ngIf="requestingCash">
-  <div class="spinner-border text-success" role="status">
-    <span class="sr-only">Loading...</span>
+  <div class="w-100 text-center mt-3" *ngIf="requestingCash">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
-</div>
-<div class="mt-3" *ngIf="!requestingCash && !cash">
-  <h5>No hay registro de caja</h5>
-</div>
+  <div class="mt-3" *ngIf="!requestingCash && !cash">
+    <h5>No hay registro de caja</h5>
+  </div>
+</section>
+
 
 
 <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->

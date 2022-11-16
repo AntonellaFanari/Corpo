@@ -18,11 +18,11 @@ export class NewsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
+    this.requestingList = true;
     this.newsService.getAll().subscribe(
       result => {
         this.requestingList = false;
@@ -55,12 +55,14 @@ export class NewsListComponent implements OnInit {
   }
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Comunicaciones", ["¿Está seguro que desea eliminar esta noticia?"], () => {
+      this.requestingList = true;
       this.newsService.delete(id).subscribe(
         result => {
           console.log(result);
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Comunicaciones", ["Error al intentar eliminar la noticia."])
         })

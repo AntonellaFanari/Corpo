@@ -25,6 +25,7 @@ export class MemberListComponent implements OnInit {
   filterUser = "";
   requestingList: boolean;
   requestingFees: boolean;
+  filterExpiration = false;
 
   constructor(private memberService: MemberService, private customAlertService: CustomAlertService,
     private feeService: FeeService, private dp: DatePipe) {
@@ -62,12 +63,17 @@ export class MemberListComponent implements OnInit {
     this.viewDueDate = false;
   }
 
+  modalClick() {
+    document.getElementById('modal-fee').click();
+  }
+
   getDetailsFee(id) {
     this.id = id;
     this.feeService.getAllByIdMember(this.id).subscribe(
       result => {
         this.requestingFees = false;
         this.fees = result;
+        this.modalClick();
       },
       error => this.requestingFees = false
     )
@@ -89,11 +95,13 @@ export class MemberListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Socios", ["¿Está seguro que desea eliminar este socio?"], () => {
+      this.requestingList = true;
       this.memberService.delete(id).subscribe(
         result => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar el socio."]);
         })
@@ -101,16 +109,21 @@ export class MemberListComponent implements OnInit {
   }
 
   filter() {
+    this.requestingList = true;
+    this.filterExpiration = true;
     this.memberService.getByDateExpiration(this.from, this.to).subscribe(
       result => {
+        this.requestingList = false;
         console.log(result);
         this.members = result.result;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 
   deleteFilter() {
+    this.requestingList = true;
+    this.filterExpiration = false;
     this.getAll();
   }
 

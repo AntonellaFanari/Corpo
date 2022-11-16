@@ -1,0 +1,59 @@
+.table-style {
+  padding: .0rem .0rem !important;
+}
+
+.total-responsive {
+  display: none;
+  padding-left: 0px;
+  text-align: center;
+}
+
+.table > :not(:first-child) {
+  border-top: 1px solid black;
+}
+
+.td-button:hover {
+  cursor: pointer;
+}
+
+.table-td td {
+  color: black;
+  text-align: right;
+}
+
+.table-td-total td {
+  color: black;
+  font-weight: 500;
+  text-align: right;
+}
+
+.header-cash-positve {
+  background: #38c172;
+  padding-left: 0px !important;
+  text-align: center !important;
+  height: auto;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.btn-opening {
+  height: 100px;
+  font-weight: 700;
+  font-size: larger;
+  margin-top: 2.5rem;
+}
+
+.td-button-opening {
+  height: 200px;
+}
+
+
+.td-height td {
+  height: 50px;
+}
+
+.cursor {
+  cursor: pointer;
+}
+

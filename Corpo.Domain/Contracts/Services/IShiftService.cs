@@ -15,5 +15,6 @@ namespace Corpo.Domain.Contracts.Services
         DomainResponse Delete(List<int> idShifts);
         Task<DomainResponse> GetById(int id);
         Task<DomainResponse> UpdateById(int id, StatusAttendance status);
+        Task<DomainResponse> GetByDay(DateTime day, int classId);
     }
 }

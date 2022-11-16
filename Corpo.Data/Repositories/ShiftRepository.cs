@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Corpo.Data.Repositories
 {
-    public class ShiftRepository: IShiftRepository
+    public class ShiftRepository : IShiftRepository
     {
         private CorpoContext _context;
 
@@ -25,21 +25,39 @@ namespace Corpo.Data.Repositories
             _context.SaveChanges();
         }
 
-        public async Task<List<Shift>> GetAll(DateTime from, DateTime to, int classId)
+        public async Task<List<Shift>> GetAll(DateTime fromDay, TimeSpan fromHour, DateTime toDay, TimeSpan toHour, int classId)
         {
+            var today = DateTime.Today;
+
             if (classId == 0)
             {
-                return await _context.Shift.Where(x => x.Day >= from && x.Day <= to).OrderBy(x=> x.Day).ThenBy(x=> x.Hour)
-                                 .Include(x => x.Class)
-                                 .Include(x => x.User).ToListAsync();
+
+                return await _context.Shift.Where(x =>
+                    (today == fromDay)
+                        ? (x.Day >= fromDay && ((x.Day == fromDay) ? x.Hour >= fromHour : true) && (x.Day <= toDay))
+                        : (x.Day >= fromDay && x.Day <= toDay))
+
+                    .OrderBy(x => x.Day).ThenBy(x => x.Hour)
+                             .Include(x => x.Class)
+                             .Include(x => x.User).ToListAsync();
+
             }
             else
             {
-                return await _context.Shift.Where(x => x.Day >= from && x.Day <= to && x.ClassId == classId)
-                                 .Include(x => x.Class)
-                                 .Include(x => x.User).ToListAsync();
+                return await _context.Shift.Where(x =>
+                    (today == fromDay)
+                        ? (x.Day >= fromDay && ((x.Day == fromDay) ? x.Hour >= fromHour : true) && (x.Day <= toDay))
+                        : (x.Day >= fromDay && x.Day <= toDay))
+                        .Where(x => x.ClassId == classId)
+
+                    .OrderBy(x => x.Day).ThenBy(x => x.Hour)
+                             .Include(x => x.Class)
+                             .Include(x => x.User).ToListAsync();
+
             }
-            
+
+
+
         }
 
         public Task<Shift> GetById(int id)
@@ -49,9 +67,9 @@ namespace Corpo.Data.Repositories
 
         public async Task Update(Shift shift)
         {
-                _context.Shift.Update(shift);
-                await _context.SaveChangesAsync();
-                         
+            _context.Shift.Update(shift);
+            await _context.SaveChangesAsync();
+
         }
 
         public void Delete(int id)

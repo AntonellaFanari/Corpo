@@ -1,9 +1,9 @@
 <section class="wrapper">
   <div class="row mt" *ngIf="!wod">
-    <div class="col-md-12" *ngIf="!requestingList && wodTemplates.length > 0">
+    <div class="col-md-12">
       <div class="task-panel ">
         <h4 class="table-title">Plantillas</h4>
-        <button type="button" class="btn btn-success col-4 col-lg-2 btn-add" routerLink="/wod-template">Agregar</button>
+        <button type="button" class="btn btn-success col-12 col-lg-2 btn-add" routerLink="/wod-template">Agregar</button>
       </div>
       <hr>
       <div class="col-12 card" *ngIf="!requestingList && wodTemplates.length > 0">
@@ -13,16 +13,21 @@
           </div>
         </div>
       </div>
-      <section id="no-more-tables" class="">
+      <section id="no-more-tables" class="" *ngIf="!requestingList && wodTemplates.length > 0">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
               <th class="numeric">Nombre</th>
+              <th class="numeric col-2">Acción</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let wod of wodTemplates | searchFilterName: filterName" class="scrollme span-margin" [routerLink]="['/plantilla-wod-editar']" [queryParams]="{id: wod.id}">
+            <tr *ngFor="let wod of wodTemplates | searchFilterName: filterName" class="scrollme span-margin">
               <td class="td-title" data-title="Nombre"><span>{{wod.name}}</span></td>
+              <td data-title="Acción">
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/plantilla-wod-editar']" [queryParams]="{id: wod.id}"><i class="fa fa-pencil-square"></i></button>
+                <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(wod.id)"><i class="fa fa-trash"></i></button>
+              </td>
             </tr>
           </tbody>
         </table>

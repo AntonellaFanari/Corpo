@@ -39,6 +39,7 @@ export class DailyCashComponent implements OnInit {
   }
 
   getFromGetTo() {
+    this.requestingList = true;
     if (this.filter) {
       this.from = localStorage.getItem('from');
       this.to = localStorage.getItem('to');
@@ -57,13 +58,13 @@ export class DailyCashComponent implements OnInit {
   }
 
   getAllCashCurrentMonth() {
-    this.requestingList = true;
     this.reportService.getCashCurrentMonth().subscribe(
       result => {
         console.log("cajas del mes actual: ", result);
-        this.requestingList = false;
+   
         this.cashs = result.result;
         this.getTotalCash(this.cashs);
+        this.requestingList = false;
       },
       error => this.requestingList = false
     )
@@ -136,13 +137,15 @@ export class DailyCashComponent implements OnInit {
   }
 
   getCashFromTo() {
+    this.requestingList = true;
     this.reportService.getCash(this.from, this.to).subscribe(
       result => {
         console.log("caja filtro: ", result.result);
         this.cashs = result.result;
         this.getTotalCash(this.cashs);
+        this.requestingList = false;
       },
-      error => console.error(error)
+      error => this.requestingList = false
     )
   }
 

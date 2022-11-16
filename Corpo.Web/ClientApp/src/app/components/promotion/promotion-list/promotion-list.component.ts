@@ -13,7 +13,8 @@ export class PromotionListComponent implements OnInit {
   filterName = "";
   requestingList: boolean;
 
-  constructor(private promotionService: PromotionService, private customAlertService: CustomAlertService) { }
+  constructor(private promotionService: PromotionService,
+    private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
     this.requestingList = true;
@@ -32,12 +33,14 @@ export class PromotionListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Promociones", ["¿Está seguro que desea eliminar esta promoción?"], () => {
+      this.requestingList = true;
       this.promotionService.delete(id).subscribe(
         result => {
           console.log(result);
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Promociones", ["Error al intentar eliminar la promoción."])
         })

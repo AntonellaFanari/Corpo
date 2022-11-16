@@ -1,24 +1,22 @@
-<button id="modal-attendance" data-toggle="modal" href="#myModalAttendance" class="d-none"></button>
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
-
-<section class="modal mt-4" id="myModalAttendance">
-  <div class="container-fluid modal-content modal-lg p-0">
+<section class="wrapper" *ngIf="!requesting && shift">
+  <div class="container-fluid card p-0">
 
     <!-- cabecera del diálogo -->
     <div class="modal-header modal-title bg-success d-block">
-      <h4 class="modal-title text-white text-center">Asistencias - {{quotaAvailable}} disponible </h4>
+      <h4 class="modal-title text-white text-center" *ngIf="!shift.attended">Asistencias - {{quotaAvailable}} disponible </h4>
+      <h4 class="modal-title text-white text-center" *ngIf="shift.attended">Asistencia registrada </h4>
       <!--<button type="button" class="close" data-dismiss="modal">X</button>-->
     </div>
 
 
     <!-- cuerpo del diálogo -->
-    <div class="modal-body">
-      <table *ngIf="!requestingList && attendances.length > 0"  class="table table-bordered table-condensed cf scrollme user-table">
+    <div class="card-body" *ngIf="!shift.attended">
+      <table *ngIf="!requestingList && attendances.length > 0" class="table table-bordered table-condensed cf scrollme user-table" id="no-more-tables">
         <thead class="cf">
           <tr>
             <th class="numeric"><span><input type="checkbox" [checked]="checkedAllAttendances" (change)="checkedAll()" /></span></th>
             <th class="numeric">{{shift.day}} {{shift.hour}}</th>
-            <th class="numeric">Créditos restantes</th>
+            <th class="numeric">Crédito Disponible</th>
             <th class="numeric">Vencimiento</th>
             <th class="numeric">Acción</th>
           </tr>
@@ -27,7 +25,7 @@
           <tr *ngFor="let attendance of attendances">
             <td class="td-title" data-title=""><span><input type="checkbox" [checked]="attendance.attended" value="{{attendance.id}}" (change)="checkedAll()" /></span></td>
             <td data-title="Turno"><span>{{attendance.name}}</span></td>
-            <td data-title="Créditos restantes"><span>{{(attendance.remainingCredit)}}</span></td>
+            <td data-title="Créd. Disp."><span>{{(attendance.remainingCredit)}}</span></td>
             <td data-title="Vencimiento"><span>{{attendance.expiration | date: 'dd/MM/yyyy'}}</span></td>
             <td data-title="Acción">
               <button *ngIf="attendance.status == 1" class="btn btn-danger btn-xs btn-action-list" (click)="cancell(attendance.id, attendance.memberId)"><i class="fa fa-trash"></i></button>
@@ -41,12 +39,12 @@
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <div *ngIf="!requestingList && attendances.length == 0">
-        <h5>No hay usuarios registrados</h5>
+      <div *ngIf="!requestingList && attendances.length == 0" class="card card-body text-center mb-3">
+        <h5>No hay socios registrados</h5>
       </div>
       <div *ngIf="viewBtnAddMember" class="row justify-content-center align-items-center">
         <div class="text-center mb-2">
-          <button type="button" class="btn btn-info col-3 text-white" (click)="viewSelectListMember()">Agregar socio</button>
+          <button type="button" class="btn btn-info col-12 col-lg-4 text-white" (click)="viewSelectListMember()">Agregar socio</button>
         </div>
       </div>
       <div *ngIf="viewSelectAddMember" class="card card-body">
@@ -57,9 +55,13 @@
         <div class="dropdown-menu form-control">
           <a *ngFor="let member of members  | searchFilterMember: filterMember " class="dropdown-item" (click)="selectMember(member)">{{member.lastName}} {{member.name}}</a>
         </div>
-        <div>
-          <button type="button" class="btn btn-outline-success btn-block col-12 mb-2" (click)="addMember()">Confirmar</button>
-          <button type="button" class="btn btn-outline-danger btn-block col-12" (click)="viewSelectListMember()">Cancelar</button>
+        <div class="row">
+          <div class="col-12 col-lg-6 btn-float-left">
+            <button type="button" class="btn btn-outline-danger btn-block col-12" (click)="viewSelectListMember()">Cancelar</button>
+          </div>
+          <div class="col-12 col-lg-6 btn-float-right">
+            <button type="button" class="btn btn-outline-success btn-block col-12" (click)="addMember()">Confirmar</button>
+          </div>
         </div>
       </div>
       <div class="row justify-content-center align-items-center mt-2">
@@ -71,8 +73,35 @@
       <!-- pie del diálogo -->
 
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" data-dismiss="modal" (click)="return()">Salir</button>
+
+    <div class="card-body" *ngIf="shift.attended">
+      <table *ngIf="members.length > 0" class="table table-bordered table-condensed cf scrollme user-table">
+        <thead class="cf">
+          <tr>
+            <th class="numeric">Socio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let member of members">
+            <td data-title="Acción">{{member.lastName}} {{member.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- pie del diálogo -->
+
+    </div>
+
+  </div>
+
+  <button type="button" class="btn btn-secondary col-12 col-lg-3 btn-float-left btn-create mt-3" data-dismiss="modal" (click)="goBack()">Volver</button>
+
+</section>
+
+<section class="wrapper">
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
 </section>
+

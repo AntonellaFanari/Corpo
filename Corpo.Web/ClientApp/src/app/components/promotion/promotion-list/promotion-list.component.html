@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-success col-xl-2 col-12 btn-float-right" routerLink="/promocion-crear">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requestingList && promotions.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
@@ -26,14 +26,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let promotion of promotions | searchFilterName: filterName">dr  15ººººg
+            <tr *ngFor="let promotion of promotions | searchFilterName: filterName">
               <td data-title="Promocion"><span>{{promotion.name}}</span></td>
               <td data-title="Dto. Principal"><span>{{promotion.discountMainMember}}%</span></td>
               <td data-title="Dto. Otros Socios">
                 <table *ngIf="promotion.promotionAnotherMember.length>0" id="table-discount">
                   <tbody>
                     <tr *ngFor="let discount of promotion.promotionAnotherMember; index as i">
-                      <td>Socio{{i+1}} {{discount.discount}}%</td>
+                      <td>Socio{{i+1}} - {{discount.discount}}%</td>
                     </tr>
                   </tbody>
                 </table>

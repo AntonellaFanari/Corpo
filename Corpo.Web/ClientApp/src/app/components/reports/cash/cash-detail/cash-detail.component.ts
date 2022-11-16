@@ -70,6 +70,7 @@ export class CashDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+
     console.log(this.id);
     if (isNaN(this.id)) {
       console.log(this.date);
@@ -94,9 +95,9 @@ export class CashDetailComponent implements OnInit {
   }
 
   getCashDate() {
+    this.requestingCash = true;
     this.reportService.getCashDate(this.date).subscribe(
       result => {
-        this.requestingCash = false
         console.log(result.result);
         this.cash = result.result;
         this.getCashDetailed(this.cash.opening, this.cash.closing);
@@ -131,7 +132,8 @@ export class CashDetailComponent implements OnInit {
         this.calculateOutflowsTotal();
         this.requestingCash = false;
       },
-      error => console.error(error))
+      error => this.requestingCash = false
+    )
   }
 
   calculateInflowsTotal() {

@@ -21,6 +21,7 @@ export class PlanEditComponent implements OnInit {
   classes: Class[] = []
   dropdownList = [];
   classDropdownSettings: IDropdownSettings = {};
+  requesting = false;
 
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private planService: PlanService,
     private router: Router, private customAlertService: CustomAlertService, private classService: ClassService) {
@@ -35,22 +36,28 @@ export class PlanEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPlan();
+
+  }
+
+  getPlan() {
+    this.requesting = true;
     this.planService.getById(this.id).subscribe(
       result => {
         console.log(result);
         this.plan = result;
+        this.getAllClasses();
+        this.classDropdownSettings = {
+          idField: 'id',
+          textField: 'name',
+          enableCheckAll: true,
+          selectAllText: "Seleccionar todos",
+          unSelectAllText: "Deseleccionar todos",
+        };
         this.toCompleteForm();
       },
-      error => console.error(error)
-    );
-    this.getAllClasses();
-    this.classDropdownSettings = {
-      idField: 'id',
-      textField: 'name',
-      enableCheckAll: true,
-      selectAllText: "Seleccionar todos",
-      unSelectAllText: "Deseleccionar todos",
-    };
+      error => this.requesting = false
+    )
   }
 
   getAllClasses() {
@@ -58,8 +65,9 @@ export class PlanEditComponent implements OnInit {
       result => {
         console.log(result);
         this.classes = result;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

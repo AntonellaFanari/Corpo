@@ -1,62 +1,53 @@
-<section class="wrapper" *ngIf="user">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <h3 class="mb text-center mt-5">Datos personales</h3>
-        <br />
-        <div class="row card-body dataUserBox ">
-          <div class="col-lg-6 form-group">
-            <label class="col-4 control-label label">Apellido:</label>
-            <p class="col-8 btn-float-right">{{user.lastName}}</p>
-          </div>
-          <div class="col-lg-6 form-group">
-            <label class="col-4 control-label label">Nombre:</label>
-            <p class="col-8 btn-float-right">{{user.name}}</p>
-          </div>
-        </div>
-        <div class="row card-body dataUserBox">
-          <div class="col-lg-6 form-group">
-            <label class="col-4 control-label label">Fecha de Nacimiento:</label>
-            <p class="col-8 btn-float-right">{{user.birthDate | date: 'dd/MM/yyyy'}}</p>
-          </div>
-          <div class="col-lg-6 form-group">
-            <label class="col-4 control-label label">Domicilio:</label>
-            <p class="col-8 btn-float-right">{{user.address}}</p>
-          </div> 
-        </div>
-        <div *ngIf="userType == 2" class="row card-body  dataUserBox">
-          <div class="col-lg-6 form-group">
-            <label class="col-4 control-label label">Contacto de emergencia:</label>
-            <p class="col-8 btn-float-right">{{user.emergencyContact}}</p>
-          </div>
-          <div class="col-lg-6 form-group">
-            <label class="col-4 control-label label">telefono de emergencia:</label>
-            <p class="col-8 btn-float-right">{{user.emergencyPhone}}</p>
-          </div>
-        </div>
-        <div class="row card-body dataUserBox">
-          <div class="col-lg-6 form-group">
-            <label class="col-4 control-label label">Telefono:</label>
-            <p class="col-8 btn-float-right">{{user.phone}}</p>
-          </div>
-          <div class="col-lg-6 form-group">
-            <label class="col-3 control-label label">Email:</label>
-            <p class="col-9 btn-float-right">{{user.email}}</p>
-          </div>
-        </div>
-        <div class="row card-body justify-content-center align-items-center">
-          <div class="col-12 col-lg-4 form-group text-center mt-2">
-            <button type="button" class="btn btn-outline-success" (click)="modifyPersonalInformation()">Modificar datos personales</button>
-          </div>
-          <div *ngIf="userType == 2" class="col-12 col-lg-4 form-group text-center mt-2">
-            <button type="button" class="btn btn-outline-success" (click)="modifyMedicalHistory()">Modificar historia médica</button>
-          </div>
-          <div class="col-12 col-lg-4 form-group text-center mt-2">
-            <button type="button" class="btn btn-outline-success" (click)="modifyEmail()">Modificar email</button>
-          </div>
-        </div>
-      </div>
+<section class="wrapper">
+  <div *ngIf="user">
+    <div class="card card-header div-header text-center">
+      <h4 class="text-white">Datos personales</h4>
+    </div>
+
+
+    <div class="card bg-ligth mb-2 text-center">
+      <div class="div-question text-white">Apellido:</div>
+      <div class="div-response"><span>{{user.lastName}}</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center">
+      <div class="div-question text-white">Nombre:</div>
+      <div class="div-response"><span>{{user.name}}</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center">
+      <div class="div-question text-white">Fecha de Nacimiento:</div>
+      <div class="div-response"><span>{{user.birthDate | date: 'dd/MM/yyyy'}}</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center">
+      <div class="div-question text-white">Domicilio:</div>
+      <div class="div-response"><span>{{user.address}}</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center" *ngIf="userType == 2">
+      <div class="div-question text-white">Contacto de emergencia:</div>
+      <div class="div-response"><span>{{user.emergencyContact}}</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center" *ngIf="userType == 2">
+      <div class="div-question text-white">Telefono de emergencia:</div>
+      <div class="div-response"><span>{{user.emergencyPhone}}</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center">
+      <div class="div-question text-white">Telefono:</div>
+      <div class="div-response"><span>{{user.phone}}</span></div>
+    </div>
+    <div class="card bg-ligth mb-2 text-center">
+      <div class="div-question text-white">Email:</div>
+      <div class="div-response"><span>{{user.email}}</span></div>
+    </div>
+    <button type="button" class="btn btn-outline-success col-12" (click)="modifyPersonalInformation()">Modificar datos personales</button>
+    <button *ngIf="userType == 2" type="button" class="btn btn-outline-success col-12 mt-1" (click)="modifyMedicalHistory()">Modificar historia médica</button>
+    <button type="button" class="btn btn-outline-success col-12 mt-1" (click)="modifyEmail()">Modificar email</button>
+
+  </div>
+  <div class="w-100 text-center" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
 </section>
+
+
 

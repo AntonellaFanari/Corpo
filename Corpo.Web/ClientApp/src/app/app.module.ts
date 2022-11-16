@@ -176,6 +176,10 @@ import { WeeklyTemplateCreateComponent } from './components/workout/weekly-templ
 import { WeeklyTemplateEditComponent } from './components/workout/weekly-template/weekly-template-edit/weekly-template-edit.component';
 import { WeeklyTemplateListComponent } from './components/workout/weekly-template/weekly-template-list/weekly-template-list.component';
 import { FilterNameGoalPipe } from './pipes/filter-name-goal.pipe';
+import { MenuAssignmentTemplateComponent } from './components/workout/menu-assignment-template/menu-assignment-template.component';
+import { CashOpeningComponent } from './components/cash/cash-opening/cash-opening.component';
+import { FilterGoalPipe } from './pipes/filter-goal.pipe';
+import { FilterLevelPipe } from './pipes/filter-level.pipe';
 
 
 @NgModule({
@@ -341,7 +345,11 @@ import { FilterNameGoalPipe } from './pipes/filter-name-goal.pipe';
     WeeklyTemplateCreateComponent,
     WeeklyTemplateEditComponent,
     WeeklyTemplateListComponent,
-    FilterNameGoalPipe
+    FilterNameGoalPipe,
+    MenuAssignmentTemplateComponent,
+    CashOpeningComponent,
+    FilterGoalPipe,
+    FilterLevelPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -381,6 +389,7 @@ import { FilterNameGoalPipe } from './pipes/filter-name-goal.pipe';
       { path: 'antecedentes-lesiones', component: InjuryHistoryComponent },
       { path: 'accesos', component: SettingsAccessComponent },
       { path: 'caja', component: CashFormComponent, canActivate: [AuthGuard], data: { name: 'caja' } },
+      { path: 'apertura-caja', component: CashOpeningComponent, canActivate: [AuthGuard], data: { name: 'caja' } },
       { path: 'login', component: LoginComponent },
       { path: 'cuota-agregar', component: FeeCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' } },
       { path: 'venta-agregar', component: SaleCreateComponent, canActivate: [AuthGuard], data: { name: 'caja' } },
@@ -458,6 +467,7 @@ import { FilterNameGoalPipe } from './pipes/filter-name-goal.pipe';
       { path: 'plantillas-semanales', component: WeeklyTemplateListComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'plantillas-wod', component: WodTemplateListComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'asignacion-plantilla', component: AssignmentTemplateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
+      { path: 'menu-asignacion-plantilla', component: MenuAssignmentTemplateComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'plantilla-wod-editar', component: WodTemplateEditComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'periodizacion', component: WorkoutPeriodizationComponent, canActivate: [AuthGuard], data: { name: 'wod' } },
       { path: 'detalle-periodizacion', component: WorkoutPeriodizaionDetailComponent, canActivate: [AuthGuard], data: { name: 'wod' } },

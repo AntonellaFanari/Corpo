@@ -21,6 +21,7 @@ export class PromotionEditComponent implements OnInit {
   promotionAnotherMember: PromotionAnotherMember[] = [];
   discount = 10;
   send: boolean = false;
+  requesting = false;
 
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private promotionService: PromotionService,
     private dp: DatePipe, private customAlertService: CustomAlertService, private router: Router) {
@@ -35,6 +36,12 @@ export class PromotionEditComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.id);
+    this.getPromotion();
+
+  }
+
+  getPromotion() {
+    this.requesting = true;
     this.promotionService.getById(this.id).subscribe(
       result => {
         console.log(result);
@@ -45,9 +52,8 @@ export class PromotionEditComponent implements OnInit {
         this.to = this.dp.transform(this.promotion.to, 'yyyy-MM-dd');
         this.toCompleteForm(this.promotion);
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
-
   }
 
   toCompleteForm(promotion) {
@@ -57,6 +63,7 @@ export class PromotionEditComponent implements OnInit {
       from: this.from,
       to: this.to
     });
+    this.requesting = false;
   }
 
   addRow() {

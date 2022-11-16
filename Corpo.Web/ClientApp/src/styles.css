@@ -6,6 +6,11 @@ a {
   color: #0366d6;
 }
 
+
+.selected-item {
+  max-width: 100% !important;
+}
+
 .login-icon {
   color: #07b215;
   height: 35px;

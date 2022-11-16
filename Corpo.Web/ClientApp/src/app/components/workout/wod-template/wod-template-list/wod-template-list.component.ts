@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Wod, WodGroup, WodTemplate, wodTemplateResponse } from 'src/app/domain/wod';
 import { WodTemplateService } from 'src/app/wod/wod-template.service';
+import { CustomAlertService } from '../../../../services/custom-alert.service';
 
 @Component({
   selector: 'app-wod-template-list',
@@ -16,9 +17,14 @@ export class WodTemplateListComponent implements OnInit {
   requestingWod: boolean;
   requestingList: boolean;
 
-  constructor(private wodTemplateService: WodTemplateService) { }
+  constructor(private wodTemplateService: WodTemplateService,
+private customAlertService: CustomAlertService  ) { }
 
   ngOnInit() {
+    this.getAll();
+  }
+
+  getAll() {
     this.requestingList = true;
     this.wodTemplateService.getAll().subscribe((data) => {
       console.log(data.result);
@@ -28,6 +34,7 @@ export class WodTemplateListComponent implements OnInit {
       this.requestingList = false;
     })
   }
+
 
   getById(id: number) {
     this.requestingWod = true;
@@ -74,4 +81,20 @@ export class WodTemplateListComponent implements OnInit {
     return wod;
   }
 
+
+  delete(id) {
+    this.customAlertService.displayAlert("Gestión de WOD", ["¿Está seguro que desea eliminar esta plantilla?"], () => {
+      this.requestingList = true;
+      this.wodTemplateService.delete(id).subscribe(
+        result => {
+          console.log(result);
+          this.getAll();
+        },
+        error => {
+          this.requestingList = false;
+          console.error(error);
+          this.customAlertService.displayAlert("Gestión de WOD", ["Error al intentar eliminar la plantilla."])
+        })
+    }, true)
+  }
 }

@@ -17,6 +17,7 @@ export class FeeDetailComponent implements OnInit {
   userRegister: string;
   @Output() updateFee = new EventEmitter<string>();
   member: MemberView;
+  requesting = false;
 
   constructor(private feeService: FeeService, private userService: UserService, private customAlertService: CustomAlertService) { }
 
@@ -28,22 +29,24 @@ export class FeeDetailComponent implements OnInit {
   }
 
   getFee(id) {
+    this.requesting = true;
     this.feeService.getById(id).subscribe(
       result => {
         this.fee = result.result;
         console.log("fee: ", result.result);
         this.userRegister = result.result.userName;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
 
   delete() {
     this.customAlertService.displayAlert("Gestión de Cuotas", ["¿Está seguro que desea eliminar esta cuota?"], () => {
+      this.modalClick(this.fee.id);
       this.feeService.delete(this.fee.id).subscribe(
         result => {
-          this.modalClick(this.fee.id);
           this.updateFeeCash();
         },
         error => {

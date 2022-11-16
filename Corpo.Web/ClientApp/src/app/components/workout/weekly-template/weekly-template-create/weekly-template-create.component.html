@@ -45,7 +45,7 @@
   <div class="col-lg-12 card bg-light" [class.d-none]="wods.length == 0">
 
     <mat-tab-group>
-      <mat-tab label="Plantilla: {{wod.detail}}" *ngFor="let wod of wods">
+      <mat-tab label="{{wod.detail}}" *ngFor="let wod of wods">
         <app-preview-wod [wod]="wod.wod"></app-preview-wod>
       </mat-tab>
     </mat-tab-group>
@@ -54,11 +54,11 @@
   </div>
 
   <div class="div-btn-create mt-3">
-    <button class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" type="button"
+    <button class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" type="button"
             routerLink="/plantillas-semanales">
       Cancelar
     </button>
-    <button class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit"
+    <button class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit"
             (click)="save()">
       Guardar
     </button>

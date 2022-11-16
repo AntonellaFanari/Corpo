@@ -4,10 +4,12 @@ import { MemberView } from '../../../domain/member-view';
 import { Wod, WodGroup, WodTemplate, wodTemplateResponse } from '../../../domain/wod';
 import { WodMember } from '../../../domain/wod-member';
 import { Periodization } from '../../../domain/wod/periodization';
+import { WeeklyTemplate } from '../../../domain/wod/weekly-template';
 import { AnamnesisService } from '../../../services/anamnesis.service';
 import { CustomAlertService } from '../../../services/custom-alert.service';
 import { MemberService } from '../../../services/member.service';
 import { PeriodizationService } from '../../../services/wod/periodization.service';
+import { WeeklyTemplateService } from '../../../services/wod/weekly-template.service';
 import { WodMemberService } from '../../../wod/wod-member.service';
 import { WodTemplateService } from '../../../wod/wod-template.service';
 
@@ -30,6 +32,8 @@ export class AssignmentTemplateEditComponent implements OnInit {
   display = true;
   level: number;
   modeWodMember = true;
+  weeklyTemplate: WeeklyTemplate;
+  displayIconWodRemoving = false;
 
   constructor(private route: ActivatedRoute,
     private wodMemberService: WodMemberService,
@@ -38,7 +42,8 @@ export class AssignmentTemplateEditComponent implements OnInit {
     private wodTemplateService: WodTemplateService,
     private memberService: MemberService,
     private customAlertService: CustomAlertService,
-    private anamnesisService: AnamnesisService) {
+    private anamnesisService: AnamnesisService,
+    private weeklyTemplateService: WeeklyTemplateService) {
     this.route.queryParams.subscribe(params => {
       this.id = parseInt(params['id']);
       this.weekNumber = parseInt(params['week']);
@@ -74,6 +79,8 @@ export class AssignmentTemplateEditComponent implements OnInit {
   ngOnInit() {
 
   }
+
+
 
   getPeriodization() {
     this.periodizationService.getById(this.id).subscribe(
@@ -123,6 +130,7 @@ export class AssignmentTemplateEditComponent implements OnInit {
         this.requestingAssignment = false;
         console.log("wods1: ", response.result);
         var wodMembers = response.result;
+        this.getWeeklyTemplate(wodMembers[0].weeklyTemplateId);
         wodMembers.forEach(w => {
           this.wods.push({
             wod: this.getWod(w),
@@ -132,17 +140,30 @@ export class AssignmentTemplateEditComponent implements OnInit {
           });
           console.log("wodMember:", w)
         })
+
         console.log("wods2: ", this.wods);
         console.log("requesting: ", this.requestingAssignment);
         console.log("display: ", this.display);
         console.log("periodization: ", this.periodization);
         this.getWeekPlanned();
         if (this.periodization.trainings < wodMembers.length) {
-          this.customAlertService.displayAlert("Gestión de Wods", ["Debe eliminar un wod ya que modifico el nº de entrenamientos semanales."]);
+          this.displayIconWodRemoving = true;
+          let difference = wodMembers.length - this.periodization.trainings;
+          this.customAlertService.displayAlert("Gestión de Wods", [`Debe eliminar ${difference} wods. El nº de entrenamientos semanales del socio es menor al nº de wods que tiene la plantilla semanal.`]);
         }
 
         console.log("wods:", this.wods)
 
+      },
+      error => console.error(error)
+    )
+  }
+
+  getWeeklyTemplate(id) {
+    this.weeklyTemplateService.getById(id).subscribe(
+      response => {
+        console.log("plantilla semanal: ", response.result);
+        this.weeklyTemplate = response.result;
       },
       error => console.error(error)
     )
@@ -198,7 +219,8 @@ export class AssignmentTemplateEditComponent implements OnInit {
     this.weekNumber = this.selectedWeekNumber;
     let weekPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true" && x.weekNumber == this.weekNumber.toString());
     if (weekPlanned.length > 0) {
-      this.getWodMember();
+      this.router.navigate(['/editar-asignacion-wod'], { queryParams: { id: this.periodization.id, memberId: this.memberId, week: this.weekNumber } });
+
     } else {
       this.router.navigate(['/asignacion-plantilla'], {
         queryParams: { memberId: this.member.id, week: '0' }
@@ -211,27 +233,33 @@ export class AssignmentTemplateEditComponent implements OnInit {
 
   }
 
+  deleteWod(id) {
+    this.customAlertService.displayAlert("Gestion de Wods", ["¿Seguro que desea eliminar este wod? Una vez eliminado no podrá recuperarlo."], () => {
+      this.requestingAssignment = true;
+      this.wodMemberService.delete(id).subscribe(
+        response => this.getWodMember(),
+        error => console.error(error)
+      )
+    }, true)
+
+  }
+
   deleteWods() {
-    this.customAlertService.displayAlert("Gestion de Wods", ["¿Seguro que desea eliminar los wods?"], () => {
+    this.customAlertService.displayAlert("Gestion de Wods", [`"¿Seguro que desea eliminar la planificación para la semana ${this.weekNumber}?"`], () => {
       this.requestingAssignment = true;
       this.display = true;
       this.wodMemberService.deleteWods(this.periodization.id, this.weekNumber).subscribe(
         response => {
           this.requestingAssignment = false;
-          this.display = false;
-          console.log("wods eliminados");
-          this.periodization = response.result;
-          let weeksPlanned = this.periodization.periodizationWeeks.filter(x => x.planned == "true");
-          this.setClassSelect(weeksPlanned);
-          if (weeksPlanned.length > 0) {
-            this.selectWeekNumber(weeksPlanned[weeksPlanned.length - 1].weekNumber);
-          } else {
-            this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId, week: 0 } });
+          this.router.navigate(['/asignacion-plantilla'], { queryParams: { memberId: this.memberId, week: 0 } });
 
-          }
         },
         error => this.requestingAssignment = false
       )
     }, true)
+  }
+
+  getGoals(goals) {
+    return goals.split("-");
   }
 }

@@ -1,12 +1,12 @@
 <section class="wrapper">
   <div class="row mt">
     <div class="col-12">
-      <div class="task-panel ">
+      <div class="task-panel pb-2">
         <h4 class="table-title">Compras</h4>
         <button type="button" class="btn btn-success col-xl-2 col-12 btn-float-right" routerLink="/compra-crear">Agregar</button>
       </div>
       <hr>
-      <section *ngIf="purchases.length>0 ; else elseBlock" id="no-more-tables" class="tab-pane fade show active">
+      <section *ngIf="!requesting && purchases.length>0" id="no-more-tables" class="mt-2 tab-pane fade show active">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -33,9 +33,23 @@
           </tbody>
         </table>
       </section>
-      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+      <div class="w-100 text-center" *ngIf="requesting">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!requesting && purchases.length == 0">
+        <h5>No hay compras registradas</h5>
+      </div>
+
+      <div class="mt-3 col-lg-12" *ngIf="!requesting">
+        <button class="btn btn-secondary col-12 col-lg-2 pull-left" type="submit" [routerLink]="['/productos-list']">Volver</button>
+      </div>
     </div>
     <!-- /content-panel -->
   </div>
   <!-- /col-md-12 -->
+</section>
+<section class="wrapper">
+  
 </section>

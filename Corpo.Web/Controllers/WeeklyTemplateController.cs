@@ -38,5 +38,19 @@ namespace Corpo.Web.Controllers
            var response = await _weeklyTemplateService.GetById(id);
             return this.ToActionResult(response);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> Update(WeeklyTemplate weeklyTemplate, int id)
+        {
+            var response = await _weeklyTemplateService.Update(weeklyTemplate, id);
+            return this.ToActionResult(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var response = await _weeklyTemplateService.Delete(id);
+            return this.ToActionResult(response);
+        }
     }
 }

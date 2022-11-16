@@ -8,8 +8,8 @@
       {{getMonth(periodization.month)}}
     </div>
     <div class="row mt-3">
-      <div *ngFor="let periodizationWeek of periodization.periodizationWeeks" class="col-3" [routerLink]="['/reporte-semanal']" [queryParams]="{id: periodizationWeek.id, memberId: periodization.memberId}">
-        <div [ngClass]="periodizationWeek.planned == 'true' ? 'week-planned': 'week-not-planned'" class="text-center cursor-pointer">Semana {{periodizationWeek.weekNumber}}</div>
+      <div *ngFor="let periodizationWeek of periodization.periodizationWeeks" class="col-12 col-lg-3 mt-2" [routerLink]="['/reporte-semanal']" [queryParams]="{id: periodizationWeek.id, memberId: periodization.memberId}">
+        <div [ngClass]="periodizationWeek.planned == 'true' ? 'week-planned': 'week-not-planned'" class="text-center cursor-pointer pt-1 pb-1">Semana {{periodizationWeek.weekNumber}}</div>
       </div>
     </div>
   </div>

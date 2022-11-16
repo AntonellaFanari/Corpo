@@ -17,7 +17,12 @@ export class PersonalInformationComponent implements OnInit {
   id: number;
   userLogged: LoggedUser;
   userType: number;
-  constructor(private userService: UserService, private memberService: MemberService, private router: Router, private accountService: AccountService) {
+  requesting = false;
+
+  constructor(private userService: UserService,
+    private memberService: MemberService,
+    private router: Router,
+    private accountService: AccountService) {
     this.userLogged = this.accountService.getLoggedUser();
     this.id = this.userLogged.id;
     this.userType = this.userLogged.userType
@@ -25,29 +30,42 @@ export class PersonalInformationComponent implements OnInit {
 
   ngOnInit() {
     if (this.userType == 1) {
-      this.userService.getById(this.id).subscribe(
-        result => {
-          console.log(result);
-          this.user = result;
-        },
-        error => console.error(error)
-      );
+      this.getUser();
     } else {
-      this.memberService.getById(this.id).subscribe(
-        result => {
-          console.log(result);
-          this.user = result.result;
-        },
-        error => console.error(error)
-      );
-    };   
+      this.getMember();
+    }  
   }
 
+
+  getUser() {
+    this.requesting = true;
+    this.userService.getById(this.id).subscribe(
+      result => {
+        console.log(result);
+        this.user = result;
+        this.requesting = false;
+      },
+      error => this.requesting = false
+    );
+  }
+
+
+  getMember() {
+    this.requesting = true;
+    this.memberService.getById(this.id).subscribe(
+      result => {
+        console.log(result);
+        this.user = result.result;
+        this.requesting = false;
+      },
+      error => this.requesting = false
+    );
+  }
   modifyPersonalInformation() {
     if (this.userType == 1) {
-      this.router.navigate(['/user-edit']);
+      this.router.navigate(['/user-edit'], { queryParams: { id: this.id } });
     } else {
-      this.router.navigate(['/member-edit']);
+      this.router.navigate(['/member-edit'], { queryParams: { id: this.id } });
     }
   }
 

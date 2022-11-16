@@ -67,7 +67,12 @@ namespace Corpo.Domain.Services
             }
 
             newFrom = DateTime.Now;
-            var response = await _shiftRespository.GetAll(newFrom, newTo, classId);
+            var fromDay = from;
+            var toDay = newTo.AddHours(23).AddMinutes(59).AddSeconds(59); ;
+            var fromHour = new TimeSpan(newFrom.Hour, newFrom.Minute, newFrom.Second);
+            var toHour = new TimeSpan(toDay.Hour, toDay.Minute, toDay.Second);
+
+            var response = await _shiftRespository.GetAll(fromDay, fromHour, toDay, toHour, classId);
 
             return new DomainResponse
             {
@@ -77,6 +82,23 @@ namespace Corpo.Domain.Services
 
 
         }
+        public async Task<DomainResponse> GetByDay(DateTime day, int classId)
+        {
+            var newDay = DateTime.Now;
+            var fromDay = day.AddHours(newDay.Hour).AddMinutes(newDay.Minute).AddSeconds(newDay.Second);
+            var newTo = day.AddHours(23).AddMinutes(59).AddSeconds(59);
+            var toDay = newTo;
+            var fromHour = new TimeSpan(fromDay.Hour, fromDay.Minute, fromDay.Second);
+            var toHour = new TimeSpan(newTo.Hour, newTo.Minute, newTo.Second);
+
+            var response = await _shiftRespository.GetAll(day, fromHour, toDay, toHour, classId);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
 
         async public Task<DomainResponse> Update(List<Shift> shifts)
         {
@@ -147,5 +169,6 @@ namespace Corpo.Domain.Services
             };
 
         }
+
     }
 }

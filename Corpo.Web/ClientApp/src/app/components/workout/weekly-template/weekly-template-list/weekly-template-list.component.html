@@ -1,4 +1,4 @@
-<section class="wrapper" *ngIf="!requesting && weeklyTemplates.length > 0">
+<section class="wrapper">
   <div class="row mt">
     <div class="col-md-12">
       <div class="task-panel ">
@@ -6,14 +6,14 @@
         <button type="button" class="btn btn-success col-4 col-lg-2 btn-add" routerLink="/crear-plantilla-semanal">Agregar</button>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requesting && weeklyTemplates.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
-      <section id="no-more-tables" class="">
+      <section id="no-more-tables" class="" *ngIf="!requesting && weeklyTemplates.length > 0">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -38,17 +38,15 @@
         </table>
       </section>
 
+      <div class="w-100 text-center mt-3" *ngIf="requesting">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!requesting && weeklyTemplates.length == 0">
+        <h5>No hay plantillas semanales</h5>
+      </div>
     </div>
     
   </div>
  </section>
-<section>
-  <div class="w-100 text-center mt-3" *ngIf="requesting">
-    <div class="spinner-border text-success" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
-  <div *ngIf="!requesting && weeklyTemplates.length == 0">
-    <h5>No hay plantillas semanales</h5>
-  </div>
-</section>

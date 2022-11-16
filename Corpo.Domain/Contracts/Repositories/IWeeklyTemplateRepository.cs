@@ -1,4 +1,5 @@
 ﻿using Corpo.Domain.Models;
+using Corpo.Domain.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace Corpo.Domain.Contracts.Repositories
         Task Add(WeeklyTemplate weeklyTemplate);
         Task<List<WeeklyTemplate>> GetAll();
         Task<WeeklyTemplate> GetById(int id);
+        Task Update(WeeklyTemplate weeklyTemplate);
+        Task Delete(int id);
     }
 }

@@ -25,6 +25,8 @@ export class InjuryHistoryComponent implements OnInit {
   injuryId: number;
   memberId: number;
   userType: number;
+  requesting = false;
+  selectedFile = false;
 
   constructor(private accountService: AccountService, private memberService: MemberService, private route: ActivatedRoute, private router: Router, private customAlertService: CustomAlertService) {
     this.userType = this.accountService.getLoggedUser().userType;
@@ -39,6 +41,7 @@ export class InjuryHistoryComponent implements OnInit {
   }
 
   getAllInjuries(id: number) {
+    this.requesting = true;
     this.injuryFiles = [];
     this.memberService.getAllInjuries(id).subscribe(
       result => {
@@ -51,8 +54,9 @@ export class InjuryHistoryComponent implements OnInit {
             this.injuryFiles.push(files[j]);
           }
         }
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
@@ -81,6 +85,7 @@ export class InjuryHistoryComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       const file = <File>files.item(i);
       this.files.push(file);
+      this.selectedFile = true;
       console.log(this.files);
     }
 
@@ -99,6 +104,7 @@ export class InjuryHistoryComponent implements OnInit {
       }
     }
     console.log(this.urls);
+
   }
 
   selectInjury(event) {
@@ -113,11 +119,13 @@ export class InjuryHistoryComponent implements OnInit {
 
   deleteFile(id) {
     this.customAlertService.displayAlert("Gestión de Lesiones", ["¿Está seguro que desea eliminar esta lesión?"], () => {
+      this.requesting = true;
       this.memberService.deleteFile(id).subscribe(
         result => {
           this.getAllInjuries(this.medicalHistoryId);
         },
         error => {
+          this.requesting = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar la lesión."]);
         })
@@ -133,6 +141,7 @@ export class InjuryHistoryComponent implements OnInit {
     if (newInjury.name != undefined) {
       this.memberService.addInjury(newInjury).subscribe(
         result => {
+          this.selectedFile = false;
           let id = result.result.id;
           this.memberService.addFile(id, this.files).subscribe(
             result => {

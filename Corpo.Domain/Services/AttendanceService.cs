@@ -36,37 +36,69 @@ namespace Corpo.Domain.Services
 
         public async Task<DomainResponse> Add(Attendance attendance)
         {
+
             try
             {
-                var creditId = _memberRepository.GetById(attendance.MemberId).Result.CreditId;
-                var credit = (Credit)_creditService.GetById(creditId).Result.Result;
-                var shift = await _shiftRepository.GetById(attendance.ShiftId);
-                if (credit.Expiration < DateTime.Now || (credit.InitialCredit == credit.CreditConsumption && credit.FirstDay == "false"))
+                var existsReservation = await _attendanceRepository.GetByMemberIdByShiftId(attendance.MemberId, attendance.ShiftId);
+                if (existsReservation == null)
                 {
-                    attendance.UsingNegative = true;
-                };
-                attendance.DateReservation = DateTime.Now;
-                attendance.DateCancellation = null;
-                attendance.DateShift = shift.Day.Date.Add(shift.Hour);
-                await _attendanceRepository.Add(attendance);
-                await _creditService.Update(credit);
-                await _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
-                var weekPlanned = await _periodizationRepository.GetPeriodizationWeekPlannedByShiftDate(attendance.DateShift);
-                if (weekPlanned != null)
-                {
-                    await _wodMemberRepository.SetShiftDate(attendance.DateShift);
+                    var creditId = _memberRepository.GetById(attendance.MemberId).Result.CreditId;
+                    var credit = (Credit)_creditService.GetById(creditId).Result.Result;
+                    var shift = await _shiftRepository.GetById(attendance.ShiftId);
+                    if (credit.Expiration < DateTime.Now || (credit.InitialCredit == credit.CreditConsumption && credit.FirstDay == "false"))
+                    {
+                        attendance.UsingNegative = true;
+                    };
+                    attendance.DateReservation = DateTime.Now;
+                    attendance.DateCancellation = null;
+                    attendance.DateShift = shift.Day.Date.Add(shift.Hour);
+                    await _attendanceRepository.Add(attendance);
+                    await _creditService.Update(credit);
+                    await _shiftService.UpdateById(attendance.ShiftId, attendance.Status);
+                    var weekPlanned = await _periodizationRepository.GetPeriodizationWeekPlannedByShiftDate(attendance.DateShift);
+                    if (weekPlanned != null)
+                    {
+                        await this.SetShiftDate(attendance.MemberId, attendance.DateShift);
+
+                    }
+                    return new DomainResponse
+                    {
+                        Success = true
+                    };
                 }
-                return new DomainResponse
+                else
                 {
-                    Success = true
-                };
+                    return new DomainResponse(false, "No puede registrarse la reserva, ya tiene una reserva en este turno.", "No puede registrarse la reserva, ya tiene una reserva en este turno.");
+
+                }
             }
             catch (Exception ex)
             {
                 return new DomainResponse(false, ex.Message, "No se pudo reservar turno.");
             }
 
+
+
         }
+
+        private async Task<DomainResponse> SetShiftDate(int memberId, DateTime dateShift)
+        {
+
+            var wodMember = await _wodMemberRepository.GetNextAvailable(memberId);
+            if (wodMember != null)
+            {
+                await _wodMemberRepository.SetShiftDate(wodMember.Id, dateShift);
+                return new DomainResponse
+                {
+                    Success = true
+                };
+            }
+            else
+            {
+                return new DomainResponse(false, "No tiene wods disponibles para la asignación de la reserva de turno.", "No se pudo asignar la fecha del turno a un wod.");
+            }
+        }
+
 
         public DomainResponse GetByIdMemberByMonth(int id, int month)
         {
@@ -84,6 +116,7 @@ namespace Corpo.Domain.Services
             var attendance = await _attendanceRepository.GetById(id);
             attendance.DateCancellation = DateTime.Now;
             attendance.Status = StatusAttendance.Cancelled;
+            attendance.DateCancellation = DateTime.Now;
             var shift = _shiftService.GetById(attendance.ShiftId);
             var s = shift.Result.Result as Shift;
             var differenceTime = (s.Day - DateTime.Now).TotalMinutes;
@@ -162,29 +195,38 @@ namespace Corpo.Domain.Services
         public async Task<DomainResponse> UpdateAttended(int id, List<Attendance> attendancesRegister)
         {
             var shift = await _shiftRepository.GetById(id);
-            shift.Attended = true;
-            foreach (var attendance in attendancesRegister)
+            var shiftDay = shift.Day.AddHours(shift.Hour.TotalHours);
+            if (DateTime.Now >= shiftDay)
             {
-                var attendanceQuery = await _attendanceRepository.GetById(attendance.Id);
-                attendanceQuery.Status = attendance.Status;
-                try
+                shift.Attended = true;
+                foreach (var attendance in attendancesRegister)
                 {
-                    _attendanceRepository.Update(attendanceQuery);
-                    return new DomainResponse
+                    var attendanceQuery = await _attendanceRepository.GetById(attendance.Id);
+                    attendanceQuery.Status = attendance.Status;
+                    try
                     {
-                        Success = true
-                    };
-                }
-                catch (Exception ex)
+                        _attendanceRepository.Update(attendanceQuery);
+                        return new DomainResponse
+                        {
+                            Success = true
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        return new DomainResponse(false, ex.Message, "no se pudo registrar las asistencia");
+                    }
+                };
+                await _shiftRepository.Update(shift);
+                return new DomainResponse
                 {
-                    return new DomainResponse(false, ex.Message, "no se pudo registrar las asistencia");
-                }
-            };
-            await _shiftRepository.Update(shift);
-            return new DomainResponse
+                    Success = true
+                };
+            }
+            else
             {
-                Success = true
-            };
+                return new DomainResponse(false, "no se pudo registrar las asistencia", "No puede registrar la asistencia antes de la fecha del turno");
+            }
+
 
         }
 
@@ -234,6 +276,20 @@ namespace Corpo.Domain.Services
                 newTo = (currentDate.AddDays(diffDaysToSunday)).AddHours(23).AddMinutes(59).AddSeconds(59);
             }
             var response = await _attendanceRepository.GetByFromByToByClass(id, newFrom, newTo, classId);
+            return new DomainResponse
+            {
+                Success = true,
+                Result = response
+            };
+        }
+
+        public async Task<DomainResponse> GetByDay(int id, DateTime day, int classId)
+        {
+            var fromDay = day;
+            var newTo = day.AddHours(23).AddMinutes(59).AddSeconds(59);
+            var toDay = newTo;
+
+            var response = await _attendanceRepository.GetByFromByToByClass(id, fromDay, toDay, classId);
             return new DomainResponse
             {
                 Success = true,

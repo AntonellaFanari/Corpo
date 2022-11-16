@@ -32,11 +32,13 @@ export class CategoryExercisesListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Categorias", ["¿Está seguro que desea eliminar esta categoria?"], () => {
+      this.requestingList = true;
       this.exerciseService.deleteCategory(id).subscribe(
         result => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar la categoria."]);
         })

@@ -26,7 +26,7 @@
             <tr *ngFor="let modality of modalities | searchFilterName: filterName">
               <td data-title="Nombre"><span>{{modality.name}}</span></td>
               <td data-title="Personalizada"><span>{{modality.unit}}</span></td>
-              <td data-title="Acción">
+              <td data-title="Acción" class="col-2">
                 <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/modalidad-editar']" [queryParams]="{id:modality.id}"><i class="fa fa-pencil-square"></i></button>
                 <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(modality.id)"><i class="fa fa-trash"></i></button>
               </td>

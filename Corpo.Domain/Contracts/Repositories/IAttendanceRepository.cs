@@ -20,5 +20,7 @@ namespace Corpo.Domain.Contracts.Repositories
         Task<List<ReservationDto>> GetAllReservationsDetail(int id);
         Task<List<Attendance>> GetAllByMonth(int id, int month);
         Task<List<AttendanceReservationDto>> GetByFromByToByClass(int id, DateTime from, DateTime to, int classId);
+        Task<Attendance> GetByMemberIdByShiftId(int memberId, int shiftId);
     }
+        
 }

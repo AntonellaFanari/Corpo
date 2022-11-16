@@ -1,6 +1,6 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Attendance } from '../../../domain/attendance';
 import { AttendanceRegister } from '../../../domain/attendance-register';
@@ -39,38 +39,50 @@ export class AttendanceComponent implements OnInit {
   attendancesRegister: AttendanceRegister[] = [];
   maxNegatives: number;
   requestingList: boolean;
+  requesting = false;
 
 
-  constructor(private attendanceService: AttendanceService, private memberService: MemberService,
-    private customAlertService: CustomAlertService, private creditService: CreditService, private shiftService: ShiftService,
-    private dp: DatePipe, private route: ActivatedRoute, private settingsService: SettingsService) {
+  constructor(private attendanceService: AttendanceService,
+    private memberService: MemberService,
+    private customAlertService: CustomAlertService,
+    private creditService: CreditService,
+    private shiftService: ShiftService,
+    private dp: DatePipe,
+    private route: ActivatedRoute,
+    private settingsService: SettingsService,
+    private router: Router,
+    private location: Location) {
+    this.route.queryParams.subscribe(params => {
+      this.shiftId = parseInt(params['id']);
+    
+      this.getShift();
+    })
 
   }
 
   ngOnInit() {
-    this.requestingList = true;
-    this.getAllMembers();
+
+  }
+
+  getSettings() {
     this.settingsService.getAll().subscribe(
       response => {
         this.maxNegatives = parseInt(response.result.find(x => x.name == "maxNegative").value);
       },
       error => console.error(error))
-
   }
 
-  modalClick() {
-    document.getElementById("modal-attendance").click();
-    this.viewBtnAddMember = true;
-  }
-
-  getShift(id) {
-    this.shiftId = id;
-    this.shiftService.getById(id).subscribe(
+  getShift() {
+    this.requesting = true;
+    this.shiftService.getById(this.shiftId).subscribe(
       result => {
         this.shift = result.result;
+        this.getAllMembers();
+        this.getSettings();
+        console.log("turno: ", this.shift);
         this.shift.day = this.getDayShift(this.shift.day) + " " + this.shift.day.substr(8, 2) + "/" + this.shift.day.substr(5, 2);
         this.shift.hour = this.shift.hour.substr(0, 5);
-        this.getAll(id);
+        this.getAll(this.shiftId);
       },
       error => console.error(error)
     )
@@ -100,6 +112,7 @@ export class AttendanceComponent implements OnInit {
   }
 
   getAll(id) {
+
     this.shiftId = id;
     this.attendanceService.getAllByIdShift(id).subscribe(
       result => {
@@ -118,12 +131,15 @@ export class AttendanceComponent implements OnInit {
           this.checkedAllAttendances = false
         }
         this.quotaAvailable = this.shift.quota - this.attendances.length;
+
+        this.requesting = false;
       },
       error => this.requestingList = false
     )
   }
 
   getAllMembers() {
+    this.requestingList = true;
     this.memberService.getAll().subscribe(
       result => {
         this.members = result.result;
@@ -186,12 +202,18 @@ export class AttendanceComponent implements OnInit {
   add() {
     let attendance = this.createAttendance();
     this.attendanceService.add(attendance).subscribe(
-      result => {
-        this.getAll(this.shiftId);
-        this.viewSelectAddMember = false;
-        this.viewBtnAddMember = true;
-        this.requestingList = false;
-        this.getAllShifts.emit();
+      response => {
+        console.log("respuesta: ", response)
+        if (response.success) {
+          this.getAll(this.shiftId);
+          this.viewSelectAddMember = false;
+          this.viewBtnAddMember = true;
+          this.requestingList = false;
+          this.getAllShifts.emit();
+        } else {
+          this.customAlertService.displayAlert("Gestión de Asistencias", response.errors);
+        }
+       
       },
       error => {
         this.requestingList = false;
@@ -207,13 +229,15 @@ export class AttendanceComponent implements OnInit {
 
 
   addMember() {
+
+    this.requesting = true;
     if (this.member.status != '3') {
       if (this.credit.negative >= this.maxNegatives) {
         this.customAlertService.displayAlert("Gestión de Asistencias", ["El socio superó la cantidad de negativos permitidos."]);
       } else {
-        this.requestingList = true;
         this.add();
       }
+
     } else {
       this.attendanceService.getAllReservations(this.member.id).subscribe(
         response => {
@@ -227,6 +251,8 @@ export class AttendanceComponent implements OnInit {
         error => console.error(error)
       )
     }
+
+    this.requesting = false;
 
 
   }
@@ -262,12 +288,22 @@ export class AttendanceComponent implements OnInit {
       }
     }
   }
+  
 
   registerAttendance() {
     this.attendedRegister();
     this.attendanceService.update(this.attendances, this.shiftId).subscribe(
-      result => {
-        console.log(result);
+      response => {
+        console.log(response.result);
+        this.requesting = true;
+        if (response.result.success) {
+          this.customAlertService.displayAlert("Gestión de Asistencias", ["Asistencia registrada."], () => {this.router.navigate(['/asistencias-turnos']) });
+        } else {
+          this.customAlertService.displayAlert("Gestión de Asistencias", response.result.errors, () => { this.getShift() });
+        };
+        console.log(this.attendances);
+       
+
       },
       error => {
         console.error(error);
@@ -278,5 +314,9 @@ export class AttendanceComponent implements OnInit {
           this.customAlertService.displayAlert("Gestión de Asistencias", ["Hubo un problema al registrar las asistencias."]);
         }
       })
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

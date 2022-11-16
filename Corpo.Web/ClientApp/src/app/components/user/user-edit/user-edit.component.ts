@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoggedUser } from '../../../domain/logged-user';
@@ -20,16 +21,24 @@ export class UserEditComponent{
   @ViewChild(UserFormComponent, { static: true }) formUser: UserFormComponent;
   requesting: boolean;
 
-  constructor(private accountService: AccountService, private userService: UserService, private route: ActivatedRoute, private router: Router, private customAlertService: CustomAlertService) {
-    this.user = this.accountService.getLoggedUser();
-    if (this.user.userType == 1 && this.user.roleName == "Administrador") {
-      this.id = this.user.id;
-      this.modifyingPersonalInformation = true;
-    } else {
-      this.route.queryParams.subscribe(params => {
+  constructor(private accountService: AccountService,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private customAlertService: CustomAlertService,
+    private location: Location) {
+    //this.user = this.accountService.getLoggedUser();
+    //if (this.user.userType == 1 && this.user.roleName == "Administrador") {
+    //  this.id = this.user.id;
+    //  this.modifyingPersonalInformation = true;
+    //} else {
+    //  this.route.queryParams.subscribe(params => {
+    //    this.id = parseInt(params['id'])
+    //  });
+    //}
+       this.route.queryParams.subscribe(params => {
         this.id = parseInt(params['id'])
       });
-    }
   }
 
   ngOnInit() {
@@ -45,17 +54,17 @@ export class UserEditComponent{
     this.requesting = false;
   }
 
+  goBack() {
+    this.location.back();
+  }
+
   public submit(){
     var userUpdate = this.formUser.createUser();
     console.log(userUpdate);
     this.userService.update(this.id, userUpdate).subscribe(
       result => {
         console.log(result);
-        if (this.modifyingPersonalInformation) {
-          this.router.navigate(['/datos-personales']);
-        } else {
-          this.router.navigate(['/user-list']);
-        }
+        this.location.back();
       },
       error => {
         console.error(error);

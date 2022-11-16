@@ -32,11 +32,13 @@ export class TagListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Tags", ["¿Está seguro que desea eliminar este tag?"], () => {
+      this.requestingList = true;
       this.exerciseService.deleteTag(id).subscribe(
         result => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar el tag."]);
         })

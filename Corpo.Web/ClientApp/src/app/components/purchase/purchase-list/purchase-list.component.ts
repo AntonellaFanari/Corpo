@@ -10,6 +10,8 @@ import { PurchaseService } from '../../../services/purchase.service';
 })
 export class PurchaseListComponent implements OnInit {
   purchases: Purchase[] = [];
+  requesting = false;
+
   constructor(private purchaseService: PurchaseService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
@@ -17,24 +19,28 @@ export class PurchaseListComponent implements OnInit {
   }
 
   getAll() {
+    this.requesting = true;
     this.purchaseService.getAll().subscribe(
       result => {
         console.log(result);
         this.purchases = result;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
   delete(id) {
     console.log("delete");
     this.customAlertService.displayAlert("Gestión de Compras", ["¿Está seguro que desea eliminar esta compra?"], () => {
+      this.requesting = true;
       this.purchaseService.delete(id).subscribe(
         result => {
           console.log(result);
           this.getAll();
         },
         error => {
+          this.requesting = false;
           console.log(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar la compra."]);
         })

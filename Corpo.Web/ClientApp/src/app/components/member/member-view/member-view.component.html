@@ -1,9 +1,9 @@
 <section class="wrapper" *ngIf="!requesting && member">
-  <section class="wrapper" *ngIf="!hideGoBack">
+  <div class="" *ngIf="!hideGoBack">
     <div class="row mt">
       <div class="col-md-12">
         <div class="task-panel">
-          <h4 class="table-title mt-2">Información personal</h4>
+          <h4 class="table-title mt-2">Información personal de {{member.lastName}} {{member.name}}</h4>
         </div>
         <hr>
         <section id="no-more-tables">
@@ -28,8 +28,8 @@
         </section>
       </div>
     </div>
-  </section>
-  <section class="wrapper" *ngIf="!hideGoBack">
+  </div>
+  <div class="" *ngIf="!hideGoBack">
     <div class="row mt">
       <div class="col-md-12">
         <div class="task-panel">
@@ -62,8 +62,8 @@
         </section>
       </div>
     </div>
-  </section>
-  <section class="wrapper" *ngIf="!hideGoBack">
+  </div>
+  <div class="" *ngIf="!hideGoBack">
     <div class="row mt">
       <div class="col-md-12">
         <div class="task-panel">
@@ -107,8 +107,8 @@
         </section>
       </div>
     </div>
-  </section>
-  <section class="wrapper">
+  </div>
+  <div class="">
     <div class="row mt">
       <div class="col-md-12">
         <div class="task-panel ">
@@ -152,8 +152,8 @@
         </div>
       </div>
     </div>
-  </section>
-  <section class="wrapper">
+  </div>
+  <div class="">
     <div class="row mt">
       <div class="col-lg-12">
         <div class="task-panel ">
@@ -191,15 +191,15 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
   <div>
     <ng-template #elseBlock2><h6 class="text-center">No tiene lesiones registrada</h6></ng-template>
   </div>
-  <div *ngIf="!hideGoBack" class="ms-3">
-    <button type="button" class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" routerLink="/member-list">Volver</button>
+  <div *ngIf="!hideGoBack">
+    <button type="button" class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" routerLink="/member-list">Volver</button>
   </div>
 </section>
-<section class="wrapper" *ngIf="requesting && !member">
+<section class="wrapper" *ngIf="requesting">
   <div class="w-100 text-center">
     <div class="spinner-border text-success" role="status">
       <span class="sr-only">Loading...</span>

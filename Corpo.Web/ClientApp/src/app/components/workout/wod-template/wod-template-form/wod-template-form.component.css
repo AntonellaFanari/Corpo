@@ -71,6 +71,7 @@ div.active-group {
   top: -10px;
   right: -10px;
   font-size: 14px;
+  margin-right: 8px;
 }
 
 .arrow-up {

@@ -32,6 +32,7 @@ export class ShiftCreateComponent implements OnInit {
   thursday: boolean = false;
   friday: boolean = false;
   saturday: boolean = false;
+  requesting = false;
 
   constructor(private dp: DatePipe, private userService: UserService, private classService: ClassService,
     private shiftService: ShiftService, private router: Router, private customAlertService: CustomAlertService) {
@@ -43,19 +44,30 @@ export class ShiftCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getAllByNameRole("Profesor").subscribe(
-      result => {
-        this.users = result.result;
-        console.log(this.users);
-      },
-      error => console.error(error)
-    );
+    this.getClass();
+
+  }
+
+  getClass() {
+    this.requesting = true;
     this.classService.getAll().subscribe(
       result => {
         console.log(result);
         this.classes = result;
+        this.getTeachers();
       },
-      error => console.error(error)
+      error => this.requesting = false
+    )
+  }
+
+  getTeachers() {
+    this.userService.getAllByNameRole("Profesor").subscribe(
+      result => {
+        this.users = result.result;
+        console.log(this.users);
+        this.requesting = false;
+      },
+      error => this.requesting = false
     );
   }
 
@@ -189,12 +201,14 @@ export class ShiftCreateComponent implements OnInit {
 
   submit() {
     this.createShift();
+    this.requesting = true;
     this.shiftService.add(this.shifts).subscribe(
       result => {
         console.log(result);
         this.router.navigate(['/turnos-list']);
       },
       error => {
+        this.requesting = false;
         console.error(error);
         if (error.status === 400) {
           this.customAlertService.displayAlert("Gestión de Turnos", error.error.errores);

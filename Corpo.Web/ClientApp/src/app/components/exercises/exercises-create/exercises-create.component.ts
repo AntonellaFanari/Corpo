@@ -18,6 +18,7 @@ export class ExercisesCreateComponent implements OnInit {
   formCreate: FormGroup;
   categories: CategoryExercises[] = [];
   sendForm: boolean = false;
+  requesting = false;
 
   constructor(private formBuilder: FormBuilder, private exerciseService: ExerciseService,
     private router: Router, private customAlertService: CustomAlertService) {
@@ -29,26 +30,38 @@ export class ExercisesCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCategories();
+  }
+
+
+  getCategories() {
+    this.requesting = true;
+    this.exerciseService.getAllCategories().subscribe(
+      result => {
+        this.categories = result;
+        this.getTags();
+      },
+      error => this.requesting = false
+    );
+
+  }
+
+  getTags() {
     this.exerciseService.getAllTags().subscribe(
       result => {
         this.tags = result;
         for (let i = 0; i < this.tags.length; i++) {
-          let tagCheck: { tag: string, checked: boolean } = {tag:'', checked:false};
+          let tagCheck: { tag: string, checked: boolean } = { tag: '', checked: false };
           tagCheck.tag = this.tags[i].name;
           tagCheck.checked = false;
           this.checkboxToTags.push(tagCheck);
-        }
+        };
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     );
-    this.exerciseService.getAllCategories().subscribe(
-      result => {
-        this.categories = result;
-      },
-      error => console.error(error)
-    );
-   
   }
+
 
   get f() {
     return this.formCreate.controls;

@@ -12,10 +12,10 @@
                              [data]="weeklyGoals"
                              [(ngModel)]="selectedGoals"
                              [placeholder]="'Seleccionar...'"
-                             (onSelect)="onItemSelect($event)"
-                             (onSelectAll)="onSelectAll($event)"
-                             (onDeSelect)="onItemDeSelect($event)"
-                             (onDeSelectAll)="onDeSelectAll()">
+                             (onSelect)="onItemSelectGoal($event)"
+                             (onSelectAll)="onSelectAllGoals($event)"
+                             (onDeSelect)="onItemDeSelectGoal($event)"
+                             (onDeSelectAll)="onDeSelectAllGoals()">
     </ng-multiselect-dropdown>
   </div>
   <!--<p [ngClass]="validatorsRequiredGoal ? 'validators': 'hide-validators'">*Debe seleccionar uno o más objetivos.</p>-->
@@ -35,7 +35,7 @@
     <label class="col-12 control-label">Plantillas Wods:</label>
     <ng-multiselect-dropdown [settings]="wodTemplatesDropdownSettings"
                              [data]="templates"
-                              [(ngModel)]="selectedWodTemplate"
+                             [(ngModel)]="selectedWodTemplates"
                              [placeholder]="'Seleccionar...'"
                              (onSelect)="onItemSelectWodTemplate($event)"
                              (onSelectAll)="onSelectAllWodTemplates($event)"
@@ -44,23 +44,23 @@
     </ng-multiselect-dropdown>
   </div>
 
-  <div class="col-lg-12 card bg-light" [class.d-none]="weeklyTemplate.weeklyWodTemplates.length == 0">
+  <div class="col-lg-12 card bg-light" [class.d-none]="wods.length == 0">
 
-    <!--<mat-tab-group>
-      <mat-tab label="Plantilla: {{wod.detail}}" *ngFor="let wod of weeklyTemplate.weeklyWodTemplates">
+    <mat-tab-group>
+      <mat-tab label="{{wod.detail}}" *ngFor="let wod of wods">
         <app-preview-wod [wod]="wod.wod"></app-preview-wod>
       </mat-tab>
-    </mat-tab-group>-->
+    </mat-tab-group>
 
 
   </div>
 
   <div class="div-btn-create mt-3">
-    <button class="btn btn-secondary col-4 col-lg-2 btn-float-left btn-create" type="button"
+    <button class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" type="button"
             routerLink="/plantillas-semanales">
       Cancelar
     </button>
-    <button class="btn btn-success col-4 col-lg-2 btn-float-right btn-create" type="submit"
+    <button class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit"
             (click)="save()">
       Guardar
     </button>

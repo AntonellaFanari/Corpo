@@ -15,13 +15,15 @@ namespace Corpo.Domain.Services
         private IWodMemberRepository _wodMemberRepository;
         private IPeriodizationRepository _periodizationRepository;
         private IWodTemplateRepository _wodTemplateRepository;
+        private IWeeklyTemplateRepository _weeklyTemplateRepository;
 
         public WodMemberService(IWodMemberRepository wodMemberRepository, IPeriodizationRepository periodizationRepository,
-            IWodTemplateRepository wodTemplateRepository)
+            IWodTemplateRepository wodTemplateRepository, IWeeklyTemplateRepository weeklyTemplateRepository)
         {
             _wodMemberRepository = wodMemberRepository;
             _periodizationRepository = periodizationRepository;
             _wodTemplateRepository = wodTemplateRepository;
+            _weeklyTemplateRepository = weeklyTemplateRepository;
         }
 
         public async Task<DomainResponse> GetById(int id)
@@ -39,19 +41,20 @@ namespace Corpo.Domain.Services
             try
             {
                 
-                var wodTemplate = await _wodTemplateRepository.GetById(id);
-                for (int i = 0; i < periodization.Trainings; i++)
+                var templates = _weeklyTemplateRepository.GetById(id).Result.WeeklyWodTemplates;
+                for (int i = 0; i < templates.Count; i++)
                 {
                     var wodMember = new WodMember();
-                    wodMember.Goal = wodTemplate.Goal;
+                    wodMember.Goal = templates[i].WodTemplate.Goal;
                     wodMember.MemberId = periodization.MemberId;
                     wodMember.PeriodizationId = periodization.Id;
                     wodMember.WeekNumber = weekNumber;
                     wodMember.WodNumber = (i + 1);
                     wodMember.IntensityType = periodization.PeriodizationWeeks.Find(x => x.WeekNumber == weekNumber).IntensityType;
                     wodMember.Intensity = periodization.PeriodizationWeeks.Find(x => x.WeekNumber == weekNumber).Intensity;
+                    wodMember.WeeklyTemplateId = id;
                     wodMember.WodGroupsMember = new List<WodGroupMember>();
-                    foreach (var wodGroup in wodTemplate.WodGroups)
+                    foreach (var wodGroup in templates[i].WodTemplate.WodGroups)
                     {
                         var wodGroupMember = new WodGroupMember();
                         wodGroupMember.ExerciseId = wodGroup.ExerciseId;

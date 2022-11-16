@@ -13,6 +13,7 @@ export class GeneralSettingsComponent implements OnInit {
   timeLimitCancell: number;
   maxNegative: number;
   firstDayPlan: boolean;
+  requesting = false;
   constructor(private settingsService: SettingsService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
@@ -20,6 +21,7 @@ export class GeneralSettingsComponent implements OnInit {
   }
 
   getAll() {
+    this.requesting = true;
     this.settingsService.getAll().subscribe(
       response => {
         console.log(response);
@@ -33,9 +35,10 @@ export class GeneralSettingsComponent implements OnInit {
           } if (setting.name == "firstDayPlan") {
             if (setting.value == null) { this.firstDayPlan = false; } else { this.firstDayPlan = (setting.value == "true"); }
           }
+          this.requesting = false;
         }
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
@@ -55,6 +58,7 @@ export class GeneralSettingsComponent implements OnInit {
 
   submit() {
     this.modifySetting();
+    this.requesting = true;
     this.settingsService.update(this.generalSettings).subscribe(
       response => {
         console.log(response);
@@ -62,6 +66,7 @@ export class GeneralSettingsComponent implements OnInit {
         this.getAll();
       }, error => {
         console.error(error);
+        this.requesting = false;
         if (error.status === 400) {
           this.customAlertService.displayAlert("Gestión de Configuraciones", error.error.errores);
         }

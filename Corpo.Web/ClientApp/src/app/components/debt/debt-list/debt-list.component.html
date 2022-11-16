@@ -5,14 +5,14 @@
         <h4 class="table-title">Deudas</h4>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requestingList && balancesToPay.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
-      <section *ngIf="!requestingList && balancesToPay.length > 0" id="no-more-tables">
+      <section id="no-more-tables" *ngIf="!requestingList && balancesToPay.length > 0">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -28,27 +28,33 @@
               <td data-title="Saldo"><span>{{(balance.balance-balance.pay) | currency}}</span></td>
               <td data-title="Observación"><span *ngIf="balance.balance<0">(A Favor)</span><span *ngIf="balance.balance>0">-</span></td>
               <td data-title="Acción">
-                <button class="btn btn-success btn-xs btn-action-list" [routerLink]="['/deudas-detalle']" [queryParams]="{id:balance.idMember}">Ver</button>
-                <button *ngIf="balance.balance>0" class="btn btn-warning btn-xs btn-action-list text-white" data-toggle="modal" href="#myModalPay" (click)="selectBalance(balance)">Pagar</button>
+                <div class="">
+                  <button class="btn btn-success col-5 col-lg-4 me-2" [routerLink]="['/deudas-detalle']" [queryParams]="{id:balance.idMember}">Ver</button>
+                  <button *ngIf="balance.balance>0" class="btn btn-warning text-white col-5 col-lg-4 me-2" data-toggle="modal" href="#myModalPay" (click)="selectBalance(balance)">Pagar</button>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </section>
-      <div class="w-100 text-center mt-3" *ngIf="requestingList">
-        <div class="spinner-border text-success" role="status">
-          <span class="sr-only">Loading...</span>
+
+      <section>
+        <div class="w-100 text-center mt-3" *ngIf="requestingList">
+          <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
-      </div>
-      <div class="mt-3" *ngIf="!requestingList && balancesToPay.length == 0">
-        <h5>No hay deudas registradas</h5>
-      </div>
+        <div class="mt-3" *ngIf="!requestingList && balancesToPay.length == 0">
+          <h5>No hay deudas registradas</h5>
+        </div>
+      </section>
     </div>
     <!-- /content-panel -->
   </div>
 
   <!-- /col-md-12 -->
 </section>
+
 
 <!--<button id="modal-pay" data-toggle="modal" href="#myModalPay" class="d-none"></button>-->
 <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
@@ -73,7 +79,7 @@
           <input type="radio" name="pay" value="false" [(ngModel)]="totalPayment" (change)="checked($event.target.value)">
           <label for="partialPayment" class="col-9 control-label labelFormStyle marginLabel">Pago parcial</label>
         </div>
-       
+
           <div *ngIf="totalPayment == 'false'" class="col-6 mt-1">
             <input type="text" class="form-control" [(ngModel)]="partialPay" />
           </div>

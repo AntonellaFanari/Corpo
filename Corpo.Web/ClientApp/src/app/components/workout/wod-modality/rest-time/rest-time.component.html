@@ -1,9 +1,9 @@
 <div class="card card-body mt-3">
 
   <div class="row">
-    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
-      <label class="control-label col-3">Rondas:</label>
-      <div class="col-9 row">
+    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
+      <label class="control-label col-4 col-lg-3">Rondas:</label>
+      <div class="col-8 col-lg-9 row">
         <div class="arrow-button col-3" (click)="dencreaseUnit('rounds')">
           <div class="down"> </div>
         </div>
@@ -17,44 +17,49 @@
       </div>
     </div>
 
-    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
-      <label class="control-label col-5">M(pausa entre rondas):</label>
-      <div class="col-7 row">
-        <div class="arrow-button col-2" (click)="dencreaseUnit('pauseBetweenRounds')">
-          <div class="down"> </div>
-        </div>
-        <div class="formValidators col-5 ps-0 pe-0">
-          <input type="text" class="form-control" [(ngModel)]="pauseBetweenRounds" (change)="getDetailGroup()">
-          <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
-        </div>
-        <div class="arrow-button col-2" (click)="increaseUnit('pauseBetweenRounds')">
-          <div class="up"> </div>
+    <div class="form-group" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-8'">
+      <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12': 'col-12 col-lg-6 float-left-M'">
+        <label class="control-label col-6 col-lg-5">M(pausa entre rondas):</label>
+        <div class="col-7 row">
+          <div class="arrow-button col-2" (click)="dencreaseUnit('pauseBetweenRounds')">
+            <div class="down"> </div>
+          </div>
+          <div class="formValidators col-5 ps-0 pe-0">
+            <input type="text" class="form-control" [(ngModel)]="pauseBetweenRounds" (change)="getDetailGroup()">
+            <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+          </div>
+          <div class="arrow-button col-2" (click)="increaseUnit('pauseBetweenRounds')">
+            <div class="up"> </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
-      <label class="control-label col-5">m(pausa entre ejercicios):</label>
-      <div class="col-7 row">
-        <div class="arrow-button col-2" (click)="dencreaseUnit('pauseBetweenExercises')">
-          <div class="down"> </div>
-        </div>
-        <div class="formValidators col-5 ps-0 pe-0">
-          <input type="text" class="form-control" [(ngModel)]="pauseBetweenExercises" (change)="getDetailGroup()">
-          <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
-        </div>
-        <div class="arrow-button col-2" (click)="increaseUnit('pauseBetweenExercises')">
-          <div class="up"> </div>
+      <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12': 'col-12 col-lg-6 float-rigth-m'">
+        <label class="control-label col-6 col-lg-5">m(pausa entre ejercicios):</label>
+        <div class="col-7 row">
+          <div class="arrow-button col-2" (click)="dencreaseUnit('pauseBetweenExercises')">
+            <div class="down"> </div>
+          </div>
+          <div class="formValidators col-5 ps-0 pe-0">
+            <input type="text" class="form-control" [(ngModel)]="pauseBetweenExercises" (change)="getDetailGroup()">
+            <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+          </div>
+          <div class="arrow-button col-2" (click)="increaseUnit('pauseBetweenExercises')">
+            <div class="up"> </div>
+          </div>
         </div>
       </div>
     </div>
+    
+
+    
   </div>
 
   <hr />
 
   <div class="row">
 
-    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
+    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
       <label class="control-label col-12">Unidades:</label>
       <div class="formValidators col-6">
         <ng-select class="custom" #select [items]="unitsTypes" [(ngModel)]="selectedUnitType" bindLabel="type"
@@ -65,7 +70,7 @@
       <div class="arrow-button col-3" (click)="dencreaseUnit('units')">
         <div class="down"> </div>
       </div>
-      <div class="formValidators col-3 ps-0 pe-0">
+      <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
         <input type="text" class="form-control" [(ngModel)]="units">
         <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
       </div>
@@ -74,7 +79,7 @@
       </div>
     </div>
 
-    <div class="form-group mt-3" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
+    <div class="form-group mt-3" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
       <label class="control-label">Ejercicio:</label>
       <div class="formValidators">
         <ng-select class="custom" #select [items]="exercisesSelect" [(ngModel)]="selectedExercise" bindLabel="label"
@@ -84,7 +89,7 @@
       </div>
     </div>
 
-    <div class="form-group mt-3s row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
+    <div class="form-group mt-3s row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
       <label class="control-label col-12">Intensidad:</label>
       <div class="formValidators col-6">
         <ng-select class="custom" #select [items]="intensityTypes" [(ngModel)]="selectedIntensityType" bindLabel="type"
@@ -95,7 +100,7 @@
       <div class="arrow-button col-3" (click)="dencreaseUnit('intensity')">
         <div class="down"> </div>
       </div>
-      <div class="formValidators col-3 ps-0 pe-0">
+      <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
         <input type="text" class="form-control" [(ngModel)]="intensity">
         <!--<p *ngIf="validationError && !intensity">* el campo es requerido.</p>-->
       </div>

@@ -46,8 +46,8 @@ namespace Corpo.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var response = _wodMemberService.Delete(id);
-            return Ok();
+            var response = await _wodMemberService.Delete(id);
+            return this.ToActionResult(response);
         }
 
         [HttpGet("{id}")]

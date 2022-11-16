@@ -22,6 +22,7 @@ export class MonthlyEarningComponent implements OnInit {
   totalWithdrawals = 0;
   totalIncomes = 0;
   totalOutflows = 0;
+  requesting = false;
 
   constructor(private reportService: ReportService) { }
 
@@ -96,9 +97,11 @@ export class MonthlyEarningComponent implements OnInit {
   }
 
   getRecordCashByMonth(month) {
+    this.requesting = true;
     this.reportService.getRecordsCashByMonth(month).subscribe(
       response => {
         console.log(response);
+        this.requesting = false;
         this.recordsCash = response.result;
         this.totalWithdrawals = 0;
         this.totalIncomes = 0;
@@ -114,7 +117,7 @@ export class MonthlyEarningComponent implements OnInit {
           }
         }
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

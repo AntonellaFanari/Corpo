@@ -1,0 +1,136 @@
+<!-- Page Content -->
+<div *ngIf="!requestingAssignment && member">
+  <section class="wrapper">
+    <div class="row">
+      <div class="task-panel col-12 col-lg-6">
+        <h4 class="table-title text-center">{{member.lastName}} {{member.name}} WOD - Nivel <span *ngIf="level">{{level}}</span><span *ngIf="!level">no asignado</span></h4>
+      </div>
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add btn-float-right" [routerLink]="['/menu-wod']" [queryParams]="{filter:'results', id: member.id}">Resultados</button>
+        <button type="button" class="btn btn-success col-xl-3 col-xs-12 btn-add btn-float-right me-2" [routerLink]="['/menu-wod']" [queryParams]="{filter:'wods', id: member.id}">Wods</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-12 col-lg-8 ">
+        <div class="col-12 card" *ngIf="weeklyTemplates.length > 0">
+          <div class="row card-body">
+            <div class="col-12">
+              <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
+            </div>
+          </div>
+        </div>
+        <section class="col-12" id="no-more-tables" *ngIf="weeklyTemplates.length > 0">
+          <table id="wod-template-table" class="table table-bordered table-condensed cf scrollme user-table">
+            <thead class="cf">
+              <tr>
+                <th class="numeric">Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let template of weeklyTemplates | searchFilterName: filterName" class="scrollme span-margin" [ngClass]="{'tr-click': selectedWeeklyTemplateId == template.id}"
+                  (click)="selectWeeklyTemplate(template.id)">
+                <td class="td-title" data-title="Nombre"><span>{{template.name}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <div class="card card-body mt-3" *ngIf="weeklyTemplates.length == 0">
+          <div class="text-center"> <h6>No hay plantillas</h6></div>
+        </div>
+
+      </div>
+      <div class=" col-12 col-lg-4">
+
+        <button class="btn btn-success w-100 mt-3 mb-3" type="button" data-toggle="modal" href="#modal"
+                *ngIf="periodization">
+          Periodización
+        </button>
+
+        <button class="btn btn-success w-100 mb-3" type="button" *ngIf="!periodization"
+                [routerLink]="['/periodizacion']" [queryParams]="{memberId: memberId}">
+          Crear periodización
+        </button>
+
+        <button class="btn btn-success w-100 mb-3" type="button" data-toggle="modal" href="#modalMedicalHistory">
+          Historia Médica
+        </button>
+
+        <label class="col-12 control-label">Seleccionar Semana:</label>
+        <div class="formValidators">
+          <select class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)">
+            <option disabled value="0">Seleccionar</option>
+            <option class="week-option week-not-planned" value="1">1</option>
+            <option class="week-option week-not-planned" value="2">2</option>
+            <option class="week-option week-not-planned" value="3">3</option>
+            <option class="week-option week-not-planned" value="4">4</option>
+          </select>
+        </div>
+
+        <button class="btn btn-success w-100 mt-3" type="button"
+                *ngIf="periodization" (click)="goToPlanning()">
+          Ir a planificación
+        </button>
+
+        <button class="btn btn-secondary w-100 mt-3" type="button" [routerLink]="['/personalizados']">
+          Volver
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <div class="modal fade" id="modal" *ngIf="periodization">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Periodización {{periodization.month}}/{{periodization.year}}</h4>
+          <button type="button" class="close" data-dismiss="modal">X</button>
+        </div>
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <app-workout-periodizaion-detail [memberId]="memberId"></app-workout-periodizaion-detail>
+        </div>
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success btn-float-left" [routerLink]="['/editar-periodizacion']" [queryParams]="{id: periodization.id}" data-dismiss="modal">Editar</button>
+          <button type="button" class="btn btn-success btn-float-right" data-dismiss="modal">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalMedicalHistory">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <!-- cabecera del diálogo -->
+        <div class="modal-header modal-title">
+          <h4 class="modal-title">Historia Médica</h4>
+          <button type="button" class="close" data-dismiss="modal">X</button>
+        </div>
+        <!-- cuerpo del diálogo -->
+        <div class="modal-body">
+          <app-member-view [id]="memberId" [hideGoBack]="true"></app-member-view>
+        </div>
+        <!-- pie del diálogo -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-100 text-center" *ngIf="requestingAssignment">
+  <div class="spinner-border text-success" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>

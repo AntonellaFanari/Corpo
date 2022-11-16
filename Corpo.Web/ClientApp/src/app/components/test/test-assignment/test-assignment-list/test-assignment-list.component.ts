@@ -29,24 +29,25 @@ export class TestAssignmentListComponent implements OnInit {
       this.id = parseInt(params['id']);
       this.getMember();
     });
-    this.getAllTestMemberByMember();
   }
 
   ngOnInit() {
   }
 
   getMember() {
+    this.requestingList = true;
     this.memberService.getById(this.id).subscribe(
       response => {
         console.log("socio: ", response);
         this.member = response.result;
+
+        this.getAllTestMemberByMember();
       },
       error => console.error(error)
     )
   }
 
   getAllTestMemberByMember() {
-    this.requestingList = true;
     this.testMemberService.getAllByMemberId(this.id).subscribe(
       response => {
         this.requestingList = false;
@@ -60,11 +61,13 @@ export class TestAssignmentListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Test", ["¿Está seguro que desea eliminar este test?"], () => {
+      this.requestingList = true;
       this.testMemberService.delete(id).subscribe(
         result => {
           this.getAllTestMemberByMember();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar el test."]);
         })

@@ -1,38 +1,9 @@
-<!--<div class="form-group mt-3">
-  <label class="control-label">Categoría:</label>
-  <div class="">
-    <select class="form-control" (change)="selectCategory($event.target.value)">
-      <option value="" disabled>Seleccionar...</option>
-      <option value="0">Todos</option>
-      <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
-    </select>
-  </div>
-</div>
-
-<div class="col-12 card mt-3">
-  <div class="row card-body justify-content-center align-items-center">
-    <div class="row">
-      <div class="col-12">
-        <label class="col-12 control-label">Tags:</label>
-        <div *ngIf="checkboxToTags.length>0" class="row">
-          <div *ngFor="let checkToTag of checkboxToTags; index as i" class="col-md-4">
-            <input class="checkbox-tags" type="checkbox" [id]="checkToTag.id" [checked]="checkToTag.checked"
-                   (change)="checkTag(i)">
-            <label [for]="checkToTag.id">{{checkToTag.tag}}</label>
-          </div>
-          <div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>-->
-
-<section>
+<div>
   <div class="card card-body mt-3">
 
-    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
-      <label class="control-label col-3">Rondas:</label>
-      <div class="col-9 row">
+    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
+      <label class="control-label col-4 col-lg-3">Rondas:</label>
+      <div class="col-8 col-lg-9 row">
         <div class="arrow-button col-3" (click)="dencreaseUnit('rounds')">
           <div class="down"> </div>
         </div>
@@ -50,7 +21,7 @@
 
     <div class="row">
 
-      <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
+      <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
         <label class="control-label col-12">Unidades:</label>
         <div class="formValidators col-6">
           <ng-select class="custom" #select [items]="unitsTypes" [(ngModel)]="selectedUnitType" bindLabel="type"
@@ -61,7 +32,7 @@
         <div class="arrow-button col-3" (click)="dencreaseUnit('units')">
           <div class="down"> </div>
         </div>
-        <div class="formValidators col-3 ps-0 pe-0">
+        <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
           <input type="text" class="form-control" [(ngModel)]="units">
           <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
         </div>
@@ -70,7 +41,7 @@
         </div>
       </div>
 
-      <div class="form-group mt-3" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
+      <div class="form-group mt-3" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
         <label class="control-label">Ejercicio:</label>
         <div class="formValidators">
           <ng-select class="custom" #select [items]="exercisesSelect" [(ngModel)]="selectedExercise" bindLabel="label"
@@ -80,7 +51,7 @@
         </div>
       </div>
 
-      <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-6': 'col-4'">
+      <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
         <label class="control-label col-12">Intensidad:</label>
         <div class="formValidators col-6">
           <ng-select class="custom" #select [items]="intensityTypes" [(ngModel)]="selectedIntensityType" bindLabel="type"
@@ -91,7 +62,7 @@
         <div class="arrow-button col-3" (click)="dencreaseUnit('intensity')">
           <div class="down"> </div>
         </div>
-        <div class="formValidators col-3 ps-0 pe-0">
+        <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
           <input type="text" class="form-control" [(ngModel)]="intensity">
           <!--<p *ngIf="validationError && !intensity">* el campo es requerido.</p>-->
         </div>
@@ -107,4 +78,4 @@
     </div>
 
   </div>
-</section>
+</div>

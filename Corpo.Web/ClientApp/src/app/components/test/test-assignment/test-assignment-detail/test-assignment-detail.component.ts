@@ -13,6 +13,7 @@ import { TestTemplateService } from '../../../../services/test-template.service'
 export class TestAssignmentDetailComponent implements OnInit {
   test: TestMember;
   id: number;
+  requesting = false;
 
   constructor(private testMemberService: TestMemberService,
     private route: ActivatedRoute) {
@@ -27,12 +28,14 @@ export class TestAssignmentDetailComponent implements OnInit {
   }
 
   getTest() {
+    this.requesting = true;
     this.testMemberService.getDetailById(this.id).subscribe(
       response => {
         console.log(response.result);
         this.test = response.result;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

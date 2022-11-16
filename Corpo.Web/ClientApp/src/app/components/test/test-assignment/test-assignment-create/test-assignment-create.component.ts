@@ -33,7 +33,7 @@ export class TestAssignmentCreateComponent implements OnInit {
   indexExercise: number;
   exercisesFMS: ExerciseFms[] = [];
   exerciseFmsId: number;
-
+  requesting = false;
 
   constructor(private route: ActivatedRoute,
     private memberService: MemberService,
@@ -45,7 +45,6 @@ export class TestAssignmentCreateComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         this.id = parseInt(params['id']);
-        this.getTestById();
         console.log("id: ", this.id);
         this.memberId = parseInt(params['memberId']);
         this.getMemberById();
@@ -64,13 +63,16 @@ export class TestAssignmentCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getExercisesFMS();
+  
   }
 
   getExercisesFMS() {
     this.testTemplateService.getAllExercisesFMS().subscribe(
-      response => this.exercisesFMS = response.result,
-      error => console.error(error)
+      response => {
+        this.exercisesFMS = response.result;
+        this.requesting = false;
+      },
+      error => this.requesting = false
     )
   }
 
@@ -79,12 +81,14 @@ export class TestAssignmentCreateComponent implements OnInit {
   }
 
   getMemberById() {
+    this.requesting = true;
     this.memberService.getById(this.memberId).subscribe(
       response => {
         console.log("socio: ", response);
         this.member = response.result;
+        this.getTestById();
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
@@ -105,6 +109,7 @@ export class TestAssignmentCreateComponent implements OnInit {
           exercise.status = StatusTest.pending;
           exercise.exerciseFmsId = x.exerciseFmsId
           this.testExercisesMember.push(exercise);
+          this.getExercisesFMS();
         })
       },
       error => console.error(error)

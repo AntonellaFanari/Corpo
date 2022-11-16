@@ -32,7 +32,6 @@ export class ReservationsComponent implements OnInit {
     this.requesting = true;
     this.memberService.getById(this.id).subscribe(
       result => {
-        this.requesting = false;
         this.member = result.result;
         this.getAttendances();
       },
@@ -46,8 +45,9 @@ export class ReservationsComponent implements OnInit {
         console.log("reservaciones: ", result.result);
         this.reservations = result.result;
         this.getCovertReservationsDate(this.reservations);
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 
@@ -62,7 +62,7 @@ export class ReservationsComponent implements OnInit {
         reservation.dateShift = this.getDayShift(reservation.dateShift) + " " + this.getDate(reservation.dateShift);
         reservation.dateReservation = this.getDayShift(reservation.dateReservation) + " " + this.getDate(reservation.dateReservation);
         if (reservation.dateCancellation !== null) {
-         reservation.dateCancellation = this.getDayShift(reservation.dateCancellation) + " " + this.getDate(reservation.dateCancellation);
+          reservation.dateCancellation = this.getDayShift(reservation.dateCancellation) + " " + this.getDate(reservation.dateCancellation);
         };
       }
     }

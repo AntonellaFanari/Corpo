@@ -22,9 +22,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let monthlyGoal of monthlyGoals | searchFilterName: filterName">
+            <tr *ngFor="let monthlyGoal of monthlyGoals | filterGoal: filterName">
               <td data-title="Nombre" class="col-lg-9"><span>{{monthlyGoal.goal}}</span></td>
-              <td data-title="Acción" class="col-lg-3">
+              <td data-title="Acción" class="col-2">
                 <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/objetivo-mensual-editar']" [queryParams]="{id:monthlyGoal.id}"><i class="fa fa-pencil-square"></i></button>
                 <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(monthlyGoal.id)"><i class="fa fa-trash "></i></button>
               </td>

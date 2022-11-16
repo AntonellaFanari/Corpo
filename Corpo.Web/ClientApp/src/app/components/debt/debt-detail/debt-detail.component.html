@@ -4,7 +4,7 @@
       <div class="task-panel" *ngIf="member">
         <h4 class="table-title mt-2">Deudas de {{member.lastName}} {{member.name}}</h4>
       </div>
-      <hr>
+      <hr *ngIf="member">
       <section id="no-more-tables" *ngIf="!requestingListBalances && balances.length > 0">
         <table class="table table-bordered table-condensed cf user-table">
           <thead class="cf bg-success text-white">
@@ -20,15 +20,13 @@
               <td data-title="Fecha"><span>{{balance.date  | date: 'dd/MM/yyyy h:mm:ss a'}}</span></td>
               <td data-title="Concepto"><span *ngIf="balance.transaction == 1">Venta</span><span *ngIf="balance.transaction == 2">Cuota</span></td>
               <td data-title="Detalle">
-                <span>
-                  <button class="btn btn-primary btn-xs btn-action-list" (click)="getTransaction(balance)">ver detalle</button>
-                </span>
+                  <button class="btn btn-primary btn-xs btn-action-list" (click)="getTransaction(balance)">detalle</button>
               </td>
               <td data-title="Saldo"><span *ngIf="balance.balance>0">{{(balance.balance-balance.pay) | currency}}</span><span *ngIf="balance.balance<0">{{balance.balance * -1}} (a favor)</span></td>
           </tbody>
         </table>
         <div>
-          <button type="button" class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" routerLink="/deudas-list">Volver</button>
+          <button type="button" class="btn btn-secondary col-12 col-lg-2 pull-left btn-create" routerLink="/deudas-list">Volver</button>
         </div>
       </section>
       <div class="w-100 text-center mt-3" *ngIf="requestingListBalances">

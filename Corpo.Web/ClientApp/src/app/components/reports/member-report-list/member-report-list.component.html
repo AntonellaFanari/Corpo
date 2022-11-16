@@ -1,19 +1,19 @@
 <section class="wrapper">
   <div class="row mt">
     <div class="col-md-12">
-      <div class="task-panel ">
+      <div class="task-panel" *ngIf="title">
         <h4 class="table-title">{{title}}</h4>
-        <button type="button" class="btn btn-secondary btn-float-right" [routerLink]="['/member-report']">Volver</button>
+        <button type="button" class="btn btn-secondary col-xl-2 col-12 btn-float-right" [routerLink]="['/member-report']">Volver</button>
       </div>
-      <hr>
-      <div class="col-12 card">
+      <hr  *ngIf="title">
+      <div class="col-12 card" *ngIf="!requesting && members.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
           </div>
         </div>
       </div>
-      <section *ngIf="members.length>0 ; else: elseBlock" id="no-more-tables">
+      <section *ngIf="!requesting && members.length>0" id="no-more-tables">
         <table class="table table-bordered table-condensed cf scrollme user-table">
           <thead class="cf">
             <tr>
@@ -35,7 +35,15 @@
           </tbody>
         </table>
       </section>
-      <ng-template #elseBlock><h5>No hay registros para mostrar</h5></ng-template>
+
+      <div class="w-100 text-center mt-3" *ngIf="requesting">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="mt-3" *ngIf="!requesting && members.length == 0">
+        <h5>No hay registros.</h5>
+      </div>
     </div>
     <!-- /content-panel -->
   </div>

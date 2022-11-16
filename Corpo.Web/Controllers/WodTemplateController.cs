@@ -42,10 +42,10 @@ namespace Corpo.Web.Controllers
             return this.ToActionResult(response);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var response = _wodTemplateService.Delete(id);
+            var response = await _wodTemplateService.Delete(id);
             return Ok();
         }
 

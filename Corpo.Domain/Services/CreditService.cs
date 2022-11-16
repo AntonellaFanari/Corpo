@@ -62,11 +62,11 @@ namespace Corpo.Domain.Services
          
             try
             {
-                if (credit.Expiration < DateTime.Now || (credit.InitialCredit == credit.CreditConsumption && credit.FirstDay == "false"))
+                if (credit.Expiration < DateTime.Now || (credit.InitialCredit == credit.CreditConsumption && credit.FirstDay != "true"))
                 {
                     credit.Negative++;
                 }
-                else if(credit.Expiration >= DateTime.Now && (credit.InitialCredit > credit.CreditConsumption && credit.FirstDay == "false"))
+                else if(credit.Expiration >= DateTime.Now && (credit.InitialCredit > credit.CreditConsumption && credit.FirstDay != "true"))
                 {
 
                     credit.CreditConsumption++;

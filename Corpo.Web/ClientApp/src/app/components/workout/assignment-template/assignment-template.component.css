@@ -8,7 +8,6 @@ div.mat-tab-body-content {
 
 .modal-dialog-full {
   width: 100%;
-
   padding: 0;
   margin: 20;
   max-width: 100%;
@@ -18,8 +17,8 @@ div.mat-tab-body-content {
   height: 100%;
 }
 
-.diplay-btn-assignment-wod{
-    display:none;
+.diplay-btn-assignment-wod {
+  display: none;
 }
 
 .diplay-calendar-assignment-wod {
@@ -27,7 +26,7 @@ div.mat-tab-body-content {
 }
 
 .not-active {
-   cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .disable-tr {
@@ -36,7 +35,7 @@ div.mat-tab-body-content {
 }
 
 .week-planned {
-    background: #00ff90;
+  background: #00ff90;
 }
 
 .week-not-planned {
@@ -47,11 +46,16 @@ div.mat-tab-body-content {
   background: #f3990b91;
 }
 
-.tr-click{
-    background-color: lightgreen;
+.tr-click {
+  background-color: lightgreen;
+}
+
+.margin-btn {
+  margin-right: 1rem;
 }
 
 @media only screen and (max-width: 800px) {
-
-
+  .margin-btn{
+      margin-right: 0px;
+  }
 }

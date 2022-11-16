@@ -5,7 +5,7 @@
         <h4 class="table-title mt-2">Información de la compra</h4>
       </div>
       <hr>
-      <section id="no-more-tables">
+      <section id="no-more-tables" *ngIf="!requesting && detailPurchase">
         <table class="table table-bordered table-condensed cf user-table">
           <thead class="cf bg-success text-white">
             <tr>
@@ -25,9 +25,15 @@
           </tbody>
         </table>
         <div>
-          <button type="button" class="btn btn-secondary col-3 col-lg-2 pull-left btn-create" routerLink="/compras-list">Volver</button>
+          <button type="button" class="btn btn-secondary col-12 col-lg-2 pull-left btn-create" routerLink="/compras-list">Volver</button>
         </div>
       </section>
+
+      <div class="w-100 text-center" *ngIf="requesting">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>

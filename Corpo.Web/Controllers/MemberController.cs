@@ -61,9 +61,19 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult> Update(int id, [FromBody] Member member)
+        public async Task<ActionResult> Update(int? id, [FromBody] Member member)
         {
-            var response = await _memberService.Update(id, member);
+            int userId = 0;
+            if (id == null)
+            {
+                var user = GetUser();
+                userId = user.Id;
+            }
+            else
+            {
+                userId = id.Value;
+            }
+            var response = await _memberService.Update(userId, member);
             return this.ToActionResult(response);
         }
 

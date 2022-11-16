@@ -1,6 +1,5 @@
-<section [class.saved]="saved" (click)="deleteClassSaved()">
+<div [class.saved]="saved" (click)="deleteClassSaved()">
   <h6 class="status-tittle w-100 text-center p-3" [class.d-none]="!saved">Guardado</h6>
-  <h6 class="w-100 text-center p-3"><strong>Planificación semana {{weekNumber}}</strong></h6>
   <div class="form-group mt-2">
     <label class="control-label">Asignar Objetivo:</label>
     <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
@@ -102,7 +101,7 @@
   </div>
 
 
-</section>
+</div>
 
 
 <button type="button" class="btn btn-primary d-none" id="group-name-modal" data-bs-toggle="modal"

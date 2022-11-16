@@ -16,11 +16,11 @@ export class ModalityListComponent implements OnInit {
   constructor(private modalityService: ModalityService, private customAlertService: CustomAlertService) { }
 
   ngOnInit() {
-    this.requestingList = true;
     this.getAll();
   }
 
   getAll() {
+    this.requestingList = true;
     this.modalityService.getAll().subscribe(
       response => {
         this.requestingList = false;
@@ -32,12 +32,14 @@ export class ModalityListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Modalidades", ["¿Está seguro que desea eliminar esta modalidad?"], () => {
+      this.requestingList = true;
       this.modalityService.delete(id).subscribe(
         result => {
           console.log(result);
           this.getAll();
         },
         error => {
+          this.requestingList = true;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Modalidades", ["Error al intentar eliminar la modalidad."])
         })

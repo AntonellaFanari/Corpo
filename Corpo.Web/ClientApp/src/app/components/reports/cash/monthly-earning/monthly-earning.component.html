@@ -10,10 +10,10 @@
     </div>
   </div>
 
-  <div class="col-12" *ngIf="!viewChart">
-    <div class="task-panel ">
+  <div class="col-12" *ngIf="!requesting && !viewChart">
+    <div class="task-panel " *ngIf="!requesting">
       <h4 class="table-title">Ganancias de {{month}}</h4>
-      <button type="button" class="btn btn-secondary btn-float-right" (click)="return()">Volver</button>
+      <button type="button" class="btn btn-secondary col-xl-2 col-12 btn-float-right" (click)="return()">Volver</button>
     </div>
     <hr>
     <section id="no-more-tables">
@@ -47,5 +47,11 @@
         </table>
       </div>
     </section>
+  </div>
+
+  <div class="w-100 text-center mt-3" *ngIf="requesting">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </section>

@@ -35,8 +35,8 @@
     </div>
   </div>
   <div class="container-fluid modal-lg div-btn-create" *ngIf="!requesting && modality">
-    <button class="btn btn-secondary col-3 col-lg-2 btn-float-left btn-create" type="button" [routerLink]="['/modalidades-list']">Cancelar</button>
-    <button class="btn btn-success col-3 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
+    <button class="btn btn-secondary col-12 col-lg-2 btn-float-left btn-create" type="button" [routerLink]="['/modalidades-list']">Cancelar</button>
+    <button class="btn btn-success col-12 col-lg-2 btn-float-right btn-create" type="submit" (click)="submit()">Guardar</button>
   </div>
   <div class="w-100 text-center" *ngIf="requesting">
     <div class="spinner-border text-success" role="status">

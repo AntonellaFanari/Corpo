@@ -19,6 +19,7 @@ namespace Corpo.Domain.Contracts.Services
         //Task<DomainResponse> GetWeeklyAttendanceByMemberId(int memberId);
         Task<DomainResponse> GetAllByMonth(int id, int month);
         Task<DomainResponse> GetByFromByToByClass(int id, DateTime from, DateTime to, int classId);
+        Task<DomainResponse> GetByDay(int id, DateTime day, int classId);
 
 
     }

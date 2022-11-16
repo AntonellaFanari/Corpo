@@ -4,7 +4,8 @@
       <button *ngFor="let plan of plans" type="button" class="btn btn-outline-primary btn-block ms-2 mt-2" (click)="selectPlan(plan.name)">{{plan.name}}</button>
     </div>
   </div>
+  <div class="card mt-3">
+    <canvas id="segmented-statistics"></canvas>
+  </div>
 </section>
-<div class="card">
-  <canvas id="segmented-statistics"></canvas>
-</div>
+

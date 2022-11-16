@@ -1,67 +1,66 @@
 <section class="wrapper">
-  <div class="row mt">
-    <div class="col-lg-12" *ngIf="!requestingList && member">
-      <div class="task-panel">
-        <h4 class="table-title">Test Asignados - {{member.lastName}} {{member.name}}</h4>
-      </div>
-      <hr>
-      <div class="col-12 card" *ngIf="testsMember.length > 0 && !requestingList && member">
-        <div class="row card-body">
-          <div class="col-12">
-            <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
-          </div>
+  <div *ngIf="!requestingList && member">
+    <div class="task-panel">
+      <h4 class="table-title">Test Asignados - {{member.lastName}} {{member.name}}</h4>
+      <button type="button" class="btn btn-success col-xl-2 col-12 btn-float-right" [routerLink]="['/test']" [queryParams]="{id: member.id}">Nuevo Test</button>
+    </div>
+    <hr>
+    <div class="col-12 card" *ngIf="testsMember.length > 0">
+      <div class="row card-body">
+        <div class="col-12">
+          <input type="text" name="filterName" placeholder="Buscar" class="form-control" [(ngModel)]="filterName">
         </div>
       </div>
-      <section id="no-more-tables" *ngIf="!requestingList && testsMember.length> 0">
-        <table class="table table-bordered table-condensed cf scrollme user-table">
-          <thead class="cf">
-            <tr>
-              <th class="numeric">Estado</th>
-              <th class="numeric">Fecha</th>
-              <th class="numeric">Nombre</th>
-              <th class="numeric">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let test of testsMember | searchFilterName: filterName">
-              <td class="td-title" data-title="Estado">
-                <span *ngIf="test.status == 2" class="badge bg-success">Pendiente</span>
-                <span *ngIf="test.status == 1" class="badge bg-secondary">Realizado</span>
-              </td>
-              <td class="td-title" data-title="Fecha"><span>{{test.date | date: 'dd/MM/yyyy'}}</span></td>
-              <td class="td-title" data-title="Nombre"><span>Nivel {{test.level}}</span></td>
-              <td class="td-title col-12 col-lg-4" data-title="Acción">
-                <button class="btn btn-primary col-4 col-lg-3 btn-action-list btn-text" placement="top" ngbTooltip="detalle" [routerLink]="['/test-asignado-detalle']" [queryParams]="{id: test.id }">
-                  <div class="row justify-content-center align-items-center">
-                    <div class="text-center me-1"><i class="fa fa-eye" aria-hidden="true"></i></div>
-                  </div>
-                </button>
-                <button *ngIf="test.status == 2" class="btn btn-warning ms-2 col-4 btn-action-list col-lg-3" placement="top" ngbTooltip="editar" [routerLink]="['/test-asignado-editar']" [queryParams]="{id: test.id }"><i class="fa fa-pencil-square"></i></button>
-                <button class="btn btn-danger ms-2 col-4 btn-action-list  col-lg-3" (click)="delete(test.id)" placement="top" ngbTooltip="eliminar"><i class="fa fa-trash"></i></button>
-                <button *ngIf="test.status == 1" class="btn btn-success ms-2 col-6 col-lg-3 btn-action-list" placement="top" ngbTooltip="resultados" [routerLink]="['/resultado-test']" [queryParams]="{id: test.id, memberId: test.memberId, level: test.level }"><i class="fa fa-file-text" aria-hidden="true"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-
-      <!-- /content-panel -->
-
     </div>
+    <section id="no-more-tables" *ngIf="testsMember.length> 0">
+      <table class="table table-bordered table-condensed cf scrollme user-table">
+        <thead class="cf">
+          <tr>
+            <th class="numeric">Estado</th>
+            <th class="numeric">Fecha</th>
+            <th class="numeric">Nombre</th>
+            <th class="numeric">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let test of testsMember | searchFilterName: filterName">
+            <td class="td-title" data-title="Estado">
+              <span *ngIf="test.status == 2" class="badge bg-success">Pendiente</span>
+              <span *ngIf="test.status == 1" class="badge bg-secondary">Realizado</span>
+            </td>
+            <td class="td-title" data-title="Fecha"><span>{{test.date | date: 'dd/MM/yyyy'}}</span></td>
+            <td class="td-title" data-title="Nombre"><span>Nivel {{test.level}}</span></td>
+            <td class="td-title col-12 col-lg-4" data-title="Acción">
+              <button class="btn btn-primary col-4 col-lg-3 btn-action-list btn-text" placement="top" ngbTooltip="detalle" [routerLink]="['/test-asignado-detalle']" [queryParams]="{id: test.id }">
+                <div class="row justify-content-center align-items-center">
+                  <div class="text-center me-1"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                </div>
+              </button>
+              <button *ngIf="test.status == 2" class="btn btn-warning ms-2 col-4 btn-action-list col-lg-3" placement="top" ngbTooltip="editar" [routerLink]="['/test-asignado-editar']" [queryParams]="{id: test.id }"><i class="fa fa-pencil-square"></i></button>
+              <button class="btn btn-danger ms-2 col-4 btn-action-list  col-lg-3" (click)="delete(test.id)" placement="top" ngbTooltip="eliminar"><i class="fa fa-trash"></i></button>
+              <button *ngIf="test.status == 1" class="btn btn-success ms-2 col-6 col-lg-3 btn-action-list" placement="top" ngbTooltip="resultados" [routerLink]="['/resultado-test']" [queryParams]="{id: test.id, memberId: test.memberId, level: test.level }"><i class="fa fa-file-text" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    <div class="w-100 text-center" *ngIf="requestingList">
-      <div class="spinner-border text-success" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-    <div *ngIf="!requestingList && testsMember.length == 0">
-      <h5>No hay test asignados</h5>
-    </div>
-    <div class="button-box col-12 col-lg-2 pe-1 btn-float-left" *ngIf="!requestingList && member">
-      <button class="btn btn-secondary btn-width " [routerLink]="['/personalizados']">Volver</button>
+
+    <!-- /content-panel -->
+
+  </div>
+  <div class="w-100 text-center" *ngIf="requestingList">
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
+  <div *ngIf="!requestingList && testsMember.length == 0">
+    <h5>No tiene test asignados</h5>
+  </div>
+  <div class="button-box col-12 col-lg-2 pe-1 btn-float-left" *ngIf="!requestingList && member">
+    <button class="btn btn-secondary btn-width " [routerLink]="['/personalizados']">Volver</button>
+  </div>
+
 </section>
 
 

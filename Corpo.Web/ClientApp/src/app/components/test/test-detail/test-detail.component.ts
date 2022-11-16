@@ -15,6 +15,7 @@ export class TestDetailComponent implements OnInit {
   memberId: number;
   exercisesFms: ExerciseFms[] = [];
   baseUrl: string;
+  requesting = false;
 
   constructor(private testTemplateService: TestTemplateService,
     private route: ActivatedRoute) {
@@ -33,12 +34,14 @@ export class TestDetailComponent implements OnInit {
   }
 
   getTest() {
+    this.requesting = true;
     this.testTemplateService.getDetailById(this.id).subscribe(
       response => {
         console.log("test: ", response.result);
         this.testTemplate = response.result;
+        this.requesting = false;
       },
-      error => console.error(error)
+      error => this.requesting = false
     )
   }
 

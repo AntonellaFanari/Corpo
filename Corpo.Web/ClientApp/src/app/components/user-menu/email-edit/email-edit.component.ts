@@ -20,6 +20,7 @@ export class EmailEditComponent implements OnInit {
   user: LoggedUser;
   email: string;
   accountId: number;
+  requesting = false;
 
   constructor(private formBuilder: FormBuilder, private accountService: AccountService, private userService: UserService,
     private memberService: MemberService, private router: Router, private customAlertService: CustomAlertService) {
@@ -35,28 +36,40 @@ export class EmailEditComponent implements OnInit {
 
   ngOnInit() {
     if (this.user.userType == 1) {
-      this.userService.getById(this.user.id).subscribe(
-        result => {
-          console.log(result)
-          this.email = result.email;
-          this.modificationForm.patchValue({
-            email: this.email
-          });
-        },
-        error => console.error(error)
-      );
+      this.getUser();
     } else {
-      this.memberService.getById(this.user.id).subscribe(
-        result => {
-          console.log(result);
-          this.email = result.result.email;
-          this.modificationForm.patchValue({
-            email: this.email
-          });
-        },
-        error => console.error(error)
-      )
+      this.getMember();
     }
+  }
+
+  getUser() {
+    this.requesting = true;
+    this.userService.getById(this.user.id).subscribe(
+      result => {
+        console.log(result)
+        this.email = result.email;
+        this.modificationForm.patchValue({
+          email: this.email
+        });
+        this.requesting = false;
+      },
+      error => this.requesting = false
+    )
+  }
+
+  getMember() {
+    this.requesting = true;
+    this.memberService.getById(this.user.id).subscribe(
+      result => {
+        console.log(result);
+        this.email = result.result.email;
+        this.modificationForm.patchValue({
+          email: this.email
+        });
+        this.requesting = false;
+      },
+      error => this.requesting = false
+    )
   }
 
   get f() {

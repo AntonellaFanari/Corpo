@@ -31,11 +31,13 @@ export class ExercisesListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Ejercicios", ["¿Está seguro que desea eliminar este ejercicio?"], () => {
+      this.requestingList = true;
       this.exerciseService.deleteExercise(id).subscribe(
         result => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Eliminación", ["Error al intentar eliminar el ejercicio."]);
         })

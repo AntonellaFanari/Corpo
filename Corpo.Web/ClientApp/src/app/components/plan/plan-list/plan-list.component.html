@@ -9,7 +9,7 @@
         </div>
       </div>
       <hr>
-      <div class="col-12 card">
+      <div class="col-12 card" *ngIf="!requestingList && plans.length > 0">
         <div class="row card-body">
           <div class="col-12">
             <input type="text" name="filterPlan" placeholder="Buscar" class="form-control" [(ngModel)]="filterPlan">

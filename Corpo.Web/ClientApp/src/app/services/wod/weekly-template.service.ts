@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { DomainResponse } from '../../domain/domain-response';
+import { WeeklyTemplate } from '../../domain/wod/weekly-template';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,7 +21,7 @@ export class WeeklyTemplateService {
   }
 
 
-  public add(weeklyTemplate) {
+  public add(weeklyTemplate: WeeklyTemplate) {
     return this.http.post(this.url + 'api/weekly-template', weeklyTemplate, httpOptions);
   }
 
@@ -30,6 +31,14 @@ export class WeeklyTemplateService {
 
   public getById(id: number) {
     return this.http.get<DomainResponse<any>>(this.url + 'api/weekly-template/' + id);
+  }
+
+  public update(weeklyTemplate: WeeklyTemplate, id: number) {
+    return this.http.put<DomainResponse<any>>(this.url + 'api/weekly-template?id='+ id, weeklyTemplate, httpOptions);
+  }
+
+  public delete(id: number) {
+    return this.http.delete<DomainResponse<any>>(this.url + 'api/weekly-template/' + id);
   }
 
 }

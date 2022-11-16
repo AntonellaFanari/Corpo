@@ -2,7 +2,7 @@
   <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Abrir ventana de diálogo</button>-->
 
   <section class="modal mt-4" id="myModalSale">
-    <div class="container-fluid modal-content modal-lg p-0" *ngIf="sale">
+    <div class="container-fluid modal-content modal-lg p-0">
 
       <!-- cabecera del diálogo -->
       <div class="modal-header modal-title bg-success d-block">
@@ -12,58 +12,66 @@
 
 
       <!-- cuerpo del diálogo -->
-      <div class="modal-body">
-        <table class="table table-bordered table-condensed cf scrollme user-table">
-          <thead class="cf">
-            <tr>
-              <th *ngIf="userRegisterSale" class="modal-title" colspan="4"><span class="label-detail-title"> Registro:</span> {{userRegisterSale.lastName}} {{userRegisterSale.name}}</th>
-            </tr>
-            <tr>
-              <th colspan="2"><span class="label-detail-title">Socio:</span> {{member}}</th>
-              <th colspan="1"><span class="label-detail-title">Fecha:</span> {{date | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
-              <th colspan="1">
-                <span class="label-detail-title">
-                  Estado:
-                </span> <span *ngIf="sale.status == 1">Vigente</span><span *ngIf="sale.status == 2" class="detail-cancelled">Cancelada</span>
-              </th>
-            </tr>
-            <tr *ngIf="sale.status == 2 && cancelSale">
-              <th colspan="2">
-                <span class="label-detail-title">Fecha de cancelación:</span> <span class="detail-cancelled"> {{cancelSale.date | date: 'dd/MM/yyyy h:mm:ss a'}}</span>
-              </th>
-              <th colspan="1" *ngIf="userCancelSale"><span class="label-detail-title">Cancelado por:</span> <span class="detail-cancelled"> {{userCancelSale.lastName}} {{userCancelSale.name}}</span></th>
-              <th colspan="2"><span class="label-detail-title">Motivo:</span> <span class="detail-cancelled"> {{cancelSale.reason}}</span></th>
-            </tr>
-            <tr>
-              <th>Descripcion</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let detail of detailsSale" class="scrollme">
-              <td class="td-title">{{detail.product.description}}</td>
-              <td class="td-title">{{detail.quantity}}</td>
-              <td class="td-title">{{detail.price | currency}}</td>
-              <td class="td-title">{{detail.quantity*detail.price | currency}}</td>
-            </tr>
-            <tr>
-              <th class="label-detail-title">Total</th>
-              <td class="td-title" data-title="Total">{{sale.total  | currency}}</td>
-              <th class="label-detail-title">Pago</th>
-              <td class="td-title" data-title="Pago">{{sale.pay  | currency}}</td>
-            </tr>
-          </tbody>
-        </table>
 
-      </div>
+      <div *ngIf="!requesting && sale">
+        <div class="modal-body">
+          <table class="table table-bordered table-condensed cf scrollme user-table">
+            <thead class="cf">
+              <tr>
+                <th *ngIf="userRegisterSale" class="modal-title" colspan="4"><span class="label-detail-title"> Registro:</span> {{userRegisterSale.lastName}} {{userRegisterSale.name}}</th>
+              </tr>
+              <tr>
+                <th colspan="2"><span class="label-detail-title">Socio:</span> {{member}}</th>
+                <th colspan="1"><span class="label-detail-title">Fecha:</span> {{date | date: 'dd/MM/yyyy h:mm:ss a'}}</th>
+                <th colspan="1">
+                  <span class="label-detail-title">
+                    Estado:
+                  </span> <span *ngIf="sale.status == 1">Vigente</span><span *ngIf="sale.status == 2" class="detail-cancelled">Cancelada</span>
+                </th>
+              </tr>
+              <tr *ngIf="sale.status == 2 && cancelSale">
+                <th colspan="2">
+                  <span class="label-detail-title">Fecha de cancelación:</span> <span class="detail-cancelled"> {{cancelSale.date | date: 'dd/MM/yyyy h:mm:ss a'}}</span>
+                </th>
+                <th colspan="1" *ngIf="userCancelSale"><span class="label-detail-title">Cancelado por:</span> <span class="detail-cancelled"> {{userCancelSale.lastName}} {{userCancelSale.name}}</span></th>
+                <th colspan="2"><span class="label-detail-title">Motivo:</span> <span class="detail-cancelled"> {{cancelSale.reason}}</span></th>
+              </tr>
+              <tr>
+                <th>Detalle</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of detailsSale" class="scrollme">
+                <td class="td-title">{{detail.product.description}}</td>
+                <td class="td-title">{{detail.quantity}}</td>
+                <td class="td-title">{{detail.price | currency}}</td>
+                <td class="td-title">{{detail.quantity*detail.price | currency}}</td>
+              </tr>
+              <tr>
+                <th class="label-detail-title">Total</th>
+                <td class="td-title" data-title="Total">{{sale.total  | currency}}</td>
+                <th class="label-detail-title">Pago</th>
+                <td class="td-title" data-title="Pago">{{sale.pay  | currency}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
         <!-- pie del diálogo -->
         <div class="modal-footer p-1">
-          <button *ngIf="sale.status == 1" type="button" class="btn btn-danger col-3 col-lg-2" data-toggle="modal" href="#myModalCancelSale">Anular</button>
-          <button type="button" class="btn btn-success col-3 col-lg-2" data-dismiss="modal">Aceptar</button>
+          <button *ngIf="sale.status == 1" type="button" class="btn btn-danger col-4 col-lg-2" data-toggle="modal" href="#myModalCancelSale">Anular</button>
+          <button type="button" class="btn btn-success col-4 col-lg-2" data-dismiss="modal">Aceptar</button>
         </div>
-     
+      </div>
+
+      <div class="w-100 text-center mt-3" *ngIf="requesting">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
     </div>
 </section>
 
@@ -86,8 +94,8 @@
           </div>
             <!-- pie del diálogo -->
             <div class="modal-footer p-1">
-              <button type="button" class="btn btn-danger col-3" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-success col-3" (click)="cancel()">Anular</button>
+              <button type="button" class="btn btn-danger col-4 col-lg-2" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-success col-4 col-lg-2" (click)="cancel()">Anular</button>
             </div>
 
           

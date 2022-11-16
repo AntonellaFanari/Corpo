@@ -40,11 +40,13 @@ export class ClassListComponent implements OnInit {
 
   delete(id) {
     this.customAlertService.displayAlert("Gestión de Clases", ["¿Está seguro que desea eliminar esta clase?"], () => {
+      this.requestingList = true;
       this.classService.delete(id).subscribe(
         result => {
           this.getAll();
         },
         error => {
+          this.requestingList = false;
           console.error(error);
           this.customAlertService.displayAlert("Gestión de Clases", ["Error al intentar eliminar la clase."])
         })

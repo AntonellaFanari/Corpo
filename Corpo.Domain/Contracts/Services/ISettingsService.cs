@@ -10,7 +10,7 @@ namespace Corpo.Domain.Contracts.Services
     public interface ISettingsService
     {
         DomainResponse SaveAccess(List<RoleAccess> access);
-        DomainResponse GetRoleAccess();
+        Task<DomainResponse> GetRoleAccess();
         Task<DomainResponse> GetAll();
         Task<DomainResponse> Update(List<GeneralSetting> settings);
         Task<DomainResponse> Add(List<GeneralSetting> settings);

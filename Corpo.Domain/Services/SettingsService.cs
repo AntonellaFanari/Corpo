@@ -65,13 +65,13 @@ namespace Corpo.Domain.Services
 
         }
 
-        public DomainResponse GetRoleAccess()
+        public async Task<DomainResponse> GetRoleAccess()
         {
-            var list = _settingsRepository.GetRoleAccess();
+            var response = await _settingsRepository.GetRoleAccess();
             return new DomainResponse
             {
                 Success = true,
-                Result = list
+                Result = response
             };
         }
 

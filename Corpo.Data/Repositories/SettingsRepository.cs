@@ -34,9 +34,9 @@ namespace Corpo.Data.Repositories
             return _context.GeneralSetting.FirstOrDefaultAsync(x => x.Name == name);
         }
 
-        public List<RoleAccess> GetRoleAccess()
+        public Task<List<RoleAccess>> GetRoleAccess()
         {
-            return _context.RoleAccess.Include(x=>x.Role).ToList();
+            return _context.RoleAccess.Include(x=>x.Role).ToListAsync();
         }
 
         public void SaveAccess(List<RoleAccess> access)

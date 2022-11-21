@@ -22,9 +22,9 @@ namespace Corpo.Web.Controllers
         }
 
         [HttpGet("getRoleAccess")]
-        public ActionResult GetRoleAccess()
+        public async Task<ActionResult> GetRoleAccess()
         {
-            var response = _settingsService.GetRoleAccess();
+            var response = await _settingsService.GetRoleAccess();
             return this.ToActionResult(response);
         }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { stringify } from 'querystring';
 import { Role } from '../../../domain/role';
 import { RoleAccess } from '../../../domain/role-access';
 import { CustomAlertService } from '../../../services/custom-alert.service';
@@ -21,30 +22,62 @@ export class SettingsAccessComponent implements OnInit {
   checkboxToAccessMarketing = this.getAccessModel();
   requesting = false;
 
-  constructor(private userService: UserService, private settingService: SettingsService, private router: Router, private customAlertService: CustomAlertService) {
+  constructor(private userService: UserService,
+    private settingService: SettingsService,
+    private router: Router,
+    private customAlertService: CustomAlertService) {
+  }
+
+  ngOnInit() {
+    this.requesting = true;
+    this.userService.getRoles().subscribe(
+      response => {
+        this.roles = response.result;
+        this.getRolesAccess();
+      },
+      error => console.log(error)
+    );
+  }
+
+  getRolesAccess() {
+    this.settingService.getRoleAccess().subscribe(
+      result => {
+        this.roleAccess = result.result;
+        console.log("accesos: ", this.roleAccess);
+ 
+        if (this.roleAccess.length > 0) {
+          this.checkboxToAccessAdmin = this.getAccessModel();
+          this.checkboxToAccessCoach = this.getAccessModel();
+          this.checkboxToAccessMarketing = this.getAccessModel();
+          this.getAccess(this.roleAccess);
+        }
+        this.requesting = false;
+      },
+      error => this.requesting = false
+    );
   }
 
   getAccessModel() {
-    return [
-      { access: 'Caja', checked: false },
-      { access: 'Usuarios', checked: false },
-      { access: 'Socios', checked: false },
-      { access: 'Asistencias', checked: false },
-      { access: 'Deudas', checked: false },
-      { access: 'Comunicación', checked: false },
-      { access: 'Informes', checked: false },
-      { access: 'ABM', checked: false },
-      { access: 'Ajustes', checked: false }
-    ];
+    var access = [];
+    if (this.roleAccess.length > 0) {
+      this.roleAccess.forEach(x => {
+        let ac = { access: '', checked: false };
+        ac.access = x.access;
+        ac.checked = false;
+        access.push(ac);
+      });
+    }
+    console.log("accesos cargados: ", access);
+    return access;
   }
 
   getAccess(roleAccess) {
-    for ( let i = 0; i < roleAccess.length; i++) {
+    for (let i = 0; i < roleAccess.length; i++) {
       let role = roleAccess[i];
       if (role.roleId == this.roles[0].id) {
         let nameAccess = role.access;
         this.checkboxToAccessAdmin = this.getCheckboxToAccess(this.checkboxToAccessAdmin, nameAccess);
-       }
+      }
       if (role.roleId == this.roles[1].id) {
         let nameAccess = role.access;
         this.checkboxToAccessCoach = this.getCheckboxToAccess(this.checkboxToAccessCoach, nameAccess);
@@ -52,7 +85,7 @@ export class SettingsAccessComponent implements OnInit {
         let nameAccess = role.access;
         this.checkboxToAccessMarketing = this.getCheckboxToAccess(this.checkboxToAccessMarketing, nameAccess);
       }
-    } 
+    }
   }
 
   getCheckboxToAccess(access, nameAccess) {
@@ -65,32 +98,9 @@ export class SettingsAccessComponent implements OnInit {
     return access;
   }
 
-  ngOnInit() {
-    this.requesting = true;
-    this.userService.getRoles().subscribe(
-      response => {
-        this.roles = response.result;
-        this.getRolesAccess();
-      },
-      error => console.log(error)
-    );
 
-    
-  }
 
-  getRolesAccess() {
-    this.settingService.getRoleAccess().subscribe(
-      result => {
-        this.roleAccess = result.result;
-        console.log(this.roleAccess);
-        if (this.roleAccess.length > 0) {
-          this.getAccess(this.roleAccess);
-        }
-        this.requesting = false;
-      },
-      error => this.requesting = false
-    );
-  }
+
 
   selectRole(event) {
     this.idRoleSelect = event;

@@ -37,6 +37,7 @@ export class ShortestPossibleTimeComponent implements OnInit {
   getEditExercise(exercise) {
     this.selectedExercise = exercise.exercise.id;
     console.log("ejercicio seleccionado para la edición: ", this.selectedExercise);
+    console.log("ejercicio detalle para la edición: ", exercise);
     this.units = exercise.units;
     this.selectedUnitType = this.unitsTypes.find(x => x.type == exercise.unitType);
     this.intensity = exercise.intensityValue;

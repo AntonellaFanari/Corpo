@@ -6,7 +6,7 @@ import { environment } from './environments/environment';
 
 export function getBaseUrl() {
   return "http://antofanari-001-site1.gtempurl.com/";
-/*  return document.getElementsByTagName('base')[0].href;*/
+  /*return document.getElementsByTagName('base')[0].href;*/
 }
 
 const providers = [

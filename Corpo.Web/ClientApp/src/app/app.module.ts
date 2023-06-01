@@ -180,6 +180,8 @@ import { MenuAssignmentTemplateComponent } from './components/workout/menu-assig
 import { CashOpeningComponent } from './components/cash/cash-opening/cash-opening.component';
 import { FilterGoalPipe } from './pipes/filter-goal.pipe';
 import { FilterLevelPipe } from './pipes/filter-level.pipe';
+import { TabataComponent } from './components/workout/wod-modality/tabata/tabata.component';
+import { RondasComponent } from './components/workout/wod-modality/rondas/rondas.component';
 
 
 @NgModule({
@@ -349,7 +351,9 @@ import { FilterLevelPipe } from './pipes/filter-level.pipe';
     MenuAssignmentTemplateComponent,
     CashOpeningComponent,
     FilterGoalPipe,
-    FilterLevelPipe
+    FilterLevelPipe,
+    TabataComponent,
+    RondasComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

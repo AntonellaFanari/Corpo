@@ -101,7 +101,7 @@ export class SaleCreateComponent implements OnInit {
       memberName: ['', Validators.required],
       idProduct: '',
       description: ['', Validators.required],
-      quantity: [0, Validators.min(1)],
+      quantity: [1, Validators.min(1)],
       price: 0,
       total: 0
     })

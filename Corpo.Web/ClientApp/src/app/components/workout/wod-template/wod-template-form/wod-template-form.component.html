@@ -23,7 +23,7 @@
       <strong>No se asignaron objetivos</strong>
     </div>
   </div>
- 
+
 
   <div class="form-group mt-3">
     <label class="control-label">Modalidad:</label>
@@ -40,12 +40,13 @@
     <button class="btn btn-secondary mr-2" (click)="addwodGroup()">Agregar bloque</button>
     <!--<button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>-->
   </div>
-  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
+  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo' && modality !='Rondas'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
   <app-amrap [class.d-none]="modality != 'AMRAP'" (getTime)="getTime($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-amrap>
   <app-emom [class.d-none]="modality != 'EMOM'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-emom>
   <app-staggered [class.d-none]="modality != 'Escalera'" [modeEdit]="modeEditStaggered" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-staggered>
   <app-timers [class.d-none]="modality != 'Timers'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-timers>
   <app-rest-time [class.d-none]="modality != 'Rest Time'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-rest-time>
+  <app-tabata [class.d-none]="modality != 'Tabata'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-tabata>
 
 
   <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="wod">
@@ -55,7 +56,7 @@
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
 
-      <p  class="group-detail">
+      <p class="group-detail">
         <label>{{group.detail}}</label>
       </p>
 
@@ -75,7 +76,7 @@
                 <span *ngIf="exerciseItem.modality == 'Timers'"> Tiempo de ejercicio: {{ exerciseItem.timeWork }} - Tiempo de descanso: {{exerciseItem.timeRest}}</span>
               </td>
               <td class="col-2">
-                {{exerciseItem.intensityValue}} {{exerciseItem.intensityType}}
+                <span *ngIf="exerciseItem.modality !='Tabata'">{{exerciseItem.intensityValue}}</span> {{exerciseItem.intensityType}}
               </td>
               <td class="col-2 action-column">
                 <a (click)="editExerciseItem(exerciseItem, ei, i)" class="delete-button me-2">
@@ -92,7 +93,7 @@
         </table>
       </div>
     </div>
-    <div class="mt-3"  [class.d-none]="planned == 'true'">
+    <div class="mt-3" [class.d-none]="planned == 'true'">
       <button class="btn btn-success col-12 btn-create" type="submit"
               (click)="save()">
         Guardar

@@ -59,6 +59,14 @@
     display: none;
 }
 
+[id^="week"] td:not(.first-td):hover {
+  cursor: pointer;
+}
+
+.hover{
+    cursor:pointer;
+}
+
 @media screen and (min-width: 800px) {
   td {
           width: 14%;

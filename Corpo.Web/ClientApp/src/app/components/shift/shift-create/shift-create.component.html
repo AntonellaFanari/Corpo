@@ -20,16 +20,19 @@
                 </div>
               </div>
               <div class="card-body row">
-                <div class="col-lg-6 col-md-6 col-xs-12 btn-float-right mt-3">
+                <div class="col-lg-6 col-md-6 col-xs-12 btn-float-right mt-3 formValidators">
                   <label class="form-label">Cupo:</label>
-                  <input type="number" class="form-control col-6" [(ngModel)]="quota" />
+                  <input type="number" class="form-control col-6" [(ngModel)]="quota" (change)="validationQuota()" />
+                  <p [ngClass]="{'display': errorQuota, 'display-none': !errorQuota}">*el cupo deber ser mayor a 0</p>
                 </div>
-                <div class="col-lg-6 col-md-6 col-xs-12 btn-float-right mt-3">
+                <div class="col-lg-6 col-md-6 col-xs-12 btn-float-right mt-3 formValidators">
                   <label class="form-label">Clase:</label>
                   <select class="form-control col-12" (change)="selectClass($event.target.value)">
                     <option class="form-control col-12" value="" disabled>Seleccionar</option>
                     <option *ngFor="let class of classes" class="form-control col-12" value={{class.id}}>{{class.name}}</option>
                   </select>
+                  <!--<p *ngIf="sendForm && f.lastName.errors?.required">*el campo es requerido</p>-->
+                  <p [ngClass]="{'display': errorSelectedClass, 'display-none': !errorSelectedClass}">*seleccione una clase</p>
                 </div>
               </div>
             </div>
@@ -57,14 +60,14 @@
             <tbody>
               <tr class="scrollme span-margin" *ngFor="let schedule of schedules; index as i">
                 <td class="td-title" data-title="Hora"><div class="row col-12 col-lg-12 col-sm-6 mx-0"><input type="time" class="form-control" value={{schedule.hour}} (change)="selectHour($event.target.value, i)" /></div></td>
-                <td class="td-title" data-title="Lunes" (click)="selectMonday(i)"><span><input type="checkbox" [checked]="schedule.monday" (change)="schedule.monday=!schedule.monday" /></span></td>
-                <td class="td-title" data-title="Martes" (click)="selectTuesday(i)"><span><input type="checkbox" [checked]="schedule.tuesday" (change)="schedule.tuesday=!schedule.tuesday" /></span></td>
-                <td class="td-title" data-title="Miercoles" (click)="selectWednesday(i)"><span><input type="checkbox" [checked]="schedule.wednesday" (change)="schedule.wednesday=!schedule.wednesday" /></span></td>
-                <td class="td-title" data-title="Jueves" (click)="selectThursday(i)"><span><input type="checkbox" [checked]="schedule.thursday" (change)="schedule.thursday=!schedule.thursday" /></span></td>
-                <td class="td-title" data-title="Viernes" (click)="selectFriday(i)"><span><input type="checkbox" [checked]="schedule.friday" (change)="schedule.friday=!schedule.friday" /></span></td>
-                <td class="td-title" data-title="Sábado" (click)="selectSaturday(i)"><span><input type="checkbox" [checked]="schedule.saturday" (change)="schedule.saturday=!schedule.saturday" /></span></td>
+                <td class="td-title" data-title="Lunes" (click)="selectDay('monday')"><span><input type="checkbox" [checked]="schedule.monday" (change)="schedule.monday=!schedule.monday" /></span></td>
+                <td class="td-title" data-title="Martes" (click)="selectDay('tuesday')"><span><input type="checkbox" [checked]="schedule.tuesday" (change)="schedule.tuesday=!schedule.tuesday" /></span></td>
+                <td class="td-title" data-title="Miercoles" (click)="selectDay('wednesday')"><span><input type="checkbox" [checked]="schedule.wednesday" (change)="schedule.wednesday=!schedule.wednesday" /></span></td>
+                <td class="td-title" data-title="Jueves" (click)="selectDay('thursday')"><span><input type="checkbox" [checked]="schedule.thursday" (change)="schedule.thursday=!schedule.thursday" /></span></td>
+                <td class="td-title" data-title="Viernes" (click)="selectDay('friday')"><span><input type="checkbox" [checked]="schedule.friday" (change)="schedule.friday=!schedule.friday" /></span></td>
+                <td class="td-title" data-title="Sábado" (click)="selectDay('saturday')"><span><input type="checkbox" [checked]="schedule.saturday" (change)="schedule.saturday=!schedule.saturday" /></span></td>
                 <td class="td-title" data-title="Profesor">
-                  <div class="row col-12 col-lg-12 col-sm-6 mx-0">
+                  <div class="row col-12 col-lg-12 col-sm-6 mx-0 formValidators">
                     <select class="form-control" (change)="selectUser($event.target.value, i)">
                       <option disabled value="">Seleccionar</option>
                       <option *ngFor="let user of users" value={{user.id}}>{{user.lastName}} {{user.name}}</option>
@@ -81,6 +84,10 @@
             <div class="col-12 col-lg-3 text-center m-2">
               <button class="btn btn-success col-12" (click)="addRow()">Nuevo turno</button>
             </div>
+          </div>
+          <div class="card formValidators">
+            <p [ngClass]="{'display': errorSelectedDays, 'display-none': !errorSelectedDays}">*Debe seleccionar al menos un día.</p>
+            <p [ngClass]="{'display': errorSelectedUser, 'display-none': !errorSelectedUser}">*Debe seleccionar un profesor/a</p>
           </div>
         </section>
       </div>

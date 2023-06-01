@@ -19,6 +19,7 @@ import { EmomComponent } from '../../wod-modality/emom/emom.component';
 import { RestTimeComponent } from '../../wod-modality/rest-time/rest-time.component';
 import { ShortestPossibleTimeComponent } from '../../wod-modality/shortest-possible-time/shortest-possible-time.component';
 import { StaggeredComponent } from '../../wod-modality/staggered/staggered.component';
+import { TabataComponent } from '../../wod-modality/tabata/tabata.component';
 import { TimersComponent } from '../../wod-modality/timers/timers.component';
 
 @Component({
@@ -75,6 +76,7 @@ export class WodTemplateEditComponent implements OnInit {
   previousActiveWodGroup: number;
   modeWodMember = false;
   modeEditStaggered = false;
+  clone: boolean;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -83,7 +85,11 @@ export class WodTemplateEditComponent implements OnInit {
     private router: Router,
     private customAlertService: CustomAlertService,
     private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(params => { this.id = parseInt(params['id']) })
+    this.route.queryParams.subscribe(params => {
+      this.id = parseInt(params['id']);
+      console.log("parametro clonar: ", params['clone']);
+      this.clone = (params['clone'] == 'true' ? true : false);
+    })
   }
 
   @ViewChild(ShortestPossibleTimeComponent, { static: false }) modalityShortesPossibleTime: ShortestPossibleTimeComponent;
@@ -92,9 +98,11 @@ export class WodTemplateEditComponent implements OnInit {
   @ViewChild(StaggeredComponent, { static: false }) modalityStaggered: StaggeredComponent;
   @ViewChild(TimersComponent, { static: false }) modalityTimers: TimersComponent;
   @ViewChild(RestTimeComponent, { static: false }) modalityRestTime: RestTimeComponent;
+  @ViewChild(TabataComponent, { static: false }) modalityTabata: TabataComponent;
 
 
   ngOnInit() {
+    if (this.clone) this.name = "";
     this.checkedNone = true;
     this.mode = "None";
     this.getWodTemplateById();
@@ -108,7 +116,7 @@ export class WodTemplateEditComponent implements OnInit {
       response => {
         console.log("wod template: ", response.result);
         this.wod = this.getWod(response.result);
-        this.name = this.wod.name;
+        this.name = (this.clone)? "":this.wod.name;
         this.getWeeklyGoals();
         this.weeklyGoalsDropdownSettings = {
           idField: 'id',
@@ -191,6 +199,12 @@ export class WodTemplateEditComponent implements OnInit {
         break;
       case 'Rest Time':
         this.modalityRestTime.clearData();
+        break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.clearData();
+        break;
+      case 'Tabata':
+        this.modalityTabata.clearData();
         break;
       default:
     }
@@ -388,6 +402,10 @@ export class WodTemplateEditComponent implements OnInit {
         this.modalityRestTime.pauseBetweenRounds = this.wod.wodGroups[index].pauseBetweenRounds;
         this.modalityRestTime.pauseBetweenExercises = this.wod.wodGroups[index].pauseBetweenExercises;
         break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.getRounds.emit(this.wod.wodGroups[index].rounds);
+        this.modalityShortesPossibleTime.rounds = this.wod.wodGroups[index].rounds;
+        break;
       default:
     }
   }
@@ -398,9 +416,9 @@ export class WodTemplateEditComponent implements OnInit {
       this.activeWodGroup = 0;
   }
 
-  save() {
-    console.log("plantilla a enviar: ", this.wod);
-    if (this.name !== "" || this.name !== undefined || this.goal !== "" || this.goal !== undefined) {
+  saveEdition() {
+    console.log("plantilla editada a enviar: ", this.wod);
+    if (this.name !== "" && this.name !== undefined && this.goal !== "" && this.goal !== undefined) {
       var wodTemplate = new WodTemplate(this.wod);
       wodTemplate.name = this.name;
       wodTemplate.goal = this.goal;
@@ -420,10 +438,51 @@ export class WodTemplateEditComponent implements OnInit {
     } else {
       if (this.name == "" || this.name == undefined) {
         this.validatorsRequiredName = true;
+      }
+      if (this.goal == "" || this.goal == undefined) {
+        this.validatorsRequiredGoal = true;
+      }
+    }
+  }
+
+  saveClone() {
+    console.log("plantilla clonada a enviar: ", this.wod);
+    if (this.name !== "" || this.name !== undefined || this.goal !== "" || this.goal !== undefined) {
+      this.requesting = true;
+      var wodTemplate = new WodTemplate(this.wod);
+      wodTemplate.id = undefined;
+      wodTemplate.name = this.name;
+      wodTemplate.goal = this.goal;
+      console.log("wod-template:", wodTemplate);
+      this.wodTemplateService.add(wodTemplate).subscribe(() => {
+        this.requesting = false;
+        this.router.navigate(['/plantillas-wod']);
+      }, error => {
+        this.requesting = false;
+        console.error(error);
+        if (error.status === 400) {
+          this.customAlertService.displayAlert("Gestión de WOD", error.error.errores);
+        }
+        if (error.status === 500) {
+          this.customAlertService.displayAlert("Gestión de WOD", ["No se pudo guardar la plantilla."]);
+        }
+      })
+    } else {
+      if (this.name == "" || this.name == undefined) {
+        this.validatorsRequiredName = true;
       } if (this.goal == "" || this.goal == undefined) {
         this.validatorsRequiredGoal = true;
       }
     }
+  }
+
+  save() {
+    if (!this.clone) {
+      this.saveEdition();
+    } else {
+      this.saveClone();
+    }
+
 
   }
 
@@ -681,10 +740,37 @@ export class WodTemplateEditComponent implements OnInit {
         break;
       case 'Rest Time':
         this.modalityRestTime.getEditExercise(exerciseItem);
+        break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.getEditExercise(exerciseItem);
+        break;
+      case 'Tabata':
+        this.modalityTabata.getEditExercise(exerciseItem);
+        break;
       default:
     }
 
     this.wod.wodGroups[this.activeWodGroup].exercises.splice(exerciseIndex, 1);
+  }
+
+
+  goClone() {
+    this.requesting = true;
+    const component = this;
+    setTimeout(function () {
+      console.log("function interval")
+      component.clone = true;
+      component.name = "";
+      component.requesting = false
+    }, 1000);
+    
+
+
+  }
+
+  validateName(event) {
+    console.log("validando nombre: ", this.name, event);
+    if (this.name.length > 0) this.validatorsRequiredName = false;
   }
 
 }

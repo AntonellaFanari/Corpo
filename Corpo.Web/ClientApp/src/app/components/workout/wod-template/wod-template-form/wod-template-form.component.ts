@@ -21,6 +21,7 @@ import { EmomComponent } from '../../wod-modality/emom/emom.component';
 import { RestTimeComponent } from '../../wod-modality/rest-time/rest-time.component';
 import { ShortestPossibleTimeComponent } from '../../wod-modality/shortest-possible-time/shortest-possible-time.component';
 import { StaggeredComponent } from '../../wod-modality/staggered/staggered.component';
+import { TabataComponent } from '../../wod-modality/tabata/tabata.component';
 import { TimersComponent } from '../../wod-modality/timers/timers.component';
 
 @Component({
@@ -87,6 +88,7 @@ export class WodTemplateFormComponent implements OnInit {
   @ViewChild(StaggeredComponent, { static: false }) modalityStaggered: StaggeredComponent;
   @ViewChild(TimersComponent, { static: false }) modalityTimers: TimersComponent;
   @ViewChild(RestTimeComponent, { static: false }) modalityRestTime: RestTimeComponent;
+  @ViewChild(TabataComponent, { static: false }) modalityTabata: TabataComponent;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -243,6 +245,12 @@ export class WodTemplateFormComponent implements OnInit {
         break;
       case 'Rest Time':
         this.modalityRestTime.clearData();
+        break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.clearData();
+        break;
+      case 'Tabata':
+        this.modalityTabata.clearData();
         break;
       default:
     }
@@ -622,6 +630,13 @@ export class WodTemplateFormComponent implements OnInit {
         break;
       case 'Rest Time':
         this.modalityRestTime.getEditExercise(exerciseItem);
+        break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.getEditExercise(exerciseItem);
+        break;
+      case 'Tabata':
+        this.modalityTabata.getEditExercise(exerciseItem);
+        break;
       default:
     }
 

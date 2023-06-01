@@ -40,7 +40,7 @@
   </div>
 </section>
 
-<section class="wrapper" >
+<section class="wrapper">
   <div class="modal-content">
     <header class="modal-header bg-success">
       <h3 class="mb text-center text-white">
@@ -55,32 +55,32 @@
         <div class="col-6  mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Año:</label>
           <div class="formValidators">
-            <input type="number" class="form-control" [(ngModel)]="year">
+            <input type="number" class="form-control hover" [(ngModel)]="year">
           </div>
         </div>
         <div class="col-6  mt-3 mb-3 btn-float-left">
           <label class="col-12 control-label">Mes:</label>
           <div class="formValidators">
-            <select class="form-control" [(ngModel)]="month" (change)="selectMonth($event.target.value)">
+            <select class="form-control hover" [(ngModel)]="month" (change)="selectMonth($event.target.value)">
               <option *ngFor="let month of months; index as i" value={{i+1}}>{{month}}</option>
             </select>
           </div>
         </div>
-        <div class="col-4  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Número de entrenamientos por semana:</label>
           <div class="formValidators">
-            <input type="number" class="form-control" [(ngModel)]="trainings">
+            <input type="number" class="form-control hover" [(ngModel)]="trainings">
           </div>
         </div>
-        <div class="col-4  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-4  mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Volumen:</label>
           <div class="formValidators">
-            <input type="number" class="form-control" [(ngModel)]="volumeMonthly">
+            <input type="number" class="form-control hover" [(ngModel)]="volumeMonthly">
           </div>
         </div>
-        <div class="col-4  mt-3 mb-3 btn-float-right">
+        <div class="col-12 col-lg-4  mt-3 mb-3 btn-float-right">
           <label class="col-12 control-label">Sistema de Entrenamiento:</label>
-          <select class="form-control" [(ngModel)]="selectedTrainingSystemMonthly" (change)="selectTrainingSystem($event.target.value, 0)">
+          <select class="form-control hover" [(ngModel)]="selectedTrainingSystemMonthly" (change)="selectTrainingSystem($event.target.value, 0)">
             <option value="0" disabled>Seleccionar...</option>
             <option *ngFor="let trainingSystem of trainingSystems" value="{{trainingSystem.id}}">{{trainingSystem.up}}x{{trainingSystem.down}}</option>
           </select>
@@ -131,13 +131,13 @@
             <strong>No se asignaron objetivos para la semana 1</strong>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3  mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Volumen:</label>
           <div class="formValidators">
             <input type="number" class="form-control" [(ngModel)]="week1.volume">
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3  mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Tipo de Intensidad:</label>
           <div class="formValidators">
             <select class="form-control" [(ngModel)]="week1.intensityType" (change)="selectIntensityType($event.target.value, 1)">
@@ -147,7 +147,7 @@
             </select>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3  mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Intensidad :</label>
           <div class="input-group">
             <input type="number" class="form-control" [(ngModel)]="week1.intensity" (blur)="validate(1)" />
@@ -155,7 +155,7 @@
           </div>
           <p class="validators-week1 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week1 hide-validators">*Ingrese un número entre 0 y 100</p>
         </div>
-        <div class="col-3  mt-3 mb-3 btn-float-right">
+        <div class="col-12 col-lg-3  mt-3 mb-3 btn-float-right">
           <label class="col-12 control-label">Sistema de Entrenamiento:</label>
           <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek1" (change)="selectTrainingSystem($event.target.value, 1)">
             <option value="0" disabled>Seleccionar...</option>
@@ -164,8 +164,8 @@
         </div>
         <div class="row col-12 pe-0">
           <section id="no-more-tables" class="tab-pane fade show active col-4">
-            <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
-                   week="week2">
+            <table class="table table-bordered table-condensed cf scrollme predominance" id="week1"
+                   week="week1">
               <thead class="cf">
                 <tr>
                   <th>M</th>
@@ -179,7 +179,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="col-12 chart" [style.display]="chartweek2 ? 'block' : 'none'">
+            <div class="col-12 chart" [style.display]="chartweek1 ? 'block' : 'none'">
               <!--<canvas id="week2-chart"></canvas>-->
             </div>
           </section>
@@ -199,16 +199,16 @@
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="Lunes" day="monday"
+                  <td data-title="Lun" day="monday"
                       class="first-td">
                     {{week1.monday}}
                   </td>
-                  <td data-title="Martes" day="tuesday">{{week1.tuesday}}</td>
-                  <td data-title="Miércoles" day="wednesday">{{week1.wednesday}}</td>
-                  <td data-title="Jueves" day="thursday">{{week1.thursday}}</td>
-                  <td data-title="Viernes" day="friday">{{week1.friday}}</td>
-                  <td data-title="Sábado" day="saturday">Libre</td>
-                  <td data-title="Domingo" day="sunday">Libre</td>
+                  <td data-title="Mar" day="tuesday">{{week1.tuesday}}</td>
+                  <td data-title="Mie" day="wednesday">{{week1.wednesday}}</td>
+                  <td data-title="Jue" day="thursday">{{week1.thursday}}</td>
+                  <td data-title="Vie" day="friday">{{week1.friday}}</td>
+                  <td data-title="Sab" day="saturday">Libre</td>
+                  <td data-title="Dom" day="sunday">Libre</td>
                 </tr>
               </tbody>
             </table>
@@ -238,13 +238,13 @@
             <strong>No se asignaron objetivos para la semana 2</strong>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Volumen:</label>
           <div class="formValidators">
             <input type="number" class="form-control" [(ngModel)]="week2.volume">
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Tipo de Intensidad:</label>
           <div class="formValidators">
             <select class="form-control" [(ngModel)]="week2.intensityType" (change)="selectIntensityType($event.target.value, 2)">
@@ -254,7 +254,7 @@
             </select>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Intensidad :</label>
           <div class="input-group">
             <input type="number" class="form-control" [(ngModel)]="week2.intensity" (blur)="validate(2)" />
@@ -262,7 +262,7 @@
           </div>
           <p class="validators-week2 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week2 hide-validators">*Ingrese un número entre 0 y 100</p>
         </div>
-        <div class="col-3  mt-3 mb-3 btn-float-right">
+        <div class="col-12 col-lg-3  mt-3 mb-3 btn-float-right">
           <label class="col-12 control-label">Sistema de Entrenamiento:</label>
           <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek2" (change)="selectTrainingSystem($event.target.value, 2)">
             <option value="0" disabled>Seleccionar...</option>
@@ -303,16 +303,16 @@
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="Lunes" day="monday"
+                  <td data-title="Lun" day="monday"
                       class="first-td">
                     {{week2.monday}}
                   </td>
-                  <td data-title="Martes" day="tuesday">{{week2.tuesday}}</td>
-                  <td data-title="Miércoles" day="wednesday">{{week2.wednesday}}</td>
-                  <td data-title="Jueves" day="thursday">{{week2.thursday}}</td>
-                  <td data-title="Viernes" day="friday">{{week2.friday}}</td>
-                  <td data-title="Sábado" day="saturday">Libre</td>
-                  <td data-title="Domingo" day="sunday">Libre</td>
+                  <td data-title="Mar" day="tuesday">{{week2.tuesday}}</td>
+                  <td data-title="Mie" day="wednesday">{{week2.wednesday}}</td>
+                  <td data-title="Jue" day="thursday">{{week2.thursday}}</td>
+                  <td data-title="Vie" day="friday">{{week2.friday}}</td>
+                  <td data-title="Sab" day="saturday">Libre</td>
+                  <td data-title="Dom" day="sunday">Libre</td>
                 </tr>
               </tbody>
             </table>
@@ -345,13 +345,13 @@
             <strong>No se asignaron objetivos para la semana 3</strong>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Volumen:</label>
           <div class="formValidators">
             <input type="number" class="form-control" [(ngModel)]="week3.volume">
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Tipo de Intensidad:</label>
           <div class="formValidators">
             <select class="form-control" [(ngModel)]="week3.intensityType" (change)="selectIntensityType($event.target.value, 3)">
@@ -361,7 +361,7 @@
             </select>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Intensidad :</label>
           <div class="input-group">
             <input type="number" class="form-control" [(ngModel)]="week3.intensity" (blur)="validate(3)" />
@@ -369,7 +369,7 @@
           </div>
           <p class="validators-week3 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week3 hide-validators">*Ingrese un número entre 0 y 100</p>
         </div>
-        <div class="col-3  mt-3 mb-3 btn-float-right">
+        <div class="col-12 col-lg-3  mt-3 mb-3 btn-float-right">
           <label class="col-12 control-label">Sistema de Entrenamiento:</label>
           <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek3" (change)="selectTrainingSystem($event.target.value, 3)">
             <option value="0" disabled>Seleccionar...</option>
@@ -414,16 +414,16 @@
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="Lunes" day="monday"
+                  <td data-title="Lun" day="monday"
                       class="first-td">
                     {{week3.monday}}
                   </td>
-                  <td data-title="Martes" day="tuesday">{{week3.tuesday}}</td>
-                  <td data-title="Miércoles" day="wednesday">{{week3.wednesday}}</td>
-                  <td data-title="Jueves" day="thursday">{{week3.thursday}}</td>
-                  <td data-title="Viernes" day="friday">{{week3.friday}}</td>
-                  <td data-title="Sábado" day="saturday">Libre</td>
-                  <td data-title="Domingo" day="sunday">Libre</td>
+                  <td data-title="Mar" day="tuesday">{{week3.tuesday}}</td>
+                  <td data-title="Mie" day="wednesday">{{week3.wednesday}}</td>
+                  <td data-title="Jue" day="thursday">{{week3.thursday}}</td>
+                  <td data-title="Vie" day="friday">{{week3.friday}}</td>
+                  <td data-title="Sab" day="saturday">Libre</td>
+                  <td data-title="Dom" day="sunday">Libre</td>
               </tbody>
             </table>
           </section>
@@ -452,13 +452,13 @@
             <strong>No se asignaron objetivos para la semana 4</strong>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Volumen:</label>
           <div class="formValidators">
             <input type="number" class="form-control" [(ngModel)]="week4.volume">
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Tipo de Intensidad:</label>
           <div class="formValidators">
             <select class="form-control" [(ngModel)]="week4.intensityType" (change)="selectIntensityType($event.target.value, 4)">
@@ -468,7 +468,7 @@
             </select>
           </div>
         </div>
-        <div class="col-3  mt-3 mb-3 pe-3 btn-float-left">
+        <div class="col-12 col-lg-3 mt-3 mb-3 pe-3 btn-float-left">
           <label class="col-12 control-label">Intensidad :</label>
           <div class="input-group">
             <input type="number" class="form-control" [(ngModel)]="week4.intensity" (blur)="validate(4)" />
@@ -476,7 +476,7 @@
           </div>
           <p class="validators-week4 hide-validators">*Ingrese un número entre 0 y 10</p><p class="validators-week4 hide-validators">*Ingrese un número entre 0 y 100</p>
         </div>
-        <div class="col-3  mt-3 mb-3 btn-float-right">
+        <div class="col-12 col-lg-3 mt-3 mb-3 btn-float-right">
           <label class="col-12 control-label">Sistema de Entrenamiento:</label>
           <select class="form-control" [(ngModel)]="selectedTrainingSystemWeek4" (change)="selectTrainingSystem($event.target.value, 4)">
             <option value="0" disabled>Seleccionar...</option>
@@ -520,16 +520,16 @@
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="Lunes" day="monday"
+                  <td data-title="Lun" day="monday"
                       class="first-td">
                     {{week4.monday}}
                   </td>
-                  <td data-title="Martes" day="tuesday">{{week4.tuesday}}</td>
-                  <td data-title="Miércoles" day="wednesday">{{week4.wednesday}}</td>
-                  <td data-title="Jueves" day="thursday">{{week4.thursday}}</td>
-                  <td data-title="Viernes" day="friday">{{week4.friday}}</td>
-                  <td data-title="Sábado" day="saturday">Libre</td>
-                  <td data-title="Domingo" day="sunday">Libre</td>
+                  <td data-title="Mar" day="tuesday">{{week4.tuesday}}</td>
+                  <td data-title="Mie" day="wednesday">{{week4.wednesday}}</td>
+                  <td data-title="Jue" day="thursday">{{week4.thursday}}</td>
+                  <td data-title="Vie" day="friday">{{week4.friday}}</td>
+                  <td data-title="Sab" day="saturday">Libre</td>
+                  <td data-title="Dom" day="sunday">Libre</td>
                 </tr>
               </tbody>
             </table>

@@ -1,11 +1,17 @@
 <section class="wrapper" *ngIf="!requesting">
-  <div class="form-group mt-3">
-    <label class="control-label">Nombre:</label>
-    <div class="formValidators">
-      <input type="text" class="form-control" [(ngModel)]="name">
-      <p [ngClass]="validatorsRequiredName ? 'validators': 'hide-validators'">*Debe ingresar un nombre.</p>
+  <div class="row">
+    <div *ngIf="!clone" class="col-12">
+      <button type="button" class="btn btn-primary col-12 col-lg-2 btn-add btn-float-right" (click)="goClone()"><i class="fa fa-clone"></i>Clonar</button>
+    </div>
+    <div class="form-group mt-3 col-12">
+      <label class="control-label">Nombre:</label>
+      <div class="formValidators">
+        <input type="text" class="form-control" [(ngModel)]="name" (change)="validateName($event)">
+        <p [ngClass]="validatorsRequiredName ? 'validators': 'hide-validators'">*Debe ingresar un nombre.</p>
+      </div>
     </div>
   </div>
+
   <div class="form-group mt-3">
     <label class="col-12 control-label">Asignar Objetivo:</label>
     <ng-multiselect-dropdown [settings]="weeklyGoalsDropdownSettings"
@@ -35,7 +41,7 @@
   <div class="button-box">
     <button class="btn btn-secondary mr-2" (click)="addwodGroupModal()">Agregar grupo</button>
     <button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>
-  </div>-->
+  </div>
 
   <div class="form-group mt-3">
     <label class="control-label">Modalidad:</label>
@@ -52,12 +58,13 @@
     <button class="btn btn-secondary mr-2" (click)="addWodGroup()">Agregar bloque</button>
     <!--<button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>-->
   </div>
-  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
+  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo' && modality !='Rondas'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
   <app-amrap [class.d-none]="modality != 'AMRAP'" (getTime)="getTime($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-amrap>
   <app-emom [class.d-none]="modality != 'EMOM'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-emom>
   <app-staggered [class.d-none]="modality != 'Escalera'" [modeEdit]="modeEditStaggered" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-staggered>
   <app-timers [class.d-none]="modality != 'Timers'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-timers>
   <app-rest-time [class.d-none]="modality != 'Rest Time'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-rest-time>
+  <app-tabata [class.d-none]="modality != 'Tabata'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-tabata>
 
 
 
@@ -82,7 +89,7 @@
                 <span *ngIf="exerciseItem.modality == 'Timers'">Tiempo de ejercicio: {{ exerciseItem.timeWork }} - Tiempo de descanso: {{exerciseItem.timeRest}}</span>
               </td>
               <td class="col-2">
-                {{exerciseItem.intensityValue}} {{exerciseItem.intensityType}}
+                <span *ngIf="exerciseItem.modality.name !='Tabata'">{{exerciseItem.intensityValue}}</span> {{exerciseItem.intensityType}}
               </td>
               <td class="col-2 action-column">
                 <a [routerLink]="" (click)="editExerciseItem(exerciseItem, ei, i)" class="delete-button me-2">

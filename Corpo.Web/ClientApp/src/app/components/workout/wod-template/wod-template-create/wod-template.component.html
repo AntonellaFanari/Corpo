@@ -2,7 +2,7 @@
   <div class="form-group mt-3">
     <label class="control-label">Nombre:</label>
     <div class="formValidators">
-      <input type="text" class="form-control" [(ngModel)]="name">
+      <input type="text" class="form-control" [(ngModel)]="name" (change)="validateName($event)">
       <p [ngClass]="validatorsRequiredName ? 'validators': 'hide-validators'">*Debe ingresar un nombre.</p>
     </div>
   </div>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  
+
 
   <div class="form-group mt-3">
     <label class="control-label">Modalidad:</label>
@@ -47,12 +47,14 @@
     <button class="btn btn-secondary mr-2" (click)="addWodGroup()">Agregar bloque</button>
     <!--<button class="btn btn-success" (click)="addExercise()" *ngIf="wod.wodGroups.length > 0">Agregar ejercicio</button>-->
   </div>
-  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
+  <app-shortest-possible-time [class.d-none]="modality != 'Tiempo' && modality !='Rondas'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-shortest-possible-time>
   <app-amrap [class.d-none]="modality != 'AMRAP'" (getTime)="getTime($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-amrap>
   <app-emom [class.d-none]="modality != 'EMOM'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-emom>
   <app-staggered [class.d-none]="modality != 'Escalera'" [modeEdit]="modeEditStaggered" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-staggered>
   <app-timers [class.d-none]="modality != 'Timers'" (getRounds)="getRounds($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-timers>
   <app-rest-time [class.d-none]="modality != 'Rest Time'" (getDetail)="getDetail($event)" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-rest-time>
+  <app-tabata [class.d-none]="modality != 'Tabata'" (getExercise)="getExercise($event)" [modeWodMember]="modeWodMember"></app-tabata>
+
 
   <div cdkDropList (cdkDropListDropped)="drop($event)">
     <div class="card wod-group" *ngFor="let group of wod.wodGroups; let i = index" [attr.data-index]="i"
@@ -68,7 +70,7 @@
       <div class="">
         <table class="table table-bordered">
           <tbody>
-            <tr *ngFor="let exerciseItem of group.exercises; let ei = index" >
+            <tr *ngFor="let exerciseItem of group.exercises; let ei = index">
 
               <td class="col-9" [attr.colspan]="exerciseItem.value ? '1' : '2'">
                 {{exerciseItem.exercise.name}} - <span *ngIf="exerciseItem.modality !='Timers'">{{ exerciseItem.units }} {{exerciseItem.unitType}}</span>

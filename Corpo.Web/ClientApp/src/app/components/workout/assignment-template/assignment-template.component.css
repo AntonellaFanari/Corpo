@@ -50,6 +50,15 @@ div.mat-tab-body-content {
   background-color: lightgreen;
 }
 
+
+#wod-template-table tr:not(.disabled-tr):hover {
+  cursor: pointer;
+}
+
+.disabled-tr {
+  background-color: #ced4da
+}
+
 .margin-btn {
   margin-right: 1rem;
 }

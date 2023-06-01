@@ -28,6 +28,14 @@ td.text-ajust {
   text-align: center;
 }
 
+.display-none {
+  display: none
+}
+
+.display {
+  display: block
+}
+
 @media only screen and (max-width: 800px) {
   #no-more-tables td {
     padding-left: 30%;

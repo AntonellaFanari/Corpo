@@ -44,7 +44,7 @@
               <li class="nav-item"><a class="nav-link" [routerLink]="['/categorias-list']">Categorias</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/tags-list']">Tags</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/ejercicios-list']">Ejercicios</a></li>
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/modalidades-list']">Modalidades</a></li>
+              <!--<li class="nav-item"><a class="nav-link" [routerLink]="['/modalidades-list']">Modalidades</a></li>-->
               <li class="nav-item"><a class="nav-link" [routerLink]="['/sistemas-entrenamiento-list']">Sistemas de Entrenamiento</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/objetivos-mensuales-list']">Objetivos Mensuales</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/objetivos-semanales-list']">Objetivos Semanales</a></li>
@@ -90,7 +90,7 @@
               ABM
             </a>
             <ul class="dropdown-menu">
-              <li class="nav-item"><a class="nav-link" [routerLink]="['/turnos-list']">Turnos</a></li>
+              <li class="nav-item"><a class="nav-link" [routerLink]="['/turnos-list']" [queryParams]="{displayList: 'false'}">Turnos</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/clases-list']">Clases</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/plan-list']">Planes</a></li>
               <li class="nav-item"><a class="nav-link" [routerLink]="['/promociones-list']">Promociones</a></li>

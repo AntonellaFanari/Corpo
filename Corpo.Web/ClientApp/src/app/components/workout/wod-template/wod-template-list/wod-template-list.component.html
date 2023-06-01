@@ -25,8 +25,9 @@
             <tr *ngFor="let wod of wodTemplates | searchFilterName: filterName" class="scrollme span-margin">
               <td class="td-title" data-title="Nombre"><span>{{wod.name}}</span></td>
               <td data-title="Acción">
-                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/plantilla-wod-editar']" [queryParams]="{id: wod.id}"><i class="fa fa-pencil-square"></i></button>
+                <button class="btn btn-warning btn-xs btn-action-list" [routerLink]="['/plantilla-wod-editar']" [queryParams]="{id: wod.id, clone:'false'}"><i class="fa fa-pencil-square"></i></button>
                 <button class="btn btn-danger btn-xs btn-action-list" (click)="delete(wod.id)"><i class="fa fa-trash"></i></button>
+                <button class="btn btn-primary btn-xs btn-action-list" [routerLink]="['/plantilla-wod-editar']" [queryParams]="{id: wod.id, clone:'true'}"><i class="fa fa-clone"></i></button>
               </td>
             </tr>
           </tbody>

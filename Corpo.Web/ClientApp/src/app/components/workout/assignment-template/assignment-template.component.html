@@ -28,7 +28,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let template of weeklyTemplates | searchFilterName: filterName" class="scrollme span-margin" [ngClass]="{'tr-click': selectedWeeklyTemplateId == template.id}"
+              <tr *ngFor="let template of weeklyTemplates | searchFilterName: filterName" class="scrollme span-margin"  [ngClass]="{'tr-click': selectedWeeklyTemplateId == template.id, 'disabled-tr': !periodization}"
                   (click)="selectWeeklyTemplate(template.id)">
                 <td class="td-title" data-title="Nombre"><span>{{template.name}}</span></td>
               </tr>
@@ -59,7 +59,7 @@
 
         <label class="col-12 control-label">Seleccionar Semana:</label>
         <div class="formValidators">
-          <select class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)">
+          <select class="form-control" [(ngModel)]="weekNumber" (change)="selectWeekNumber($event.target.value)"[disabled]="periodization ? false : true">
             <option disabled value="0">Seleccionar</option>
             <option class="week-option week-not-planned" value="1">1</option>
             <option class="week-option week-not-planned" value="2">2</option>

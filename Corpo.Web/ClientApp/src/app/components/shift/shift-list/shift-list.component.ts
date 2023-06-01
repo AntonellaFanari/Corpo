@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'oidc-client';
 import { Class } from '../../../domain/class';
 import { Shift } from '../../../domain/shift';
@@ -33,12 +35,21 @@ export class ShiftListComponent implements OnInit {
   requestingList: boolean;
 
   constructor(private shiftService: ShiftService, private dp: DatePipe, private classService: ClassService,
-    private userService: UserService, private customAlertService: CustomAlertService) {
+    private userService: UserService, private customAlertService: CustomAlertService, private route: ActivatedRoute) {
+  
     this.from = this.dp.transform(new Date(), 'yyyy-MM-dd');
     console.log(this.from);
     let to = new Date();
     this.to = this.dp.transform(to.setDate(to.getDate() + 30), 'yyyy-MM-dd');
     console.log(this.to);
+    this.route.queryParams.subscribe(params => {
+      if (params['displayList'] == 'true') {
+        this.getAll();
+        this.toList = true
+      } else {
+        this.toList = false;
+      }
+    });
   }
 
   ngOnInit() {

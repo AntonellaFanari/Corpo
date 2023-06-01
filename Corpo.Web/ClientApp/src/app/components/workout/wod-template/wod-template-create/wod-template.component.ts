@@ -20,6 +20,7 @@ import { EmomComponent } from '../../wod-modality/emom/emom.component';
 import { RestTimeComponent } from '../../wod-modality/rest-time/rest-time.component';
 import { ShortestPossibleTimeComponent } from '../../wod-modality/shortest-possible-time/shortest-possible-time.component';
 import { StaggeredComponent } from '../../wod-modality/staggered/staggered.component';
+import { TabataComponent } from '../../wod-modality/tabata/tabata.component';
 import { TimersComponent } from '../../wod-modality/timers/timers.component';
 
 
@@ -84,6 +85,7 @@ export class WodTemplateComponent implements OnInit {
   @ViewChild(StaggeredComponent, { static: false }) modalityStaggered: StaggeredComponent;
   @ViewChild(TimersComponent, { static: false }) modalityTimers: TimersComponent;
   @ViewChild(RestTimeComponent, { static: false }) modalityRestTime: RestTimeComponent;
+  @ViewChild(TabataComponent, { static: false }) modalityTabata: TabataComponent;
 
   constructor(private exerciseService: ExerciseService,
     private wodTemplateService: WodTemplateService,
@@ -169,6 +171,12 @@ export class WodTemplateComponent implements OnInit {
       case 'Rest Time':
         this.modalityRestTime.clearData();
         break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.clearData();
+        break;
+      case 'Tabata':
+        this.modalityTabata.clearData();
+        break;
       default:
     }
   }
@@ -179,6 +187,7 @@ export class WodTemplateComponent implements OnInit {
   selectUnitsTypes() { };
 
   onItemSelect(goal) {
+    this.validatorsRequiredGoal = false;
     if (this.goal.length == 0) {
       this.goal = goal.goal;
     } else {
@@ -188,6 +197,7 @@ export class WodTemplateComponent implements OnInit {
   }
 
   onSelectAll(goals) {
+    this.validatorsRequiredGoal = false;
     this.weeklyGoalsList = [];
     this.goal = "";
     for (var i = 0; i < goals.length; i++) {
@@ -317,6 +327,10 @@ export class WodTemplateComponent implements OnInit {
         this.modalityRestTime.pauseBetweenRounds = this.wod.wodGroups[index].pauseBetweenRounds;
         this.modalityRestTime.pauseBetweenExercises = this.wod.wodGroups[index].pauseBetweenExercises;
         break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.getRounds.emit(this.wod.wodGroups[index].rounds);
+        this.modalityShortesPossibleTime.rounds = this.wod.wodGroups[index].rounds;
+        break;
       default:
     }
   }
@@ -329,7 +343,7 @@ export class WodTemplateComponent implements OnInit {
 
   save() {
     console.log("plantilla a enviar: ", this.wod);
-    if (this.name !== "" || this.name !== undefined || this.goal !== "" || this.goal !== undefined) {
+    if (this.name !== "" && this.name !== undefined && this.goal !== "" && this.goal !== undefined && this.selectedModality != undefined) {
       this.requesting = true;
       var wodTemplate = new WodTemplate(this.wod);
       wodTemplate.name = this.name;
@@ -351,8 +365,12 @@ export class WodTemplateComponent implements OnInit {
     } else {
       if (this.name == "" || this.name == undefined) {
         this.validatorsRequiredName = true;
-      } if (this.goal == "" || this.goal == undefined) {
+      }
+      if (this.goal == "" || this.goal == undefined) {
         this.validatorsRequiredGoal = true;
+      }
+      if (this.selectedModality == undefined) {
+        this.validatorsRequiredModality = true;
       }
     }
 
@@ -490,7 +508,7 @@ export class WodTemplateComponent implements OnInit {
     this.wod.wodGroups[this.activeWodGroup].modalityId = modalityId;
     this.wod.wodGroups[this.activeWodGroup].modality = this.modality;
     this.wod.wodGroups[this.activeWodGroup].detail = "Modalidad: " + this.modality + " - " + this.rounds.toString() + " " + "Rondas";
-   
+
   }
 
   getExercise(exercise) {
@@ -545,7 +563,7 @@ export class WodTemplateComponent implements OnInit {
 
   editExerciseItem(exerciseItem, exerciseIndex, groupIndex) {
     this.setActiveWodGroup(groupIndex);
-
+    console.log("modalidad: ", this.modality);
     switch (this.modality) {
       case 'Tiempo':
         this.modalityShortesPossibleTime.getEditExercise(exerciseItem);
@@ -564,12 +582,24 @@ export class WodTemplateComponent implements OnInit {
         break;
       case 'Rest Time':
         this.modalityRestTime.getEditExercise(exerciseItem);
+        break;
+      case 'Rondas':
+        this.modalityShortesPossibleTime.getEditExercise(exerciseItem);
+        break;
+      case 'Tabata':
+        this.modalityTabata.getEditExercise(exerciseItem);
+        break;
       default:
     }
 
     this.wod.wodGroups[this.activeWodGroup].exercises.splice(exerciseIndex, 1);
   }
 
+
+  validateName(event) {
+    console.log("validando nombre: ", this.name, event);
+    if (this.name.length > 0) this.validatorsRequiredName = false;
+  }
 }
 
 
@@ -577,5 +607,3 @@ function input() {
   throw new Error('Function not implemented.');
 
 }
-
-

@@ -23,7 +23,7 @@ export class ShiftCreateComponent implements OnInit {
   classes: Class[] = [];
   from: string;
   to: string;
-  quota: number = 0;
+  quota: number = 1;
   selectedClass: number;
   shifts: Shift[] = [];
   monday: boolean = false;
@@ -33,6 +33,11 @@ export class ShiftCreateComponent implements OnInit {
   friday: boolean = false;
   saturday: boolean = false;
   requesting = false;
+  disabledBtnSave = true;
+  errorSelectedDays: boolean;
+  errorQuota: boolean;
+  errorSelectedClass: boolean;
+  errorSelectedUser: boolean;
 
   constructor(private dp: DatePipe, private userService: UserService, private classService: ClassService,
     private shiftService: ShiftService, private router: Router, private customAlertService: CustomAlertService) {
@@ -81,44 +86,74 @@ export class ShiftCreateComponent implements OnInit {
 
   selectClass(event) {
     this.selectedClass = event;
+    this.errorSelectedClass = false;
   }
 
   selectUser(event, i) {
     console.log(event, i);
     this.schedules[i].userId = event
+    this.errorSelectedUser = false;
   }
 
-
-  selectMonday(i) {
-    this.monday = !this.monday;
+  selectDay(day) {
+    switch (day) {
+      case 'monday':
+        this.monday = !this.monday;
+        if (this.monday) this.errorSelectedDays = false;
+        console.log("monday: ", this.monday);
+        break;
+      case 'tuesday':
+        this.tuesday = !this.tuesday;
+        if (this.tuesday) this.errorSelectedDays = false;
+        break;
+      case 'wednesday':
+        this.wednesday = !this.wednesday;
+        if (this.wednesday) this.errorSelectedDays = false;
+        break;
+      case 'thursday':
+        this.thursday = !this.thursday;
+        if (this.thursday) this.errorSelectedDays = false;
+        break;
+      case 'friday':
+        this.friday = !this.friday;
+        if (this.friday) this.errorSelectedDays = false;
+        break;
+      case 'saturday':
+        this.saturday = !this.saturday;
+        if (this.saturday) this.errorSelectedDays = false;
+        break;
+    }
   }
 
-  selectTuesday(i) {
-    this.tuesday = !this.tuesday;
+  validationQuota() {
+    console.log("cambiando valor de cupo");
+    this.errorQuota = (this.quota > 0) ? false : true;
   }
 
-  selectWednesday(i) {
-    this.wednesday = !this.wednesday;
+  validationSchedules() {
+    let currentSchedule = this.schedules[this.schedules.length - 1];
+    console.log("horario actual: ", currentSchedule);
+    if (!currentSchedule.monday && !currentSchedule.saturday && !currentSchedule.thursday && !currentSchedule.tuesday
+      && !currentSchedule.wednesday && !currentSchedule.friday && !currentSchedule.saturday)
+      this.errorSelectedDays = true;
+    console.log("profesor seleccionado: ", currentSchedule.userId);
+    if (!currentSchedule.userId) this.errorSelectedUser = true;
   }
 
-  selectThursday(i) {
-    this.thursday = !this.thursday;
-  }
-
-  selectFriday(i) {
-    this.friday = !this.friday;
-  }
-
-  selectSaturday(i) {
-    this.saturday = !this.saturday;
-  }
-
-
-  addRow() {
+  addSchedule() {
     let schedule = this.createSchedule();
     schedule.hour = this.dp.transform(new Date(), '00:00:00')
     this.schedules.push(schedule);
-    console.log(this.schedules);
+    console.log("turno: ", this.schedules);
+  }
+
+  addRow() {
+    if (this.schedules.length == 0) {
+      this.addSchedule();
+    } else {
+      this.validationSchedules();
+      if (!this.errorSelectedDays && !this.errorSelectedUser) this.addSchedule();
+    }
 
   }
 
@@ -200,23 +235,37 @@ export class ShiftCreateComponent implements OnInit {
   }
 
   submit() {
-    this.createShift();
-    this.requesting = true;
-    this.shiftService.add(this.shifts).subscribe(
-      result => {
-        console.log(result);
-        this.router.navigate(['/turnos-list']);
-      },
-      error => {
-        this.requesting = false;
-        console.error(error);
-        if (error.status === 400) {
-          this.customAlertService.displayAlert("Gestión de Turnos", error.error.errores);
-        }
-        if (error.status === 500) {
-          this.customAlertService.displayAlert("Gestión de Turnos", ["Hubo un problema al intentar crear los turnos."]);
-        }
-      })
-  }
+    if (this.quota > 0 && this.selectedClass && this.schedules.length > 0) {
+      console.log("schedules: ", this.schedules.length);
+      if (this.schedules.length > 0) this.validationSchedules();
 
+      console.log("error dias: ", this.errorSelectedDays);
+      console.log("error profesor: ", this.errorSelectedUser);
+      if (!this.errorSelectedDays && !this.errorSelectedUser) {
+        this.createShift();
+        this.requesting = true;
+        this.shiftService.add(this.shifts).subscribe(
+          result => {
+            console.log(result);
+            this.router.navigate(['/turnos-list'], { queryParams: {displayList: true} });
+          },
+          error => {
+            this.requesting = false;
+            console.error(error);
+            if (error.status === 400) {
+              this.customAlertService.displayAlert("Gestión de Turnos", error.error.errores);
+            }
+            if (error.status === 500) {
+              this.customAlertService.displayAlert("Gestión de Turnos", ["Hubo un problema al intentar crear los turnos."]);
+            }
+          })
+      }
+    } else {
+      console.log("error validation: ", this.selectedClass);
+      if (this.quota == 0) this.errorQuota = true;
+      if (!this.selectedClass) this.errorSelectedClass = true;
+      if (this.schedules.length == 0) this.customAlertService.displayAlert("Gestión de Turnos", ["No agregó turnos."]);
+    }
+
+  }
 }

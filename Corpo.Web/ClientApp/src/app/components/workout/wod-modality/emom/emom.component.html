@@ -2,27 +2,27 @@
 
   <div class="row">
 
-    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
+    <div class="form-group mt-3 row pe-0" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
       <label class="control-label col-12">Unidades:</label>
-      <div class="formValidators col-6">
+      <div class="formValidators col-5">
         <ng-select class="custom" #select [items]="unitsTypes" [(ngModel)]="selectedUnitType" bindLabel="type"
                    selectOnTab="true" id="select-units" placeholder="Seleccionar" notFoundText="No hay tipos de unidades">
         </ng-select>
         <!--<p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>-->
       </div>
-      <div class="arrow-button col-3" (click)="dencreaseUnit('units')">
+      <div class="arrow-button col-2" (click)="dencreaseUnit('units')">
         <div class="down"> </div>
       </div>
-      <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
+      <div class="formValidators col-2 ps-0 pe-0">
         <input type="text" class="form-control" [(ngModel)]="units">
         <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
       </div>
-      <div class="arrow-button col-3" (click)="increaseUnit('units')">
+      <div class="arrow-button col-2" (click)="increaseUnit('units')">
         <div class="up"> </div>
       </div>
     </div>
 
-    <div class="form-group mt-3" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
+    <div class="form-group mt-3 ps-0" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
       <label class="control-label">Ejercicio:</label>
       <div class="formValidators">
         <ng-select class="custom" #select [items]="exercisesSelect" [(ngModel)]="selectedExercise" bindLabel="label"
@@ -34,20 +34,20 @@
 
     <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
       <label class="control-label col-12">Intensidad:</label>
-      <div class="formValidators col-6">
+      <div class="formValidators col-5">
         <ng-select class="custom" #select [items]="intensityTypes" [(ngModel)]="selectedIntensityType" bindLabel="type"
                    selectOnTab="true" id="select-intensity" placeholder="Seleccionar" notFoundText="No hay tipos de intensidad">
         </ng-select>
         <!--<p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>-->
       </div>
-      <div class="arrow-button col-3" (click)="dencreaseUnit('intensity')">
+      <div class="arrow-button col-2" (click)="dencreaseUnit('intensity')">
         <div class="down"> </div>
       </div>
-      <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
+      <div class="formValidators col-2 ps-0 pe-0">
         <input type="text" class="form-control" [(ngModel)]="intensity">
         <!--<p *ngIf="validationError && !intensity">* el campo es requerido.</p>-->
       </div>
-      <div class="arrow-button col-3" (click)="increaseUnit('intensity')">
+      <div class="arrow-button col-2" (click)="increaseUnit('intensity')">
         <div class="up"> </div>
       </div>
     </div>

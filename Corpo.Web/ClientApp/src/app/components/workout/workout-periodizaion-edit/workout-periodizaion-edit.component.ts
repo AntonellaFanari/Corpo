@@ -54,10 +54,10 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: ""};
-  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
-  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: ""};
-  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week1: Week = { weekNumber: "1", m: "50", s: "50", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week2: Week = { weekNumber: "2", m: "50", s: "50", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week3: Week = { weekNumber: "3", m: "50", s: "50", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week4: Week = { weekNumber: "4", m: "50", s: "50", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -140,9 +140,9 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
 
     });
     this.getTrainingSystems();
-    this.getPeriodizationById();
-    this.getPeriodization();
   }
+
+
 
   getPeriodizationById() {
     this.periodizacionService.getById(this.id).subscribe(data => {
@@ -179,10 +179,15 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
   }
 
   getTrainingSystemId(trainingSystem) {
+    console.log("trainingSistem recibido: ", trainingSystem);
     let trainingSystemValues = trainingSystem.split("x");
+    console.log("trainingSistem transformado: ", trainingSystemValues);
     let up = trainingSystemValues[0];
     let down = trainingSystemValues[1];
-    return this.trainingSystems.find(x => x.up == up && x.down == down).id;
+    console.log("trainingSistem options: ", this.trainingSystems);
+    let result = this.trainingSystems.find(x => x.up == up && x.down == down);
+    console.log("result systemTraining: ", result);
+    return result.id;
   }
 
   getPeriodization() {
@@ -241,6 +246,9 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
     this.trainingSystemService.getAll().subscribe(
       response => {
         this.trainingSystems = response.result;
+
+        this.getPeriodizationById();
+        this.getPeriodization();
       },
       error => console.error(error)
     )
@@ -1036,8 +1044,41 @@ export class WorkoutPeriodizaionEditComponent implements OnInit {
       })
   }
 
-  getWeek() {
-
+  increaseUnit(type, weekNumber) {
+    const week = 'week' + weekNumber;
+    if (type == 'm') {
+      const m = (parseInt(this[week].m) + 10);
+      if (m > 100) return;
+      const s = 100 - m;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    } else {
+      const s = (parseInt(this[week].s) + 10);
+      if (s > 100) return;
+      const m = 100 - s;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    }
   }
+
+
+  dencreaseUnit(type, weekNumber) {
+    const week = 'week' + weekNumber;
+    if (type == 'm') {
+      const m = parseInt(this[week].m) - 10;
+      if (m < 0) return;
+      const s = 100 - m;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    } else {
+      const s = parseInt(this[week].s) - 10;
+      if (s < 0) return;
+      const m = 100 - s;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    }
+  }
+
+
 
 }

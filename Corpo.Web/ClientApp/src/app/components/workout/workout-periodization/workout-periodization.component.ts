@@ -55,10 +55,10 @@ export class WorkoutPeriodizationComponent implements OnInit {
   gymnastic: number = 25;
   strength: number = 25;
   weightlifting: number = 25;
-  week1: Week = { weekNumber: "1", m: "", s: "", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
-  week2: Week = { weekNumber: "2", m: "", s: "", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
-  week3: Week = { weekNumber: "3", m: "", s: "", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
-  week4: Week = { weekNumber: "4", m: "", s: "", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week1: Week = { weekNumber: "1", m: "50", s: "50", monday: "M", tuesday: "GW", wednesday: "WS", thursday: "SM", friday: "MGWS", saturday: "Libre", sunday: "Libre", goal: "", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week2: Week = { weekNumber: "2", m: "50", s: "50", monday: "G", tuesday: "WS", wednesday: "MG", thursday: "GW", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week3: Week = { weekNumber: "3", m: "50", s: "50", monday: "W", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
+  week4: Week = { weekNumber: "4", m: "50", s: "50", monday: "S", tuesday: "", wednesday: "", thursday: "", friday: "", saturday: "Libre", sunday: "Libre", planned: "false", volume: "", intensity: 0, intensityType: 0, trainingSystem: "" };
   chartweek1: any;
   chartweek2: any;
   chartweek3: any;
@@ -123,7 +123,7 @@ export class WorkoutPeriodizationComponent implements OnInit {
     private monthlyGoalService: MonthlyGoalService,
     private weeklyGoalService: WeeklyGoalService,
     private trainingSystemService: TrainingSystemService,
-private customAlertService: CustomAlertService  ) {
+    private customAlertService: CustomAlertService) {
     this.route.queryParams.subscribe(params => {
       this.memberId = parseInt(params['memberId'])
       memberService.getById(this.memberId).subscribe(data => {
@@ -132,7 +132,7 @@ private customAlertService: CustomAlertService  ) {
     });
     this.getPeriodization();
     this.year = new Date().getFullYear();
-    this.month = new Date().getMonth()+1;
+    this.month = new Date().getMonth() + 1;
   }
 
 
@@ -142,7 +142,6 @@ private customAlertService: CustomAlertService  ) {
 
     var previousIndex = this.index;
     console.log("index: ", this.index)
-
     this.week1 = this.getPeriodization1(this.index);
     this.week1.weekNumber = "1";
     this.incrementIndex();
@@ -188,7 +187,9 @@ private customAlertService: CustomAlertService  ) {
       volume: "",
       intensity: 0,
       intensityType: 0,
-      trainingSystem: ""
+      trainingSystem: "",
+      m: '50',
+      s: '50'
     };
 
 
@@ -262,10 +263,10 @@ private customAlertService: CustomAlertService  ) {
   }
 
   hidePercentage(type) {
-    if (type == 1) { return true } else { return false};
+    if (type == 1) { return true } else { return false };
   }
 
- 
+
 
   getType() {
     if (this.index >= 4) this.index = 0;
@@ -324,24 +325,27 @@ private customAlertService: CustomAlertService  ) {
     //  .forEach(e => e.addEventListener("click", () => document.getElementById('modal-predominance').click()));
     //this.render();
 
-    var tds = document.querySelectorAll(".predominance td");
-    for (var i = 0; i < tds.length; i++) {
-      (tds[i] as HTMLTableDataCellElement).contentEditable = 'true';
-      tds[i].addEventListener("blur", (x) => {
+    //var tds = document.querySelectorAll(".predominance td");
+    //console.log("tds: ", tds);
+    //for (var i = 0; i < tds.length; i++) {
+    //  (tds[i] as HTMLTableDataCellElement).contentEditable = 'true';
+    //  tds[i].addEventListener("blur", (x) => {
 
-        console.log("entra");
-        var value = (x.target as HTMLTableDataCellElement).innerHTML;
-        (x.target as HTMLTableDataCellElement).innerHTML = (value.includes("%") || value == "") ? value : value + "%"
+    //    console.log("entra");
+    //    var value = (x.target as HTMLTableDataCellElement).innerHTML;
+    //    (x.target as HTMLTableDataCellElement).innerHTML = (value.includes("%") || value == "0") ?value: value + "%"
 
-        var weekName = (x.target as HTMLTableDataCellElement).getAttribute("week")
-        console.log(weekName);
-        var typeName = (x.target as HTMLTableDataCellElement).getAttribute("type")
-        console.log(typeName);
-        this[weekName][typeName] = value;
+    //    var weekName = (x.target as HTMLTableDataCellElement).getAttribute("week")
+    //    console.log(weekName);
+    //    var typeName = (x.target as HTMLTableDataCellElement).getAttribute("type")
+    //    console.log(typeName);
+    //    console.log("value", value);
 
-        console.log(this[weekName]);
-      })
-    }
+    //    this[weekName][typeName] = value;
+
+    //    console.log(this[weekName]);
+    //  })
+    //}
 
     var types = ["M", "G"];
     //this.renderExpectedChart(types, [50, 50])
@@ -551,7 +555,7 @@ private customAlertService: CustomAlertService  ) {
 
   validate(week) {
     switch (week) {
-      case 1:        
+      case 1:
         this.resetClass(1, this.hidePercentageWeek1, this.week1);
         break;
       case 2:
@@ -682,7 +686,7 @@ private customAlertService: CustomAlertService  ) {
     this[this.week][this.day] = this.getCheckedCheckboxes();
     var td = document.querySelector("#" + this.week + " td[day='" + this.day + "']");
     td.innerHTML = this[this.week][this.day];
-/*    var res = this.getWeekPercentage(this[this.week], this.week)*/
+    /*    var res = this.getWeekPercentage(this[this.week], this.week)*/
 
     document.getElementById('modal-button').click();
     this.type = "";
@@ -924,5 +928,40 @@ private customAlertService: CustomAlertService  ) {
       })
   }
 
+
+  increaseUnit(type, weekNumber) {
+    const week = 'week' + weekNumber;
+    if (type == 'm') {
+      const m = (parseInt(this[week].m) + 10);
+      if (m > 100) return;
+      const s = 100 - m;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    } else {
+      const s = (parseInt(this[week].s) + 10);
+      if (s > 100) return;
+      const m = 100 - s;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    }  
+  }
+
+
+  dencreaseUnit(type, weekNumber) {
+    const week = 'week' + weekNumber;
+    if (type == 'm') {
+      const m = parseInt(this[week].m) - 10;
+      if (m < 0) return;
+      const s = 100 - m;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    } else {
+      const s = parseInt(this[week].s) - 10;
+      if (s < 0) return;
+      const m = 100 - s;
+      this[week].m = m.toString();
+      this[week].s = s.toString();
+    }
+  }
 
 }

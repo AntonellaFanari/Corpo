@@ -164,18 +164,46 @@
         </div>
         <div class="row col-12 pe-0">
           <section id="no-more-tables" class="tab-pane fade show active col-4">
-            <table class="table table-bordered table-condensed cf scrollme predominance" id="week1"
-                   week="week1">
+            <table class="table table-bordered table-condensed cf scrollme predominance" id="week2"
+                   week="week2">
               <thead class="cf">
                 <tr>
-                  <th>M</th>
-                  <th>S</th>
+                  <th>M-%</th>
+                  <th>S-%</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="M" week="week1" type="m"></td>
-                  <td data-title="S" week="week1" type="s"></td>
+                  <td data-title="M" week="week1" type="m">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('m', 1)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week1.m">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+
+                      <div class="arrow-button col-3" (click)="increaseUnit('m', 1)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
+                  <!--<td data-title="M" week="week1" type="m">{{week1.m}}%</td>-->
+                  <td data-title="S" week="week1" type="s">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('s', 1)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week1.s">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+                      <div class="arrow-button col-3" (click)="increaseUnit('s', 1)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -275,21 +303,48 @@
                    week="week1">
               <thead class="cf">
                 <tr>
-                  <th>M</th>
-                  <th>S</th>
+                  <th>M-%</th>
+                  <th>S-%</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="M" week="week2" type="m"></td>
-                  <td data-title="S" week="week2" type="s"></td>
+                  <td data-title="M" week="week2" type="m">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('m', 2)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week2.m">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+                      <div class="arrow-button col-3" (click)="increaseUnit('m', 2)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
+                  <!--<td data-title="M" week="week1" type="m">{{week2.m}}%</td>-->
+                  <td data-title="S" week="week2" type="s">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('s', 2)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week2.s">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+                      <div class="arrow-button col-3" (click)="increaseUnit('s', 2)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </section>
           <section id="no-more-tables" class="tab-pane fade show active col-8 pe-0">
             <table class="table table-bordered table-condensed cf scrollme periodization" id="week2"
-                   week="week2">
+                   week="week1">
               <thead class="cf">
                 <tr>
                   <th>Lunes</th>
@@ -382,14 +437,41 @@
                    week="week2">
               <thead class="cf">
                 <tr>
-                  <th>M</th>
-                  <th>S</th>
+                  <th>M-%</th>
+                  <th>S-%</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="M" week="week3" type="m"></td>
-                  <td data-title="S" week="week3" type="s"></td>
+                  <td data-title="M" week="week3" type="m">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('m', 3)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week3.m">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+                      <div class="arrow-button col-3" (click)="increaseUnit('m', 3)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
+                  <!--<td data-title="M" week="week1" type="m">{{week3.m}}%</td>-->
+                  <td data-title="S" week="week3" type="s">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('s', 3)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week3.s">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+                      <div class="arrow-button col-3" (click)="increaseUnit('s', 3)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -489,14 +571,41 @@
                    week="week2">
               <thead class="cf">
                 <tr>
-                  <th>M</th>
-                  <th>S</th>
+                  <th>M-%</th>
+                  <th>S-%</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td data-title="M" week="week4" type="m"></td>
-                  <td data-title="S" week="week4" type="s"></td>
+                  <td data-title="M" week="week4" type="m">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('m', 4)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week4.m">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+                      <div class="arrow-button col-3" (click)="increaseUnit('m', 4)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
+                  <!--<td data-title="M" week="week1" type="m">{{week4.m}}%</td>-->
+                  <td data-title="S" week="week4" type="s">
+                    <div class="row justify-content-center">
+                      <div class="arrow-button col-3" (click)="dencreaseUnit('s', 4)">
+                        <div class="down"> </div>
+                      </div>
+                      <div class="formValidators col-2 col-lg-3 ps-0 pe-0 me-2">
+                        <input type="text" class="form-control input-m-s" [(ngModel)]="week4.s">
+                        <!--<p *ngIf="validationError && !units">* el campo es requerido.</p>-->
+                      </div>
+                      <div class="arrow-button col-3" (click)="increaseUnit('s', 4)">
+                        <div class="up"> </div>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>

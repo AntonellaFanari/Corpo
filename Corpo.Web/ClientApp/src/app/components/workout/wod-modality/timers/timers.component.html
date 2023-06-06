@@ -20,13 +20,13 @@
 
   <div class="row">
 
-    <div class="form-group mt-3" [ngClass]="modeWodMember ? 'col-12 col-lg-3 row': 'col-12 col-lg-4 row'">
+    <div class="form-group mt-3 row col-12 col-lg-6">
       <label class="control-label col-4 col-lg-12">Tiempo(minutos):</label>
-      <div class="row ms-1 col-8 col-lg-12">
+      <div class="row col-8">
         <div class="arrow-button col-2" (click)="dencreaseUnit('timeWork')">
           <div class="down"> </div>
         </div>
-        <div class="formValidators col-5 ps-0 pe-0">
+        <div class="formValidators col-4 ps-0 pe-0">
           <input type="text" class="form-control" [(ngModel)]="timeWork">
           <!--<p *ngIf="validationError && !time">* el campo es requerido.</p>-->
         </div>
@@ -38,13 +38,13 @@
 
 
 
-    <div class="form-group mt-3" [ngClass]="modeWodMember ? 'col-12 col-lg-3 row': 'col-12 col-lg-4 row'">
+    <div class="form-group mt-3 row col-12 col-lg-6">
       <label class="control-label col-4 col-lg-12">Tiempo descanso:</label>
-      <div class="row ms-1 col-8 col-lg-12">
+      <div class="row col-8">
         <div class="arrow-button col-2" (click)="dencreaseUnit('timeRest')">
           <div class="down"> </div>
         </div>
-        <div class="formValidators col-5 ps-0 pe-0">
+        <div class="formValidators col-4 ps-0 pe-0">
           <input type="text" class="form-control" [(ngModel)]="timeRest">
           <!--<p *ngIf="validationError && !time">* el campo es requerido.</p>-->
         </div>
@@ -54,26 +54,6 @@
       </div>
     </div>
 
-
-    <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
-      <label class="control-label col-12">Intensidad:</label>
-      <div class="formValidators col-6">
-        <ng-select class="custom" #select [items]="intensityTypes" [(ngModel)]="selectedIntensityType" bindLabel="type"
-                   selectOnTab="true" id="select-intensity" placeholder="Seleccionar" notFoundText="No hay tipos de intensidad">
-        </ng-select>
-        <!--<p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>-->
-      </div>
-      <div class="arrow-button col-3" (click)="dencreaseUnit('intensity')">
-        <div class="down"> </div>
-      </div>
-      <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
-        <input type="text" class="form-control" [(ngModel)]="intensity">
-        <!--<p *ngIf="validationError && !intensity">* el campo es requerido.</p>-->
-      </div>
-      <div class="arrow-button col-3" (click)="increaseUnit('intensity')">
-        <div class="up"> </div>
-      </div>
-    </div>
 
     <div class="form-group mt-3 row" [ngClass]="modeWodMember ? 'col-12 col-lg-3': 'col-12 col-lg-3'">
       <label class="control-label col-6 col-lg-12">Unidades:</label>
@@ -92,6 +72,29 @@
                    bindValue="id" selectOnTab="true" id="select-exercise" placeholder="Seleccionar" notFoundText="No hay ejercicios">
         </ng-select>
         <!--<p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>-->
+      </div>
+    </div>
+
+
+
+
+    <div class="form-group mt-3 row pe-0" [ngClass]="modeWodMember ? 'col-12 col-lg-6': 'col-12 col-lg-4'">
+      <label class="control-label col-12">Intensidad:</label>
+      <div class="formValidators col-6 col-lg-5">
+        <ng-select class="custom" #select [items]="intensityTypes" [(ngModel)]="selectedIntensityType" bindLabel="type"
+                   selectOnTab="true" id="select-intensity" placeholder="Seleccionar" notFoundText="No hay tipos de intensidad">
+        </ng-select>
+        <!--<p [ngClass]="validatorsRequiredExercise ? 'validators': 'hide-validators'">*Debe seleccionar un ejercicio.</p>-->
+      </div>
+      <div class="arrow-button col-2" (click)="dencreaseUnit('intensity')">
+        <div class="down"> </div>
+      </div>
+      <div class="formValidators col-2 col-lg-3 ps-0 pe-0">
+        <input type="text" class="form-control" [(ngModel)]="intensity">
+        <!--<p *ngIf="validationError && !intensity">* el campo es requerido.</p>-->
+      </div>
+      <div class="arrow-button col-2" (click)="increaseUnit('intensity')">
+        <div class="up"> </div>
       </div>
     </div>
 
